@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
+    <AssemblyName>Event_Planning_System.Migrator</AssemblyName>
+    <OutputType>Exe</OutputType>
+    <PackageId>Event_Planning_System.Migrator</PackageId>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Update="appsettings.json;log4net.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Abp.Castle.Log4Net" Version="9.2.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Event_Planning_System.Core\Event_Planning_System.Core.csproj" />
+    <ProjectReference Include="..\Event_Planning_System.EntityFrameworkCore\Event_Planning_System.EntityFrameworkCore.csproj" />
+  </ItemGroup>
+</Project>
