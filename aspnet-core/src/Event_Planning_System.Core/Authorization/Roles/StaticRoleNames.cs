@@ -11,5 +11,6 @@ namespace Event_Planning_System.Authorization.Roles
         {
             public const string Admin = "Admin";
         }
+
     }
 }

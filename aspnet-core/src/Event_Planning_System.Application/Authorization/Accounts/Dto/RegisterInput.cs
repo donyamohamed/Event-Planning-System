@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using Abp.Auditing;
 using Abp.Authorization.Users;
 using Abp.Extensions;
+using Event_Planning_System.Authorization.Users;
 using Event_Planning_System.Validation;
 
 namespace Event_Planning_System.Authorization.Accounts.Dto
@@ -33,6 +34,11 @@ namespace Event_Planning_System.Authorization.Accounts.Dto
 
         [DisableAuditing]
         public string CaptchaResponse { get; set; }
+
+        public int Age { get; set; }
+
+        public Gender Gender { get; set; }
+        public string Img {  get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

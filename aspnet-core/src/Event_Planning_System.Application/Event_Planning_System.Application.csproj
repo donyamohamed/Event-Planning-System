@@ -14,4 +14,10 @@
   <ItemGroup>
     <ProjectReference Include="..\Event_Planning_System.Core\Event_Planning_System.Core.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Event\Dto\" />
+    <Folder Include="Guest\Dto\" />
+    <Folder Include="Notification\Dto\" />
+    <Folder Include="ToDoCheckList\Dto\" />
+  </ItemGroup>
 </Project>
