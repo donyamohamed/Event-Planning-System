@@ -8,5 +8,7 @@ namespace Event_Planning_System.Users.Dto
     {
         public string Keyword { get; set; }
         public bool? IsActive { get; set; }
+
+
     }
 }

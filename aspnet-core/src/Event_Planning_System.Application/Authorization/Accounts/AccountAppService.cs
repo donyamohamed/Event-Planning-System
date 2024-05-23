@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Abp.Authorization;
 using Abp.Configuration;
 using Abp.Zero.Configuration;
 using Event_Planning_System.Authorization.Accounts.Dto;
@@ -35,6 +36,7 @@ namespace Event_Planning_System.Authorization.Accounts
             return new IsTenantAvailableOutput(TenantAvailabilityState.Available, tenant.Id);
         }
 
+        [AbpAllowAnonymous]
         public async Task<RegisterOutput> Register(RegisterInput input)
         {
             var user = await _userRegistrationManager.RegisterAsync(
@@ -43,6 +45,11 @@ namespace Event_Planning_System.Authorization.Accounts
                 input.EmailAddress,
                 input.UserName,
                 input.Password,
+                input.Age,
+                input.Gender ,
+                input.Img,
+             
+
                 true // Assumed email address is always confirmed. Change this if you want to implement email confirmation.
             );
 

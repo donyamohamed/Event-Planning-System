@@ -1,8 +1,9 @@
 <li class="nav-item dropdown nav-user-menu" dropdown>
   <a href="javascript:;" class="nav-link" dropdownToggle>
+   
     <img
       class="user-image img-circle elevation-2"
-      src="assets/img/user.png"
+      src="assets/img/user.jpg"
       alt="User Image"
     />
   </a>
@@ -13,5 +14,12 @@
     <a class="dropdown-item" href="javascript:;" (click)="logout()">
       <i class="fas fa-sign-out-alt"></i> {{ "Logout" | localize }}
     </a>
+    <a class="dropdown-item" href="javascript:;" (click)="logout()">
+      <i class="fas fa-sign-out-alt"></i> {{ "Logout" | localize }}
+    </a>
+    <div>
+      
+      <h1>dddddd{{user.age}}</h1>
+    </div>
   </div>
 </li>
