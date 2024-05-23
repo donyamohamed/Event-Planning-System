@@ -11,7 +11,6 @@ namespace Event_Planning_System.Enitities
 {
     public class Interest
     {
-		[Key]
 		public int Id { get; set; }
 
 		[Required(ErrorMessage = "Event type is required.")]

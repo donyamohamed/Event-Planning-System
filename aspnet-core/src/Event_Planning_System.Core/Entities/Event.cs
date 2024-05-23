@@ -26,8 +26,9 @@ public enum EventCategory
 
 namespace Event_Planning_System.Enitities
 {
-    public class Event : FullAuditedEntity<Guid>
+    public class Event
     {
+		public int Id { get; set; }
 		[Required(ErrorMessage = "Event name is required.")]
 		[StringLength(100, ErrorMessage = "Event name can't be longer than 100 characters.")]
 		public string Name { get; set; }
@@ -61,7 +62,7 @@ namespace Event_Planning_System.Enitities
 		[ForeignKey("UserId")]
 		public virtual User User { get; set; }
 
-		public Guid BudgetId { get; set; }
+		public int BudgetId { get; set; }
 		[ForeignKey("BudgetId")]
 		public virtual BudgetExpense BudgetExpense { get; set; }
 

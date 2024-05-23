@@ -15,8 +15,9 @@ public enum StatusList
 }
 namespace Event_Planning_System.Enitities
 {
-    public class ToDoCheckList : FullAuditedEntity<Guid>
+    public class ToDoCheckList 
     {
+		public int Id { get; set; }
 		[Required(ErrorMessage = "Status is required.")]
 		public StatusList Status { get; set; }
 
@@ -32,7 +33,7 @@ namespace Event_Planning_System.Enitities
 		[ForeignKey("UserId")]
 		public virtual User User { get; set; }
 
-		public Guid EventId { get; set; }
+		public int EventId { get; set; }
 		[ForeignKey("EventId")]
 		public virtual Event Event { get; set; }
 

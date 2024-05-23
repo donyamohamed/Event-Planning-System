@@ -18,8 +18,9 @@ public enum Notification_Type
 }
 namespace Event_Planning_System.Enitities
 {
-    public class Notification : FullAuditedEntity<Guid>
+    public class Notification 
     {
+		public int Id { get; set; }
 		[Required(ErrorMessage = "Content is required.")]
 		public string Content { get; set; }
 
@@ -34,7 +35,7 @@ namespace Event_Planning_System.Enitities
 		[ForeignKey("UserId")]
 		public virtual User User { get; set; }
 
-		public Guid EventId { get; set; }
+		public int EventId { get; set; }
 		[ForeignKey("EventId")]
 		public virtual Event Event { get; set; }
 	}

@@ -10,8 +10,9 @@ using System.Threading.Tasks;
 
 namespace Event_Planning_System.Enitities
 {
-    public class BudgetExpense : FullAuditedEntity<Guid>
+    public class BudgetExpense 
 	{
+		public int Id { get; set; }
 		[Range(0, int.MaxValue, ErrorMessage = "Amount must be a non-negative integer.")]
 		public int Amount { get; set; }
 
