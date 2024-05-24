@@ -15,9 +15,12 @@
     <ProjectReference Include="..\Event_Planning_System.Core\Event_Planning_System.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Event\Dto\" />
     <Folder Include="Guest\Dto\" />
     <Folder Include="Notification\Dto\" />
     <Folder Include="ToDoCheckList\Dto\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
   </ItemGroup>
 </Project>
