@@ -1,31 +1,36 @@
+import { Component, OnInit } from '@angular/core';
+import { CurrentUserDataService } from '@shared/Services/current-user-data.service';
+import { CurrentUser } from '@shared/Models/current-user';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { CommonModule } from '@angular/common';
-import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, ViewChild, TemplateRef } from '@angular/core';
-import { CurrentUserDataService } from '@shared/Services/current-user-data.service'; 
-import { CurrentUser } from '@shared/Models/current-user'; 
 import { FormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
 
 @Component({
+  imports: [
+    FormsModule,
+    CommonModule
+  ],
+   standalone:true,
   selector: 'app-user-profile',
-  standalone: true,
-  imports: [CommonModule,FormsModule],
   templateUrl: './user-profile.component.html',
   styleUrls: ['./user-profile.component.css']
 })
 export class UserProfileComponent implements OnInit {
+
   user: CurrentUser | null = null;
+  bsModalRef!: BsModalRef;
 
   constructor(
     private _userService: CurrentUserDataService,
-    // private modalService: NgbModal,
-    private cdr: ChangeDetectorRef
+    private modalService: BsModalService
   ) {}
 
   ngOnInit(): void {
     this._userService.GetCurrentUserData().subscribe({
       next: (u: CurrentUser) => {
-        console.log('User data loaded:', u); 
+        console.log('User data loaded:', u);
         this.user = u;
-        this.cdr.detectChanges(); // Manually trigger change detection
       },
       error: (err) => {
         console.error('Failed to load user data', err);
@@ -37,22 +42,20 @@ export class UserProfileComponent implements OnInit {
     return this.user?.imageName ? `assets/img/${this.user.imageName}` : 'assets/img/user.png';
   }
 
-  openEditModal(content: TemplateRef<any>) {
-    // this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
+  openModal(template: any): void {
+    this.bsModalRef = this.modalService.show(template);
   }
 
-  onSubmit(modal: any) {
-    if (this.user) {
+  onSubmit(): void {
+    
       this._userService.UpdateUserData(this.user).subscribe({
-        next: (updatedUser: CurrentUser) => {
+        next: updatedUser => {
           this.user = updatedUser;
-          modal.close();
-          console.log('User profile updated:', this.user);
+          console.log(updatedUser);
+          this.bsModalRef.hide(); 
+          location.reload();
         },
-        error: (err) => {
-          console.error('Error updating profile:', err);
-        }
       });
-    }
+    
   }
 }

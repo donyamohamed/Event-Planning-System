@@ -38,6 +38,7 @@ import { SidebarComponent } from './layout/sidebar.component';
 import { SidebarLogoComponent } from './layout/sidebar-logo.component';
 import { SidebarUserPanelComponent } from './layout/sidebar-user-panel.component';
 import { SidebarMenuComponent } from './layout/sidebar-menu.component';
+import { BrowserModule } from '@angular/platform-browser';
 
 
 @NgModule({
@@ -71,6 +72,7 @@ import { SidebarMenuComponent } from './layout/sidebar-menu.component';
         SidebarMenuComponent
     ],
     imports: [
+       
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
