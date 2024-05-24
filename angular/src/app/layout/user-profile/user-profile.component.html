@@ -56,7 +56,7 @@
 
 <ng-template #modalTemplate >
   <div class="modal-header">
-    <h4 class="modal-title">Edit User Profile</h4>
+    <h4 class="modal-title" style="color: #1D2027;">Edit My Profile</h4>
     <button type="button" class="close" aria-label="Close" (click)="bsModalRef.hide()">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -88,12 +88,12 @@
       
       <div class="form-group">
         <label for="age">Age:</label>
-        <input type="number" class="form-control" id="age" min="16" max="90" name="age" [(ngModel)]="user.age" required>
+        <input type="number" class="form-control" id="age" min="16" max="70" name="age" [(ngModel)]="user.age" required>
         <div
           *ngIf="createForm.controls['age'].invalid && (createForm.controls['age'].dirty || createForm.controls['age'].touched)">
           <div *ngIf="createForm.controls['age'].errors.required" class="err">Age is required.</div>
           <div *ngIf="createForm.controls['age'].errors.min" class="err">Age must be at least 16.</div>
-          <div *ngIf="createForm.controls['age'].errors.max" class="err">Age must not exceed 90.</div>
+          <div *ngIf="createForm.controls['age'].errors.max" class="err">Age must not exceed 70.</div>
         </div>
       </div>
       <div class="form-group">
@@ -111,7 +111,7 @@
         <label for="imageName">Image:</label>
         <input type="text" class="form-control" id="imageName" name="imageName" [(ngModel)]="user.imageName" required>
       </div>
-      <button type="submit" [disabled]="createForm.invalid" class="btn btn-primary">Submit</button>
+      <button type="submit" [disabled]="createForm.invalid"  class="btn btn-primary">Submit</button>
     </form>
   </div>
 </ng-template>
