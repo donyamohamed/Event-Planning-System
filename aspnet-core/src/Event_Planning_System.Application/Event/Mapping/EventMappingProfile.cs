@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+
 using Event_Planning_System.Enitities;
 using Event_Planning_System.Event.Dto;
 using System;
@@ -17,6 +18,7 @@ namespace Event_Planning_System.Event.Mapping
             CreateMap<EventDto, Enitities.Event>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.Category, opt => opt.MapFrom(src => Enum.Parse<EventCategory>(src.Category.ToString())));
+
         }
     }
 }
