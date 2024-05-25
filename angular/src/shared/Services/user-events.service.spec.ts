@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { EventService } from './eventa.service';
+import { UserEventsService } from './user-events.service';
 
-describe('EventService', () => {
-  let service: EventService;
+describe('UserEventsService', () => {
+  let service: UserEventsService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(EventService);
+    service = TestBed.inject(UserEventsService);
   });
 
   it('should be created', () => {
