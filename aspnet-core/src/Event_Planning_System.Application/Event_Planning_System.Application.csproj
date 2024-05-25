@@ -17,7 +17,6 @@
   <ItemGroup>
     <Folder Include="Authorization\Accounts\UploadedImages\" />
     <Folder Include="Event\Dto\" />
-    <Folder Include="Guest\Dto\" />
     <Folder Include="Notification\Dto\" />
     <Folder Include="ToDoCheckList\Dto\" />
   </ItemGroup>

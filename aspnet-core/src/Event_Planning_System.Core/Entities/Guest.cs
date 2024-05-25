@@ -1,4 +1,5 @@
-﻿using Abp.Domain.Entities.Auditing;
+﻿using Abp.Domain.Entities;
+using Abp.Domain.Entities.Auditing;
 using Event_Planning_System.Authorization.Users;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Event_Planning_System.Enitities
 {
-    public class Guest 
+    public class Guest : IEntity<long>
     {
 		public int Id { get; set; }	
 		[Required(ErrorMessage = "Name is required.")]
@@ -29,6 +30,11 @@ namespace Event_Planning_System.Enitities
 
 		public virtual ICollection<Event> Events { get; set; } = new List<Event>();
 		public virtual ICollection<User> Users { get; set; } = new List<User>();
+        long IEntity<long>.Id { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
-	}
+        public bool IsTransient()
+        {
+            throw new NotImplementedException();
+        }
+    }
 }
