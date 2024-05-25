@@ -17,6 +17,8 @@
   <ItemGroup>
     <PackageReference Include="Abp.AutoMapper" Version="9.2.2" />
     <PackageReference Include="Abp.ZeroCore.EntityFrameworkCore" Version="9.2.2" />
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
     <PackageReference Include="Castle.Windsor.MsDependencyInjection" Version="4.1.0" />
   </ItemGroup>
 </Project>

@@ -7,6 +7,7 @@ import { AboutComponent } from './about/about.component';
 import { UsersComponent } from './users/users.component';
 import { TenantsComponent } from './tenants/tenants.component';
 import { RolesComponent } from 'app/roles/roles.component';
+import { CreateEventComponent } from 'app/layout/create-event/create-event.component';
 import { ChangePasswordComponent } from './users/change-password/change-password.component';
 
 import { UserProfileComponent } from './layout/user-profile/user-profile.component';
@@ -27,12 +28,19 @@ import { UserProfileComponent } from './layout/user-profile/user-profile.compone
                     { path: 'tenants', component: TenantsComponent, data: { permission: 'Pages.Tenants' }, canActivate: [AppRouteGuard] },
                     { path: 'about', component: AboutComponent, canActivate: [AppRouteGuard] },
                     { path: 'update-password', component: ChangePasswordComponent, canActivate: [AppRouteGuard] },
+
+                    { path: 'create-event', component: CreateEventComponent }
+
+                  
+
                     {
                         path:"Profile",
                         component:UserProfileComponent,
                         canActivate: [AppRouteGuard] 
                     }
+
                 ]
+               
             }
         ])
     ],
