@@ -22,6 +22,7 @@ using Event_Planning_System.Roles.Dto;
 using Event_Planning_System.Users.Dto;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using PasswordGenerator;
 
 namespace Event_Planning_System.Users
 {
@@ -214,33 +215,25 @@ namespace Event_Planning_System.Users
 
         public async Task<bool> ResetPassword(ResetPasswordDto input)
         {
-            if (_abpSession.UserId == null)
+
+            var currentUser = await _userManager.FindByNameOrEmailAsync(input.UserEmail);
+
+            if (currentUser == null)
             {
-                throw new UserFriendlyException("Please log in before attempting to reset password.");
+                throw new Exception("There is no current user!");
             }
-            
-            var currentUser = await _userManager.GetUserByIdAsync(_abpSession.GetUserId());
-            var loginAsync = await _logInManager.LoginAsync(currentUser.UserName, input.AdminPassword, shouldLockout: false);
-            if (loginAsync.Result != AbpLoginResultType.Success)
-            {
-                throw new UserFriendlyException("Your 'Admin Password' did not match the one on record.  Please try again.");
-            }
-            
+
             if (currentUser.IsDeleted || !currentUser.IsActive)
             {
                 return false;
             }
-            
-            var roles = await _userManager.GetRolesAsync(currentUser);
-            if (!roles.Contains(StaticRoleNames.Tenants.Admin))
-            {
-                throw new UserFriendlyException("Only administrators may reset passwords.");
-            }
 
-            var user = await _userManager.GetUserByIdAsync(input.UserId);
-            if (user != null)
+            var pwd = new Password().IncludeLowercase().IncludeUppercase().IncludeSpecial();
+            var NewPassword = pwd.Next();
+
+            if (currentUser != null)
             {
-                user.Password = _passwordHasher.HashPassword(user, input.NewPassword);
+                currentUser.Password = _passwordHasher.HashPassword(currentUser, NewPassword);
                 await CurrentUnitOfWork.SaveChangesAsync();
             }
 

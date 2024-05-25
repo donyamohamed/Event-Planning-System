@@ -20,4 +20,7 @@
     <Folder Include="Notification\Dto\" />
     <Folder Include="ToDoCheckList\Dto\" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="PasswordGenerator" Version="2.1.0" />
+  </ItemGroup>
 </Project>

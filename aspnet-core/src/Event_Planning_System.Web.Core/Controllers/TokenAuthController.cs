@@ -14,6 +14,11 @@ using Event_Planning_System.Authorization;
 using Event_Planning_System.Authorization.Users;
 using Event_Planning_System.Models.TokenAuth;
 using Event_Planning_System.MultiTenancy;
+using Event_Planning_System.Users.Dto;
+using Microsoft.AspNetCore.Identity;
+using PasswordGenerator;
+using System.Net.Mail;
+using System.Net;
 
 namespace Event_Planning_System.Controllers
 {
@@ -24,13 +29,22 @@ namespace Event_Planning_System.Controllers
         private readonly ITenantCache _tenantCache;
         private readonly AbpLoginResultTypeHelper _abpLoginResultTypeHelper;
         private readonly TokenAuthConfiguration _configuration;
+        private readonly UserManager _userManager;
+        private readonly IPasswordHasher<User> _passwordHasher;
+
 
         public TokenAuthController(
             LogInManager logInManager,
             ITenantCache tenantCache,
+                        UserManager userManager,
+            IPasswordHasher<User> passwordHasher,
+
             AbpLoginResultTypeHelper abpLoginResultTypeHelper,
             TokenAuthConfiguration configuration)
         {
+            _userManager = userManager;
+            _passwordHasher = passwordHasher;
+
             _logInManager = logInManager;
             _tenantCache = tenantCache;
             _abpLoginResultTypeHelper = abpLoginResultTypeHelper;
@@ -66,6 +80,75 @@ namespace Event_Planning_System.Controllers
 
             return _tenantCache.GetOrNull(AbpSession.TenantId.Value)?.TenancyName;
         }
+
+        [HttpPost]
+        public async Task<bool> ResetPassword(ResetPasswordDto input)
+        {
+
+            var currentUser = await _userManager.FindByNameOrEmailAsync(input.UserEmail);
+
+            if (currentUser == null)
+            {
+                throw new Exception("There is no current user!");
+            }
+
+            if (currentUser.IsDeleted || !currentUser.IsActive)
+            {
+                return false;
+            }
+
+            var pwd = new Password().IncludeLowercase().IncludeUppercase().IncludeSpecial();
+            var NewPassword = pwd.Next();
+
+            if (currentUser != null)
+            {
+                await _userManager.ChangePasswordAsync(currentUser, NewPassword);
+                //currentUser.Password = _passwordHasher.HashPassword(currentUser, NewPassword);
+                //await CurrentUnitOfWork.SaveChangesAsync();
+                SendEmail(input.UserEmail, NewPassword);
+
+            }
+
+            return true;
+        }
+
+        private void SendEmail(string emailAddress, string newPassword)
+        {
+
+            string senderEmail = "opaaida@hotmail.com";
+            string senderPassword = "1234565432121-";
+
+            // Recipient's email address
+            string recipientEmail = emailAddress;
+
+            // SMTP server configuration for Hotmail (Outlook.com)
+            var smtpClient = new SmtpClient("smtp-mail.outlook.com")
+            {
+                Port = 587,
+                Credentials = new NetworkCredential(senderEmail, senderPassword),
+                EnableSsl = true,
+            };
+
+            // Creating and configuring the email message
+            var message = new MailMessage(senderEmail, recipientEmail)
+            {
+                Subject = "Test Email",
+                Body = newPassword,
+                IsBodyHtml = false // Change to true if your email body is HTML formatted
+            };
+
+            try
+            {
+                // Sending the email
+                smtpClient.Send(message);
+                Console.WriteLine("Email sent successfully!");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Failed to send email. Error: {ex.Message}");
+            }
+        }
+
 
         private async Task<AbpLoginResult<Tenant, User>> GetLoginResultAsync(string usernameOrEmailAddress, string password, string tenancyName)
         {
