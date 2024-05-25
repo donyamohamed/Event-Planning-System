@@ -14,6 +14,11 @@ export class AppRouteGuard  {
     ) { }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+
+        if (state.url.startsWith('/activate/')) {
+            return true;
+        }
+
         if (!this._sessionService.user) {
             this._router.navigate(['/account/login']);
             return false;

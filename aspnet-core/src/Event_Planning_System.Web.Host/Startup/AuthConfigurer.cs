@@ -48,7 +48,15 @@ namespace Event_Planning_System.Web.Host.Startup
                     {
                         OnMessageReceived = QueryStringTokenResolver
                     };
-                });
+                
+                })
+
+              .AddCookie()
+            .AddGoogle(options =>
+            {
+                options.ClientId = configuration["Authentication:Google:ClientId"];
+                options.ClientSecret = configuration["Authentication:Google:ClientSecret"];
+            });
             }
         }
 

@@ -8,7 +8,9 @@ import { UsersComponent } from './users/users.component';
 import { TenantsComponent } from './tenants/tenants.component';
 import { RolesComponent } from 'app/roles/roles.component';
 import { ChangePasswordComponent } from './users/change-password/change-password.component';
+
 import { UserProfileComponent } from './layout/user-profile/user-profile.component';
+
 
 
 @NgModule({
@@ -18,6 +20,7 @@ import { UserProfileComponent } from './layout/user-profile/user-profile.compone
                 path: '',
                 component: AppComponent,
                 children: [
+                
                     { path: 'home', component: HomeComponent,  canActivate: [AppRouteGuard] },
                     { path: 'users', component: UsersComponent, data: { permission: 'Pages.Users' }, canActivate: [AppRouteGuard] },
                     { path: 'roles', component: RolesComponent, data: { permission: 'Pages.Roles' }, canActivate: [AppRouteGuard] },
