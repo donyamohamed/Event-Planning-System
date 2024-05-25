@@ -18,7 +18,7 @@ export class CurrentUserDataService {
       map(response => response.result)
     );
   }
-  public UpdateUserData(user:CurrentUser){
+  public UpdateUserData(user:FormData){
   return this.http.put<CurrentUser>(this.UpdateUrl,user);
   }
 }

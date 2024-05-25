@@ -7,6 +7,7 @@ export class CurrentUser {
    public  emailAddress: string | undefined,
    public age: number | undefined,
    public genderUser: string | undefined,
-   public  image: string | undefined
+   public  image: string | undefined,
+   public  ImagePath :File|undefined,
   ) {}
 }
