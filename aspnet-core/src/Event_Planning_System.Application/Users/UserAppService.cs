@@ -20,6 +20,7 @@ using Event_Planning_System.Authorization.Roles;
 using Event_Planning_System.Authorization.Users;
 using Event_Planning_System.Roles.Dto;
 using Event_Planning_System.Users.Dto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -100,7 +101,8 @@ namespace Event_Planning_System.Users
             await _userManager.DeleteAsync(user);
         }
 
-        [AbpAuthorize(PermissionNames.Pages_Users_Activation)]
+        //[AbpAuthorize(PermissionNames.Pages_Users)]
+        [AllowAnonymous]
         public async Task Activate(EntityDto<long> user)
         {
             await Repository.UpdateAsync(user.Id, async (entity) =>
@@ -246,6 +248,41 @@ namespace Event_Planning_System.Users
 
             return true;
         }
+        [AbpAuthorize(PermissionNames.Pages_Users_Activation)]
+     
+
+        Task<string> IUserAppService.Activate(EntityDto<long> userDto)
+        {
+            var user = _userManager.GetUserById(userDto.Id);
+            if (user == null)
+            {
+                throw new EntityNotFoundException(typeof(User), userDto.Id);
+            }
+
+            // Activate the user
+            user.IsActive = true;
+
+            // Generate activation token
+            var activationToken = _userManager.GenerateEmailConfirmationTokenAsync(user);
+
+            // Save changes
+            CurrentUnitOfWork.SaveChanges();
+
+            return activationToken;
+        }
+        public async Task ActivateUserById(long userId)
+        {
+            var user = await GetEntityByIdAsync(userId);
+            if (user == null)
+            {
+                throw new EntityNotFoundException(typeof(User), userId);
+            }
+
+            await Activate(new EntityDto<long> { Id = userId });
+        }
+
+    
     }
 }
+
 

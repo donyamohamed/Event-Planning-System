@@ -12,7 +12,8 @@ namespace Event_Planning_System.UserProfile
 	{
 		[Required]
 		public string UserName { get; set; }
-		public string Email { get; set; }
+		[Required]
+		public string emailAddress { get; set; }
 		[Required]
 		public virtual int Age { get; set; }
 		[Required]

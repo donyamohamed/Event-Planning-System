@@ -1,6 +1,8 @@
 ﻿using System.Threading.Tasks;
 using Abp.Application.Services;
 using Event_Planning_System.Authorization.Accounts.Dto;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Event_Planning_System.Authorization.Accounts
 {
@@ -8,6 +10,7 @@ namespace Event_Planning_System.Authorization.Accounts
     {
         Task<IsTenantAvailableOutput> IsTenantAvailable(IsTenantAvailableInput input);
 
-        Task<RegisterOutput> Register(RegisterInput input);
+        //Task<RegisterOutput> Register(RegisterInput input);
+        Task<RegisterOutput> Register([FromForm] RegisterInput input);
     }
 }
