@@ -9,6 +9,7 @@ import { CurrentUser } from '@shared/Models/current-user';
 })
 export class CurrentUserDataService {
   private baseUrl = "https://localhost:44311/api/services/app/UserProfileAppServices/GetUserProfile";
+  private UpdateUrl="https://localhost:44311/api/services/app/UserProfileAppServices/UpdateUserProfileData";
 
   constructor(private http: HttpClient) {}
 
@@ -16,5 +17,8 @@ export class CurrentUserDataService {
     return this.http.get<{ result: CurrentUser }>(this.baseUrl).pipe(
       map(response => response.result)
     );
+  }
+  public UpdateUserData(user:CurrentUser){
+  return this.http.put<CurrentUser>(this.UpdateUrl,user);
   }
 }
