@@ -6,9 +6,16 @@ import { AppAuthService } from '@shared/auth/app-auth.service';
 
 @Component({
   templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css'],
   animations: [accountModuleAnimation()]
 })
 export class LoginComponent extends AppComponentBase {
+  passwordFieldType: string = 'password';
+
+  togglePasswordVisibility() {
+    this.passwordFieldType = this.passwordFieldType === 'password' ? 'text' : 'password';
+  }
+  
   submitting = false;
 
   constructor(

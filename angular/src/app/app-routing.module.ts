@@ -29,7 +29,7 @@ import { UserProfileComponent } from './layout/user-profile/user-profile.compone
                     { path: 'about', component: AboutComponent, canActivate: [AppRouteGuard] },
                     { path: 'update-password', component: ChangePasswordComponent, canActivate: [AppRouteGuard] },
 
-                    { path: 'create-event', component: CreateEventComponent }
+                    { path: 'create-event', component: CreateEventComponent },
 
                   
 
