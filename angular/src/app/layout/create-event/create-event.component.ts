@@ -19,21 +19,22 @@ export class CreateEventComponent implements OnInit {
   Enumerator = Enumerator;
   username: string; 
   budgetOptions: { id: number, amount: number, description: string }[] = [];
-  today: Date = new Date(); // Property to hold today's date
+  today: Date = new Date(); 
 
   constructor(private eventService: EventService, private http: HttpClient) { }
 
   ngOnInit(): void {
     this.getUserData();
     this.fetchBudgetOptions();
+    this.setDefaultValues();
   }
 
   getUserData(): void {
     this.http.get<any>('https://localhost:44311/api/services/app/User/Get?Id=1')
       .subscribe(response => {
         if (response && response.result && response.result.name) {
-          this.username = response.result.name; // Assigning username
-          this.eventData.userId = response.result.id; // Assigning userID
+          this.username = response.result.name; 
+          this.eventData.userId = response.result.id; 
         }
       });
   }
@@ -43,8 +44,15 @@ export class CreateEventComponent implements OnInit {
       .subscribe(response => {
         if (response && response.result && response.result.items) {
           this.budgetOptions = response.result.items;
+          this.setDefaultBudgetId();
         }
       });
+  }
+
+  setDefaultBudgetId(): void {
+    if (this.budgetOptions.length > 0) {
+      this.eventData.budgetId = this.budgetOptions[0].id;
+    }
   }
 
   createEvent(): void {
@@ -59,18 +67,12 @@ export class CreateEventComponent implements OnInit {
     if (file) {
       this.eventData.eventImg = file.name; 
     }
-  
   }
+
   setDefaultValues(): void {
-    // Set default value for isPublic
     this.eventData.isPublic = true;
-    // Set default value for category
     if (this.enumeratorKeys.length > 0) {
       this.eventData.category = this.enumeratorKeys[0];
     }
-    // Set default value for budgetId
-    if (this.budgetOptions.length > 0) {
-      this.eventData.budgetId = this.budgetOptions[0].amount;
-    }
-}
+  }
 }
