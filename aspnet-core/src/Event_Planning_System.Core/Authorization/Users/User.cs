@@ -28,7 +28,9 @@ namespace Event_Planning_System.Authorization.Users
         public virtual Gender GenderUser { get; set; }
 
         [RegularExpression(@"^.+\.(png|jpg|jpeg)$", ErrorMessage = "Image must be in PNG, JPG, or JPEG format.")]
-        public virtual string ImageName { get; set; }
+        public virtual string Image { get; set; }
+
+
         public virtual ICollection<Notification> Notifications { get; set; } = new List<Notification>();
         public virtual ICollection<Event> Events { get; set; } = new List<Event>();
         public virtual ICollection<Guest> Guests { get; set; } = new List<Guest>();

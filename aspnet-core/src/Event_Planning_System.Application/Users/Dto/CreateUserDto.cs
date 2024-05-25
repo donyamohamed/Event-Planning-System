@@ -39,7 +39,7 @@ namespace Event_Planning_System.Users.Dto
 
         public Gender Gender { get; set; }
 
-        public string Img { get; set; }
+        public string Image { get; set; }
 
 
 
