@@ -1,4 +1,5 @@
-﻿using Abp.Domain.Entities.Auditing;
+﻿using Abp.Domain.Entities;
+using Abp.Domain.Entities.Auditing;
 using Event_Planning_System.Authorization.Users;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
@@ -26,8 +27,9 @@ public enum EventCategory
 
 namespace Event_Planning_System.Enitities
 {
-    public class Event
+    public class Event:IEntity<int>
     {
+	
 		public int Id { get; set; }
 		[Required(ErrorMessage = "Event name is required.")]
 		[StringLength(100, ErrorMessage = "Event name can't be longer than 100 characters.")]
@@ -70,6 +72,9 @@ namespace Event_Planning_System.Enitities
 		public virtual ICollection<Guest> Guests { get; set; } = new List<Guest>();
 		public virtual ICollection<ToDoCheckList> ToDoCheckLists { get; set; } = new List<ToDoCheckList>();
 
-
-	}
+        public bool IsTransient()
+        {
+            throw new NotImplementedException();
+        }
+    }
 }
