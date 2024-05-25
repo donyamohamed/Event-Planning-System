@@ -13,6 +13,7 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Event_Planning_System.Core\Event_Planning_System.Core.csproj" />
+    <ProjectReference Include="..\Event_Planning_System.EntityFrameworkCore\Event_Planning_System.EntityFrameworkCore.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Authorization\Accounts\UploadedImages\" />

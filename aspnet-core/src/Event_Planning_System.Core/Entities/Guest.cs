@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Event_Planning_System.Enitities
 {
-    public class Guest : IEntity<long>
+    public class Guest : IEntity<int>
     {
 		public int Id { get; set; }	
 		[Required(ErrorMessage = "Name is required.")]
@@ -30,7 +30,6 @@ namespace Event_Planning_System.Enitities
 
 		public virtual ICollection<Event> Events { get; set; } = new List<Event>();
 		public virtual ICollection<User> Users { get; set; } = new List<User>();
-        long IEntity<long>.Id { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public bool IsTransient()
         {

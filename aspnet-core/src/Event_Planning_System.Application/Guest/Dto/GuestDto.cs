@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace Event_Planning_System.Guest.Dto
 {
     [AutoMapFrom(typeof(Enitities.Guest))]
-    public class GuestDto :EntityDto<long>
+    public class GuestDto : IEntityDto<int>
     {
         public int Id { get; set; }
         [Required(ErrorMessage = "Name is required.")]
@@ -28,6 +28,5 @@ namespace Event_Planning_System.Guest.Dto
         [Required(ErrorMessage = "Phone is required.")]
         [RegularExpression(@"^[0-9]{10}$", ErrorMessage = "Phone must be a 10-digit number.")]
         public string Phone { get; set; }
-
     }
 }

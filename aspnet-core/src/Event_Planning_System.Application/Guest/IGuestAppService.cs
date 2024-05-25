@@ -9,12 +9,6 @@ using System.Threading.Tasks;
 
 namespace Event_Planning_System.Guest
 {
-    public interface IGuestAppService : IApplicationService //IAsyncCrudAppService<GuestDto, long> //IApplicationService
-    {
-        Task<List<GuestDto>> GetAllAsync();
-        Task<GuestDto> GetByIdAsync(int id);
-        Task<GuestDto> Update(int id, Enitities.Guest guest);
-        Task<GuestDto> Delete(int id);
-        Task<GuestDto> CreateGuest(Enitities.Guest guest);
-    }
+    public interface IGuestAppService : IAsyncCrudAppService<GuestDto, int>
+    {}
 }

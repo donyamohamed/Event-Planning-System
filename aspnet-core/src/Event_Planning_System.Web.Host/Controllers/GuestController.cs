@@ -19,31 +19,7 @@ namespace Event_Planning_System.Controllers
         {
             this._guestAppService = _guestAppService;
         }
-        [HttpGet]
-        public async Task<List<GuestDto>> GetAll()
-        {
-            return await _guestAppService.GetAllAsync();
-        }
-        [HttpGet]
-        public async Task<GuestDto> GetGuestById(int id)
-        {
-            return await _guestAppService.GetByIdAsync(id);
-        }
-        [HttpPost]
-        public async Task<GuestDto> Create(Enitities.Guest guest)
-        {
-            return await _guestAppService.CreateGuest(guest);
-        }
-        [HttpPut]
-        public async Task<GuestDto> Update(int id, Enitities.Guest guest)
-        {
-            return await _guestAppService.Update(id, guest);    
-        }
-        [HttpDelete]
-        public async Task<GuestDto> Delete(int id)
-        {
-            return await _guestAppService.Delete(id);
-        }
+       
 
     }
 }
