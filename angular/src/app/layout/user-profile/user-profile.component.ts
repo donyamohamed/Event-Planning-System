@@ -17,7 +17,7 @@ import { BrowserModule } from '@angular/platform-browser';
   styleUrls: ['./user-profile.component.css']
 })
 export class UserProfileComponent implements OnInit {
-
+ 
   user: CurrentUser | null = null;
   bsModalRef!: BsModalRef;
 
@@ -39,7 +39,8 @@ export class UserProfileComponent implements OnInit {
   }
 
   getUserImage(): string {
-    return this.user?.imageName ? `assets/img/${this.user.imageName}` : 'assets/img/user.png';
+    console.log(this.user.image);
+    return this.user?.image ? `https://localhost:44311/${this.user.image}` : 'assets/img/user.jpg';
   }
 
   openModal(template: any): void {

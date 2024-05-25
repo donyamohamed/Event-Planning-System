@@ -6,7 +6,7 @@
         <div class="card user-card-full shadow-lg">
           <div class="row no-gutters">
             <div class="col-md-4 user-profile text-center d-flex flex-column align-items-center justify-content-center">
-              <img src="assets/img/user.jpg" alt="User-Profile-Image" class="img-fluid rounded-circle">
+              <img [src]="getUserImage()" alt="User-Profile-Image" class="img-fluid rounded-circle">
               <h5>{{ user?.userName  }}</h5>
               <p>Planner</p>
               <button class="btn btn-outline-light btn-sm mt-2" id="modalShow" (click)="openModal(modalTemplate)"><i
@@ -109,7 +109,7 @@
       </div>
       <div class="form-group">
         <label for="imageName">Image:</label>
-        <input type="text" class="form-control" id="imageName" name="imageName" [(ngModel)]="user.imageName" required>
+        <input type="text" class="form-control" id="imageName" name="imageName" [(ngModel)]="user.image" readonly>
       </div>
       <button type="submit" [disabled]="createForm.invalid"  class="btn btn-primary">Submit</button>
     </form>
