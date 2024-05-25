@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Event_Planning_System.Guest
+namespace Event_Planning_System.BudgetExpense.Dto.Mapping
 {
-    internal class IGuestService
+    internal class BudgetExpenseMappingProfile
     {
     }
 }

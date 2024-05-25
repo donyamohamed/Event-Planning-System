@@ -61,12 +61,12 @@ namespace Event_Planning_System.Authorization.Users
                 Name = name,
                 Surname = surname,
                 EmailAddress = emailAddress,
-                IsActive = true,
+                IsActive = false,
                 UserName = userName,
                 IsEmailConfirmed = isEmailConfirmed,
                 Age=age,
                 GenderUser=gender,
-                ImageName=img,
+                Image=img,
                 Roles = new List<UserRole>()
             };
 

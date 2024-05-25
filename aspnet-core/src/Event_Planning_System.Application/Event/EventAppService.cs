@@ -1,12 +1,28 @@
-﻿using System;
+﻿using Abp.Application.Services;
+using Abp.Domain.Repositories;
+using AutoMapper;
+using Event_Planning_System.Event.Dto;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Event_Planning_System.Event
 {
-    internal class EventAppService
+    public class EventAppService : AsyncCrudAppService<Enitities.Event, EventDto, int>, IEventAppService
     {
+        private readonly IRepository<Enitities.Event, int> _repository;
+        private readonly IMapper _mapper;
+
+        public EventAppService(IRepository<Enitities.Event, int> repository, IMapper mapper) : base(repository)
+        {
+            _repository = repository;
+            _mapper = mapper;
+        }
+
+        public async Task<List<EventDto>> GetUserEventsAsync(long userId)
+        {
+            var events = await _repository.GetAllListAsync(e => e.UserId == userId);
+            return _mapper.Map<List<EventDto>>(events);
+        }
     }
 }

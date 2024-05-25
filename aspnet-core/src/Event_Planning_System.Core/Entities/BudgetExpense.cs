@@ -1,4 +1,5 @@
-﻿using Abp.Domain.Entities.Auditing;
+﻿using Abp.Domain.Entities;
+using Abp.Domain.Entities.Auditing;
 using Event_Planning_System.Authorization.Users;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Event_Planning_System.Enitities
 {
-    public class BudgetExpense 
+    public class BudgetExpense : IEntity<int>
 	{
 		public int Id { get; set; }
 		[Range(0, int.MaxValue, ErrorMessage = "Amount must be a non-negative integer.")]
@@ -27,5 +28,10 @@ namespace Event_Planning_System.Enitities
 		public long UserId { get; set; }
 		[ForeignKey("UserId")]
 		public virtual User User { get; set; }
+
+        public bool IsTransient()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

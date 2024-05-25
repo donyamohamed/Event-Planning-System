@@ -3,5 +3,7 @@
     public class RegisterOutput
     {
         public bool CanLogin { get; set; }
+
+        public string ProfileImage { get; set; }
     }
 }

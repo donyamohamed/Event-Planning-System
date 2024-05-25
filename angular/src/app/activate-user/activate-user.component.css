@@ -1,0 +1,32 @@
+body.login-page {
+  background-color: white !important;
+}
+
+.activate-account {
+  max-width: 400px;
+  margin: 100px auto;
+  text-align: center;
+}
+
+.activate-account h2 {
+  color: #333;
+}
+
+.activate-account p {
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.activate-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.activate-button:hover {
+  background-color: #0056b3;
+}
