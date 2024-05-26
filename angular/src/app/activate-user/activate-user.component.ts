@@ -20,7 +20,7 @@ export class ActivateUserComponent implements OnInit {
   ngOnInit(): void {
 
     this.renderer.removeClass(document.body, 'login-page');
-    this.activateAccount();
+  
   }
 
   activateAccount(): void {
