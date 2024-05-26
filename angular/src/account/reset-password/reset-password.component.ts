@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { ResetpasswordService } from '../../shared/Services/resetpassword.service';
 import { Router} from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { Email } from '@shared/Models/Email';
 import { Subject } from 'rxjs';
 
 @Component({
