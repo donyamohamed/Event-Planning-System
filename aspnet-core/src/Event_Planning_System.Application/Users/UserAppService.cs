@@ -214,40 +214,40 @@ namespace Event_Planning_System.Users
             return true;
         }
 
-        public async Task<bool> ResetPassword(ResetPasswordDto input)
-        {
-            if (_abpSession.UserId == null)
-            {
-                throw new UserFriendlyException("Please log in before attempting to reset password.");
-            }
+        //public async Task<bool> ResetPassword(ResetPasswordDto input)
+        //{
+        //    if (_abpSession.UserId == null)
+        //    {
+        //        throw new UserFriendlyException("Please log in before attempting to reset password.");
+        //    }
             
-            var currentUser = await _userManager.GetUserByIdAsync(_abpSession.GetUserId());
-            var loginAsync = await _logInManager.LoginAsync(currentUser.UserName, input.AdminPassword, shouldLockout: false);
-            if (loginAsync.Result != AbpLoginResultType.Success)
-            {
-                throw new UserFriendlyException("Your 'Admin Password' did not match the one on record.  Please try again.");
-            }
+        //    var currentUser = await _userManager.GetUserByIdAsync(_abpSession.GetUserId());
+        //    var loginAsync = await _logInManager.LoginAsync(currentUser.UserName, input.AdminPassword, shouldLockout: false);
+        //    if (loginAsync.Result != AbpLoginResultType.Success)
+        //    {
+        //        throw new UserFriendlyException("Your 'Admin Password' did not match the one on record.  Please try again.");
+        //    }
             
-            if (currentUser.IsDeleted || !currentUser.IsActive)
-            {
-                return false;
-            }
+        //    if (currentUser.IsDeleted || !currentUser.IsActive)
+        //    {
+        //        return false;
+        //    }
             
-            var roles = await _userManager.GetRolesAsync(currentUser);
-            if (!roles.Contains(StaticRoleNames.Tenants.Admin))
-            {
-                throw new UserFriendlyException("Only administrators may reset passwords.");
-            }
+        //    var roles = await _userManager.GetRolesAsync(currentUser);
+        //    if (!roles.Contains(StaticRoleNames.Tenants.Admin))
+        //    {
+        //        throw new UserFriendlyException("Only administrators may reset passwords.");
+        //    }
 
-            var user = await _userManager.GetUserByIdAsync(input.UserId);
-            if (user != null)
-            {
-                user.Password = _passwordHasher.HashPassword(user, input.NewPassword);
-                await CurrentUnitOfWork.SaveChangesAsync();
-            }
+        //    var user = await _userManager.GetUserByIdAsync(input.UserId);
+        //    if (user != null)
+        //    {
+        //        user.Password = _passwordHasher.HashPassword(user, input.NewPassword);
+        //        await CurrentUnitOfWork.SaveChangesAsync();
+        //    }
 
-            return true;
-        }
+        //    return true;
+        //}
         [AbpAuthorize(PermissionNames.Pages_Users_Activation)]
      
 
