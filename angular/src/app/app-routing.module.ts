@@ -1,3 +1,8 @@
+import { CreateGuestComponent } from './guest/create-guest/create-guest.component';
+import { GetByIdGuestComponent } from './guest/get-by-id-guest/get-by-id-guest.component';
+import { DeleteGuestComponent } from './guest/delete-guest/delete-guest.component';
+import { UpdateGuestComponent } from './guest/update-guest/update-guest.component';
+import { AllGuestComponent } from './guest/all-guest/all-guest.component';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
@@ -29,7 +34,8 @@ import { UserProfileComponent } from './layout/user-profile/user-profile.compone
                     { path: 'about', component: AboutComponent, canActivate: [AppRouteGuard] },
                     { path: 'update-password', component: ChangePasswordComponent, canActivate: [AppRouteGuard] },
 
-                    { path: 'create-event', component: CreateEventComponent }
+                    { path: 'create-event', component: CreateEventComponent },
+                    
 
                   
 
@@ -41,7 +47,14 @@ import { UserProfileComponent } from './layout/user-profile/user-profile.compone
 
                 ]
                
-            }
+            },
+            {path:'addNewGuest', component: CreateGuestComponent},
+            { path: 'allGuests', component: AllGuestComponent, children:[
+                { path: 'edit', component: UpdateGuestComponent },
+                { path: 'delete', component: DeleteGuestComponent },
+                { path: 'showMore', component: GetByIdGuestComponent }
+            ]}
+            
         ])
     ],
     exports: [RouterModule]

@@ -1,0 +1,32 @@
+<div class="table-responsive text-center ">
+    <table class="table table-hover table-striped table-borderless align-middle">
+        <thead class="table-light">
+          
+            <tr class="text-capitalize">
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>invitationState</th>
+                <th>phone</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody class="table-group-divider">
+            <tr class="table-secondary" *ngFor="let item of guests">
+                <td scope="row">{{item.id}}</td>
+                <td>{{item.name}}</td>
+                <td>{{item.email}}</td>
+                <td>{{item.invitationState}}</td>
+                <td>{{item.phone}}</td>
+                <td class="d-flex justify-content-evenly">
+                    <a class="btn" routerLink="showMore?id={{item.id}}"><i class="fa-solid fa-eye text-secondary"></i></a>
+                    <a class="btn" routerLink="edit?id={{item.id}}"><i class="fa-solid fa-pen-to-square text-success"></i></a>
+                    <a onclick="return confirm('Are you sure you want to delete this guest?')" class="btn" routerLink="delete?id={{item.id}}"><i class="fa-solid fa-trash-can text-danger" aria-hidden="true"></i></a>
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<router-outlet></router-outlet>
