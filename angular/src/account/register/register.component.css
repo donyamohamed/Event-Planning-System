@@ -114,6 +114,24 @@ select {
   top: 100px;
   color: white;
 }
+.gender-container {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+  margin: 0px;
+  padding: 0px;
+}
+.form-check {
+  display: flex;
+  align-items: center;
+}
+.form-check input {
+  margin-right: 40px;
+}
+.form-check label {
+  margin: auto;
+  padding: auto;
+}
 
 .context h1 {
   text-align: center;
