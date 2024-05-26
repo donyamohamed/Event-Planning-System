@@ -26,7 +26,7 @@ namespace Event_Planning_System.Controllers
 			return await userProfileAppService.GetUserProfile();
 		}
 		[HttpPost]
-		public async Task UpdateUserProfileData([FromBody] UpdateUserProfileDTO userProfileDTO)
+		public async Task UpdateUserProfileData([FromForm] UpdateUserProfileDTO userProfileDTO)
 		{
 			await userProfileAppService.UpdateUserProfileData(userProfileDTO);
 		}

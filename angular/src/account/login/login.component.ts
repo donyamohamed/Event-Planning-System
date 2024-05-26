@@ -3,18 +3,27 @@ import { AbpSessionService } from 'abp-ng2-module';
 import { AppComponentBase } from '@shared/app-component-base';
 import { accountModuleAnimation } from '@shared/animations/routerTransition';
 import { AppAuthService } from '@shared/auth/app-auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css'],
   animations: [accountModuleAnimation()]
 })
 export class LoginComponent extends AppComponentBase {
+  passwordFieldType: string = 'password';
+
+  togglePasswordVisibility() {
+    this.passwordFieldType = this.passwordFieldType === 'password' ? 'text' : 'password';
+  }
+  
   submitting = false;
 
   constructor(
     injector: Injector,
     public authService: AppAuthService,
-    private _sessionService: AbpSessionService
+    private _sessionService: AbpSessionService,
+    public router :Router
   ) {
     super(injector);
   }
