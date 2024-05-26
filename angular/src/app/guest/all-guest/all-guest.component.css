@@ -1,3 +1,13 @@
-.tableDiv{
-    width: 300px;
-}
+
+.card {
+    border: none;
+    border-radius: 1rem;
+  }
+  
+  .tableDiv {
+    border-top-left-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+    /* background: linear-gradient(135deg, #050694 10%, #FBAF1B 100%); */
+    color: #fff;
+  }
+  

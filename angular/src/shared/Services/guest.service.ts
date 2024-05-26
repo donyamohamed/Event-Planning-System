@@ -19,7 +19,7 @@ export class GuestService {
     "https://localhost:44311/api/services/app/Guest/Delete";
   private baseUrlForUpdate =
     "https://localhost:44311/api/services/app/Guest/Update";
-  private queryString = "?Id=";
+ 
   
   constructor(private httpClient: HttpClient) {}
   public getAllGuest(): Observable<GuestResponse> {

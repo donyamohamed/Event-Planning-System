@@ -35,33 +35,26 @@ import {UserEventComponent} from './layout/user-event/user-event.component';
                     { path: 'tenants', component: TenantsComponent, data: { permission: 'Pages.Tenants' }, canActivate: [AppRouteGuard] },
                     { path: 'about', component: AboutComponent, canActivate: [AppRouteGuard] },
                     { path: 'update-password', component: ChangePasswordComponent, canActivate: [AppRouteGuard] },
-
-
                     { path: 'create-event', component: CreateEventComponent },
                     
 
                     {path:'user-event', component:UserEventComponent},
 
-                  
-
-
-                
                     {
                         path:"Profile",
                         component:UserProfileComponent,
                         canActivate: [AppRouteGuard] 
-                    }
-
-
-                ]
-               
-            },
-            {path:'addNewGuest', component: CreateGuestComponent},
-            { path: 'allGuests', component: AllGuestComponent, children:[
+                    },
+                    {path:'addNewGuest', component: CreateGuestComponent},
+                { path: 'allGuests', component: AllGuestComponent, children:[
                 { path: 'edit/:id', component: UpdateGuestComponent },
                 { path: 'delete/:id', component: DeleteGuestComponent },
                 { path: 'showMore/:id', component: GetByIdGuestComponent }
             ]}
+            
+                ]
+               
+            }
             
         ])
     ],
