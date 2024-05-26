@@ -40,8 +40,10 @@
             </div>
             <abp-validation-summary [control]="passwordModel" [controlEl]="passwordEl"></abp-validation-summary>
           </div>
+          <a href="account/resetPassword">Forget Password</a>
+          <br>
 
-<br>
+        <br>
           <div class="form-group row">
             <div class="col-md-8">
               <div class="custom-control custom-checkbox">
@@ -53,12 +55,17 @@
               </div>
             </div>
           <br>
+
             <div class="col-md-4">
               <button type="submit" style="background-color: #FBaF1B; border-color: #FBaF1B; font-family: 'MyCustomFont';" class="btn btn-primary btn-block" [disabled]="!loginForm.form.valid || submitting">
                 {{ "LogIn" | localize }}
               </button>
             </div>
           </div>
+
+        
+
+
 
         </form>
 
