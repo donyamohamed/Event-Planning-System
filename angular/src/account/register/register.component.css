@@ -78,7 +78,8 @@ body.hold-transition {
 div.input-group {
   margin: 10px 0px;
 }
-input.form-control {
+input.form-control,
+select {
   background-color: white;
   border-color: aliceblue;
   border-width: 2px;
@@ -87,7 +88,7 @@ input.form-control {
 }
 .submit-btn.btn.btn-primary {
   margin: 20px 0px;
-  background-color: #007bff;
+  background-color: #fbaf1b;
   padding: 10px;
   border-radius: 10px;
   color: white;
@@ -113,6 +114,24 @@ input.form-control {
   top: 100px;
   color: white;
 }
+.gender-container {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+  margin: 0px;
+  padding: 0px;
+}
+.form-check {
+  display: flex;
+  align-items: center;
+}
+.form-check input {
+  margin-right: 40px;
+}
+.form-check label {
+  margin: auto;
+  padding: auto;
+}
 
 .context h1 {
   text-align: center;
@@ -125,7 +144,7 @@ input.form-control {
   line-height: 34px;
 }
 .area {
-  background: #4e54c8;
+  background: #050794;
   background: -webkit-linear-gradient(to left, #8f94fb, #4e54c8);
   width: 100%;
   height: 100vh;
