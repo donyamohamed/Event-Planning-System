@@ -39,6 +39,8 @@ import { SidebarLogoComponent } from './layout/sidebar-logo.component';
 import { SidebarUserPanelComponent } from './layout/sidebar-user-panel.component';
 import { SidebarMenuComponent } from './layout/sidebar-menu.component';
 import { BrowserModule } from '@angular/platform-browser';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CreateGuestModelComponent } from './guest/create-guest-model/create-guest-model.component';
 
 
 @NgModule({
@@ -46,6 +48,7 @@ import { BrowserModule } from '@angular/platform-browser';
         AppComponent,
         HomeComponent,
         AboutComponent,
+        CreateGuestModelComponent,
         // tenants
         TenantsComponent,
         CreateTenantDialogComponent,
@@ -87,7 +90,9 @@ import { BrowserModule } from '@angular/platform-browser';
         SharedModule,
         NgxPaginationModule,
         HttpClientModule,
+        NgbModule
     ],
-    providers: []
+    providers: [],
+    bootstrap: [AppComponent]
 })
 export class AppModule {}
