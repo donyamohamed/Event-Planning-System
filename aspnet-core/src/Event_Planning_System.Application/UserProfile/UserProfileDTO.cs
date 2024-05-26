@@ -34,6 +34,6 @@ namespace Event_Planning_System.UserProfile
 		public virtual Gender GenderUser { get; set; }
 
 		[RegularExpression(@"^.+\.(png|jpg|jpeg)$", ErrorMessage = "Image must be in PNG, JPG, or JPEG format.")]
-		public virtual string ImageName { get; set; }
+		public virtual string Image { get; set; }
 	}
 }

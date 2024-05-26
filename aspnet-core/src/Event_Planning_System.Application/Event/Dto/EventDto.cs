@@ -59,7 +59,9 @@ namespace Event_Planning_System.Event.Dto
 
         [RegularExpression(@"^.+\.(png|jpg|jpeg)$", ErrorMessage = "Image must be in PNG, JPG, or JPEG format.")]
         public string EventImg { get; set; }
-        public EventCategory Category { get; set; }
+
+        public string Category { get; set; }
+
 
         public long UserId { get; set; }
      
