@@ -11,12 +11,24 @@ using Abp.Runtime.Session;
 using Abp.UI;
 using Event_Planning_System.Authorization.Roles;
 using Event_Planning_System.MultiTenancy;
+using Event_Planning_System.Enitities;
+using System.ComponentModel.DataAnnotations;
 
 namespace Event_Planning_System.Authorization.Users
 {
+    public enum Gender
+    {
+        Female,
+        Male
+    }
     public class UserRegistrationManager : DomainService
     {
         public IAbpSession AbpSession { get; set; }
+
+
+     
+
+
 
         private readonly TenantManager _tenantManager;
         private readonly UserManager _userManager;
@@ -37,32 +49,36 @@ namespace Event_Planning_System.Authorization.Users
             AbpSession = NullAbpSession.Instance;
         }
 
-        public async Task<User> RegisterAsync(string name, string surname, string emailAddress, string userName, string plainPassword, bool isEmailConfirmed)
+        public async Task<User> RegisterAsync(string name, string surname, string emailAddress, string userName, string plainPassword, int age, Gender gender, string img, bool isEmailConfirmed)
         {
-            CheckForTenant();
+            //CheckForTenant();
 
-            var tenant = await GetActiveTenantAsync();
+       //var tenant = await GetActiveTenantAsync();
 
             var user = new User
             {
-                TenantId = tenant.Id,
+                //TenantId = tenant.Id,
                 Name = name,
                 Surname = surname,
                 EmailAddress = emailAddress,
-                IsActive = true,
+                IsActive = false,
                 UserName = userName,
                 IsEmailConfirmed = isEmailConfirmed,
+                Age=age,
+                GenderUser=gender,
+                Image=img,
                 Roles = new List<UserRole>()
             };
 
             user.SetNormalizedNames();
-           
+            //var defaultRole = await _roleManager.GetRoleByNameAsync("User");
             foreach (var defaultRole in await _roleManager.Roles.Where(r => r.IsDefault).ToListAsync())
             {
-                user.Roles.Add(new UserRole(tenant.Id, user.Id, defaultRole.Id));
+                user.Roles.Add(new UserRole(null, user.Id, defaultRole.Id));
             }
+      
 
-            await _userManager.InitializeOptionsAsync(tenant.Id);
+            await _userManager.InitializeOptionsAsync(null);
 
             CheckErrors(await _userManager.CreateAsync(user, plainPassword));
             await CurrentUnitOfWork.SaveChangesAsync();

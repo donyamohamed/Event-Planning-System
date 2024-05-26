@@ -1,22 +1,36 @@
+﻿using System;
+using System.IO;
 using System.Threading.Tasks;
+using Abp.Authorization;
 using Abp.Configuration;
 using Abp.Zero.Configuration;
 using Event_Planning_System.Authorization.Accounts.Dto;
 using Event_Planning_System.Authorization.Users;
+using Event_Planning_System.Email;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Event_Planning_System.Authorization.Accounts
 {
     public class AccountAppService : Event_Planning_SystemAppServiceBase, IAccountAppService
     {
-        // from: http://regexlib.com/REDetails.aspx?regexp_id=1923
-        public const string PasswordRegex = "(?=^.{8,}$)(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\\s)[0-9a-zA-Z!@#$%^&*()]*$";
-
         private readonly UserRegistrationManager _userRegistrationManager;
+        private readonly IEmailService _emailService;
+        private readonly UserManager _userManager;
+        private readonly IWebHostEnvironment _hostingEnvironment;
 
         public AccountAppService(
-            UserRegistrationManager userRegistrationManager)
+            UserRegistrationManager userRegistrationManager,
+            UserManager userManager,
+            IEmailService emailService,
+            IWebHostEnvironment hostingEnvironment)
         {
             _userRegistrationManager = userRegistrationManager;
+            _emailService = emailService;
+            _userManager = userManager;
+            _hostingEnvironment = hostingEnvironment;
         }
 
         public async Task<IsTenantAvailableOutput> IsTenantAvailable(IsTenantAvailableInput input)
@@ -35,23 +49,68 @@ namespace Event_Planning_System.Authorization.Accounts
             return new IsTenantAvailableOutput(TenantAvailabilityState.Available, tenant.Id);
         }
 
-        public async Task<RegisterOutput> Register(RegisterInput input)
+        [AbpAllowAnonymous]
+        public async Task<RegisterOutput> Register([FromForm] RegisterInput input)
         {
-            var user = await _userRegistrationManager.RegisterAsync(
-                input.Name,
-                input.Surname,
-                input.EmailAddress,
-                input.UserName,
-                input.Password,
-                true // Assumed email address is always confirmed. Change this if you want to implement email confirmation.
-            );
+            string imagePath = null;
 
-            var isEmailConfirmationRequiredForLogin = await SettingManager.GetSettingValueAsync<bool>(AbpZeroSettingNames.UserManagement.IsEmailConfirmationRequiredForLogin);
-
-            return new RegisterOutput
+            try
             {
-                CanLogin = user.IsActive && (user.IsEmailConfirmed || !isEmailConfirmationRequiredForLogin)
-            };
+                if (input.ImageFile != null && input.ImageFile.Length > 0)
+                {
+                    string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "ProfileImages");
+                    string uniqueFileName = Guid.NewGuid().ToString() + "_" + input.ImageFile.FileName;
+                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await input.ImageFile.CopyToAsync(fileStream);
+                    }
+
+                    imagePath = "/ProfileImages/" + uniqueFileName;
+                }
+
+                var user = await _userRegistrationManager.RegisterAsync(
+                    input.Name,
+                    input.Surname,
+                    input.EmailAddress,
+                    input.UserName,
+                    input.Password,
+                    input.Age,
+                    input.Gender,
+                    imagePath,
+                    false
+                );
+
+                await SendRegistrationConfirmationEmail(user);
+
+                var isEmailConfirmationRequiredForLogin = await SettingManager.GetSettingValueAsync<bool>(AbpZeroSettingNames.UserManagement.IsEmailConfirmationRequiredForLogin);
+                var output = new RegisterOutput
+                {
+                    CanLogin = user.IsActive && (user.IsEmailConfirmed || !isEmailConfirmationRequiredForLogin),
+                    ProfileImage = imagePath
+                    
+                };
+
+                return output;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        //public Task<RegisterOutput> Register(RegisterInput input)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        private async Task SendRegistrationConfirmationEmail(User user)
+        {
+            var activationLink = $"http://localhost:4200/account/activate/{user.Id}";
+            var emailBodyTemplate = $"Thank you for registering! Click <a href='{activationLink}'>here</a> to activate your account.";
+
+            await _emailService.SendEmailAsync(user.EmailAddress, "Registration Confirmation", emailBodyTemplate);
         }
     }
 }

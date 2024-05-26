@@ -25,7 +25,18 @@ namespace Event_Planning_System.Users.Dto
         [Required]
         [EmailAddress]
         [StringLength(AbpUserBase.MaxEmailAddressLength)]
-        public string EmailAddress { get; set; }
+		public string EmailAddress { get; set; }
+		[Required(ErrorMessage = "Age is required.")]
+		[Range(16, 70, ErrorMessage = "Age must be between 16 and 70.")]
+		public virtual int Age { get; set; }
+
+
+		[Required(ErrorMessage = "Gender is required.")]
+		[RegularExpression("^(male|female)$", ErrorMessage = "Gender must be either 'male' or 'female'.")]
+		public virtual Gender GenderUser { get; set; }
+
+		[RegularExpression(@"^.+\.(png|jpg|jpeg)$", ErrorMessage = "Image must be in PNG, JPG, or JPEG format.")]
+		public virtual string Image { get; set; }
 
         public bool IsActive { get; set; }
 

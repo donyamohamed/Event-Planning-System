@@ -35,6 +35,15 @@ namespace Event_Planning_System.Users.Dto
         [StringLength(AbpUserBase.MaxPlainPasswordLength)]
         [DisableAuditing]
         public string Password { get; set; }
+        public int Age { get; set; }
+
+        public Gender Gender { get; set; }
+
+        public string Image { get; set; }
+
+
+
+
 
         public void Normalize()
         {

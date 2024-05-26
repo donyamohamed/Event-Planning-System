@@ -118,6 +118,35 @@ export class AccountServiceProxy {
         }));
     }
 
+    registerFromForm(formData: FormData): Observable<RegisterOutput> {
+        let url_ = this.baseUrl + "/api/services/app/Account/Register";
+        url_ = url_.replace(/[?&]$/, "");
+       
+        let options_: any = {
+          body: formData,
+          observe: "response",
+          headers: new HttpHeaders({
+            // 'Content-Type': 'multipart/form-data',
+            "Accept": "application/json"
+          })
+        };
+        
+    
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processRegister(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processRegister(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<RegisterOutput>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<RegisterOutput>;
+        }));
+      }
+    
+      
     protected processRegister(response: HttpResponseBase): Observable<RegisterOutput> {
         const status = response.status;
         const responseBlob =
@@ -2642,6 +2671,10 @@ export class RegisterInput implements IRegisterInput {
     emailAddress: string;
     password: string;
     captchaResponse: string | undefined;
+    age:number;
+   gender:boolean;
+    image:string;
+    imageFile: File | null; 
 
     constructor(data?: IRegisterInput) {
         if (data) {
@@ -2658,8 +2691,15 @@ export class RegisterInput implements IRegisterInput {
             this.surname = _data["surname"];
             this.userName = _data["userName"];
             this.emailAddress = _data["emailAddress"];
+            this.age=_data["age"]
+            this.gender=_data["gender"]
+            this.image=_data["image"]
             this.password = _data["password"];
             this.captchaResponse = _data["captchaResponse"];
+            this.imageFile=_data["imageFile"]
+     
+
+            
         }
     }
 
@@ -2676,6 +2716,10 @@ export class RegisterInput implements IRegisterInput {
         data["surname"] = this.surname;
         data["userName"] = this.userName;
         data["emailAddress"] = this.emailAddress;
+        data["age"]=this.age;
+        data["gender"]=this.gender
+        data["image"]=this.image
+        data["imageFile"]=this.imageFile
         data["password"] = this.password;
         data["captchaResponse"] = this.captchaResponse;
         return data;
@@ -2696,6 +2740,10 @@ export interface IRegisterInput {
     emailAddress: string;
     password: string;
     captchaResponse: string | undefined;
+    age:number;
+    gender:boolean;
+    image:string
+    imageFile: File | null; 
 }
 
 export class RegisterOutput implements IRegisterOutput {

@@ -3,7 +3,9 @@ using System.ComponentModel.DataAnnotations;
 using Abp.Auditing;
 using Abp.Authorization.Users;
 using Abp.Extensions;
+using Event_Planning_System.Authorization.Users;
 using Event_Planning_System.Validation;
+using Microsoft.AspNetCore.Http;
 
 namespace Event_Planning_System.Authorization.Accounts.Dto
 {
@@ -34,6 +36,12 @@ namespace Event_Planning_System.Authorization.Accounts.Dto
         [DisableAuditing]
         public string CaptchaResponse { get; set; }
 
+        public int Age { get; set; }
+
+        public IFormFile ImageFile { get; set; }
+        public Gender Gender { get; set; }
+        public string Image {  get; set; }
+   
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             if (!UserName.IsNullOrEmpty())
