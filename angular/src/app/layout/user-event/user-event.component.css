@@ -5,16 +5,17 @@ body {
     padding: 20px;
 }
 
-.events {
-    max-width: 70%;
+.events .card-container {
+    max-width: 80%;
     margin: auto;
     display: flex;
     align-items: flex-start;
     align-content: center;
+    flex-wrap: wrap;
 }
 
 h2 {
-    margin-top: 10px;
+    padding: 30px 60px;
     display: block;
     
     /* font-size: 1.5em; */
