@@ -16,6 +16,7 @@ import { CreateEventComponent } from 'app/layout/create-event/create-event.compo
 import { ChangePasswordComponent } from './users/change-password/change-password.component';
 
 import { UserProfileComponent } from './layout/user-profile/user-profile.component';
+import {UserEventComponent} from './layout/user-event/user-event.component';
 
 
 
@@ -37,8 +38,12 @@ import { UserProfileComponent } from './layout/user-profile/user-profile.compone
                     { path: 'create-event', component: CreateEventComponent },
                     
 
+                    {path:'user-event', component:UserEventComponent},
+
                   
 
+
+                
                     {
                         path:"Profile",
                         component:UserProfileComponent,

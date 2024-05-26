@@ -24,7 +24,7 @@ export class Event {
         public isPublic: boolean | undefined = undefined,
         public maxCount: number | undefined = undefined,
         public eventImg: string | undefined = undefined,
-        public category: Enumerator | undefined = undefined,
+        public category: string | undefined = undefined,
         public userId: number | undefined = undefined,
         public budgetId: number | undefined = undefined
     ) {}

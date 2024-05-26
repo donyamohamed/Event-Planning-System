@@ -12,6 +12,9 @@ namespace Event_Planning_System.Event
 {
     public interface IEventAppService: IAsyncCrudAppService<EventDto,int>
     {
-        
+
+        Task<List<EventDto>> GetUserEventsAsync(long userId);
+
+    
     }
 }

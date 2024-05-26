@@ -1,12 +1,12 @@
 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
   <div class="image">
     <img
-      src="assets/img/user.jpg"
-      class="img-circle elevation-2"
+      [src]="getUserImage()"
+      class="img-fluid rounded-circle"
       alt="User Image"
     />
   </div>
   <div class="info">
-    <a class="d-block" href="javascript:;">{{ shownLoginName }}</a>
+    <a class="d-block" href="javascript:;">{{  this.UserName   }}</a>
   </div>
 </div>
