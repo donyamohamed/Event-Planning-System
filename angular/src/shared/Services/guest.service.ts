@@ -2,6 +2,7 @@ import { GuestResponse } from "./../../app/guest/guest-response.model";
 import { Guest } from "./../Models/guest";
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { GuestGetResponse } from "@app/guest/guest-get-response";
 import { Observable } from "rxjs";
 
 
@@ -24,20 +25,25 @@ export class GuestService {
   public getAllGuest(): Observable<GuestResponse> {
     return this.httpClient.get<GuestResponse>(this.baseUrlForGetAll);
   }
-  public getGuest(id: number) {
-    return this.httpClient.get<Guest>(
-      this.baseUrlForGet + this.queryString + id
+  public getGuest(id: number):Observable<GuestGetResponse> {
+    const url = `${this.baseUrlForGet}?Id=${id}`;
+    return this.httpClient.get<GuestGetResponse>(
+      url
     );
   }
   public createGuest(guest: Guest) {
+    console.log(guest);
+    
     return this.httpClient.post<Guest>(this.baseUrlForCreate, guest);
   }
   public updateGuest(guest: Guest) {
+    
     return this.httpClient.put<Guest>(this.baseUrlForUpdate, guest);
   }
   public deleteGuest(id: number) {
+    const url = `${this.baseUrlForDelete}?Id=${id}`;
     return this.httpClient.delete(
-      this.baseUrlForDelete + this.queryString + id
+      url
     );
   }
 }

@@ -25,11 +25,7 @@ export class CreateGuestComponent //implements OnInit
     public modalService: NgbModal,
     public router: Router
   ) {}
-  // ngOnInit(): void {
-  //   this.subscribe = this.activatedRoute.params.subscribe((params) => {
-  //     this.guestSer.createGuest(params["id"]);
-  //   });
-  // }
+
   openModal(): void {
     this.modalService.open(CreateGuestModelComponent);
   }
@@ -37,6 +33,8 @@ export class CreateGuestComponent //implements OnInit
   Save() {
     this.guestSer.createGuest(this.guest).subscribe({
       next: (data) => {
+        this.guest=data;
+        console.log("gust"+this.guest);
         console.log(data);
       },
       error: (err) => {

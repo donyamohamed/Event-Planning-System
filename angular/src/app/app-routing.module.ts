@@ -55,9 +55,9 @@ import {UserEventComponent} from './layout/user-event/user-event.component';
             },
             {path:'addNewGuest', component: CreateGuestComponent},
             { path: 'allGuests', component: AllGuestComponent, children:[
-                { path: 'edit', component: UpdateGuestComponent },
-                { path: 'delete', component: DeleteGuestComponent },
-                { path: 'showMore', component: GetByIdGuestComponent }
+                { path: 'edit/:id', component: UpdateGuestComponent },
+                { path: 'delete/:id', component: DeleteGuestComponent },
+                { path: 'showMore/:id', component: GetByIdGuestComponent }
             ]}
             
         ])
