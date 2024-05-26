@@ -154,7 +154,7 @@
         ></abp-validation-summary>
       </div>
 
-      <!-- Gender field -->
+      <!-- Gender field
       <div class="form-group">
         <div class="input-group">
           <select
@@ -181,7 +181,7 @@
           [control]="genderModel"
           [controlEl]="genderEl"
         ></abp-validation-summary>
-      </div>
+      </div> -->
 
       <!-- Image upload field -->
       <div class="form-group">
@@ -204,6 +204,43 @@
               <i class="fas fa-file-upload"></i>
             </span>
           </div>
+        </div>
+      </div>
+
+      <!-- Gender field -->
+      <div class="form-group">
+        <!-- <label>{{ "Gender" | localize }}</label
+  ><br /> -->
+        <div class="gender-container">
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="gender"
+              id="maleRadio"
+              value="Male"
+              [(ngModel)]="model.gender"
+            />
+            <label class="form-check-label ml-3" for="maleRadio">{{
+              "Male" | localize
+            }}</label>
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="gender"
+              id="femaleRadio"
+              value="Female"
+              [(ngModel)]="model.gender"
+            />
+            <label class="form-check-label ml-3" for="femaleRadio">{{
+              "Female" | localize
+            }}</label>
+          </div>
+          <abp-validation-summary
+            [control]="registerForm.controls['gender']"
+          ></abp-validation-summary>
         </div>
       </div>
 
