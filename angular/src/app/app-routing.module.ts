@@ -32,7 +32,7 @@ import {UserEventComponent} from './layout/user-event/user-event.component';
                     { path: 'update-password', component: ChangePasswordComponent, canActivate: [AppRouteGuard] },
 
 
-                    { path: 'create-event', component: CreateEventComponent },
+                    { path: 'create-event', component: CreateEventComponent },,
 
                     {path:'user-event', component:UserEventComponent},
 
