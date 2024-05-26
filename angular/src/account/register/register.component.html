@@ -195,8 +195,8 @@
               (change)="onFileChange($event)"
               aria-describedby="imageAddon"
             />
-            <label class="custom-file-label" for="imageInput">
-              {{ "Choose file" | localize }}
+            <label class="custom-file-label px-2 py-1" for="imageInput">
+              {{ imageName || "Choose file" | localize }}
             </label>
           </div>
           <div class="input-group-append">
