@@ -3,12 +3,12 @@ import { CommonModule } from '@angular/common';
 import { UserEventsService } from '../../../shared/Services/user-events.service';
 import { Event } from '../../../shared/Models/Event';
 import { AllGuestComponent } from '@app/guest/all-guest/all-guest.component';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-user-event',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,RouterLink],
   templateUrl: './user-event.component.html',
   styleUrls: ['./user-event.component.css']
 })

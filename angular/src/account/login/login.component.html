@@ -2,9 +2,9 @@
   <div class="container ">
     <div class="left-side">
       <div >
-        <h1 class="text-center mb-3 " style="color: #FBaF1B;   font-family: 'MyCustomFont font-weight: bold; ';">EVENTA</h1>
+        <h1 class="text-center mb-3 " style="color: #FBaF1B;   font-family: 'MyCustomFont font-weight: bold; ';">{{ "Eventa Login" | localize }}</h1>
         <br>
-        <h2 class="mb-3" style="font-family: 'MyCustomFont'; font-weight: bold;">{{ "LogIn" | localize }}</h2>
+        <!-- <h2 class="mb-3" style="font-family: 'MyCustomFont'; font-weight: bold;">{{ "LogIn" | localize }}</h2> -->
 
         <form novalidate autocomplete="off" #loginForm="ngForm" (ngSubmit)="login()">
 
@@ -56,8 +56,8 @@
             </div>
           <br>
 
-            <div class="col-md-4">
-              <button type="submit" style="background-color: #FBaF1B; border-color: #FBaF1B; font-family: 'MyCustomFont';" class="btn btn-primary btn-block" [disabled]="!loginForm.form.valid || submitting">
+            <div class="col-md-6">
+              <button type="submit" style="background-color: #FBaF1B; border-color: #FBaF1B; font-family: 'MyCustomFont';" class="mt-2 btn btn-primary btn-block" [disabled]="!loginForm.form.valid || submitting">
                 {{ "LogIn" | localize }}
               </button>
             </div>
@@ -72,7 +72,7 @@
 
         <p  class="mb-1">
           <a [routerLink]="['../register']">
-            <i class="fa fa-plus-circle"></i> {{ "Register" | localize }}
+          {{ "Register" | localize }}
           </a>
         </p>
 
