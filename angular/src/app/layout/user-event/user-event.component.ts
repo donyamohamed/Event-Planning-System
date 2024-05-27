@@ -3,12 +3,12 @@ import { CommonModule } from '@angular/common';
 import { UserEventsService } from '../../../shared/Services/user-events.service';
 import { Event } from '../../../shared/Models/Event';
 import { AllGuestComponent } from '@app/guest/all-guest/all-guest.component';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-user-event',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,RouterLink],
   templateUrl: './user-event.component.html',
   styleUrls: ['./user-event.component.css']
 })
@@ -33,14 +33,14 @@ export class UserEventComponent implements OnInit {
       }
     );
   } 
-  guestAppearing(){
-    if(AllGuestComponent.guestsCount>0){
-      this.route.navigateByUrl("app/allGuests")
-    }else{
-      this.route.navigateByUrl("app/allGuests")
-      console.log("hg yhhhg hgy");
-      console.log(AllGuestComponent.guestsCount);
-    }
+  guestAppearing(id:number){
+    this.route.navigateByUrl("app/allGuests/"+id)
+    // if(AllGuestComponent.guestsCount>0){
+    // }else{
+    //   this.route.navigateByUrl("app/allGuests")
+    //   console.log("hg yhhhg hgy");
+    //   console.log(AllGuestComponent.guestsCount);
+    // }
     
     
   } 

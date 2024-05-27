@@ -4,6 +4,7 @@ using Event_Planning_System.Authorization.Users;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,7 +28,9 @@ namespace Event_Planning_System.Enitities
 		[Required(ErrorMessage = "Phone is required.")]
 		[RegularExpression(@"^[0-9]{10}$", ErrorMessage = "Phone must be a 10-digit number.")]
 		public string Phone { get; set; }
+		//public int EventId { get; set; }
 
+		//[ForeignKey(nameof(EventId))]
 		public virtual ICollection<Event> Events { get; set; } = new List<Event>();
 		public virtual ICollection<User> Users { get; set; } = new List<User>();
 
