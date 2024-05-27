@@ -80,4 +80,5 @@ export class CreateEventComponent implements OnInit {
       this.eventData.category = this.enumeratorKeys[0];
     }
   }
+  
 }

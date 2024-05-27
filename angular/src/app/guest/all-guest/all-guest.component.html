@@ -1,9 +1,15 @@
 <!-- <></> -->
 
 <div class="card container m-3 p-3 tableDiv shadow-lg">
-    <div>
-        <button class="btn btn-primary " (click)="openModal(template)">Add Guest</button>
+
+  <div class="text-center imageDiv">
+    <img src="../../../assets/img/guests.svg" alt="">
+  </div>
+    <div class="btnDiv">
+        <button class="btn" (click)="openModal(template)">Add Guest</button>
     </div>
+    <div>
+
     <div class="table-responsive text-center ">
         <table id="guestTable" class="table table-hover table-borderless align-middle">
         <thead class="table-light">  
@@ -13,6 +19,7 @@
                 <th>Email</th>
                 <th>Invitation State</th>
                 <th>Phone</th>
+                <th>Send Invitation</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -23,17 +30,23 @@
                 <td>{{item.email}}</td>
                 <td>{{item.invitationState}}</td>
                 <td>{{item.phone}}</td>
+                <td class="sendInvitation">
+                  By: 
+                  <a class="btn" (click)="SendSMS(item.phone)"><i class="fa-solid fa-comment-sms"></i> SMS</a> |
+                  <a class="btn" (click)="SendEmail(item.email)"><i class="fa-solid fa-envelope"></i> Email</a>
+                  
+                </td>
                 <td class="d-flex justify-content-evenly">
                     <!-- <a class="btn" routerLink="edit/{{item.id}}" (click)="openEditModal(Editetemplate)"><i class="fa-solid fa-pen-to-square text-success"></i></a> -->
                     <a class="btn" (click)="openEditModal(Editetemplate,item.id)"><i class="fa-solid fa-pen-to-square text-success"></i></a>
-                    <a onclick="return confirm('Are you sure you want to delete this guest?');" class="btn" routerLink="delete/{{item.id}}"><i class="fa-solid fa-trash-can text-danger" aria-hidden="true"></i></a>
+                    <a onclick="return confirm('Are you sure you want to delete this guest?');" class="btn" (click)="Delete(item.id)"><i class="fa-solid fa-trash-can text-danger" aria-hidden="true"></i></a>
                     
                 </td>
             </tr>
         </tbody>
     </table>
-</div>
-
+</div> <!-- table-responsive div -->
+</div> <!-- div for table -->
 </div>
 <router-outlet></router-outlet>
 
@@ -78,7 +91,7 @@
       </button>
     </div>
     <div class="modal-body">
-      <form (ngSubmit)="Save()">
+      <form (ngSubmit)="Edit()">
         <div>
           <label for="nameInput">Name:</label>
           <input class="form-control" type="text" id="nameInput" name="nameInput" [(ngModel)]="guestEdit.name" required/>
@@ -98,7 +111,7 @@
             <option value="Confirmed">Confirmed</option>
           </select>
         </div>
-        <input class="btn btn-success" value="Add" type="submit"/>
+        <input class="btn btn-success m-1" value="Update" type="submit"/>
       </form>
     </div>
   </ng-template>

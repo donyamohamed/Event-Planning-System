@@ -38,7 +38,16 @@ import {UserEventComponent} from './layout/user-event/user-event.component';
                     { path: 'create-event', component: CreateEventComponent },
                     
 
-                    {path:'user-event', component:UserEventComponent},
+                    {path:'user-event', component:UserEventComponent
+                    // , children:[
+                    //     {path:'addNewGuest', component: CreateGuestComponent},
+                    //     { path: 'allGuests/:id', component: AllGuestComponent, children:[
+                    //     { path: 'edit/:id', component: UpdateGuestComponent },
+                    //     { path: 'delete/:id', component: DeleteGuestComponent },
+                    //     { path: 'showMore/:id', component: GetByIdGuestComponent }
+                    // ]}
+                    // ]
+                },
 
                     {
                         path:"Profile",
@@ -46,7 +55,7 @@ import {UserEventComponent} from './layout/user-event/user-event.component';
                         canActivate: [AppRouteGuard] 
                     },
                     {path:'addNewGuest', component: CreateGuestComponent},
-                { path: 'allGuests', component: AllGuestComponent, children:[
+                { path: 'allGuests/:id', component: AllGuestComponent, children:[
                 { path: 'edit/:id', component: UpdateGuestComponent },
                 { path: 'delete/:id', component: DeleteGuestComponent },
                 { path: 'showMore/:id', component: GetByIdGuestComponent }
