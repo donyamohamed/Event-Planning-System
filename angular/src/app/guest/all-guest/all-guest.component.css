@@ -15,6 +15,7 @@
   .btnDiv button{
     background-color: #050794;
     color: white;
+    border: 1px solid #050794;
   }
   .btnDiv button:hover{
     background-color: white;

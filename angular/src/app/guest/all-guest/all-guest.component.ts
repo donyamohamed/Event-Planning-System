@@ -1,10 +1,10 @@
+import { GuestResponse } from './../guest-response.model';
 import { InvitationService } from './../../../shared/Services/invitation.service';
 import { Component, OnDestroy, OnInit, TemplateRef } from "@angular/core";
 import { CommonModule, DatePipe } from "@angular/common";
 import { Subscription } from "rxjs";
 import { GuestService } from "../../../shared/Services/guest.service";
 import { Guest } from "../../../shared/Models/guest";
-import { GuestResponse } from "../guest-response.model";
 import {
   ActivatedRoute,
   Router,
@@ -45,11 +45,27 @@ export class AllGuestComponent implements OnInit {
     private invitation:InvitationService
   ) {}
   ngOnInit(): void {
-    this.subscribe = this.activatedRoute.params.subscribe((params) => {
-      this.subGuest = this.guestSer.getGuestsPerEvent(params["id"]).subscribe({
-        next: (res: GuestPerEventResponse) => {
+    // this.subscribe = this.activatedRoute.params.subscribe((params) => {
+    //   this.subGuest = this.guestSer.getGuestsPerEvent(params["id"]).subscribe({
+    //     next: (res: GuestPerEventResponse) => {
+    //       console.log(res);
+    //       this.guests = res.result;
+    //      // AllGuestComponent.guestsCount = res.result.totalCount;
+    //       console.log(this.guests);
+    //     },
+    //     error: (err) => {
+    //       console.log(err);
+    //     },
+    //   });
+    // });
+    // if(AllGuestComponent.guestsCount==0){
+    //  // this.router.navigate(["/event"]); //must go to add gusts page
+    // }
+    //this.subscribe = this.activatedRoute.params.subscribe((params) => {
+      this.subGuest = this.guestSer.getAllGuest().subscribe({
+        next: (res: GuestResponse) => {
           console.log(res);
-          this.guests = res.result;
+          this.guests = res.result.items;
          // AllGuestComponent.guestsCount = res.result.totalCount;
           console.log(this.guests);
         },
@@ -57,7 +73,7 @@ export class AllGuestComponent implements OnInit {
           console.log(err);
         },
       });
-    });
+    //});
     if(AllGuestComponent.guestsCount==0){
      // this.router.navigate(["/event"]); //must go to add gusts page
     }
@@ -142,5 +158,19 @@ export class AllGuestComponent implements OnInit {
       },
     });
     this.router.navigateByUrl("/app/allGuests");
+  }
+  Delete(id:number){
+    //this.subscribe = this.activatedRoute.params.subscribe((params) => {
+      this.subGuest= this.guestSer.deleteGuest(id).subscribe({
+        next: (data) => {
+          console.log(data);
+          location.reload();
+          this.router.navigateByUrl("/app/allGuests");
+        },
+        error: (err) => {
+          console.log(err);
+        }
+      });
+    //});
   }
 }

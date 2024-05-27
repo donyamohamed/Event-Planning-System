@@ -28,13 +28,13 @@ export class DeleteGuestComponent implements OnInit{
         next: (data) => {
           console.log(data);
           location.reload();
+          this.router.navigateByUrl("/app/allGuests/:id");
         },
         error: (err) => {
           console.log(err);
         }
       });
     });
-    this.router.navigateByUrl("/app/allGuests");
   }
 
 }
