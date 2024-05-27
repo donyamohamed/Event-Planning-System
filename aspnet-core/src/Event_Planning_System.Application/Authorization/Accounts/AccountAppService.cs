@@ -73,7 +73,6 @@ namespace Event_Planning_System.Authorization.Accounts
             return await _userManager.ResetPasswordAsync(user, token, model.NewPassword);
         }
 
-        ///
 
         public async Task<IsTenantAvailableOutput> IsTenantAvailable(IsTenantAvailableInput input)
         {
