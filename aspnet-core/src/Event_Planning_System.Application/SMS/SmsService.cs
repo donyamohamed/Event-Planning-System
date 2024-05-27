@@ -1,11 +1,10 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Threading.Tasks;
 using Vonage;
 using Vonage.Request;
 using Vonage.Messaging;
-using System.Net;
-using System;
 
 namespace Event_Planning_System.SMS
 {
@@ -17,26 +16,44 @@ namespace Event_Planning_System.SMS
 
         public SmsService(IConfiguration configuration, ILogger<SmsService> logger)
         {
-            _configuration = configuration;
-            _logger = logger;
+            _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
-            var credentials = Credentials.FromApiKeyAndSecret(
-                _configuration["Nexmo:ApiKey"],
-                _configuration["Nexmo:ApiSecret"]
-            );
+            var apiKey = _configuration["Nexmo:ApiKey"];
+            var apiSecret = _configuration["Nexmo:ApiSecret"];
+            var fromPhoneNumber = _configuration["Nexmo:FromPhoneNumber"];
+
+            if (string.IsNullOrEmpty(apiKey) || string.IsNullOrEmpty(apiSecret) || string.IsNullOrEmpty(fromPhoneNumber))
+            {
+                throw new InvalidOperationException("Nexmo configuration is not properly set.");
+            }
+
+            var credentials = Credentials.FromApiKeyAndSecret(apiKey, apiSecret);
             _vonageClient = new VonageClient(credentials);
         }
 
-        public async Task SendSmsAsync(string toPhoneNumber, string message)
+        public async Task SendSmsAsync(SmsRequest smsRequest)
         {
+            if (string.IsNullOrEmpty(smsRequest.ToPhoneNumber))
+            {
+                _logger.LogError("Phone number cannot be null or empty.");
+                throw new ArgumentException("Phone number cannot be null or empty.", nameof(smsRequest.ToPhoneNumber));
+            }
+
+            if (string.IsNullOrEmpty(smsRequest.Message))
+            {
+                _logger.LogError("Message cannot be null or empty.");
+                throw new ArgumentException("Message cannot be null or empty.", nameof(smsRequest.Message));
+            }
+
             try
             {
                 var fromPhoneNumber = _configuration["Nexmo:FromPhoneNumber"];
                 var response = await _vonageClient.SmsClient.SendAnSmsAsync(new SendSmsRequest
                 {
-                    To = toPhoneNumber,
+                    To = smsRequest.ToPhoneNumber,
                     From = fromPhoneNumber,
-                    Text = message
+                    Text = $"{smsRequest.Message}\nEvent: {smsRequest.EventName}\nDate: {smsRequest.Date}\nAddress: {smsRequest.EventAddress}"
                 });
 
                 if (response.Messages[0].Status != "0")
@@ -45,12 +62,13 @@ namespace Event_Planning_System.SMS
                 }
                 else
                 {
-                    _logger.LogInformation("SMS sent successfully.");
+                    _logger.LogInformation("SMS sent successfully to {ToPhoneNumber}.", smsRequest.ToPhoneNumber);
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error sending SMS.");
+                _logger.LogError(ex, "Error sending SMS to {ToPhoneNumber}.", smsRequest.ToPhoneNumber);
+                throw; // rethrow the exception after logging it
             }
         }
     }

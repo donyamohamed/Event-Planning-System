@@ -16,8 +16,11 @@ export class HeaderUserMenuComponent implements OnInit {
     private _userService: CurrentUserDataService,
     private cdr: ChangeDetectorRef
   ) {}
-
+  getUserImage(): string {
+    return this.user.image ? `https://localhost:44311/${this.user.image}` : 'assets/img/user.jpg';
+  }
   ngOnInit(): void {
+  //  this.getUserImage();
     this._userService.GetCurrentUserData().subscribe({
       next: (u: CurrentUser) => {
         console.log('User data loaded:', u); // Debugging: Log the user data

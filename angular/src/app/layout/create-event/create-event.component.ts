@@ -29,15 +29,20 @@ export class CreateEventComponent implements OnInit {
     this.setDefaultValues();
   }
 
+
+
+
   getUserData(): void {
-    this.http.get<any>('https://localhost:44311/api/services/app/User/Get?Id=1')
+    this.http.get<any>('https://localhost:44311/api/services/app/UserProfileAppServices/GetUserProfile')
       .subscribe(response => {
-        if (response && response.result && response.result.name) {
-          this.username = response.result.name; 
-          this.eventData.userId = response.result.id; 
+        if (response && response.result) {
+          this.username = response.result.name;
+          this.eventData.userId = response.result.id;
         }
       });
   }
+
+
 
   fetchBudgetOptions(): void {
     this.eventService.getBudgetAmounts()
