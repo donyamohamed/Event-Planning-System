@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpClientJsonpModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { provideHttpClient, withInterceptorsFromDi, withJsonpSupport } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { AccountRoutingModule } from './account-routing.module';
@@ -18,18 +18,7 @@ import { AccountFooterComponent } from './layout/account-footer.component';
 import { TenantChangeComponent } from './tenant/tenant-change.component';
 import { TenantChangeDialogComponent } from './tenant/tenant-change-dialog.component';
 
-@NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        HttpClientModule,
-        HttpClientJsonpModule,
-        SharedModule,
-        ServiceProxyModule,
-        AccountRoutingModule,
-        ModalModule.forChild()
-    ],
-    declarations: [
+@NgModule({ declarations: [
         AccountComponent,
         LoginComponent,
         RegisterComponent,
@@ -39,8 +28,13 @@ import { TenantChangeDialogComponent } from './tenant/tenant-change-dialog.compo
         // tenant
         TenantChangeComponent,
         TenantChangeDialogComponent,
-    ]
-})
+    ], imports: [CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        SharedModule,
+        ServiceProxyModule,
+        AccountRoutingModule,
+        ModalModule.forChild()], providers: [provideHttpClient(withInterceptorsFromDi(), withJsonpSupport())] })
 export class AccountModule {
 
 }

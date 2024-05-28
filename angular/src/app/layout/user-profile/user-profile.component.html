@@ -6,7 +6,7 @@
         <div class="card user-card-full shadow-lg">
           <div class="row no-gutters">
             <div class="col-md-4 user-profile text-center d-flex flex-column align-items-center justify-content-center">
-              <img src="assets/img/user.jpg" alt="User-Profile-Image" class="img-fluid rounded-circle">
+              <img [src]="getUserImage()" alt="User-Profile-Image" class="img-fluid rounded-circle">
               <h5>{{ user?.userName  }}</h5>
               <p>Planner</p>
               <button class="btn btn-outline-light btn-sm mt-2" id="modalShow" (click)="openModal(modalTemplate)"><i
@@ -69,20 +69,20 @@
           maxlength="50" pattern="^[a-zA-Z0-9]+(?:[_-][a-zA-Z0-9]+)*$">
         <div
           *ngIf="createForm.controls['userName'].invalid && (createForm.controls['userName'].dirty || createForm.controls['userName'].touched)">
-          <div *ngIf="createForm.controls['userName'].errors.required" class="err">User Name is required.</div>
-          <div *ngIf="createForm.controls['userName'].errors.minlength" class="err">User Name must be at least 3 characters long.
+          <div *ngIf="createForm?.controls['userName']?.errors?.required" class="err">User Name is required.</div>
+          <div *ngIf="createForm?.controls['userName']?.errors?.minlength" class="err">User Name must be at least 3 characters long.
           </div>
-          <div *ngIf="createForm.controls['userName'].errors.maxlength" class="err">User Name must not exceed 50 characters.
+          <div *ngIf="createForm?.controls['userName']?.errors?.maxlength" class="err">User Name must not exceed 50 characters.
           </div>
-          <div *ngIf="createForm.controls['userName'].errors.pattern" class="err">Invalid username format.</div>
+          <div *ngIf="createForm?.controls['userName']?.errors?.pattern" class="err">Invalid username format.</div>
         </div>
       </div>
       <div class="form-group">
         <label for="email">Email:</label>
-        <input type="email" class="form-control" id="email" name="email" [(ngModel)]="user.emailAddress" required email>
-        <div *ngIf="createForm.controls['email'].invalid && (createForm.controls['email'].dirty || createForm.controls['email'].touched)">
-          <div *ngIf="createForm.controls['email'].errors.required" class="err">Email is required.</div>
-          <div *ngIf="createForm.controls['email'].errors.email" class="err">Invalid email format.</div>
+        <input type="email" class="form-control" id="email" name="emailAddress" [(ngModel)]="user.emailAddress" required email>
+        <div *ngIf="createForm?.controls['emailAddress']?.invalid && (createForm?.controls['email']?.dirty || createForm?.controls['email']?.touched)">
+          <div *ngIf="createForm?.controls['emailAddress']?.errors?.required" class="err">Email is required.</div>
+          <div *ngIf="createForm?.controls['emailAddress']?.errors?.email" class="err">Invalid email format.</div>
         </div>
       </div>
       
@@ -90,26 +90,26 @@
         <label for="age">Age:</label>
         <input type="number" class="form-control" id="age" min="16" max="70" name="age" [(ngModel)]="user.age" required>
         <div
-          *ngIf="createForm.controls['age'].invalid && (createForm.controls['age'].dirty || createForm.controls['age'].touched)">
-          <div *ngIf="createForm.controls['age'].errors.required" class="err">Age is required.</div>
-          <div *ngIf="createForm.controls['age'].errors.min" class="err">Age must be at least 16.</div>
-          <div *ngIf="createForm.controls['age'].errors.max" class="err">Age must not exceed 70.</div>
+          *ngIf="createForm?.controls['age']?.invalid && (createForm?.controls['age'].dirty || createForm?.controls['age']?.touched)">
+          <div *ngIf="createForm?.controls['age']?.errors?.required" class="err">Age is required.</div>
+          <div *ngIf="createForm?.controls['age']?.errors?.min" class="err">Age must be at least 16.</div>
+          <div *ngIf="createForm?.controls['age']?.errors?.max" class="err">Age must not exceed 70.</div>
         </div>
       </div>
       <div class="form-group">
-        <label for="Gender">Gender:</label>
-        <select [(ngModel)]="user.genderUser" required name="Gender" class="form-control">
+        <label for="genderUser">Gender:</label>
+        <select [(ngModel)]="user.genderUser" required name="genderUser" class="form-control">
           <option value="1">Male</option>
           <option value="0">Female</option>
         </select>
         <div
-          *ngIf="createForm.controls['Gender'].invalid && (createForm.controls['Gender'].dirty || createForm.controls['Gender'].touched)">
-          <div *ngIf="createForm.controls['Gender'].errors.required" class="err">Gender is required.</div>
+          *ngIf="createForm?.controls['genderUser']?.invalid && (createForm?.controls['genderUser']?.dirty || createForm?.controls['genderUser']?.touched)">
+          <div *ngIf="createForm?.controls['genderUser'].errors?.required" class="err">Gender is required.</div>
         </div>
       </div>
       <div class="form-group">
-        <label for="imageName">Image:</label>
-        <input type="text" class="form-control" id="imageName" name="imageName" [(ngModel)]="user.imageName" required>
+        <label for="imagePath1">Image:</label>
+        <input type="file" class="form-control" id="imagePath1" name="imagePath" (change)="onFileSelected($event)" required>
       </div>
       <button type="submit" [disabled]="createForm.invalid"  class="btn btn-primary">Submit</button>
     </form>

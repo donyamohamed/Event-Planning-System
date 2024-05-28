@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientJsonpModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, withJsonpSupport } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
@@ -39,13 +39,15 @@ import { SidebarLogoComponent } from './layout/sidebar-logo.component';
 import { SidebarUserPanelComponent } from './layout/sidebar-user-panel.component';
 import { SidebarMenuComponent } from './layout/sidebar-menu.component';
 import { BrowserModule } from '@angular/platform-browser';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CreateGuestModelComponent } from './guest/create-guest-model/create-guest-model.component';
 
 
-@NgModule({
-    declarations: [
+@NgModule({ declarations: [
         AppComponent,
         HomeComponent,
         AboutComponent,
+        CreateGuestModelComponent,
         // tenants
         TenantsComponent,
         CreateTenantDialogComponent,
@@ -71,13 +73,10 @@ import { BrowserModule } from '@angular/platform-browser';
         SidebarUserPanelComponent,
         SidebarMenuComponent
     ],
-    imports: [
-       
-        CommonModule,
+    bootstrap: [AppComponent], imports: [CommonModule,
         FormsModule,
         ReactiveFormsModule,
         HttpClientModule,
-        HttpClientJsonpModule,
         ModalModule.forChild(),
         BsDropdownModule,
         CollapseModule,
@@ -86,8 +85,5 @@ import { BrowserModule } from '@angular/platform-browser';
         ServiceProxyModule,
         SharedModule,
         NgxPaginationModule,
-        HttpClientModule,
-    ],
-    providers: []
-})
+        NgbModule], providers: [provideHttpClient(withInterceptorsFromDi(), withJsonpSupport())] })
 export class AppModule {}

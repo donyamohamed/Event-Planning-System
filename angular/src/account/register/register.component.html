@@ -154,7 +154,7 @@
         ></abp-validation-summary>
       </div>
 
-      <!-- Gender field -->
+      <!-- Gender field
       <div class="form-group">
         <div class="input-group">
           <select
@@ -181,7 +181,7 @@
           [control]="genderModel"
           [controlEl]="genderEl"
         ></abp-validation-summary>
-      </div>
+      </div> -->
 
       <!-- Image upload field -->
       <div class="form-group">
@@ -195,8 +195,8 @@
               (change)="onFileChange($event)"
               aria-describedby="imageAddon"
             />
-            <label class="custom-file-label" for="imageInput">
-              {{ "Choose file" | localize }}
+            <label class="custom-file-label px-2 py-1" for="imageInput">
+              {{ imageName || "Choose file" | localize }}
             </label>
           </div>
           <div class="input-group-append">
@@ -204,6 +204,43 @@
               <i class="fas fa-file-upload"></i>
             </span>
           </div>
+        </div>
+      </div>
+
+      <!-- Gender field -->
+      <div class="form-group">
+        <!-- <label>{{ "Gender" | localize }}</label
+  ><br /> -->
+        <div class="gender-container ml-4">
+          <div class="form-check">
+            <inpu4
+              class="form-check-input"
+              type="radio"
+              name="gender"
+              id="maleRadio"
+              value="Male"
+              [(ngModel)]="model.gender"
+            />
+            <label class="form-check-label ml-1" for="maleRadio">{{
+              "Male" | localize
+            }}</label>
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="gender"
+              id="femaleRadio"
+              value="Female"
+              [(ngModel)]="model.gender"
+            />
+            <label class="form-check-label ml-1" for="femaleRadio">{{
+              "Female" | localize
+            }}</label>
+          </div>
+          <abp-validation-summary
+            [control]="registerForm.controls['gender']"
+          ></abp-validation-summary>
         </div>
       </div>
 
@@ -233,28 +270,8 @@
     <!-- </div> -->
   </div>
   <div class="img-container">
-    <div class="context">
-      <h1>Eventa Planning System</h1>
-      <p>
-        Create unforgettable events effortlessly. Our system handles every
-        detail, making your gatherings memorable, whether it's a corporate
-        event, wedding, or private party.
-      </p>
-    </div>
 
-    <div class="area">
-      <ul class="circles">
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-      </ul>
-    </div>
+
+ 
   </div>
 </div>
