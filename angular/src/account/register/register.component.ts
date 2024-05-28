@@ -108,7 +108,7 @@ export class RegisterComponent extends AppComponentBase implements OnInit {
       )
       .subscribe((result: RegisterOutput) => {
         console.log(result);
-        
+        this._router.navigate(['/login']);
         if (!result.canLogin) {
           this.notify.success('Registration successful! Please check your email for further instructions.');
 

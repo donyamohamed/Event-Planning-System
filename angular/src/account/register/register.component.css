@@ -18,7 +18,7 @@ body.hold-transition {
   background-color: #b7b7b7;
 }
 
-.register-container {
+/* .register-container {
   display: flex !important;
   width: 900px;
   border-radius: 25px;
@@ -26,7 +26,33 @@ body.hold-transition {
   margin: 100px auto !important;
   background-color: white;
   height: 90vh;
+} */
+.register-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 90%;
+  height: 90vh;
+  justify-content: center;
+  margin: 20px auto;
+  border-radius: 25px;
 }
+.form-container {
+  width: 100%;
+  padding: 20px;
+  height: 100%;
+  background-color: #fff;
+  border-radius: 0px 25px 25px 0px;
+}
+.img-container {
+  border-radius: 25px 0px 0px 25px;
+  width: 100%;
+}
+.img-container img {
+  width: 100%;
+  height: 100%;
+  border-radius: 25px 0px 0px 25px;
+}
+
 .googleSign {
   width: 100%;
   border: 1px solid gray;
@@ -70,11 +96,7 @@ body.hold-transition {
 .orHr::after {
   right: -65px;
 }
-.form-container {
-  width: 50%;
-  padding: 20px;
-  height: 100%;
-}
+
 div.input-group {
   margin: 10px 0px;
 }
@@ -100,14 +122,27 @@ select {
   text-align: center;
   background-color: aliceblue;
 }
-.img-container {
-  /* width: 50%;
-  height: 90vh;
-  border-radius: 0px 25px 25px 0px;
-  overflow: hidden;
-  position: relative; */
-  width: 50%;
-  height: 100%;
-  background: url('../../assets/img/image.jpg') no-repeat center center;
-  background-size: cover;
+.gender-container {
+  display: flex;
+  gap: 60px;
+  align-items: center;
+  margin: 10px 0px;
+}
+.gender-container input {
+  margin-top: 5px;
+}
+
+@media (max-width: 767px) {
+  .register-container {
+    grid-template-columns: 1fr;
+  }
+  .form-container {
+    border-radius: 0px 0px 25px 25px;
+  }
+  .img-container {
+    border-radius: 25px 25px 0px 0px;
+  }
+  .img-container img {
+    border-radius: 25px 25px 0px 0px;
+  }
 }

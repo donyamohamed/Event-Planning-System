@@ -2,6 +2,8 @@ import { Component, OnInit,Renderer2 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ActiveAccountService } from '@shared/Services/active-account.service';
+import { NotifyService } from 'abp-ng2-module';
+
 @Component({
   selector: 'app-activate-user',
   standalone: true,
@@ -14,7 +16,8 @@ export class ActivateUserComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private activeAccountService: ActiveAccountService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private notify:NotifyService
   ) {}
 
   ngOnInit(): void {
@@ -33,7 +36,12 @@ export class ActivateUserComponent implements OnInit {
        
         console.log('Account activated successfully:', response);
     
-        this.router.navigate(['/account/login']);
+        this.notify.success('Your Account Activated  successful!');
+        
+        // Close the window after a short delay
+        setTimeout(() => {
+          window.close();
+        }, 3000); // Adjust the delay as needed
       },
       (error) => {
         

@@ -12,12 +12,15 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Authorization\Accounts\UploadedImages\**" />
+    <EmbeddedResource Remove="Authorization\Accounts\UploadedImages\**" />
+    <None Remove="Authorization\Accounts\UploadedImages\**" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Event_Planning_System.Core\Event_Planning_System.Core.csproj" />
     <ProjectReference Include="..\Event_Planning_System.EntityFrameworkCore\Event_Planning_System.EntityFrameworkCore.csproj" />
   </ItemGroup>
   <ItemGroup>
-
-    <Folder Include="Authorization\Accounts\UploadedImages\" />
     <Folder Include="Event\Dto\" />
 
 
