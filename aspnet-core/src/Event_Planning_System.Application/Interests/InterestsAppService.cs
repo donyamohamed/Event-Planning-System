@@ -39,5 +39,12 @@ namespace Event_Planning_System.Interests
 
 			return _mapper.Map<List<GetUserInterestsDTO>>(interests);
 		}
+
+
+		public async Task <List<GetAllInterstsDTO>> GetAllIntersts()
+		{
+			var Interests = await _interestRepository.GetAll().ToListAsync();
+            return _mapper.Map<List<GetAllInterstsDTO>>(Interests);
+        }
 	}
 }

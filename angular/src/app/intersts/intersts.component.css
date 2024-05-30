@@ -1,0 +1,18 @@
+.btn{
+    display: inline-block;
+    background-color:#050794;
+    border-radius: 40%;
+    color: white;
+    cursor: pointer;
+    justify-content: center;
+}
+.container{
+    background-color: #e4e4e4;
+
+}
+.next{
+    justify-content: center;
+    background-color: #fbaf1b;
+    color: white;
+    cursor: pointer;
+}
