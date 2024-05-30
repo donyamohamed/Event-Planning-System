@@ -87,13 +87,17 @@ body {
   display: flex;
   flex-direction: row;
   border-radius: 6px;
-  width: 50vw;
+  width: 55vw;
   -webkit-box-shadow: 0 1px 2.94px 0.06px rgba(4,26,55,0.16);
   box-shadow: 0 1px 2.94px 0.06px rgba(4,26,55,0.16);
 }
 
 .card1 {
-  width: 25vw;
+  padding: 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 22vw;
   background-color: #fbaf1b;
   border-radius: 8px;
   -webkit-box-shadow: 0 1px 2.94px 0.06px rgba(4,26,55,0.16);
@@ -119,4 +123,27 @@ body {
 
 .f-right {
   float: right;
+}
+.interests-header{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+ margin: 10px;
+}
+.interests-container{
+  width: 90vw;
+}
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  gap: 2px;
+  padding: 2px;
+}
+.grid-item {
+  background-color:#b37a08;
+  border: 1px solid rgba(247, 243, 243, 0.8);
+ border-radius: 7px;
+  font-size: 20px;
+  padding: 7px;
+  text-align: center;
 }

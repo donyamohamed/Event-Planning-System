@@ -27,14 +27,14 @@ namespace Event_Planning_System.Interests
 			_mapper = mapper;
 		}
 
-		public async Task Add([FromHeader] int? interestId)
+		public async Task Add([FromHeader] int? id)
 		{
 			var userId = AbpSession.UserId.Value;
 			var user = _userManager.GetUserById(userId);
-			var interest = await _interestRepository.FirstOrDefaultAsync(interestId.Value);
+			var interest = await _interestRepository.FirstOrDefaultAsync(id.Value);
 			if (interest == null)
 			{
-				throw new EntityNotFoundException(typeof(Interest), interestId);
+				throw new EntityNotFoundException(typeof(Interest), id);
 			}
 			user.Interests.Add(interest);
 			await _userManager.UpdateAsync(user);
