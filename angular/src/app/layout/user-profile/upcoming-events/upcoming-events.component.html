@@ -22,7 +22,7 @@
     </button>
   </div>
 
-  <div *ngIf="showCalendarView; else cardView">
+  <div *ngIf="showCalendarView; else cardView" class="calendar-container">
     <full-calendar [options]="calendarOptions"></full-calendar>
   </div>
 
@@ -32,19 +32,26 @@
       class="cards"
     >
       <div *ngFor="let event of upcomingEvents" class="card mb-3">
-        <div class="card-body">
-          <h5 class="card-title">{{ event.name }}</h5>
-          <p class="card-text">{{ event.location }}</p>
-          <p class="card-text">{{ event.category }} Category</p>
-          <p class="card-text">
-            {{ event.isPublic ? "Public Event" : "Private Event" }}
+        <div class="card-header">
+          <p>
+            Event Name: <span>{{ event.name }}</span>
           </p>
-          <p class="card-text">{{ event.description }}</p>
-          <p class="card-subtitle mb-2">
+          <p>Category: {{ event.category }}</p>
+        </div>
+        <div class="card-body">
+          <div class="event-details">
+            <p class="card-text">Location: {{ event.location }}</p>
+            <p class="card-text">
+              {{ event.isPublic ? "Public Event" : "Private Event" }}
+            </p>
+          </div>
+          <p class="card-text">Description: {{ event.description }}</p>
+          <p class="card-subtitle">
+            Date:
             {{ event.startDate | date : "short" }}
             <span *ngIf="!isSameDate(event.startDate, event.endDate)">
-              - {{ event.endDate | date : "short" }}</span
-            >
+              - {{ event.endDate | date : "short" }}
+            </span>
           </p>
         </div>
       </div>

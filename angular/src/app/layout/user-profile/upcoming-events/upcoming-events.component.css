@@ -6,6 +6,7 @@ h2 {
 h2 img {
   width: 38px;
   animation: swing 2s ease-in-out infinite;
+  background-color: white;
 }
 .btn-groups {
   display: flex;
@@ -30,10 +31,63 @@ h2 img {
   background-color: #fbaf1b;
   color: white;
 }
+
 .cards {
-  max-height: 550px;
+  display: flex;
+  flex-direction: column;
+  max-height: 600px;
+  overflow-y: auto;
 }
-.card.mb-3 {
+
+.card {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+
+  margin: 20px 10px;
+}
+
+.card-header {
+  background-color: #788dd1;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 10px 15px;
+}
+.card-header p {
+  margin: 0;
+  padding: 0 10px;
+  width: 100%;
+}
+.card-header p:nth-child(2) {
+  display: flex;
+  justify-content: end;
+}
+.card-title {
+  margin: 0;
+}
+
+.card-subtitle {
+  margin: 0;
+  color: #2d2c2c;
+}
+
+.card-body {
+  padding: 15px 25px;
+}
+
+.event-details {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.card-text {
+  margin: 0;
+  margin-bottom: 10px;
+}
+/* .card.mb-3 {
   background-color: #fbaf1b1a;
   color: #050794;
   border-color: #050794;
@@ -41,7 +95,7 @@ h2 img {
 .card-body {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-}
+} */
 .fc-day.fc-day-fri.fc-day-today.fc-daygrid-day {
   background-color: #f5ff0791 !important;
 }
