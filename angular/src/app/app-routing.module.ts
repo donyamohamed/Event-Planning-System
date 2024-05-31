@@ -16,6 +16,7 @@ import { CreateEventComponent } from 'app/layout/create-event/create-event.compo
 import { ChangePasswordComponent } from './users/change-password/change-password.component';
 import { UserProfileComponent } from './layout/user-profile/user-profile.component';
 import {UserEventComponent} from './layout/user-event/user-event.component';
+import {HistoryeventComponent} from './layout/historyevent/historyevent.component';
 
 
 
@@ -36,7 +37,9 @@ import {UserEventComponent} from './layout/user-event/user-event.component';
                     { path: 'about', component: AboutComponent, canActivate: [AppRouteGuard] },
                     { path: 'update-password', component: ChangePasswordComponent, canActivate: [AppRouteGuard] },
                     { path: 'create-event', component: CreateEventComponent },
-                    
+                    {path :'historyevent',component:HistoryeventComponent},
+                   
+                
 
                     {path:'user-event', component:UserEventComponent
                     // , children:[
@@ -49,6 +52,7 @@ import {UserEventComponent} from './layout/user-event/user-event.component';
                     // ]
                 },
 
+            
                     {
                         path:"Profile",
                         component:UserProfileComponent,
