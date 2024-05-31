@@ -6,7 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { CommonModule } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { HttpClientJsonpModule } from "@angular/common/http";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 import { HttpClientModule } from "@angular/common/http";
 import { ModalModule } from "ngx-bootstrap/modal";
 import { BsDropdownModule } from "ngx-bootstrap/dropdown";
@@ -33,11 +33,10 @@ import { SidebarMenuComponent } from "./layout/sidebar-menu.component";
 describe("AppComponent", () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [
+    declarations: [
         AppComponent,
         HomeComponent,
         AboutComponent,
-
         // layout
         HeaderComponent,
         HeaderLeftNavbarComponent,
@@ -48,13 +47,11 @@ describe("AppComponent", () => {
         SidebarLogoComponent,
         SidebarUserPanelComponent,
         SidebarMenuComponent,
-      ],
-      imports: [
-        BrowserAnimationsModule,
+    ],
+    imports: [BrowserAnimationsModule,
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-        HttpClientModule,
         HttpClientJsonpModule,
         ModalModule.forChild(),
         BsDropdownModule.forRoot(),
@@ -63,28 +60,28 @@ describe("AppComponent", () => {
         RouterTestingModule,
         ServiceProxyModule,
         SharedModule.forRoot(),
-        NgxPaginationModule,
-      ],
-      providers: [
+        NgxPaginationModule],
+    providers: [
         LayoutStoreService,
         {
-          provide: AppSessionService,
-          useValue: {
-            application: {
-              version: "",
-              releaseDate: {
-                format: function () {
-                  return "";
+            provide: AppSessionService,
+            useValue: {
+                application: {
+                    version: "",
+                    releaseDate: {
+                        format: function () {
+                            return "";
+                        },
+                    },
                 },
-              },
+                getShownLoginName: function () {
+                    return 'admin';
+                }
             },
-            getShownLoginName: function(){
-              return 'admin';
-            }
-          },
         },
-      ],
-    });
+        provideHttpClient(withInterceptorsFromDi()),
+    ]
+});
     TestBed.compileComponents();
   });
 

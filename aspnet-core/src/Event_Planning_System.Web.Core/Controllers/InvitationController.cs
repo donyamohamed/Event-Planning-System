@@ -51,32 +51,19 @@ namespace Event_Planning_System.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
-    
+       
 
-    [HttpPost]
+        [HttpPost()]
         public async Task<IActionResult> SendInvitationBySms([FromBody] SmsRequest smsRequest)
         {
-            try
+            if (!ModelState.IsValid)
             {
-                if (smsRequest == null)
-                {
-                    return BadRequest("Invalid SMS request.");
-                }
-
-                if (string.IsNullOrEmpty(smsRequest.Message))
-                {
-                    return BadRequest("SMS message cannot be empty.");
-                }
-
-                await _smsService.SendSmsAsync(smsRequest.ToPhoneNumber, smsRequest.Message);
-                _logger.LogInformation("Invitation SMS sent successfully.");
-                return Ok("Invitation SMS sent successfully.");
+                return BadRequest(ModelState);
             }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error sending invitation SMS.");
-                return StatusCode(500, "Internal server error");
-            }
+
+            await _smsService.SendSmsAsync(smsRequest);
+            return Ok(new { message = "SMS sent successfully!" });
         }
     }
 }
+

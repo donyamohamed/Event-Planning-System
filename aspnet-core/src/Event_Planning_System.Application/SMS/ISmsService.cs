@@ -8,9 +8,14 @@ using System.Threading.Tasks;
 namespace Event_Planning_System.SMS
 {
 
-    public interface ISmsService : IApplicationService
-    {
-        Task SendSmsAsync(string toPhoneNumber, string message);
-    }
+   
+
+  
+        public interface ISmsService : IApplicationService
+        {
+            Task SendSmsAsync(SmsRequest smsRequest);
+        }
+    
+
 }
 

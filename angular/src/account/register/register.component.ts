@@ -21,6 +21,7 @@ declare var gapi: any;
 export class RegisterComponent extends AppComponentBase implements OnInit {
   model: RegisterInput = new RegisterInput();
   fileToUpload: File | null = null;
+  imageName:string | null=null;
   saving = false;
 
   constructor(
@@ -70,7 +71,8 @@ export class RegisterComponent extends AppComponentBase implements OnInit {
     const file = event.target.files[0];
     if (file) {
       this.model.imageFile = file;
-      console.log(this.model.imageFile );
+      this.imageName=file.name;
+      // console.log(this.model.imageFile );
     }
   }
 
@@ -105,8 +107,11 @@ export class RegisterComponent extends AppComponentBase implements OnInit {
         })
       )
       .subscribe((result: RegisterOutput) => {
+        console.log(result);
+        this._router.navigate(['/login']);
         if (!result.canLogin) {
-          this.notify.success(this.l('SuccessfullyRegistered'));
+          this.notify.success('Registration successful! Please check your email for further instructions.');
+
           this._router.navigate(['/login']);
           return;
         }

@@ -30,11 +30,11 @@ export class CreateEventComponent implements OnInit {
   }
 
   getUserData(): void {
-    this.http.get<any>('https://localhost:44311/api/services/app/User/Get?Id=1')
+    this.http.get<any>('https://localhost:44311/api/services/app/UserProfileAppServices/GetUserProfile')
       .subscribe(response => {
-        if (response && response.result && response.result.name) {
-          this.username = response.result.name; 
-          this.eventData.userId = response.result.id; 
+        if (response && response.result) {
+          this.username = response.result.name;
+          this.eventData.userId = response.result.id;
         }
       });
   }
@@ -59,6 +59,9 @@ export class CreateEventComponent implements OnInit {
     this.eventService.createEvent(this.eventData)
       .subscribe(() => {
         this.eventData = new Event();
+        alert('Event added successfully!');
+        this.setDefaultValues(); 
+     
       });
   }
 
