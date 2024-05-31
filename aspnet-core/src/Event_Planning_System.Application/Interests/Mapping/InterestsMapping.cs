@@ -24,7 +24,7 @@ namespace Event_Planning_System.Interests.Mapping
             // Mapping from GetAllInterstsDTO to Enitities.Interest
             CreateMap<GetAllInterstsDTO , Enitities.Interest>()
             .ForMember(dest => dest.Id, opt => opt.Ignore())
-             .ForMember(dest => dest.Type, opt => opt.MapFrom(src => Enum.Parse<EventCategory>(src.Type, true)));
+            .ForMember(dest => dest.Type, opt => opt.MapFrom(src => Enum.Parse<EventCategory>(src.Type, true)));
 
             // Mapping from Enitities.Interest to GetAllInterstsDTO
             CreateMap<Enitities.Interest, GetAllInterstsDTO>()

@@ -16,7 +16,7 @@ import { CreateEventComponent } from "app/layout/create-event/create-event.compo
 import { ChangePasswordComponent } from "./users/change-password/change-password.component";
 import { UserProfileComponent } from "./layout/user-profile/user-profile.component";
 import { UserEventComponent } from "./layout/user-event/user-event.component";
-import { Interests } from "@shared/Models/interests";
+import { InterstsComponent } from "./intersts/intersts.component";
 
 @NgModule({
   imports: [
@@ -78,7 +78,7 @@ import { Interests } from "@shared/Models/interests";
             component: UserProfileComponent,
             canActivate: [AppRouteGuard],
           },
-          {path:"showInterests" , component :Interests},
+          {path:"showInterests" , component:InterstsComponent},
           { path: "addNewGuest", component: CreateGuestComponent },
           {
             path: "allGuests/:id",
