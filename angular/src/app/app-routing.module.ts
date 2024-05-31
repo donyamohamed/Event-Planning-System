@@ -1,3 +1,4 @@
+
 import { CreateGuestComponent } from './guest/create-guest/create-guest.component';
 import { GetByIdGuestComponent } from './guest/get-by-id-guest/get-by-id-guest.component';
 import { DeleteGuestComponent } from './guest/delete-guest/delete-guest.component';
@@ -39,18 +40,21 @@ import {HistoryeventComponent} from './layout/historyevent/historyevent.componen
                     { path: 'create-event', component: CreateEventComponent },
                     {path :'historyevent',component:HistoryeventComponent},
                    
-                
 
-                    {path:'user-event', component:UserEventComponent
-                    // , children:[
-                    //     {path:'addNewGuest', component: CreateGuestComponent},
-                    //     { path: 'allGuests/:id', component: AllGuestComponent, children:[
-                    //     { path: 'edit/:id', component: UpdateGuestComponent },
-                    //     { path: 'delete/:id', component: DeleteGuestComponent },
-                    //     { path: 'showMore/:id', component: GetByIdGuestComponent }
-                    // ]}
-                    // ]
-                },
+
+          {
+            path: "user-event",
+            component: UserEventComponent,
+            // , children:[
+            //     {path:'addNewGuest', component: CreateGuestComponent},
+            //     { path: 'allGuests/:id', component: AllGuestComponent, children:[
+            //     { path: 'edit/:id', component: UpdateGuestComponent },
+            //     { path: 'delete/:id', component: DeleteGuestComponent },
+            //     { path: 'showMore/:id', component: GetByIdGuestComponent }
+            // ]}
+            // ]
+          },
+
 
             
                     {
@@ -72,5 +76,7 @@ import {HistoryeventComponent} from './layout/historyevent/historyevent.componen
         ])
     ],
     exports: [RouterModule]
+
+
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
