@@ -8,6 +8,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Event_Planning_System.Authorization.Users;
+using Microsoft.AspNetCore.Mvc;
+using Abp.Domain.Entities;
+using System;
 
 namespace Event_Planning_System.Interests
 {
@@ -25,7 +28,45 @@ namespace Event_Planning_System.Interests
 			_mapper = mapper;
 			_userRepository = userRepository;
     }
+		
+		public async Task Add([FromHeader] int? id)
+		{
+			var userId = AbpSession.UserId.Value;
+			var user = _userManager.GetUserById(userId);
+			var interest = await _interestRepository.FirstOrDefaultAsync(id.Value);
+			if (interest == null)
+			{
+				throw new EntityNotFoundException(typeof(Interest), id);
+			}
+			user.Interests.Add(interest);
+			await _userManager.UpdateAsync(user);
+		}
+		public async Task Delete([FromHeader] int? id)
+		{
+			var userId = AbpSession.UserId.Value;
+			var interest = await _interestRepository.GetAll()
+				.Include(i => i.Users)
+				.FirstOrDefaultAsync(i => i.Id == id.Value && i.Users.Any(u => u.Id == userId));
 
+			if (interest == null)
+			{
+				throw new EntityNotFoundException(typeof(Interest), id.Value);
+			}
+
+			var user = interest.Users.FirstOrDefault(u => u.Id == userId);
+
+			if (user != null)
+			{
+				interest.Users.Remove(user);
+				await _interestRepository.UpdateAsync(interest);
+			}
+		}
+
+		public async Task<List<Interest>> GetAllInterests()
+		{
+			var interests = await _interestRepository.GetAllListAsync();
+			return interests;
+		}
 		public async Task<List<GetUserInterestsDTO>> GetUserIntersts()
 		{
 			var userId = AbpSession.UserId.Value;
