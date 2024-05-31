@@ -5,11 +5,13 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-
+import {UpcomingEventsComponent} from './upcoming-events/upcoming-events.component'
 @Component({
   imports: [
     FormsModule,
-    CommonModule
+    CommonModule,
+    UpcomingEventsComponent,
+  
   ],
    standalone:true,
   selector: 'app-user-profile',

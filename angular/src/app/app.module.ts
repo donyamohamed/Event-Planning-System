@@ -39,15 +39,19 @@ import { SidebarLogoComponent } from './layout/sidebar-logo.component';
 import { SidebarUserPanelComponent } from './layout/sidebar-user-panel.component';
 import { SidebarMenuComponent } from './layout/sidebar-menu.component';
 import { BrowserModule } from '@angular/platform-browser';
+import { FullCalendarModule } from '@fullcalendar/angular';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CreateGuestModelComponent } from './guest/create-guest-model/create-guest-model.component';
 
+// import { CalendarModule, DateAdapter } from 'angular-calendar';
+// import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
 @NgModule({ declarations: [
         AppComponent,
         HomeComponent,
         AboutComponent,
         CreateGuestModelComponent,
+     
         // tenants
         TenantsComponent,
         CreateTenantDialogComponent,
@@ -85,5 +89,13 @@ import { CreateGuestModelComponent } from './guest/create-guest-model/create-gue
         ServiceProxyModule,
         SharedModule,
         NgxPaginationModule,
-        NgbModule], providers: [provideHttpClient(withInterceptorsFromDi(), withJsonpSupport())] })
+        NgbModule,
+        FullCalendarModule
+        // FullCalendarModule.forRoot({
+        //     plugins: [dayGridPlugin]
+        //   })
+        // CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
+      
+    ]
+        , providers: [provideHttpClient(withInterceptorsFromDi(), withJsonpSupport())] })
 export class AppModule {}

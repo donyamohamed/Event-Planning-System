@@ -73,6 +73,20 @@ namespace Event_Planning_System.Controllers
             }
             return Ok(events);
         }
+        [HttpGet]
+       
+        public async Task<IActionResult> GetUpcomingEventsForCurrentUser(long userId)
+        {
+            
+
+           
+            var events = await _eventService.GetUpcomingEventsForCurrentUserAsync(userId);
+            if (events == null || events.Count == 0)
+            {
+                return NotFound();
+            }
+            return Ok(events);
+        }
     }
 }
 
