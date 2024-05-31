@@ -13,7 +13,7 @@ namespace Event_Planning_System.Interests
 	{
 		Task<List<GetUserInterestsDTO>> GetUserIntersts();
 
-		Task <List<GetAllInterstsDTO>> GetAllIntersts();
-		Task Delete();
+		Task <List<GetAllInterstsDTO>> GetAllInterstsDTO();
+		
 	}
 }

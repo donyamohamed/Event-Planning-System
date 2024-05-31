@@ -26,12 +26,6 @@ namespace Event_Planning_System.Interests
 			_userRepository = userRepository;
     }
 
-		public Task Delete()
-		{
-			
-			throw new System.NotImplementedException();
-		}
-
 		public async Task<List<GetUserInterestsDTO>> GetUserIntersts()
 		{
 			var userId = AbpSession.UserId.Value;
@@ -43,7 +37,7 @@ namespace Event_Planning_System.Interests
 			return _mapper.Map<List<GetUserInterestsDTO>>(interests);
 		}
 
-		public async Task<List<GetAllInterstsDTO>> GetAllIntersts()
+		public async Task<List<GetAllInterstsDTO>> GetAllInterstsDTO()
 		{
 			var Interests = await _interestRepository.GetAll().ToListAsync();
 			return _mapper.Map<List<GetAllInterstsDTO>>(Interests);
@@ -57,27 +51,6 @@ namespace Event_Planning_System.Interests
             return user.Interests.Any();
 
         }
-
-
-
-        //public async Task addUserInterests(List<int> interestIds )
-        //{
-        //	var UserId = AbpSession.UserId.Value;
-        //	var user = await _userRepository.GetAsync(UserId);
-
-        //	foreach ( var interestId in interestIds)
-        //	{
-        //		if(!user.Interests.Any(a=>a.Id == interestId))
-        //		{
-        //		user.Interests.Add(new Interest() { Id = interestId });
-        //		}
-        //	}
-
-        //	 await _userRepository.UpdateAsync(user);
-
-        //      }
-
-
 
         public async Task addUserInterests(List<int> interestIds)
 		{
