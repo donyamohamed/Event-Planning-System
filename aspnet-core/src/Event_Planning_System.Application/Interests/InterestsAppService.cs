@@ -26,7 +26,6 @@ namespace Event_Planning_System.Interests
 			_userManager = userManager;
 			_mapper = mapper;
 		}
-
 		public async Task Add([FromHeader] int? id)
 		{
 			var userId = AbpSession.UserId.Value;
@@ -39,10 +38,6 @@ namespace Event_Planning_System.Interests
 			user.Interests.Add(interest);
 			await _userManager.UpdateAsync(user);
 		}
-
-
-
-
 		public async Task Delete([FromHeader] int? id)
 		{
 			var userId = AbpSession.UserId.Value;
@@ -69,7 +64,6 @@ namespace Event_Planning_System.Interests
 			var interests = await _interestRepository.GetAllListAsync();
 			return interests;
 		}
-
 		public async Task<List<GetUserInterestsDTO>> GetUserIntersts()
 		{
 			var userId = AbpSession.UserId.Value;

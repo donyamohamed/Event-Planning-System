@@ -8,6 +8,8 @@ import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { BrowserModule } from "@angular/platform-browser";
 import { RouterLink } from "@angular/router";
+import Swal from "sweetalert2";
+import { finalize } from "rxjs";
 
 @Component({
   imports: [FormsModule, CommonModule, RouterLink],
@@ -17,29 +19,85 @@ import { RouterLink } from "@angular/router";
   styleUrls: ["./user-profile.component.css"],
 })
 export class UserProfileComponent implements OnInit {
-  AddInterest(id: any,interest:any) {
-  console.log("iiiiiiiii",id);
-  this.interestsService.AddInterest(id,interest).subscribe({
-    next:i=>{
-      location.reload();
-    }
-  });
-}
+  AddInterest(id: any, interest: any) {
+    console.log("iiiiiiiii", id);
+    this.interestsService.AddInterest(id, interest).subscribe({
+      next: i => {
+        location.reload();
+      }
+    });
+  }
   openModal2(_t38: TemplateRef<any>) {
     this.bsModalRef = this.modalService.show(_t38);
 
   }
   deleteItem(id: number) {
-    var isConfirmed = confirm("Are You Sure?");
-    if (isConfirmed) {
-      this.interestsService.Delete(id).subscribe({
-        next: inter => {
-          console.log(inter);
-          location.reload();
+    Swal.fire({
+        title: 'Are you sure You Want To Delete This Interest?',
+        showClass: {
+            popup: `
+            animate__animated
+            animate__fadeInUp
+            animate__faster
+            `
+        },
+        hideClass: {
+            popup: `
+            animate__animated
+            animate__fadeOutDown
+            animate__faster
+            `
+        },
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#4242c5',
+        cancelButtonColor: '#9f9e9e',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            this.interestsService.Delete(id)
+                .pipe(
+                    finalize(() => {
+                      //  location.reload();
+                    })
+                )
+                .subscribe(() => {
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer);
+                            toast.addEventListener('mouseleave', Swal.resumeTimer);
+                        }
+                    });
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'Interest has been deleted'
+                        
+                    }).then(n=>{
+                      location.reload();
+
+                    });
+                });
         }
-      });
-    }
-  }
+    });
+}
+
+
+  // deleteItem(id: number) {
+  //   var isConfirmed = confirm("Are You Sure?");
+  //   if (isConfirmed) {
+  //     this.interestsService.Delete(id).subscribe({
+  //       next: inter => {
+  //         console.log(inter);
+  //         location.reload();
+  //       }
+  //     });
+  //   }
+  // }
   user: CurrentUser | null = null;
   bsModalRef!: BsModalRef;
   AllInterests: Interests[] | any;

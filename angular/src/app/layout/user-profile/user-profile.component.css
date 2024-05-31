@@ -15,7 +15,7 @@ body {
 .user-profile {
   border-top-left-radius: 1rem;
   border-bottom-left-radius: 1rem;
-  background: linear-gradient(135deg, #050694 10%, #FBAF1B 100%);
+  background: linear-gradient(135deg, #2626bc 90%, #FBAF1B 30%);
   color: #fff;
 }
 
@@ -62,10 +62,10 @@ body {
 
 .card-title {
   border-bottom: 2px solid #050694;
-
 }
 .order-card {
   color: #fff;
+
 }
 
 .bg-c-blue {
