@@ -1,3 +1,4 @@
+
 import { CreateGuestComponent } from './guest/create-guest/create-guest.component';
 import { GetByIdGuestComponent } from './guest/get-by-id-guest/get-by-id-guest.component';
 import { DeleteGuestComponent } from './guest/delete-guest/delete-guest.component';
@@ -16,6 +17,7 @@ import { CreateEventComponent } from 'app/layout/create-event/create-event.compo
 import { ChangePasswordComponent } from './users/change-password/change-password.component';
 import { UserProfileComponent } from './layout/user-profile/user-profile.component';
 import {UserEventComponent} from './layout/user-event/user-event.component';
+import {HistoryeventComponent} from './layout/historyevent/historyevent.component';
 
 
 
@@ -36,19 +38,25 @@ import {UserEventComponent} from './layout/user-event/user-event.component';
                     { path: 'about', component: AboutComponent, canActivate: [AppRouteGuard] },
                     { path: 'update-password', component: ChangePasswordComponent, canActivate: [AppRouteGuard] },
                     { path: 'create-event', component: CreateEventComponent },
-                    
+                    {path :'historyevent',component:HistoryeventComponent},
+                   
 
-                    {path:'user-event', component:UserEventComponent
-                    // , children:[
-                    //     {path:'addNewGuest', component: CreateGuestComponent},
-                    //     { path: 'allGuests/:id', component: AllGuestComponent, children:[
-                    //     { path: 'edit/:id', component: UpdateGuestComponent },
-                    //     { path: 'delete/:id', component: DeleteGuestComponent },
-                    //     { path: 'showMore/:id', component: GetByIdGuestComponent }
-                    // ]}
-                    // ]
-                },
 
+          {
+            path: "user-event",
+            component: UserEventComponent,
+            // , children:[
+            //     {path:'addNewGuest', component: CreateGuestComponent},
+            //     { path: 'allGuests/:id', component: AllGuestComponent, children:[
+            //     { path: 'edit/:id', component: UpdateGuestComponent },
+            //     { path: 'delete/:id', component: DeleteGuestComponent },
+            //     { path: 'showMore/:id', component: GetByIdGuestComponent }
+            // ]}
+            // ]
+          },
+
+
+            
                     {
                         path:"Profile",
                         component:UserProfileComponent,
@@ -68,5 +76,7 @@ import {UserEventComponent} from './layout/user-event/user-event.component';
         ])
     ],
     exports: [RouterModule]
+
+
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

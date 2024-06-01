@@ -1,41 +1,27 @@
-<h1 class="m-3" style="color: #1d2027; font-size: 2.5rem; text-align: center">
-  Profile
-</h1>
+
+
+<!-- profile.component.html -->
+<h1 class="m-3" style="color: #1D2027; font-size: 2.5rem; text-align: center;">Profile</h1>
 <div class="page-content page-container" id="page-content">
   <div class="padding">
     <div class="row container d-flex justify-content-center">
       <div class="col-lg-8 col-md-10">
         <div class="card user-card-full shadow-lg">
           <div class="row no-gutters">
-            <div
-              class="col-md-4 user-profile text-center d-flex flex-column align-items-center justify-content-center"
-            >
-              <img
-                [src]="getUserImage()"
-                alt="User-Profile-Image"
-                class="img-fluid rounded-circle"
-              />
+            <div class="col-md-4 user-profile text-center d-flex flex-column align-items-center justify-content-center">
+              <img [src]="getUserImage()" alt="User-Profile-Image" class="img-fluid rounded-circle">
               <h5>{{ user?.userName }}</h5>
               <p>Planner</p>
-              <button
-                class="btn btn-outline-light btn-sm mt-2"
-                id="modalShow"
-                (click)="openModal(modalTemplate)"
-              >
+              <button class="btn btn-outline-light btn-sm mt-2" id="modalShow" (click)="openModal(modalTemplate)">
                 <i class="fas fa-edit"></i> Edit
               </button>
             </div>
             <div class="col-md-8">
               <div class="card-body">
-                <h5 class="card-title mb-3" style="color: #050694">
-                  Information
-                </h5>
-                <br /><br />
+                <h5 class="card-title mb-3 " style="color: #050694;font-size: 25px;">Information</h5><br><br>
                 <div class="row">
-                  <div class="col-sm-6 mb-3">
-                    <p class="font-weight-bold mb-1" style="margin-left: 0%">
-                      Email
-                    </p>
+                  <div class="col-sm-6 " style="margin-left: 0%;">
+                    <p class="font-weight-bold mb-1">Email</p>
                     <h6 class="text-muted">{{ user?.emailAddress }}</h6>
                   </div>
                   <div class="col-sm-6 mb-3">
@@ -46,9 +32,7 @@
                 <div class="row">
                   <div class="col-sm-6 mb-3">
                     <p class="font-weight-bold mb-1">Gender</p>
-                    <h6 class="text-muted">
-                      {{ user?.genderUser == "0" ? "Female" : "Male" }}
-                    </h6>
+                    <h6 class="text-muted">{{ user?.genderUser === '0' ? 'Female' : 'Male' }}</h6>
                   </div>
                   <div class="col-sm-6 mb-3">
                     <p class="font-weight-bold mb-1">Name</p>
@@ -58,32 +42,55 @@
               </div>
             </div>
           </div>
+        </div><br><br>
+        <!-- Interests Section -->
+        <div class="interests-header">
+          <h4 style=" border-left: 2px solid rgb(66, 66, 215);color: #050694;">My Interests</h4>
+          <button class="btn btn-outline-dark ml-3" (click)="openModal2(AddInterests)" >
+            <i class="fas fa-plus"></i> Add Interest
+          </button>
+        </div>
+       
+        <div class="bg-white p-2 mainCard " style="margin-bottom: 30px;">
+          <div class="interests-container">
+           
+            
+            <h4 *ngIf="AllInterests.result.length === 0" class=" text-center " style="color: #FBAF1B;margin: auto;margin-top: 25%;">Please choose some interests! 🍒</h4>
+            <div class=" card1" *ngFor="let interest of AllInterests.result" >
+
+              <h6>{{ getStatusLabel(interest.type) }}</h6>
+              <button class="btn btn-close" (click)="deleteItem(interest.id)"></button>
+            </div>
+          </div>
+         
+            <img src="../../../assets/img/eventsPic.svg" width="50%" >
+         
         </div>
       </div>
     </div>
   </div>
 </div>
-<!-- "result": {
-  "id": 4,
-  "userName": "Eman_mo",
-  "name": "Eman",
-  "emailAddress": "eman@gmail.com",
-  "age": 21,
-  "genderUser": 1,
-  "imageName": "user.jpg"
-}, -->
 
+
+
+
+
+
+
+<!-- upcoming -->
 <app-upcoming-events></app-upcoming-events>
+
+
+
+
+
+
+
 
 <ng-template #modalTemplate>
   <div class="modal-header">
-    <h4 class="modal-title" style="color: #1d2027">Edit My Profile</h4>
-    <button
-      type="button"
-      class="close"
-      aria-label="Close"
-      (click)="bsModalRef.hide()"
-    >
+    <h4 class="modal-title" style="color: #1D2027;">Edit My Profile</h4>
+    <button type="button" class="close" aria-label="Close" (click)="bsModalRef.hide()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -91,160 +98,60 @@
     <form #createForm="ngForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
         <label for="userName">User Name:</label>
-        <input
-          type="text"
-          class="form-control"
-          id="userName"
-          name="userName"
-          [(ngModel)]="user.userName"
-          required
-          minlength="3"
-          maxlength="50"
-          pattern="^[a-zA-Z0-9]+(?:[_-][a-zA-Z0-9]+)*$"
-        />
-        <div
-          *ngIf="
-            createForm.controls['userName'].invalid &&
-            (createForm.controls['userName'].dirty ||
-              createForm.controls['userName'].touched)
-          "
-        >
-          <div
-            *ngIf="createForm?.controls['userName']?.errors?.required"
-            class="err"
-          >
-            User Name is required.
-          </div>
-          <div
-            *ngIf="createForm?.controls['userName']?.errors?.minlength"
-            class="err"
-          >
-            User Name must be at least 3 characters long.
-          </div>
-          <div
-            *ngIf="createForm?.controls['userName']?.errors?.maxlength"
-            class="err"
-          >
-            User Name must not exceed 50 characters.
-          </div>
-          <div
-            *ngIf="createForm?.controls['userName']?.errors?.pattern"
-            class="err"
-          >
-            Invalid username format.
-          </div>
+        <input type="text" class="form-control" id="userName" name="userName" [(ngModel)]="user.userName" required minlength="3" maxlength="50" pattern="^[a-zA-Z0-9]+(?:[_-][a-zA-Z0-9]+)*$">
+        <div *ngIf="createForm.controls['userName'].invalid && (createForm.controls['userName'].dirty || createForm.controls['userName'].touched)">
+          <div *ngIf="createForm?.controls['userName']?.errors?.required" class="err">User Name is required.</div>
+          <div *ngIf="createForm?.controls['userName']?.errors?.minlength" class="err">User Name must be at least 3 characters long.</div>
+          <div *ngIf="createForm?.controls['userName']?.errors?.maxlength" class="err">User Name must not exceed 50 characters.</div>
+          <div *ngIf="createForm?.controls['userName']?.errors?.pattern" class="err">Invalid username format.</div>
         </div>
       </div>
       <div class="form-group">
         <label for="email">Email:</label>
-        <input
-          type="email"
-          class="form-control"
-          id="email"
-          name="emailAddress"
-          [(ngModel)]="user.emailAddress"
-          required
-          email
-        />
-        <div
-          *ngIf="
-            createForm?.controls['emailAddress']?.invalid &&
-            (createForm?.controls['email']?.dirty ||
-              createForm?.controls['email']?.touched)
-          "
-        >
-          <div
-            *ngIf="createForm?.controls['emailAddress']?.errors?.required"
-            class="err"
-          >
-            Email is required.
-          </div>
-          <div
-            *ngIf="createForm?.controls['emailAddress']?.errors?.email"
-            class="err"
-          >
-            Invalid email format.
-          </div>
+        <input type="email" class="form-control" id="email" name="emailAddress" [(ngModel)]="user.emailAddress" required>
+        <div *ngIf="createForm?.controls['emailAddress']?.invalid && (createForm?.controls['email']?.dirty || createForm?.controls['email']?.touched)">
+          <div *ngIf="createForm?.controls['emailAddress']?.errors?.required" class="err">Email is required.</div>
+          <div *ngIf="createForm?.controls['emailAddress']?.errors?.email" class="err">Invalid email format.</div>
         </div>
       </div>
-
       <div class="form-group">
         <label for="age">Age:</label>
-        <input
-          type="number"
-          class="form-control"
-          id="age"
-          min="16"
-          max="70"
-          name="age"
-          [(ngModel)]="user.age"
-          required
-        />
-        <div
-          *ngIf="
-            createForm?.controls['age']?.invalid &&
-            (createForm?.controls['age'].dirty ||
-              createForm?.controls['age']?.touched)
-          "
-        >
-          <div
-            *ngIf="createForm?.controls['age']?.errors?.required"
-            class="err"
-          >
-            Age is required.
-          </div>
-          <div *ngIf="createForm?.controls['age']?.errors?.min" class="err">
-            Age must be at least 16.
-          </div>
-          <div *ngIf="createForm?.controls['age']?.errors?.max" class="err">
-            Age must not exceed 70.
-          </div>
+        <input type="number" class="form-control" id="age" min="16" max="70" name="age" [(ngModel)]="user.age" required>
+        <div *ngIf="createForm?.controls['age']?.invalid && (createForm?.controls['age'].dirty || createForm?.controls['age']?.touched)">
+          <div *ngIf="createForm?.controls['age']?.errors?.required" class="err">Age is required.</div>
+          <div *ngIf="createForm?.controls['age']?.errors?.min" class="err">Age must be at least 16.</div>
+          <div *ngIf="createForm?.controls['age']?.errors?.max" class="err">Age must not exceed 70.</div>
         </div>
       </div>
       <div class="form-group">
         <label for="genderUser">Gender:</label>
-        <select
-          [(ngModel)]="user.genderUser"
-          required
-          name="genderUser"
-          class="form-control"
-        >
+        <select [(ngModel)]="user.genderUser" required name="genderUser" class="form-control">
           <option value="1">Male</option>
           <option value="0">Female</option>
         </select>
-        <div
-          *ngIf="
-            createForm?.controls['genderUser']?.invalid &&
-            (createForm?.controls['genderUser']?.dirty ||
-              createForm?.controls['genderUser']?.touched)
-          "
-        >
-          <div
-            *ngIf="createForm?.controls['genderUser'].errors?.required"
-            class="err"
-          >
-            Gender is required.
-          </div>
+        <div *ngIf="createForm?.controls['genderUser']?.invalid && (createForm?.controls['genderUser']?.dirty || createForm?.controls['genderUser']?.touched)">
+          <div *ngIf="createForm?.controls['genderUser'].errors?.required" class="err">Gender is required.</div>
         </div>
       </div>
       <div class="form-group">
         <label for="imagePath1">Image:</label>
-        <input
-          type="file"
-          class="form-control"
-          id="imagePath1"
-          name="imagePath"
-          (change)="onFileSelected($event)"
-          required
-        />
+        <input type="file" class="form-control" id="imagePath1" name="imagePath" (change)="onFileSelected($event)" required>
       </div>
-      <button
-        type="submit"
-        [disabled]="createForm.invalid"
-        class="btn btn-primary"
-      >
-        Submit
-      </button>
+      <button type="submit" [disabled]="createForm.invalid" class="btn btn-primary">Submit</button>
     </form>
+  </div>
+</ng-template>
+<!--add intersts modal section-->
+<ng-template #AddInterests>
+  <div class="modal-header">
+    <h4 class="modal-title" style="color: #1D2027;">Add Interests 💖</h4>
+    <button type="button" class="close" aria-label="Close" (click)="bsModalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body grid-container">
+    <div *ngFor="let interest of getFilteredInterests()" >
+      <button class=" btn " style="display: grid;width: 150px;background-color: #3e3ec1;color: white;margin: 7px;" (click)="AddInterest(interest.id,interest)"><i class="fa fa-plus"></i>{{ getStatusLabel(interest.type)}}</button>
+    </div>
   </div>
 </ng-template>

@@ -32,6 +32,7 @@ namespace Event_Planning_System.Event
             _mapper = mapper;
         }
 
+
         public async Task<List<EventDto>> GetUserEventsAsync(long userId)
         {
             var events = await _repository.GetAllListAsync(e => e.UserId == userId);
@@ -48,5 +49,12 @@ namespace Event_Planning_System.Event
         }
 
 
+        public async Task<List<EventDto>> GetHistoryEventAsync(long userId)
+        {
+            var today = DateTime.Today;
+            var events = await _repository.GetAllListAsync(e => e.UserId == userId & e.StartDate < today & e.EndDate < today);
+            return _mapper.Map<List<EventDto>>(events);
+        }
+       
     }
 }

@@ -1,0 +1,23 @@
+<div *ngIf="historyevent && historyevent.length > 0">
+    <h1>Event History</h1>
+    <div *ngFor="let event of historyevent" class="container">
+        <div class="event">
+            <div class="eventp">
+                <div class="eventname">
+                    <h2>{{ event.name }}</h2>
+                </div>
+                <div class="todo">
+                    <a routerLink="/app/create-event" class="btn">To do CheckList</a>
+                </div>
+            </div>
+            <ul>
+                <li>
+                    <span class="icon">📅 Start Date:</span> {{ event.startDate }}
+                </li>
+                <li>
+                    <span class="icon">📅 End Date:</span> {{ event.endDate }}
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
