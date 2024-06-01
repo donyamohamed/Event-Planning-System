@@ -13,6 +13,7 @@ namespace Event_Planning_System.BudgetExpense.Dto
     public class BudgetExpenseDto : IEntityDto<int>
     {
         public int Id { get; set; }
+
         [Range(0, int.MaxValue, ErrorMessage = "Amount must be a non-negative integer.")]
         public int Amount { get; set; }
 
@@ -25,10 +26,12 @@ namespace Event_Planning_System.BudgetExpense.Dto
         public DateTime Date { get; set; }
 
         public long UserId { get; set; }
+
         public bool IsTransient()
         {
             throw new NotImplementedException();
         }
-
     }
+
+
 }

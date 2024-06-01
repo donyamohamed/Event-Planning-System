@@ -1,0 +1,113 @@
+h2 {
+  color: #050794;
+  text-align: center;
+  font-size: 42px;
+}
+h2 img {
+  width: 38px;
+  animation: swing 2s ease-in-out infinite;
+  background-color: white;
+}
+.btn-groups {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 280px;
+  margin: 20px auto;
+}
+
+.btn-groups .btn {
+  background-color: #0027ab82;
+  color: #eeeeee;
+  width: 100%;
+}
+.btn-groups .btn:nth-child(1) {
+  border-radius: 15px 0px 0px 15px;
+}
+.btn-groups .btn:nth-child(2) {
+  border-radius: 0px 15px 15px 0px;
+}
+.btn-groups .btn.active {
+  background-color: #fbaf1b;
+  color: white;
+}
+
+.cards {
+  display: flex;
+  flex-direction: column;
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.card {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+
+  margin: 20px 10px;
+}
+
+.card-header {
+  background-color: #788dd1;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 10px 15px;
+}
+.card-header p {
+  margin: 0;
+  padding: 0 10px;
+  width: 100%;
+}
+.card-header p:nth-child(2) {
+  display: flex;
+  justify-content: end;
+}
+.card-title {
+  margin: 0;
+}
+
+.card-subtitle {
+  margin: 0;
+  color: #2d2c2c;
+}
+
+.card-body {
+  padding: 15px 25px;
+}
+
+.event-details {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.card-text {
+  margin: 0;
+  margin-bottom: 10px;
+}
+/* .card.mb-3 {
+  background-color: #fbaf1b1a;
+  color: #050794;
+  border-color: #050794;
+}
+.card-body {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+} */
+.fc-day.fc-day-fri.fc-day-today.fc-daygrid-day {
+  background-color: #f5ff0791 !important;
+}
+
+@keyframes swing {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(15deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}

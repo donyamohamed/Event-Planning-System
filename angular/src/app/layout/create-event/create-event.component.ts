@@ -5,6 +5,7 @@ import { Enumerator } from "../../../shared/Models/Event";
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-create-event',
@@ -59,9 +60,15 @@ export class CreateEventComponent implements OnInit {
     this.eventService.createEvent(this.eventData)
       .subscribe(() => {
         this.eventData = new Event();
-        alert('Event added successfully!');
-        this.setDefaultValues(); 
-     
+        swal.fire({
+          title: 'Success',
+          text: 'Event added successfully!',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        }).then(()=>{
+          window.location.href="/app/user-event"
+        })
+       
       });
   }
 

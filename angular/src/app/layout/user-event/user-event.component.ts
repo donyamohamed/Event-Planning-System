@@ -14,7 +14,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 })
 export class UserEventComponent implements OnInit {
   events: Event[] = [];
-  userId: number = 3;
+  userId: number = 1;
 
   constructor(private userEventsService: UserEventsService, private activatedRoute:ActivatedRoute, private route:Router) {}
 
