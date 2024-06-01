@@ -40,14 +40,14 @@ import { SidebarUserPanelComponent } from './layout/sidebar-user-panel.component
 import { SidebarMenuComponent } from './layout/sidebar-menu.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { CreateGuestModelComponent } from './guest/create-guest-model/create-guest-model.component';
+// import { CreateGuestModelComponent } from './guest/create-guest-model/create-guest-model.component';
 
 
 @NgModule({ declarations: [
         AppComponent,
         HomeComponent,
         AboutComponent,
-        CreateGuestModelComponent,
+       // CreateGuestModelComponent,
         // tenants
         TenantsComponent,
         CreateTenantDialogComponent,

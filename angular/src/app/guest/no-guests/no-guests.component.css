@@ -1,0 +1,16 @@
+.imgDiv img{
+    width: 300px;
+}
+.oneByOne{
+    background-color: #b3d7f7;
+}
+.excel{
+    background-color: #CAEAD8;
+}
+.excel, .oneByOne{
+    box-shadow: rgb(209, 209, 209) 5px 5px 50px;
+}
+.excel:hover, .oneByOne:hover{
+    box-shadow: rgb(190, 190, 190) 5px 5px 50px;
+    cursor: pointer;
+}

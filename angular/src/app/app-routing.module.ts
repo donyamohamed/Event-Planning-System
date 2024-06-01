@@ -1,3 +1,4 @@
+import { NoGuestsComponent } from './guest/no-guests/no-guests.component';
 import { CreateGuestComponent } from './guest/create-guest/create-guest.component';
 import { GetByIdGuestComponent } from './guest/get-by-id-guest/get-by-id-guest.component';
 import { DeleteGuestComponent } from './guest/delete-guest/delete-guest.component';
@@ -55,6 +56,7 @@ import {UserEventComponent} from './layout/user-event/user-event.component';
                         canActivate: [AppRouteGuard] 
                     },
                     {path:'addNewGuest', component: CreateGuestComponent},
+                    {path:'NoGuests/:id', component: NoGuestsComponent},
                 { path: 'allGuests/:id', component: AllGuestComponent, children:[
                 { path: 'edit/:id', component: UpdateGuestComponent },
                 { path: 'delete/:id', component: DeleteGuestComponent },
