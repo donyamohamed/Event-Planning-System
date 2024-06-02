@@ -33,15 +33,16 @@ export class UserEventComponent implements OnInit {
       }
     );
   } 
-  guestAppearing(id:number){
-    this.route.navigateByUrl("app/allGuests/"+id)
-    // if(AllGuestComponent.guestsCount>0){
-    // }else{
-    //   this.route.navigateByUrl("app/allGuests")
-    //   console.log("hg yhhhg hgy");
-    //   console.log(AllGuestComponent.guestsCount);
-    // }
-    
-    
+  guestAppearing(event:Event){
+    if(this.events.length==0){
+      this.route.navigateByUrl("app/NoGuests/"+event.id)
+
+    }
+    else{
+
+      this.route.navigateByUrl("app/allGuests/"+event.id, { state:{event}})
+      // this.route.navigate(['/allGuests', event.id], { state: { event } });
+    }
+      
   } 
 }

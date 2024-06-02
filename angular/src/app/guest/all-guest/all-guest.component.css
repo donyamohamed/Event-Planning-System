@@ -12,14 +12,25 @@
   .imageDiv img{
     width: 200px;
   }
-  .btnDiv button{
+  .btnDiv button ,.GuestCount{
     background-color: #050794;
     color: white;
     border: 1px solid #050794;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
   }
   .btnDiv button:hover{
     background-color: white;
     color: #050794;
+  }
+  
+  .btn:disabled,.btnDiv button:disabled:hover{
+    background-color: #050794 !important;
+    color: white !important;
+    cursor: not-allowed !important;
+    pointer-events: visible !important;
   }
   .sendInvitation a{
     background-color: #FBAF1B;
@@ -29,4 +40,4 @@
     color: #FBAF1B;
     background-color: white;
   }
-  
+ 

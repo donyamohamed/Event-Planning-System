@@ -1,3 +1,4 @@
+import { NoGuestsComponent } from './guest/no-guests/no-guests.component';
 
 import { CreateGuestComponent } from './guest/create-guest/create-guest.component';
 import { GetByIdGuestComponent } from './guest/get-by-id-guest/get-by-id-guest.component';
@@ -64,6 +65,7 @@ import { InterstsComponent } from "./intersts/intersts.component";
                     },
                     { path: "showInterests", component: InterstsComponent },
                     {path:'addNewGuest', component: CreateGuestComponent},
+                    {path:'NoGuests/:id', component: NoGuestsComponent},
                 { path: 'allGuests/:id', component: AllGuestComponent, children:[
                 { path: 'edit/:id', component: UpdateGuestComponent },
                 { path: 'delete/:id', component: DeleteGuestComponent },

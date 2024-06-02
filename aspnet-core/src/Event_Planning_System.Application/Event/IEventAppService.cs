@@ -14,6 +14,8 @@ namespace Event_Planning_System.Event
     {
 
         Task<List<EventDto>> GetUserEventsAsync(long userId);
+        Task<List<EventDto>> GetUpcomingEventsForCurrentUserAsync(long userId);
+
 
         Task <List<EventDto>> GetHistoryEventAsync(long userId);
 

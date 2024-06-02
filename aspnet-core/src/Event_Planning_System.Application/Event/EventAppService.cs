@@ -39,6 +39,16 @@ namespace Event_Planning_System.Event
             return _mapper.Map<List<EventDto>>(events);
 
         }
+
+        public async Task<List<EventDto>> GetUpcomingEventsForCurrentUserAsync(long userId)
+        {
+           // Assuming you have a way to get the current user's ID
+            var today = DateTime.Today;
+            var upcomingEvents = await _repository.GetAllListAsync(e => e.UserId == userId && e.StartDate >= today);
+            return _mapper.Map<List<EventDto>>(upcomingEvents);
+        }
+
+
         public async Task<List<EventDto>> GetHistoryEventAsync(long userId)
         {
             var today = DateTime.Today;

@@ -10,9 +10,9 @@ import { BrowserModule } from "@angular/platform-browser";
 import { RouterLink } from "@angular/router";
 import Swal from "sweetalert2";
 import { finalize } from "rxjs";
-
+import {UpcomingEventsComponent} from './upcoming-events/upcoming-events.component'
 @Component({
-  imports: [FormsModule, CommonModule, RouterLink],
+  imports: [FormsModule, CommonModule, RouterLink,UpcomingEventsComponent],
   standalone: true,
   selector: "app-user-profile",
   templateUrl: "./user-profile.component.html",
