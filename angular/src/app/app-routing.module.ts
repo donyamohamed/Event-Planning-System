@@ -19,7 +19,7 @@ import { ChangePasswordComponent } from './users/change-password/change-password
 import { UserProfileComponent } from './layout/user-profile/user-profile.component';
 import {UserEventComponent} from './layout/user-event/user-event.component';
 import {HistoryeventComponent} from './layout/historyevent/historyevent.component';
-
+import { InterstsComponent } from "./intersts/intersts.component";
 
 
 
@@ -63,6 +63,7 @@ import {HistoryeventComponent} from './layout/historyevent/historyevent.componen
                         component:UserProfileComponent,
                         canActivate: [AppRouteGuard] 
                     },
+                    { path: "showInterests", component: InterstsComponent },
                     {path:'addNewGuest', component: CreateGuestComponent},
                     {path:'NoGuests/:id', component: NoGuestsComponent},
                 { path: 'allGuests/:id', component: AllGuestComponent, children:[
