@@ -60,6 +60,7 @@ export class CreateEventComponent implements OnInit {
     this.eventService.createEvent(this.eventData)
       .subscribe(() => {
         this.eventData = new Event();
+
         swal.fire({
           title: 'Success',
           text: 'Event added successfully!',
@@ -69,6 +70,7 @@ export class CreateEventComponent implements OnInit {
           window.location.href="/app/user-event"
         })
        
+
       });
   }
 

@@ -23,6 +23,7 @@
     "@angular/router": "^18.0.0",
     "@aspnet/signalr": "^1.0.27",
     "@fortawesome/fontawesome-free": "^6.4.2",
+
     "@fullcalendar/angular": "^6.1.10",
     "@fullcalendar/bootstrap5": "^6.1.13",
     "@fullcalendar/core": "^6.1.13",
@@ -30,13 +31,16 @@
     "@fullcalendar/interaction": "^6.1.13",
     "@fullcalendar/list": "^6.1.13",
     "@fullcalendar/timegrid": "^6.1.13",
+
     "@ng-bootstrap/ng-bootstrap": "^16.0.0",
     "@popperjs/core": "^2.11.8",
     "abp-ng2-module": "10.0.0",
     "abp-web-resources": "^5.9.1",
     "admin-lte-css-only": "^3.2.0",
     "bootstrap": "^5.3.3",
+
     "bootstrap-icons": "^1.11.3",
+
     "core-js": "^3.33.3",
     "famfamfam-flags": "^1.0.0",
     "gapi-script": "^1.2.0",

@@ -16,8 +16,10 @@ namespace Event_Planning_System.Event.Mapping
 
             // Mapping from EventDto to Enitities.Event
             CreateMap<EventDto, Enitities.Event>()
+
          .ForMember(dest => dest.Id, opt => opt.Ignore())
          .ForMember(dest => dest.Category, opt => opt.MapFrom(src => Enum.Parse<EventCategory>(src.Category, true)));
         }
+
         }
     }

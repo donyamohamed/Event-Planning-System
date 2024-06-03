@@ -1,9 +1,12 @@
+
 import { ActivatedRoute, Router } from "@angular/router";
 import { GuestService } from "./../../../shared/Services/guest.service";
 import { Component, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { Subscription } from "rxjs";
+
 //import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
+
 import { Guest } from "@shared/Models/guest";
 import { FormsModule } from "@angular/forms";
 
@@ -21,12 +24,16 @@ export class CreateGuestComponent //implements OnInit
   constructor(
     private guestSer: GuestService,
     public activatedRoute: ActivatedRoute,
+
     //public modalService: NgbModal,
+
     public router: Router
   ) {}
 
   openModal(): void {
+
     //this.modalService.open(CreateGuestModelComponent);
+
   }
 
   Save() {

@@ -8,7 +8,9 @@ using Event_Planning_System.Enitities;
 using Event_Planning_System.Interests.DTO;
 using Event_Planning_System.Users.Dto;
 using Event_Planning_System.Authorization.Users;
+
 using Event_Planning_System.Event.Dto;
+
 
 
 namespace Event_Planning_System.Interests.Mapping
@@ -17,6 +19,7 @@ namespace Event_Planning_System.Interests.Mapping
 	{
 		public InterestsMapping()
 		{
+
             CreateMap<User, UserDto>();
 			CreateMap<Interest, GetUserInterestsDTO>();
             //.ForMember(dest => dest.Users, opt => opt.MapFrom(src => src.Users));
@@ -31,5 +34,6 @@ namespace Event_Planning_System.Interests.Mapping
            .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type.ToString()));
            
         }
+
 	}
 }

@@ -1,7 +1,9 @@
+
 import { GuestResponse } from "./../guest-response.model";
 import { InvitationService } from "./../../../shared/Services/invitation.service";
 import { Component, OnDestroy, OnInit, TemplateRef } from "@angular/core";
 import { CommonModule } from "@angular/common";
+
 import { Subscription } from "rxjs";
 import { GuestService } from "../../../shared/Services/guest.service";
 import { Guest } from "../../../shared/Models/guest";
@@ -11,6 +13,7 @@ import {
   RouterLink,
   RouterOutlet,
 } from "@angular/router";
+
 import {
   FormBuilder,
   FormGroup,
@@ -18,16 +21,20 @@ import {
   ReactiveFormsModule,
   Validators,
 } from "@angular/forms";
+
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
 import { GuestGetResponse } from "../guest-get-response";
 import { GuestPerEventResponse } from "../guest-per-event-response";
 import { EmailRequest } from "../../../shared/Models/EmailRequest";
+
 import { Event } from "../../../shared/Models/Event";
 import { SmsRequest } from "@shared/Models/Sms";
+
 
 @Component({
   selector: "app-all-guest",
   standalone: true,
+
   imports: [
     CommonModule,
     RouterLink,
@@ -35,16 +42,19 @@ import { SmsRequest } from "@shared/Models/Sms";
     FormsModule,
     ReactiveFormsModule,
   ],
+
   templateUrl: "./all-guest.component.html",
   styleUrl: "./all-guest.component.css",
 })
 export class AllGuestComponent implements OnInit {
+
   subscribe: Subscription | null = null;
   subGuest: Subscription | null = null;
   guests: Guest[] = [];
   dataTable: any;
   guest: Guest = new Guest();
   guestEdit: Guest = new Guest();
+
   modalRef: BsModalRef;
   bsModalRef: any;
   guestForm: FormGroup;
@@ -56,11 +66,13 @@ export class AllGuestComponent implements OnInit {
   private smsObj: SmsRequest=new SmsRequest();
 
   //constructor
+
   constructor(
     public guestSer: GuestService,
     private modalService: BsModalService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
+
     private invitation: InvitationService,
     private fb: FormBuilder
   ) {
@@ -89,11 +101,13 @@ export class AllGuestComponent implements OnInit {
             console.log(this.guestCount);
             this.router.navigateByUrl("/app/NoGuests/" + this.idEvent);
           }
+
         },
         error: (err) => {
           console.log(err);
         },
       });
+
     });
     
   }
@@ -116,6 +130,7 @@ export class AllGuestComponent implements OnInit {
     });
     // });
   }
+
 
   Save() {
     if (this.guestForm.valid) {
@@ -218,3 +233,4 @@ export class AllGuestComponent implements OnInit {
 
   }
 } ////end of Delete function
+

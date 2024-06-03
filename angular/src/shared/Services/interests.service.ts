@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
+
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+
 import { Interests } from '@shared/Models/interests';
 
 @Injectable({
@@ -9,6 +11,7 @@ export class InterestsService {
 
   constructor(public http:HttpClient) { }
   getUrl="https://localhost:44311/api/services/app/Interests/GetUserIntersts";
+
   deleteUrl="https://localhost:44311/api/services/app/Interests/Delete";
   GetAll="https://localhost:44311/api/services/app/Interests/GetAllInterests";
   addUrl="https://localhost:44311/api/services/app/Interests/Add";
@@ -36,5 +39,6 @@ public AddInterest(interestId: any, interestData: any) {
   };
   return this.http.post(this.addUrl, interestData, options);
 }
+
 
 }

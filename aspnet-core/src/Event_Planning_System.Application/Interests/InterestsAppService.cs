@@ -8,24 +8,29 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Event_Planning_System.Authorization.Users;
+
 using Microsoft.AspNetCore.Mvc;
 using Abp.Domain.Entities;
 using System;
+
 
 namespace Event_Planning_System.Interests
 {
 	public class InterestsAppService : ApplicationService, IUserIntersets
 	{
 		private readonly IRepository<Interest, int> _interestRepository;
+=
 		private readonly IRepository<User, long> _userRepository;
         private readonly UserManager _userManager;
 		private readonly IMapper _mapper;
 
 		public InterestsAppService(IRepository<Interest, int> interestRepository, UserManager userManager, IMapper mapper , IRepository<User, long> userRepository)
+
 		{
 			_interestRepository = interestRepository;
 			_userManager = userManager;
 			_mapper = mapper;
+
 			_userRepository = userRepository;
     }
 		
@@ -67,6 +72,7 @@ namespace Event_Planning_System.Interests
 			var interests = await _interestRepository.GetAllListAsync();
 			return interests;
 		}
+
 		public async Task<List<GetUserInterestsDTO>> GetUserIntersts()
 		{
 			var userId = AbpSession.UserId.Value;
@@ -77,6 +83,7 @@ namespace Event_Planning_System.Interests
 
 			return _mapper.Map<List<GetUserInterestsDTO>>(interests);
 		}
+
 
 		public async Task<List<GetAllInterstsDTO>> GetAllInterstsDTO()
 		{
@@ -104,6 +111,7 @@ namespace Event_Planning_System.Interests
             await _userRepository.UpdateAsync(user);
 
 		}
+
 
 	}
 }

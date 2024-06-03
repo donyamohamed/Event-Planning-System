@@ -33,6 +33,7 @@ export class UserEventComponent implements OnInit {
       }
     );
   } 
+
   guestAppearing(event:Event){
     if(this.events.length==0){
       this.route.navigateByUrl("app/NoGuests/"+event.id)
@@ -44,5 +45,6 @@ export class UserEventComponent implements OnInit {
       // this.route.navigate(['/allGuests', event.id], { state: { event } });
     }
       
+
   } 
 }

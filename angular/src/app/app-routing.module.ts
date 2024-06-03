@@ -1,3 +1,4 @@
+
 import { NoGuestsComponent } from './guest/no-guests/no-guests.component';
 
 import { CreateGuestComponent } from './guest/create-guest/create-guest.component';
@@ -43,6 +44,7 @@ import { InterstsComponent } from "./intersts/intersts.component";
                    
 
 
+
           {
             path: "user-event",
             component: UserEventComponent,
@@ -57,12 +59,14 @@ import { InterstsComponent } from "./intersts/intersts.component";
           },
 
 
+
             
                     {
                         path:"Profile",
                         component:UserProfileComponent,
                         canActivate: [AppRouteGuard] 
                     },
+                  {path:"todolist/:id",component:  TodoListComponent},
                     { path: "showInterests", component: InterstsComponent },
                     {path:'addNewGuest', component: CreateGuestComponent},
                     {path:'NoGuests/:id', component: NoGuestsComponent},
@@ -79,6 +83,7 @@ import { InterstsComponent } from "./intersts/intersts.component";
         ])
     ],
     exports: [RouterModule]
+
 
 
 })
