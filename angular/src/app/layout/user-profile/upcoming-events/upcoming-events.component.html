@@ -1,0 +1,64 @@
+<div class="container mt-4">
+  <h2>
+    <img src="assets/img/next-date.png" alt="icon" />
+    Upcoming Events
+  </h2>
+  <div class="btn-groups mb-3">
+    <button
+      type="button"
+      class="btn"
+      [ngClass]="{ active: activeButton === 'calendar' }"
+      (click)="showCalendar()"
+    >
+      Calendar View
+    </button>
+    <button
+      type="button"
+      class="btn"
+      [ngClass]="{ active: activeButton === 'details' }"
+      (click)="showDetails()"
+    >
+      Details View
+    </button>
+  </div>
+
+  <div *ngIf="showCalendarView; else cardView" class="calendar-container">
+    <full-calendar [options]="calendarOptions"></full-calendar>
+  </div>
+
+  <ng-template #cardView>
+    <div
+      *ngIf="upcomingEvents && upcomingEvents.length > 0; else noEvents"
+      class="cards"
+    >
+      <div *ngFor="let event of upcomingEvents" class="card mb-3">
+        <div class="card-header">
+          <p>
+            Event Name: <span>{{ event.name }}</span>
+          </p>
+          <p>Category: {{ event.category }}</p>
+        </div>
+        <div class="card-body">
+          <div class="event-details">
+            <p class="card-text">Location: {{ event.location }}</p>
+            <p class="card-text">
+              {{ event.isPublic ? "Public Event" : "Private Event" }}
+            </p>
+          </div>
+          <p class="card-text">Description: {{ event.description }}</p>
+          <p class="card-subtitle">
+            Date:
+            {{ event.startDate | date : "short" }}
+            <span *ngIf="!isSameDate(event.startDate, event.endDate)">
+              - {{ event.endDate | date : "short" }}
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #noEvents>
+    <div class="alert alert-info" role="alert">No upcoming events.</div>
+  </ng-template>
+</div>

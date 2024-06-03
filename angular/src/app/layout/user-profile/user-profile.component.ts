@@ -1,4 +1,6 @@
-import { Component, OnInit } from "@angular/core";
+
+import { Component, OnInit, TemplateRef } from "@angular/core";
+
 import { CurrentUserDataService } from "@shared/Services/current-user-data.service";
 import { InterestsService } from "@shared/Services/interests.service";
 import { CurrentUser } from "@shared/Models/current-user";
@@ -9,14 +11,99 @@ import { FormsModule } from "@angular/forms";
 import { BrowserModule } from "@angular/platform-browser";
 import { RouterLink } from "@angular/router";
 
+import Swal from "sweetalert2";
+import { finalize } from "rxjs";
+import {UpcomingEventsComponent} from './upcoming-events/upcoming-events.component'
 @Component({
-  imports: [FormsModule, CommonModule, RouterLink],
+  imports: [FormsModule, CommonModule, RouterLink,UpcomingEventsComponent],
+
   standalone: true,
   selector: "app-user-profile",
   templateUrl: "./user-profile.component.html",
   styleUrls: ["./user-profile.component.css"],
 })
 export class UserProfileComponent implements OnInit {
+
+  AddInterest(id: any, interest: any) {
+    console.log("iiiiiiiii", id);
+    this.interestsService.AddInterest(id, interest).subscribe({
+      next: i => {
+        location.reload();
+      }
+    });
+  }
+  openModal2(_t38: TemplateRef<any>) {
+    this.bsModalRef = this.modalService.show(_t38);
+
+  }
+  deleteItem(id: number) {
+    Swal.fire({
+        title: 'Are you sure You Want To Delete This Interest?',
+        showClass: {
+            popup: `
+            animate__animated
+            animate__fadeInUp
+            animate__faster
+            `
+        },
+        hideClass: {
+            popup: `
+            animate__animated
+            animate__fadeOutDown
+            animate__faster
+            `
+        },
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#4242c5',
+        cancelButtonColor: '#9f9e9e',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            this.interestsService.Delete(id)
+                .pipe(
+                    finalize(() => {
+                      //  location.reload();
+                    })
+                )
+                .subscribe(() => {
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer);
+                            toast.addEventListener('mouseleave', Swal.resumeTimer);
+                        }
+                    });
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'Interest has been deleted'
+                        
+                    }).then(n=>{
+                      location.reload();
+
+                    });
+                });
+        }
+    });
+}
+
+
+  // deleteItem(id: number) {
+  //   var isConfirmed = confirm("Are You Sure?");
+  //   if (isConfirmed) {
+  //     this.interestsService.Delete(id).subscribe({
+  //       next: inter => {
+  //         console.log(inter);
+  //         location.reload();
+  //       }
+  //     });
+  //   }
+  // }
+
   user: CurrentUser | null = null;
   bsModalRef!: BsModalRef;
   AllInterests: Interests[] | any;
@@ -24,7 +111,9 @@ export class UserProfileComponent implements OnInit {
     private _userService: CurrentUserDataService,
     private modalService: BsModalService,
     private interestsService: InterestsService
-  ) {}
+
+  ) { }
+  AllExistingInterests: any;
 
   ngOnInit(): void {
     this._userService.GetCurrentUserData().subscribe({
@@ -42,20 +131,35 @@ export class UserProfileComponent implements OnInit {
         this.AllInterests = interest;
         console.log("my interests :", this.AllInterests.result[0]);
       },
+
+    });
+    //all
+    this.interestsService.GetAllInterests().subscribe({
+      next: inter => {
+        this.AllExistingInterests = inter;
+        console.log(this.AllExistingInterests.result);
+      }
     });
   }
-/*Concert,
-Conference,
-Workshop,
-Seminar,
-Party,
-Exam,
-Birthday,
-Graduation,
-Baby_Shower,
-Wedding,
-Gathering,
-Other */
+  //filtered
+  getFilteredInterests() {
+    return this.AllExistingInterests.result.filter(interest => {
+      return !this.AllInterests.result.some(added => added.id === interest.id);
+    });
+  }
+  /*Concert,
+  Conference,
+  Workshop,
+  Seminar,
+  Party,
+  Exam,
+  Birthday,
+  Graduation,
+  Baby_Shower,
+  Wedding,
+  Gathering,
+  Other */
+
   getStatusLabel(status: number): string {
     switch (status) {
       case 0:
@@ -127,4 +231,6 @@ Other */
     //   },
     // });
   }
+
 }
+

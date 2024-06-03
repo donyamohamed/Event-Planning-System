@@ -1,0 +1,20 @@
+<div class="container">
+    <form [formGroup]="interstsForm" class="row" (ngSubmit)="onSubmit()">
+        <h1>Choose your interests</h1>
+
+        <button type="button" class="btn" 
+        
+        *ngFor="let item of intersts"  
+
+        (click)="SelectedInterests(item.id)"
+        
+        [ngClass]="{'btn-selected': selectedInterestsId.includes(item.id)}"
+        
+        >{{item.type}}
+        
+
+       </button>
+
+        <button type="submit" class="btn btn-info">Next</button>
+    </form>
+</div>

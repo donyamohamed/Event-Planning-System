@@ -182,7 +182,9 @@
     symbol-observable "4.0.0"
     yargs "17.7.2"
 
-"@angular/common@^17.0.0", "@angular/common@^17.0.3", "@angular/common@^18.0.0", "@angular/common@>=13.0.0", "@angular/common@18.0.0":
+
+"@angular/common@^17.0.0", "@angular/common@^17.0.3", "@angular/common@^18.0.0", "@angular/common@>=13.0.0", "@angular/common@12 - 17", "@angular/common@18.0.0":
+
   version "18.0.0"
   resolved "https://registry.npmjs.org/@angular/common/-/common-18.0.0.tgz"
   integrity sha512-s43ZcOhXTUlkdOPMiMtr4Pz1qKIS8nClXhaahY0JBQZYGsOSn7NR42SoEeB8/ixktfY60s3SLhizXTKMAYtOTA==
@@ -210,7 +212,9 @@
   dependencies:
     tslib "^2.3.0"
 
-"@angular/core@^17.0.0", "@angular/core@^17.0.3", "@angular/core@^18.0.0", "@angular/core@>=13.0.0", "@angular/core@18.0.0":
+
+"@angular/core@^17.0.0", "@angular/core@^17.0.3", "@angular/core@^18.0.0", "@angular/core@>=13.0.0", "@angular/core@12 - 17", "@angular/core@18.0.0":
+
   version "18.0.0"
   resolved "https://registry.npmjs.org/@angular/core/-/core-18.0.0.tgz"
   integrity sha512-tpR7HIY4MJuM9ETpG15IvBr1wsI8Cyec3ZxYFe/27FKHARvxDbqIrT9QevmC6lxg1NdfD990G2XphYML1EyJ8g==
@@ -278,6 +282,7 @@
   resolved "https://registry.npmjs.org/@babel/compat-data/-/compat-data-7.24.6.tgz"
   integrity sha512-aC2DGhBq5eEdyXWqrDInSqQjO0k8xtPRf5YylULqx8MCd6jBtzqfta/3ETMRpuKIc5hyswfO80ObyA1MvkCcUQ==
 
+
 "@babel/core@^7.0.0", "@babel/core@^7.0.0-0", "@babel/core@^7.0.0-0 || ^8.0.0-0 <8.0.0", "@babel/core@^7.12.0", "@babel/core@^7.12.3", "@babel/core@^7.13.0", "@babel/core@^7.4.0 || ^8.0.0-0 <8.0.0", "@babel/core@7.24.4":
   version "7.24.4"
   resolved "https://registry.npmjs.org/@babel/core/-/core-7.24.4.tgz"
@@ -293,11 +298,13 @@
     "@babel/template" "^7.24.0"
     "@babel/traverse" "^7.24.1"
     "@babel/types" "^7.24.0"
+
     convert-source-map "^2.0.0"
     debug "^4.1.0"
     gensync "^1.0.0-beta.2"
     json5 "^2.2.3"
     semver "^6.3.1"
+
 
 "@babel/core@7.24.5":
   version "7.24.5"
@@ -325,6 +332,7 @@
   resolved "https://registry.npmjs.org/@babel/generator/-/generator-7.24.5.tgz"
   integrity sha512-x32i4hEXvr+iI0NEoEfDKzlemF8AmtOP8CcrRaEcpzysWuoEb1KknpcvMsHKPONoKZiDuItklgWhB18xEhr9PA==
   dependencies:
+
     "@babel/types" "^7.24.5"
     "@jridgewell/gen-mapping" "^0.3.5"
     "@jridgewell/trace-mapping" "^0.3.25"
@@ -503,6 +511,7 @@
   dependencies:
     "@babel/types" "^7.24.6"
 
+
 "@babel/helper-split-export-declaration@7.24.5":
   version "7.24.5"
   resolved "https://registry.npmjs.org/@babel/helper-split-export-declaration/-/helper-split-export-declaration-7.24.5.tgz"
@@ -519,6 +528,7 @@
   version "7.24.6"
   resolved "https://registry.npmjs.org/@babel/helper-validator-identifier/-/helper-validator-identifier-7.24.6.tgz"
   integrity sha512-4yA7s865JHaqUdRbnaxarZREuPTHrjpDT+pXoAZ1yhyo6uFnIEpS8VMu16siFOHDpZNKYv5BObhsB//ycbICyw==
+
 
 "@babel/helper-validator-option@^7.23.5", "@babel/helper-validator-option@^7.24.6":
   version "7.24.6"
@@ -1294,6 +1304,49 @@
   resolved "https://registry.npmjs.org/@fortawesome/fontawesome-free/-/fontawesome-free-6.4.2.tgz"
   integrity sha512-m5cPn3e2+FDCOgi1mz0RexTUvvQibBebOUlUlW0+YrMjDTPkiJ6VTKukA1GRsvRw+12KyJndNjj0O4AgTxm2Pg==
 
+
+"@fullcalendar/angular@^6.1.10":
+  version "6.1.10"
+  resolved "https://registry.npmjs.org/@fullcalendar/angular/-/angular-6.1.10.tgz"
+  integrity sha512-y0aIC5Zexu8PaULF4u+K8LzMVu8pI7kLkEI53c7gV2/1OOGMg5Ld3tVeuArsHfAdlPdOqiWa/q2/ECZj28/Izg==
+  dependencies:
+    tslib "^2.3.0"
+
+"@fullcalendar/bootstrap5@^6.1.13":
+  version "6.1.13"
+  resolved "https://registry.npmjs.org/@fullcalendar/bootstrap5/-/bootstrap5-6.1.13.tgz"
+  integrity sha512-XOVYLxcRm7w+iBJT0FxovUBM7otSBz3WtT34jayF7ehXnI7+SxsLlFWNoDSyxLMSfyVXb9ei9CBAvx7E3cPByA==
+
+"@fullcalendar/core@^6.1.13", "@fullcalendar/core@~6.1.10", "@fullcalendar/core@~6.1.13":
+  version "6.1.13"
+  resolved "https://registry.npmjs.org/@fullcalendar/core/-/core-6.1.13.tgz"
+  integrity sha512-Cps/hMQan4kwnsBhFf2+m2mijbGoWs6r18ZzxBnAAOkkNHtPmHU8EdR6lF+ZLsiVvb7nsC4H/ZKqnxXWwgpoPw==
+  dependencies:
+    preact "~10.12.1"
+
+"@fullcalendar/daygrid@^6.1.13", "@fullcalendar/daygrid@~6.1.13":
+  version "6.1.13"
+  resolved "https://registry.npmjs.org/@fullcalendar/daygrid/-/daygrid-6.1.13.tgz"
+  integrity sha512-0I0hL1kgGjkZuc7Qt8mu4jjrqIL5PZzd58bEpTxoXRKI5UBZ9KbshGVMryQSXYANlrRtkPnXVt90VIDrxZbDrA==
+
+"@fullcalendar/interaction@^6.1.13":
+  version "6.1.13"
+  resolved "https://registry.npmjs.org/@fullcalendar/interaction/-/interaction-6.1.13.tgz"
+  integrity sha512-r1w+jqCRGZZyxKFquueDSFvbsFhJLhc1BX8Nlyz684lYxS1SiToYJW9Q8X/XkySCzpjO3KOnxEp2jVOn1Usyjg==
+
+"@fullcalendar/list@^6.1.13":
+  version "6.1.13"
+  resolved "https://registry.npmjs.org/@fullcalendar/list/-/list-6.1.13.tgz"
+  integrity sha512-bPW4EsgGNwDZh91NtD+q4hqGfS6jEvCXQo7+MNy4JLMwFtdenEURRrzsb6CW3l97L3Vp0E2mSqiXaNESOmXEcQ==
+
+"@fullcalendar/timegrid@^6.1.13":
+  version "6.1.13"
+  resolved "https://registry.npmjs.org/@fullcalendar/timegrid/-/timegrid-6.1.13.tgz"
+  integrity sha512-8Ub2mSV+6Mh8WWDKuyCYbj5PKYpmyjSctpJ/21fDBJduE9QFS0WfG9CZZxSJT7CT+srnyk4mX2/5gYN9gYZjUg==
+  dependencies:
+    "@fullcalendar/daygrid" "~6.1.13"
+
+
 "@inquirer/figures@^1.0.2":
   version "1.0.2"
   resolved "https://registry.npmjs.org/@inquirer/figures/-/figures-1.0.2.tgz"
@@ -1400,6 +1453,7 @@
   resolved "https://registry.npmjs.org/@leichtgewicht/ip-codec/-/ip-codec-2.0.5.tgz"
   integrity sha512-Vo+PSpZG2/fmgmiNzYK9qWRh8h/CHrwD0mo1h1DzL4yzHNSfWYujGTYsWGreD000gcgmZ7K4Ys6Tx9TxtsKdDw==
 
+
 "@ljharb/through@^2.3.13":
   version "2.3.13"
   resolved "https://registry.npmjs.org/@ljharb/through/-/through-2.3.13.tgz"
@@ -1423,6 +1477,7 @@
   integrity sha512-+FJ3e6cX9DW2t7021Ji3oz433rk3+4jLfqzU+Jyx6/vJz1dIOaML3EAY6lYuW4TLiXgMPOMvs6KzPFALGh4Lag==
   dependencies:
     tslib "^2.3.0"
+
 
 "@ngtools/webpack@18.0.1":
   version "18.0.1"
@@ -2436,6 +2491,13 @@ boolbase@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/boolbase/-/boolbase-1.0.0.tgz"
   integrity sha512-JZOSA7Mo9sNGB8+UjSgzdLtokWAky1zbztM3WRLCbZ70/3cTANmQmOdR7y2g+J0e2WXywy1yS468tY+IruqEww==
+
+
+bootstrap-icons@^1.11.3:
+  version "1.11.3"
+  resolved "https://registry.npmjs.org/bootstrap-icons/-/bootstrap-icons-1.11.3.tgz"
+  integrity sha512-+3lpHrCw/it2/7lBL15VR0HEumaBss0+f/Lb6ZvHISn1mlK83jjFpooTLsMWbIjJMDjDjOExMsTxnXSIT4k4ww==
+
 
 bootstrap@^5.3.3:
   version "5.3.3"
@@ -5739,6 +5801,13 @@ postcss-value-parser@^4.1.0, postcss-value-parser@^4.2.0:
     nanoid "^3.3.7"
     picocolors "^1.0.0"
     source-map-js "^1.2.0"
+
+
+preact@~10.12.1:
+  version "10.12.1"
+  resolved "https://registry.npmjs.org/preact/-/preact-10.12.1.tgz"
+  integrity sha512-l8386ixSsBdbreOAkqtrwqHwdvR35ID8c3rKPa8lCWuO86dBi32QWHV4vfsZK1utLLFMvw+Z5Ad4XLkZzchscg==
+
 
 proc-log@^3.0.0:
   version "3.0.0"

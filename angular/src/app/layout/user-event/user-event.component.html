@@ -13,7 +13,9 @@
         <h3>{{ event.name }}</h3>
         <p>{{ event.location }}</p>
         <button id="details">View</button>
-        <button id="invite" (click)="guestAppearing(event.id)" >Guest</button>
+
+        <button id="invite" (click)="guestAppearing(event)" >Guest</button>
+
       </div>
     </div>
   </div>

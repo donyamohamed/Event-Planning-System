@@ -5,114 +5,163 @@
   <div class="text-center imageDiv">
     <img src="../../../assets/img/guests.svg" alt="">
   </div>
+
+  <div class="d-flex justify-content-between m-1">
     <div class="btnDiv">
-        <button class="btn" (click)="openModal(template)">Add Guest</button>
+      <button class="btn" (click)="openModal(template)" [disabled]="guestCount >= maxCountOfGuest">Add Guest</button>
     </div>
-    <div>
+    <div class="GuestCount text-center">
+      <p class="px-3 pt-1">No. Guests: {{guestCount}}</p>
+    </div>
+  </div>
+  <div>
 
     <div class="table-responsive text-center ">
-        <table id="guestTable" class="table table-hover table-borderless align-middle">
-        <thead class="table-light">  
-            <tr class="text-capitalize">
-                <th>ID</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Invitation State</th>
-                <th>Phone</th>
-                <th>Send Invitation</th>
-                <th>Actions</th>
-            </tr>
+      <table id="guestTable" class="table table-hover table-borderless align-middle">
+        <thead class="table-light">
+          <tr class="text-capitalize">
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Invitation State</th>
+            <th>Phone</th>
+            <th>Send Invitation</th>
+            <th>Actions</th>
+          </tr>
         </thead>
         <tbody class="table-group-divider">
-            <tr class="table-secondary" *ngFor="let item of guests">
-                <td scope="row">{{item.id}}</td>
-                <td>{{item.name}}</td>
-                <td>{{item.email}}</td>
-                <td>{{item.invitationState}}</td>
-                <td>{{item.phone}}</td>
-                <td class="sendInvitation">
-                  By: 
-                  <a class="btn" (click)="SendSMS(item.phone)"><i class="fa-solid fa-comment-sms"></i> SMS</a> |
-                  <a class="btn" (click)="SendEmail(item.email)"><i class="fa-solid fa-envelope"></i> Email</a>
-                  
-                </td>
-                <td class="d-flex justify-content-evenly">
-                    <!-- <a class="btn" routerLink="edit/{{item.id}}" (click)="openEditModal(Editetemplate)"><i class="fa-solid fa-pen-to-square text-success"></i></a> -->
-                    <a class="btn" (click)="openEditModal(Editetemplate,item.id)"><i class="fa-solid fa-pen-to-square text-success"></i></a>
-                    <a onclick="return confirm('Are you sure you want to delete this guest?');" class="btn" (click)="Delete(item.id)"><i class="fa-solid fa-trash-can text-danger" aria-hidden="true"></i></a>
-                    
-                </td>
-            </tr>
+          <tr class="table-secondary" *ngFor="let item of guests">
+            <td scope="row">{{item.id}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.email}}</td>
+            <td>{{item.invitationState}}</td>
+            <td>{{item.phone}}</td>
+            <td class="sendInvitation">
+              By:
+              <a class="btn" (click)="SendSMS(item.phone)"><i class="fa-solid fa-comment-sms"></i> SMS</a> |
+              <a class="btn" (click)="SendEmail(item.email)"><i class="fa-solid fa-envelope"></i> Email</a>
+
+            </td>
+            <td class="d-flex justify-content-evenly">
+              <!-- <a class="btn" routerLink="edit/{{item.id}}" (click)="openEditModal(Editetemplate)"><i class="fa-solid fa-pen-to-square text-success"></i></a> -->
+              <a class="btn" (click)="openEditModal(Editetemplate,item.id)"><i
+                  class="fa-solid fa-pen-to-square text-success"></i></a>
+              <a class="btn" (click)="Delete(item.id)"><i class="fa-solid fa-trash-can text-danger"
+                  aria-hidden="true"></i></a>
+
+            </td>
+          </tr>
         </tbody>
-    </table>
-</div> <!-- table-responsive div -->
-</div> <!-- div for table -->
+      </table>
+    </div> <!-- table-responsive div -->
+  </div> <!-- div for table -->
 </div>
 <router-outlet></router-outlet>
 
-  <ng-template #template>
-    <div class="modal-header">
-      <h4 class="modal-title" style="color: #1D2027;">Add New Guest</h4>
-      <button type="button" class="close" aria-label="Close" (click)="bsModalRef.hide()">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <form (ngSubmit)="Save()">
-        <div>
-          <label for="nameInput">Name:</label>
-          <input class="form-control" type="text" id="nameInput" name="nameInput" [(ngModel)]="guest.name" required/>
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title" style="color: #1D2027;">Add New Guest</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="guestForm" (ngSubmit)="Save()">
+      <div>
+        <label for="nameInput">Name:</label>
+        <input class="form-control" type="text" id="nameInput" formControlName="name" [(ngModel)]="guest.name" />
+        <div *ngIf="guestForm.get('name').invalid && guestForm.get('name').touched" class="text-danger">
+          <div *ngIf="guestForm.get('name').errors.required">Name is required.</div>
+          <div *ngIf="guestForm.get('name').errors.maxlength">Name cannot be longer than 100 characters.</div>
         </div>
-        <div>
-          <label for="phoneInput">Phone:</label>
-          <input class="form-control" type="text" id="phoneInput" name="phoneInput" [(ngModel)]="guest.phone" required/>
+      </div>
+      <div>
+        <label for="phoneInput">Phone:</label>
+        <input class="form-control" type="text" id="phoneInput" formControlName="phone" [(ngModel)]="guest.phone"
+          required />
+        <div *ngIf="guestForm.get('phone').invalid && guestForm.get('phone').touched" class="text-danger">
+          <div *ngIf="guestForm.get('phone').errors.required">Phone is required.</div>
+          <div *ngIf="guestForm.get('phone').errors.pattern">Phone must be a 10-digit number.</div>
         </div>
-        <div>
-          <label for="emailInput">Email:</label>
-          <input class="form-control" type="email" id="emailInput" name="emailInput" [(ngModel)]="guest.email" required/>
+      </div>
+      <div>
+        <label for="emailInput">Email:</label>
+        <input class="form-control" type="email" id="emailInput" formControlName="email" [(ngModel)]="guest.email"
+          required />
+        <div *ngIf="guestForm.get('email').invalid && guestForm.get('email').touched" class="text-danger">
+          <div *ngIf="guestForm.get('email').errors.required">Email is required.</div>
+          <div *ngIf="guestForm.get('email').errors.email">Invalid email address.</div>
         </div>
-        <div>
-          <label for="invStatInput">Invitation State:</label>
-          <select [(ngModel)]="guest.invitationState" id="invStatInput" name="invStatInput" class="form-control" required>
-            <option value="Pending">Pending</option>
-            <option value="Confirmed">Confirmed</option>
-          </select>
+      </div>
+      <div>
+        <label for="invStatInput">Invitation State:</label>
+        <select formControlName="invitationState" id="invStatInput" class="form-control"
+          [(ngModel)]="guest.invitationState" required>
+          <option value="" aria-readonly="true">Select State</option>
+          <option value="Pending">Pending</option>
+          <option value="Confirmed">Confirmed</option>
+        </select>
+        <div *ngIf="guestForm.get('invitationState').invalid && guestForm.get('invitationState').touched"
+          class="text-danger">
+          <div *ngIf="guestForm.get('invitationState').errors.required">Invitation state is required.</div>
         </div>
-        <input class="btn btn-success" value="Add" type="submit"/>
-      </form>
-    </div>
-  </ng-template>
+      </div>
+      <input class="btn btn-success" value="Add" type="submit" />
+    </form>
+  </div>
+</ng-template>
 
-  <ng-template #Editetemplate>
-    <div class="modal-header">
-      <h4 class="modal-title" style="color: #1D2027;">Add New Guest</h4>
-      <button type="button" class="close" aria-label="Close" (click)="bsModalRef.hide()">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <form (ngSubmit)="Edit()">
-        <div>
-          <label for="nameInput">Name:</label>
-          <input class="form-control" type="text" id="nameInput" name="nameInput" [(ngModel)]="guestEdit.name" required/>
+<ng-template #Editetemplate>
+  <div class="modal-header">
+    <h4 class="modal-title" style="color: #1D2027;">Update Guest</h4>
+    <button type="button" class="close" aria-label="Close" (click)="bsModalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="guestForm" (ngSubmit)="Edit()">
+      <div>
+        <label for="nameInput">Name:</label>
+        <input formControlName="name" class="form-control" type="text" id="nameInput" name="nameInput"
+          [(ngModel)]="guestEdit.name" required />
+        <div *ngIf="guestForm.get('name').invalid && guestForm.get('name').touched" class="text-danger">
+          <div *ngIf="guestForm.get('name').errors.required">Name is required.</div>
+          <div *ngIf="guestForm.get('name').errors.maxlength">Name cannot be longer than 100 characters.</div>
         </div>
-        <div>
-          <label for="phoneInput">Phone:</label>
-          <input class="form-control" type="text" id="phoneInput" name="phoneInput" [(ngModel)]="guestEdit.phone" required/>
+      </div>
+      <div>
+        <label for="phoneInput">Phone:</label>
+        <input formControlName="phone" class="form-control" type="text" id="phoneInput" name="phoneInput"
+          [(ngModel)]="guestEdit.phone" required />
+        <div *ngIf="guestForm.get('phone').invalid && guestForm.get('phone').touched" class="text-danger">
+          <div *ngIf="guestForm.get('phone').errors.required">Phone is required.</div>
+          <div *ngIf="guestForm.get('phone').errors.pattern">Phone must be a 10-digit number.</div>
         </div>
-        <div>
-          <label for="emailInput">Email:</label>
-          <input class="form-control" type="email" id="emailInput" name="emailInput" [(ngModel)]="guestEdit.email" required/>
+      </div>
+      <div>
+        <label for="emailInput">Email:</label>
+        <input formControlName="email" class="form-control" type="email" id="emailInput" name="emailInput"
+          [(ngModel)]="guestEdit.email" required />
+        <div *ngIf="guestForm.get('email').invalid && guestForm.get('email').touched" class="text-danger">
+          <div *ngIf="guestForm.get('email').errors.required">Email is required.</div>
+          <div *ngIf="guestForm.get('email').errors.email">Invalid email address.</div>
         </div>
-        <div>
-          <label for="invStatInput">Invitation State:</label>
-          <select [(ngModel)]="guestEdit.invitationState" id="invStatInput" name="invStatInput" class="form-control" required>
-            <option value="Pending">Pending</option>
-            <option value="Confirmed">Confirmed</option>
-          </select>
+      </div>
+      <div>
+        <label for="invStatInput">Invitation State:</label>
+        <select formControlName="invitationState" [(ngModel)]="guestEdit.invitationState" id="invStatInput"
+          name="invStatInput" class="form-control" required>
+          <option value="" aria-readonly="true">Select State</option>
+          <option value="Pending">Pending</option>
+          <option value="Confirmed">Confirmed</option>
+        </select>
+        <div *ngIf="guestForm.get('invitationState').invalid && guestForm.get('invitationState').touched"
+          class="text-danger">
+          <div *ngIf="guestForm.get('invitationState').errors.required">Invitation state is required.</div>
         </div>
-        <input class="btn btn-success m-1" value="Update" type="submit"/>
-      </form>
-    </div>
-  </ng-template>
-  
+      </div>
+      <input class="btn btn-success m-1" value="Update" type="submit" />
+    </form>
+  </div>
+</ng-template>
+
