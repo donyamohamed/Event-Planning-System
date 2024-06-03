@@ -2,11 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserEventsService } from '../../../shared/Services/user-events.service';
 import { Event } from '../../../shared/Models/Event';
+import { AllGuestComponent } from '@app/guest/all-guest/all-guest.component';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-user-event',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,RouterLink],
   templateUrl: './user-event.component.html',
   styleUrls: ['./user-event.component.css']
 })
@@ -14,7 +16,7 @@ export class UserEventComponent implements OnInit {
   events: Event[] = [];
   userId: number = 3;
 
-  constructor(private userEventsService: UserEventsService) {}
+  constructor(private userEventsService: UserEventsService, private activatedRoute:ActivatedRoute, private route:Router) {}
 
   ngOnInit(): void {
     this.userEventsService.getUserEvents(this.userId).subscribe(
@@ -30,5 +32,16 @@ export class UserEventComponent implements OnInit {
         console.error('Error fetching user events', error);
       }
     );
-  }  
+  } 
+  guestAppearing(id:number){
+    this.route.navigateByUrl("app/allGuests/"+id)
+    // if(AllGuestComponent.guestsCount>0){
+    // }else{
+    //   this.route.navigateByUrl("app/allGuests")
+    //   console.log("hg yhhhg hgy");
+    //   console.log(AllGuestComponent.guestsCount);
+    // }
+    
+    
+  } 
 }

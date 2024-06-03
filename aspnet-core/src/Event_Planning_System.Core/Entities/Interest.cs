@@ -1,4 +1,5 @@
-﻿using Event_Planning_System.Authorization.Users;
+﻿using Abp.Domain.Entities;
+using Event_Planning_System.Authorization.Users;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -9,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace Event_Planning_System.Enitities
 {
-    public class Interest
+    public class Interest:Entity<int>
     {
-		public int Id { get; set; }
+		//public int Id { get; set; }
 
 		[Required(ErrorMessage = "Event type is required.")]
 		public EventCategory Type { get; set; }

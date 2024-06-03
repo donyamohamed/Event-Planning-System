@@ -1,7 +1,7 @@
 import { NgModule, APP_INITIALIZER, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
@@ -28,34 +28,28 @@ export function getCurrentLanguage(): string {
   return 'en';
 }
 
-@NgModule({
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    SharedModule.forRoot(),
-    ModalModule.forRoot(),
-    BsDropdownModule.forRoot(),
-    CollapseModule.forRoot(),
-    TabsModule.forRoot(),
-    ServiceProxyModule,
-    RootRoutingModule,
-  ],
-  declarations: [RootComponent],
-  providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AbpHttpInterceptor, multi: true },
-    {
-      provide: APP_INITIALIZER,
-      useFactory: (appInitializer: AppInitializer) => appInitializer.init(),
-      deps: [AppInitializer],
-      multi: true,
-    },
-    { provide: API_BASE_URL, useFactory: () => AppConsts.remoteServiceBaseUrl },
-    {
-      provide: LOCALE_ID,
-      useFactory: getCurrentLanguage,
-    },
-  ],
-  bootstrap: [RootComponent],
-})
+@NgModule({ declarations: [RootComponent],
+    bootstrap: [RootComponent], imports: [BrowserModule,
+        BrowserAnimationsModule,
+        SharedModule.forRoot(),
+        ModalModule.forRoot(),
+        BsDropdownModule.forRoot(),
+        CollapseModule.forRoot(),
+        TabsModule.forRoot(),
+        ServiceProxyModule,
+        RootRoutingModule], providers: [
+        { provide: HTTP_INTERCEPTORS, useClass: AbpHttpInterceptor, multi: true },
+        {
+            provide: APP_INITIALIZER,
+            useFactory: (appInitializer: AppInitializer) => appInitializer.init(),
+            deps: [AppInitializer],
+            multi: true,
+        },
+        { provide: API_BASE_URL, useFactory: () => AppConsts.remoteServiceBaseUrl },
+        {
+            provide: LOCALE_ID,
+            useFactory: getCurrentLanguage,
+        },
+        provideHttpClient(withInterceptorsFromDi()),
+    ] })
 export class RootModule {}

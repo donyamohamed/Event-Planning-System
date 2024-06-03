@@ -1,0 +1,32 @@
+.card {
+    border: none;
+    border-radius: 1rem;
+  }
+  
+  .tableDiv {
+    border-top-left-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+    /* background: linear-gradient(135deg, #050694 10%, #FBAF1B 100%); */
+    color: #fff;
+  }
+  .imageDiv img{
+    width: 200px;
+  }
+  .btnDiv button{
+    background-color: #050794;
+    color: white;
+    border: 1px solid #050794;
+  }
+  .btnDiv button:hover{
+    background-color: white;
+    color: #050794;
+  }
+  .sendInvitation a{
+    background-color: #FBAF1B;
+    color: white;
+  }
+  .sendInvitation a:hover{
+    color: #FBAF1B;
+    background-color: white;
+  }
+  

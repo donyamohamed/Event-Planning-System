@@ -1,0 +1,26 @@
+<!-- <p>update-guest works!</p> -->
+<div class="contianer m-3 p-3">
+
+    <form (ngSubmit)="Save()">
+        <div>
+          <label for="nameInput">Name:</label>
+          <input class="form-control" type="text" id="nameInput" name="nameInput" [(ngModel)]="guest.name"/>
+        </div>
+        <div>
+          <label for="capInput">Phone:</label>
+          <input class="form-control" type="text" id="capInput" name="capInput" [(ngModel)]="guest.phone"/>
+        </div>
+        <div>
+          <label for="emailInput">Email:</label>
+          <input class="form-control" type="email" id="emailInput" name="emailInput" [(ngModel)]="guest.email"/>
+        </div>
+        <div>
+          <label for="invStatInput">Invitation State:</label>
+          <select [(ngModel)]="guest.invitationState" id="invStatInput" name="invStatInput" class="form-control">
+            <option value="Pending">Pending</option>
+            <option value="Confirmed">Confirmed</option>
+          </select>
+        </div>
+        <input class="btn btn-success" value="Add" type="submit"/>
+      </form>
+</div>

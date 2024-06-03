@@ -29,9 +29,6 @@ export class CreateEventComponent implements OnInit {
     this.setDefaultValues();
   }
 
-
-
-
   getUserData(): void {
     this.http.get<any>('https://localhost:44311/api/services/app/UserProfileAppServices/GetUserProfile')
       .subscribe(response => {
@@ -41,8 +38,6 @@ export class CreateEventComponent implements OnInit {
         }
       });
   }
-
-
 
   fetchBudgetOptions(): void {
     this.eventService.getBudgetAmounts()
@@ -64,6 +59,9 @@ export class CreateEventComponent implements OnInit {
     this.eventService.createEvent(this.eventData)
       .subscribe(() => {
         this.eventData = new Event();
+        alert('Event added successfully!');
+        this.setDefaultValues(); 
+     
       });
   }
 

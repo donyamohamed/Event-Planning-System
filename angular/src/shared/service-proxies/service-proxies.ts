@@ -3589,55 +3589,55 @@ function throwException(message: string, status: number, response: string, heade
         return _observableThrow(new ApiException(message, status, response, headers, null));
 }
 
-// function blobToText(blob: any): Observable<string> {
-//     return new Observable<string>((observer: any) => {
-//         if (!blob) {
-//             observer.next("");
-//             observer.complete();
-//         } else {
-//             let reader = new FileReader();
-//             reader.onload = event => {
-//                 observer.next((event.target as any).result);
-//                 observer.complete();
-//             };
-//             reader.readAsText(blob);
-//         }
-//     });
-// }
-
-
-
 function blobToText(blob: any): Observable<string> {
     return new Observable<string>((observer: any) => {
-        console.log('blob:', blob);
-        console.log('Type of blob:', typeof blob);
-
-        // Check if blob is an object and has data that can be converted to Blob
-        if (typeof blob === 'object' && blob !== null) {
-            // Convert object to JSON string
-            const jsonString = JSON.stringify(blob);
-            // Convert JSON string to Blob
-            const blobData = new Blob([jsonString], { type: 'application/json' });
-            
-            // Pass the blobData to FileReader to read as text
-            let reader = new FileReader();
-            reader.onload = event => {
-                observer.next((event.target as any).result);
-                observer.complete();
-            };
-            reader.readAsText(blobData);
-        } else if (blob instanceof Blob) {
-            // If blob is already a Blob, proceed as before
+        if (!blob) {
+            observer.next("");
+            observer.complete();
+        } else {
             let reader = new FileReader();
             reader.onload = event => {
                 observer.next((event.target as any).result);
                 observer.complete();
             };
             reader.readAsText(blob);
-        } else {
-            // If blob is not an object or Blob, emit an error
-            observer.error('The input is not a Blob or File object.');
-            observer.complete();
         }
     });
 }
+
+
+
+// function blobToText(blob: any): Observable<string> {
+//     return new Observable<string>((observer: any) => {
+//         console.log('blob:', blob);
+//         console.log('Type of blob:', typeof blob);
+
+//         // Check if blob is an object and has data that can be converted to Blob
+//         if (typeof blob === 'object' && blob !== null) {
+//             // Convert object to JSON string
+//             const jsonString = JSON.stringify(blob);
+//             // Convert JSON string to Blob
+//             const blobData = new Blob([jsonString], { type: 'application/json' });
+            
+//             // Pass the blobData to FileReader to read as text
+//             let reader = new FileReader();
+//             reader.onload = event => {
+//                 observer.next((event.target as any).result);
+//                 observer.complete();
+//             };
+//             reader.readAsText(blobData);
+//         } else if (blob instanceof Blob) {
+//             // If blob is already a Blob, proceed as before
+//             let reader = new FileReader();
+//             reader.onload = event => {
+//                 observer.next((event.target as any).result);
+//                 observer.complete();
+//             };
+//             reader.readAsText(blob);
+//         } else {
+//             // If blob is not an object or Blob, emit an error
+//             observer.error('The input is not a Blob or File object.');
+//             observer.complete();
+//         }
+//     });
+// }

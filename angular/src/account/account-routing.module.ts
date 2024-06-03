@@ -6,6 +6,11 @@ import { AccountComponent } from './account.component';
 import { ActivateUserComponent } from '../app/activate-user/activate-user.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { NewPasswordComponent } from '../account/new-password/new-password.component';
+import { AllGuestComponent } from '@app/guest/all-guest/all-guest.component';
+import { CreateGuestComponent } from '@app/guest/create-guest/create-guest.component';
+import { DeleteGuestComponent } from '@app/guest/delete-guest/delete-guest.component';
+import { GetByIdGuestComponent } from '@app/guest/get-by-id-guest/get-by-id-guest.component';
+import { UpdateGuestComponent } from '@app/guest/update-guest/update-guest.component';
 
 
 

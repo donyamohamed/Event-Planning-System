@@ -30,5 +30,6 @@
     <PackageReference Include="Abp.AspNetCore" Version="9.2.2" />
     <PackageReference Include="Abp.ZeroCore" Version="9.2.2" />
     <PackageReference Include="Abp.AspNetCore.SignalR" Version="9.2.2" />
+    <PackageReference Include="Twilio" Version="7.1.0" />
   </ItemGroup>
 </Project>
