@@ -39,7 +39,7 @@ Refer to the detailed documentation for comprehensive guides on setting up and u
 
 ## License
 
-Eventa is licensed under the MIT License. See the [LICENSE](link-to-license-file) file for details.
+ ![MIT License](https://img.shields.io/badge/License-MIT-yellow.svg)
 
 
 
