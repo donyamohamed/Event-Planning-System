@@ -21,6 +21,7 @@ import { UserProfileComponent } from './layout/user-profile/user-profile.compone
 import {UserEventComponent} from './layout/user-event/user-event.component';
 import {HistoryeventComponent} from './layout/historyevent/historyevent.component';
 import { InterstsComponent } from "./intersts/intersts.component";
+import{TodoListComponent} from './layout/event-todo-list/event-todo-list.component'
 
 
 
