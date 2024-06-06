@@ -1,37 +1,45 @@
-# Important
+# Eventa - Simplifying Event Management with ASP.NET Core & Angular
 
-Issues of this repository are tracked on https://github.com/aspnetboilerplate/aspnetboilerplate. Please create your issues on https://github.com/aspnetboilerplate/aspnetboilerplate/issues.
+![Eventa Logo](https://static.vecteezy.com/system/resources/previews/012/710/072/non_2x/event-planner-template-hand-drawn-cartoon-flat-illustration-with-planning-schedule-time-management-business-agenda-and-calendar-concept-vector.jpg)
 
-# Introduction
+Eventa is a comprehensive event management platform built on ASP.NET Core and Angular, designed to streamline the process of creating, customizing, and inviting participants to events. Leveraging the power of ASP.NET Boilerplate, Eventa offers a robust foundation for developing scalable and feature-rich event applications. Whether you're organizing a casual gathering or a corporate conference, Eventa provides all the tools you need to ensure a successful event experience.
 
-This is a template to create **ASP.NET Core MVC / Angular** based startup projects for [ASP.NET Boilerplate](https://aspnetboilerplate.com/Pages/Documents). It has 2 different versions:
+## Features
 
-1. [ASP.NET Core MVC & jQuery](https://aspnetboilerplate.com/Pages/Documents/Zero/Startup-Template-Core) (server rendered multi-page application).
-2. [ASP.NET Core & Angular](https://aspnetboilerplate.com/Pages/Documents/Zero/Startup-Template-Angular) (single page application).
- 
-User Interface is based on [AdminLTE theme](https://github.com/ColorlibHQ/AdminLTE).
- 
-# Download
+- **Event Creation**: Easily create events with customizable details such as date, time, location, and description.
+- **Customization**: Personalize your events with flexible themes, templates, and branding options.
+- **Invitations**: Seamlessly invite guests via email, social media, or direct link sharing.
+- **RSVP Management**: Efficiently manage RSVPs and guest lists with real-time updates.
+- **User-Friendly Interface**: Intuitive UI based on AdminLTE theme ensures a smooth user experience.
+- **Multi-Platform Compatibility**: Supports ASP.NET Core and Angular for a modern, responsive web application.
 
-Create & download your project from https://aspnetboilerplate.com/Templates
+## Getting Started
 
-# Screenshots
+1. **Download**: Get started by creating and downloading your customized project from [Eventa Templates](https://aspnetboilerplate.com/Templates).
 
-#### Sample Dashboard Page
-![](_screenshots/module-zero-core-template-ui-home.png)
+2. **Installation**: Follow the installation instructions provided in the documentation for the ASP.NET Core & Angular version.
 
-#### User Creation Modal
-![](_screenshots/module-zero-core-template-ui-user-create-modal.png)
+3. **Configuration**: Customize your event platform according to your specific requirements.
 
-#### Login Page
 
-![](_screenshots/module-zero-core-template-ui-login.png)
 
-# Documentation
+## Documentation
 
-* [ASP.NET Core MVC & jQuery version.](https://aspnetboilerplate.com/Pages/Documents/Zero/Startup-Template-Core)
-* [ASP.NET Core & Angular  version.](https://aspnetboilerplate.com/Pages/Documents/Zero/Startup-Template-Angular)
+Refer to the detailed documentation for comprehensive guides on setting up and using Eventa:
+- [ASP.NET Core & Angular version](https://aspnetboilerplate.com/Templates)
 
-# License
+## Team Members
 
-[MIT](LICENSE).
+1. **Asmaa Elfatayry**
+2. **Aya Shehata**
+3. **Bothina Ahmed**
+4. **Donya Mohamed**
+5. **Esraa Mohamed**
+6. **Nada Atef**
+
+## License
+
+Eventa is licensed under the MIT License. See the [LICENSE](link-to-license-file) file for details.
+
+
+
