@@ -6,7 +6,7 @@ body {
 }
 
 .container {
-    max-width: 900px;
+    max-width: 1200px;
     margin: 20px auto;
     padding: 20px;
     background-color: #fff;
@@ -18,11 +18,16 @@ body {
 .event {
     margin-bottom: 20px;
 }
+h2 img {
+    width: 38px;
+    animation: swing 2s ease-in-out infinite;
+  }
 
-h1 {
-    color: #f1c05c;
+h2 {
+    color: #050794;;
     font-size: 30px;
-    margin-left: 50px;
+    margin-left: 500px;
+    margin-top: 20px;
 }
 
 .eventp {
@@ -51,7 +56,7 @@ h1 {
     background-color: #f1c05c;
 }
 
-.event h2 {
+.event h3 {
     margin-top: 0;
     padding-bottom: 10px;
     color: #050794;
@@ -81,3 +86,35 @@ h1 {
 .event ul li:last-child {
     border-bottom: none;
 }
+.no-event {
+    color: #050794;
+    text-align: center;
+    font-size: 36px;
+    margin-top: 50px;
+    font-weight: bold;
+    text-transform: uppercase;
+    animation: fadeIn 2s ease-in-out;
+}
+.no-event  img {
+    width: 38px;
+    animation: swing 2s ease-in-out infinite;
+    background-color: white;
+  }
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 2; }
+}
+
+
+@keyframes swing {
+    0% {
+      transform: rotate(0deg);
+    }
+    50% {
+      transform: rotate(15deg);
+    }
+    100% {
+      transform: rotate(0deg);
+    }
+  }
