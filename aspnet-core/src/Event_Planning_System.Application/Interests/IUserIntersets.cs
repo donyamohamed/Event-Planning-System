@@ -17,7 +17,7 @@ namespace Event_Planning_System.Interests
 	{
 		Task<List<GetUserInterestsDTO>> GetUserIntersts();
 
-		Task <List<GetAllInterstsDTO>> GetAllInterstsDTO();
+		Task <List<GetAllInterstsDTO>> GetAllInterstsForChoosing();
 		
 		Task Delete(int? id);
 		Task Add(int? interestId);
