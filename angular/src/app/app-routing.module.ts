@@ -23,6 +23,9 @@ import {HistoryeventComponent} from './layout/historyevent/historyevent.componen
 import { InterstsComponent } from "./intersts/intersts.component";
 import{TodoListComponent} from './layout/event-todo-list/event-todo-list.component'
 
+import{EventDetailsComponent} from './layout/event-details/event-details.component'
+
+
 
 
 
@@ -67,6 +70,9 @@ import{TodoListComponent} from './layout/event-todo-list/event-todo-list.compone
                         component:UserProfileComponent,
                         canActivate: [AppRouteGuard] 
                     },
+
+                    {path:"eventDetails/:id",component:EventDetailsComponent},
+
                   {path:"todolist/:id",component:  TodoListComponent},
                     { path: "showInterests", component: InterstsComponent },
                     {path:'addNewGuest', component: CreateGuestComponent},
