@@ -85,7 +85,7 @@ namespace Event_Planning_System.Interests
 		}
 
 
-		public async Task<List<GetAllInterstsDTO>> GetAllInterstsDTO()
+		public async Task<List<GetAllInterstsDTO>> GetAllInterstsForChoosing()
 		{
 			var Interests = await _interestRepository.GetAll().ToListAsync();
 			return _mapper.Map<List<GetAllInterstsDTO>>(Interests);
@@ -105,6 +105,10 @@ namespace Event_Planning_System.Interests
 			var UserId = AbpSession.UserId.Value;
 			var user = await _userRepository.GetAsync(UserId);
 
+            if (user == null)
+            {
+                throw new Exception("User not found.");
+            }
 
 			user.Interests= interestIds.Select(id => new Interest() { Id = id }).ToList();
 
