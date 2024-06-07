@@ -3,6 +3,10 @@ h2 {
   text-align: center;
   font-size: 42px;
 }
+.container{
+  width:calc(100% - 270px);
+  margin-left:270px;
+}
 h2 img {
   width: 38px;
   animation: swing 2s ease-in-out infinite;
@@ -40,20 +44,24 @@ h2 img {
 }
 
 .card {
-  border: 1px solid #ddd;
-  border-radius: 4px;
-
+  /* border: 1px solid #ddd; */
+  border-radius: 10px;
+  border: none;
+  border-left: 5px solid #fbaf1b;
   margin: 20px 10px;
+  box-shadow: none;
 }
 
 .card-header {
-  background-color: #788dd1;
-
+  /* background-color: #788dd1;
+   */
+   border-bottom: 1px solid #f9ecd4;
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
   padding: 10px 15px;
+
 }
 .card-header p {
   margin: 0;
