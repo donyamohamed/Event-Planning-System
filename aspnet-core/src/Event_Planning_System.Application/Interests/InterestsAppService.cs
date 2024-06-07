@@ -85,7 +85,7 @@ namespace Event_Planning_System.Interests
 		}
 
 
-		public async Task<List<GetAllInterstsDTO>> GetAllInterstsDTO()
+		public async Task<List<GetAllInterstsDTO>> GetAllInterstsForChoosing()
 		{
 			var Interests = await _interestRepository.GetAll().ToListAsync();
 			return _mapper.Map<List<GetAllInterstsDTO>>(Interests);
