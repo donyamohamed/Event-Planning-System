@@ -1,0 +1,288 @@
+body {
+    background-color: #9b5de5;
+    color: #fff;
+    position: relative;
+}
+
+.big-circle {
+    width: 100px; /* Adjust the width as needed */
+    height: 100px; /* Adjust the height as needed */
+    border-radius: 50%; /* Make it a circle */
+    /* Set the background color */
+    position: absolute; /* Position it wherever you want */
+}
+
+.circle1 {
+    top: 20px; /* Adjust the top position */
+    left: 20px; /* Adjust the left position */
+    background: #5551ff;
+}
+
+.circle2 {
+    bottom: 20px; /* Adjust the bottom position */
+    right: 20px; 
+    background-color: #ebb447/* Adjust the right position */
+}
+
+.circle3 {
+    top: 150px; /* Adjust the top position */
+    right: 50px; /* Adjust the right position */
+    background: #5551ff;
+}
+
+.circle4 {
+    bottom: 50px; /* Adjust the bottom position */
+    left: 150px; /* Adjust the left position */
+    background: #5551ff;
+}
+.circle5 {
+    top: 200px; /* Adjust the top position */
+    left: 50px; /* Adjust the left position */
+    background-color: #ebb447
+}
+.circle6 {
+    top: 200px; /* Adjust the top position */
+    right: 250px; /* Adjust the right position */
+    background-color: #ebb447
+}
+.circle7 {
+    bottom: 100px; /* Adjust the top position */
+    right:300px; /* Adjust the right position */
+    background-color: #5551ff
+}
+main {
+    padding: 20px;
+    z-index: 2;
+}
+
+h1.h2 {
+    color: #fff;
+}
+
+.input-group {
+    margin-bottom: 20px;
+    border-radius: 15px;
+    border: 2px solid #ddd;
+    background-color: #fff;
+    height: 65px;
+    display: flex;
+    align-items: center;
+}
+
+.task-list {
+    padding: 20px;
+    border-radius: 10px;
+    color: #000;
+}
+
+.input-group-prepend {
+    align-self: center;
+    margin: 10px;
+}
+
+.input-group-prepend .task-circle {
+    margin-right: 0.5rem; /* Adjust as needed */
+}
+
+#datepicker, #task-text, #task-text:focus{
+    border: none;
+    background-color: inherit;
+}
+#datepicker:focus-visible,#task-text:focus-visible, #task-text:focus {
+    outline: none;
+  }
+  
+.button {
+    margin: 10px;
+    margin-left: 10px !important;
+    width: 40px;
+    height: 40px;
+    border-radius: 100% !important;
+}
+
+.task {
+    /* display: flex; */
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    background-color: #fff;
+    padding: 20px 10px;
+    border-radius: 15px;
+    border: 2px solid #ddd;
+}
+
+.task-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+.task-details{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.task-info {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    justify-content: space-between;
+    
+    width: 100%;
+}
+
+.task-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-grow: 1;
+    /* justify-content: space-between; */
+}
+
+.task-time {
+    margin-right: 10px;
+    color: #000; /* Adjust text color */
+}
+
+.task-description {
+    flex-grow: 1;
+    color: #000; /* Adjust text color */
+}
+
+/* .task-checkbox input {
+    visibility: hidden;
+} */
+
+.task-checkbox label {
+/* display: block; */
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    text-align: center;
+    line-height: 25px;
+    cursor: pointer;
+    position: relative;
+}
+.task-checkbox{
+    height: 30px;
+}
+.task-delete{
+    height: 30px;
+}
+.task-checkbox label::after {
+    content: '';
+    display: block;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    border: 2px solid #4caf50; /* Green border color */
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.task-circle.bg-todo {
+    background-color: blue;
+  }
+/* Hide the actual date input */
+input[type="date"].d-none {
+    visibility: hidden;
+  }
+  
+  
+  .calendar-button {
+    background-color: inherit;
+    border: none;
+    border-radius: 0.25rem;
+    padding: 0.375rem 0.75rem;
+    cursor: pointer;
+  }
+  
+  .calendar-button:hover {
+    background-color: #e2e6ea;
+  }
+  
+.task-checkbox input:checked + label::after {
+    content: '✓';
+    color: #4caf50; 
+    font-size: 18px; 
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); 
+}
+
+.task-checkbox input:disabled + label::after {
+    content: ''; /* No mark when disabled */
+    border-color: #ddd; /* Default border color */
+    width: 25px;
+    height: 25px;
+}
+
+.green-line {
+    text-decoration: line-through green;
+}
+
+.red-line {
+    text-decoration: line-through red;
+}
+
+.task-status {
+    display: flex;
+    align-items: center;
+}
+
+.task-status .task-circle {
+    margin-right: 10px; /* Adjust as needed */
+}
+
+
+
+.d-flex.align-items-center .task-circle {
+    margin-right: 10px; /* Adjust as needed */
+}
+.other-circles {
+    display: flex; 
+    justify-content: flex-start;
+    margin: 5px;
+    border: 1px solid gray;
+    width: fit-content;
+    border-radius: 20%;
+  }
+  .circle-wrapper {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .task-circle {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    margin: 0 5px; /* Adjust the margin as needed */
+  }
+  
+  .task-circle.bg-warning {
+    background-color: yellow;
+  }
+  
+  .task-circle.bg-success {
+    background-color: green;
+  }
+  
+  .other-circles .task-circle {
+    width: 15px; /* Adjust the width of the circles */
+    height: 15px; /* Adjust the height of the circles */
+    border-radius: 50%; /* Make the circles round */
+    padding: 5px;
+    margin: 5px;
+    /* cursor: pointer; Add pointer cursor to indicate interactivity */
+  }
+ 
+  
+ 
+  
+  /* Hide the default checkbox */
+  .task-checkbox input[type="checkbox"] {
+    opacity: 0;
+  }
+  

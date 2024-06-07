@@ -1,0 +1,70 @@
+<div>
+    <div>
+        <div class="container text-center p-2">
+            <div class="imgDiv p-2">
+                <img src="../../../assets/img/looov.jpg" alt="" srcset="">
+            </div>
+            <h3>No Guests added yet!</h3>
+            <div class="d-flex justify-content-evenly m-5 p-5">
+                <div class="oneByOne p-2" (click)="openModal(template)">
+                    <i class="fa fa-user text-primary fa-2x" aria-hidden="true"></i>
+                    <p>Add one by one</p>
+                </div>
+                <div class="excel p-2">
+                    <i class="fas fa-file-excel text-success fa-2x"></i>
+                    <p>Add one or more <br> from excel sheet</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- add guest -->
+<ng-template #template>
+    <div class="modal-header">
+        <h4 class="modal-title" style="color: #1D2027;">Add New Guest</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="guestForm" (ngSubmit)="AddGeust()">
+            <div>
+                <label for="nameInput">Name:</label>
+                <input class="form-control" type="text" id="nameInput" formControlName="name" [(ngModel)]="guest.name"/>
+                <div *ngIf="guestForm.get('name').invalid && guestForm.get('name').touched" class="text-danger">
+                    <div *ngIf="guestForm.get('name').errors.required">Name is required.</div>
+                    <div *ngIf="guestForm.get('name').errors.maxlength">Name cannot be longer than 100 characters.</div>
+                </div>
+            </div>
+            <div>
+                <label for="phoneInput">Phone:</label>
+                <input class="form-control" type="text" id="phoneInput" formControlName="phone" [(ngModel)]="guest.phone" required/>
+                <div *ngIf="guestForm.get('phone').invalid && guestForm.get('phone').touched" class="text-danger">
+                    <div *ngIf="guestForm.get('phone').errors.required">Phone is required.</div>
+                    <div *ngIf="guestForm.get('phone').errors.pattern">Phone must be a 10-digit number.</div>
+                </div>
+            </div>
+            <div>
+                <label for="emailInput">Email:</label>
+                <input class="form-control" type="email" id="emailInput" formControlName="email" [(ngModel)]="guest.email" required/>
+                <div *ngIf="guestForm.get('email').invalid && guestForm.get('email').touched" class="text-danger">
+                    <div *ngIf="guestForm.get('email').errors.required">Email is required.</div>
+                    <div *ngIf="guestForm.get('email').errors.email">Invalid email address.</div>
+                </div>
+            </div>
+            <div>
+                <label for="invStatInput">Invitation State:</label>
+                <select formControlName="invitationState" id="invStatInput" class="form-control" [(ngModel)]="guest.invitationState" required >
+                    <option value="">Select State</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Confirmed">Confirmed</option>
+                </select>
+                <div *ngIf="guestForm.get('invitationState').invalid && guestForm.get('invitationState').touched" class="text-danger">
+                    <div *ngIf="guestForm.get('invitationState').errors.required">Invitation state is required.</div>
+                </div>
+            </div>
+            <input class="btn btn-success" value="Add" type="submit"/>
+        </form>
+    </div>
+</ng-template>

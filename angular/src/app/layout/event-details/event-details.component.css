@@ -1,0 +1,97 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 20px;
+}
+
+.header-container {
+    display: flex;
+    align-items: center; 
+    justify-content: space-between; 
+}
+
+h2 {
+    padding: 30px 60px;
+    display: block;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    background-color: #050794;
+    border: none;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    margin-right: 10px;
+}
+  
+.btn:hover {
+    background-color: #5551ff;
+}
+/* event-details.component.css */
+
+
+  
+  /* Style for the event details section */
+  .container {
+    border: 1px solid #ccc; /* Add a border for visual separation */
+    padding: 20px;
+    border-radius: 5px; /* Add border radius for rounded corners */
+    background-color: #f9f9f9; /* Light background color */
+  }
+  h3 {
+    padding: 30px 60px;
+    display: block;
+  }
+ 
+  
+  
+  /* Style for the loading message */
+  .loading-message {
+    font-style: italic;
+    color: #888;
+  }
+  
+/* event-details.component.css */
+
+/* Header Container */
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #f0f0f0; /* Example background color */
+}
+
+/* Title */
+h2 {
+    font-size: 24px;
+    color: #333; /* Example color */
+}
+
+/* Event Details */
+.container p {
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+/* Loading Message */
+.container p.loading-message {
+    font-style: italic;
+    color: #999; /* Example color */
+}
+
+/* Image */
+.container img {
+    max-width: 100%;
+    height: auto;
+    margin-top: 10px;
+    border-radius: 4px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1); /* Example box shadow */
+}
