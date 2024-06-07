@@ -74,7 +74,7 @@ import{EventDetailsComponent} from './layout/event-details/event-details.compone
                     {path:"eventDetails/:id",component:EventDetailsComponent},
 
                   {path:"todolist/:id",component:  TodoListComponent},
-                    { path: "showInterests", component: InterstsComponent },
+                    { path: "showInterests", component: InterstsComponent, canActivate: [AppRouteGuard] },
                     {path:'addNewGuest', component: CreateGuestComponent},
                     {path:'NoGuests/:id', component: NoGuestsComponent},
                 { path: 'allGuests/:id', component: AllGuestComponent, children:[
