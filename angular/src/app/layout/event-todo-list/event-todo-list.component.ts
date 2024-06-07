@@ -4,7 +4,9 @@ import { ToDoList } from '../../../shared/Models/ToDoList';
 import { TodoListService } from '../../../shared/Services/todo-list.service';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+
 import { HttpClient } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-event-todo-list',
@@ -20,6 +22,7 @@ export class TodoListComponent implements OnInit {
   taskDescription: string = ''; // Initialize with empty string
   taskDate: string = '';
   selectedTask: ToDoList | null = null;
+
   userId: number | null = null; // Store the user ID
 
   constructor(private todoListService: TodoListService, private http: HttpClient) { }
@@ -39,6 +42,7 @@ export class TodoListComponent implements OnInit {
       });
   }
 
+
   createToDoItem(): void {
     if (!this.newTask.description) {
       alert('Please enter a task description.');
@@ -50,16 +54,19 @@ export class TodoListComponent implements OnInit {
       return;
     }
 
+
     if (this.userId === null) {
       alert('User ID not available.');
       return;
     }
+
 
     const newItem: ToDoList = {
       id: 0, // Id should be set by the backend
       status: 'Todo',
       date: new Date(this.newTask.date),
       description: this.newTask.description,
+
       userId: this.userId, // Use the fetched userId
       eventId: 5 // Example eventId
     };
@@ -72,12 +79,17 @@ export class TodoListComponent implements OnInit {
         this.todoItems.push(data);
         this.newTask = { description: '', date: '' }; // Reset the form
         window.location.reload();
+
       },
       (error) => {
         console.error('Error creating ToDo item', error);
       }
+
     );
   }
+
+
+      
 
   getToDoList(eventId: number): void {
     this.todoListService.getToDoCheckList(eventId).subscribe(
@@ -97,8 +109,10 @@ export class TodoListComponent implements OnInit {
 
   getTaskColor(status: string): string {
     if (!status) {
-      return 'bg-secondary';
+
+      return 'bg-secondary'; 
     }
+  
 
     switch (status.toLowerCase()) {
       case 'todo':
@@ -108,9 +122,12 @@ export class TodoListComponent implements OnInit {
       case 'done':
         return 'bg-success';
       default:
-        return 'bg-secondary';
+
+        return 'bg-secondary'; 
     }
   }
+  
+
 
   isTaskOverdue(task: ToDoList): boolean {
     const taskDate: Date = new Date(task.date);
@@ -118,16 +135,19 @@ export class TodoListComponent implements OnInit {
     return taskDate < currentDate && (task.status.toLowerCase() === 'todo' || task.status.toLowerCase() === 'inprogress');
   }
 
+
   updateTaskStatus(taskToUpdate: ToDoList, newStatus: string): void {
     taskToUpdate.status = newStatus;
 
     this.todoListService.updateToDoList(taskToUpdate).subscribe(
       (updatedTask: ToDoList) => {
         console.log('Task status updated successfully:', updatedTask);
+
         this.selectedTask = null; // Reset the selected task after updating status
       },
       (error) => {
         console.error('Error updating task status:', error);
+
       }
     );
   }
@@ -152,4 +172,5 @@ export class TodoListComponent implements OnInit {
       }
     );
   }
+
 }

@@ -22,7 +22,9 @@ import {UserEventComponent} from './layout/user-event/user-event.component';
 import {HistoryeventComponent} from './layout/historyevent/historyevent.component';
 import { InterstsComponent } from "./intersts/intersts.component";
 import{TodoListComponent} from './layout/event-todo-list/event-todo-list.component'
+
 import{EventDetailsComponent} from './layout/event-details/event-details.component'
+
 
 
 
@@ -68,7 +70,9 @@ import{EventDetailsComponent} from './layout/event-details/event-details.compone
                         component:UserProfileComponent,
                         canActivate: [AppRouteGuard] 
                     },
+
                     {path:"eventDetails/:id",component:EventDetailsComponent},
+
                   {path:"todolist/:id",component:  TodoListComponent},
                     { path: "showInterests", component: InterstsComponent },
                     {path:'addNewGuest', component: CreateGuestComponent},

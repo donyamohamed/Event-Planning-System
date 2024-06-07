@@ -14,7 +14,9 @@ import { HttpClient } from '@angular/common/http'; // Updated import
 })
 export class UserEventComponent implements OnInit {
   events: Event[] = [];
+
   userId: number | null = null; // Add userId property
+
 
   constructor(
     private userEventsService: UserEventsService,
@@ -59,6 +61,7 @@ export class UserEventComponent implements OnInit {
         console.error('Error fetching user events', error);
       }
     );
+
   }
 
   guestAppearing(event: Event): void {
@@ -73,4 +76,4 @@ export class UserEventComponent implements OnInit {
       this.route.navigateByUrl("app/eventDetails/" + event.id, { state: { event } });
     }
   }
-}
+
