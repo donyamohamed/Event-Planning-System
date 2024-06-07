@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ToDoList } from '../../../shared/Models/ToDoList';
 import { TodoListService } from '../../../shared/Services/todo-list.service';
+
 import { RouterLink, ActivatedRoute } from '@angular/router'; // Import ActivatedRoute
+
 import { FormsModule } from '@angular/forms';
 
 import { HttpClient } from '@angular/common/http';
@@ -24,6 +26,7 @@ export class TodoListComponent implements OnInit {
   selectedTask: ToDoList | null = null;
 
   userId: number | null = null; // Store the user ID
+
   eventId: number | null = null; // Store the event ID
 
   constructor(
@@ -43,6 +46,7 @@ export class TodoListComponent implements OnInit {
         console.error('Event ID not found in the URL');
       }
     });
+
   }
 
   getUserData(): void {
@@ -55,6 +59,7 @@ export class TodoListComponent implements OnInit {
       });
   }
 
+
   createToDoItem(): void {
     if (!this.newTask.description) {
       alert('Please enter a task description.');
@@ -66,23 +71,28 @@ export class TodoListComponent implements OnInit {
       return;
     }
 
+
     if (this.userId === null) {
       alert('User ID not available.');
       return;
     }
+
 
     if (this.eventId === null) {
       alert('Event ID not available.');
       return;
     }
 
+
     const newItem: ToDoList = {
       id: 0, // Id should be set by the backend
       status: 'Todo',
       date: new Date(this.newTask.date),
       description: this.newTask.description,
+
       userId: this.userId, // Use the fetched userId
       eventId: this.eventId // Use the fetched eventId
+
     };
 
     console.log('Creating new task:', newItem); // Debug log
@@ -93,12 +103,15 @@ export class TodoListComponent implements OnInit {
         this.todoItems.push(data);
         this.newTask = { description: '', date: '' }; // Reset the form
         window.location.reload();
+
       },
       (error) => {
         console.error('Error creating ToDo item', error);
       }
+
     );
   }
+
 
   getToDoList(eventId: number): void {
     this.todoListService.getToDoCheckList(eventId).subscribe(
@@ -121,6 +134,7 @@ export class TodoListComponent implements OnInit {
       return 'bg-secondary'; 
     }
 
+
     switch (status.toLowerCase()) {
       case 'todo':
         return 'bg-todo';
@@ -132,6 +146,7 @@ export class TodoListComponent implements OnInit {
         return 'bg-secondary'; 
     }
   }
+
 
   isTaskOverdue(task: ToDoList): boolean {
     const taskDate: Date = new Date(task.date);
@@ -145,10 +160,12 @@ export class TodoListComponent implements OnInit {
     this.todoListService.updateToDoList(taskToUpdate).subscribe(
       (updatedTask: ToDoList) => {
         console.log('Task status updated successfully:', updatedTask);
+
         this.selectedTask = null; // Reset the selected task after updating status
       },
       (error) => {
         console.error('Error updating task status:', error);
+
       }
     );
   }
@@ -175,4 +192,5 @@ export class TodoListComponent implements OnInit {
       }
     );
   }
+
 }
