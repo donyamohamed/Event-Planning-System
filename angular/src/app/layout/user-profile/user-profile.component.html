@@ -1,4 +1,5 @@
 
+
 <!-- profile.component.html -->
 <h1 class="m-3" style="color: #1D2027; font-size: 2.5rem; text-align: center;">Profile</h1>
 <div class="page-content page-container" id="page-content">
@@ -69,6 +70,27 @@
     </div>
   </div>
 </div>
+
+
+
+
+
+
+
+
+<!-- upcoming -->
+<app-upcoming-events></app-upcoming-events>
+<!--History-->
+<app-historyevent></app-historyevent>
+
+
+
+
+
+
+
+
+
 <ng-template #modalTemplate>
   <div class="modal-header">
     <h4 class="modal-title" style="color: #1D2027;">Edit My Profile</h4>
@@ -80,22 +102,28 @@
     <form #createForm="ngForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
         <label for="userName">User Name:</label>
+
         <input type="text" class="form-control" id="userName" name="userName" [(ngModel)]="user.userName" required minlength="3" maxlength="50" pattern="^[a-zA-Z0-9]+(?:[_-][a-zA-Z0-9]+)*$">
         <div *ngIf="createForm.controls['userName'].invalid && (createForm.controls['userName'].dirty || createForm.controls['userName'].touched)">
           <div *ngIf="createForm?.controls['userName']?.errors?.required" class="err">User Name is required.</div>
           <div *ngIf="createForm?.controls['userName']?.errors?.minlength" class="err">User Name must be at least 3 characters long.</div>
           <div *ngIf="createForm?.controls['userName']?.errors?.maxlength" class="err">User Name must not exceed 50 characters.</div>
+
           <div *ngIf="createForm?.controls['userName']?.errors?.pattern" class="err">Invalid username format.</div>
         </div>
       </div>
       <div class="form-group">
         <label for="email">Email:</label>
+
         <input type="email" class="form-control" id="email" name="emailAddress" [(ngModel)]="user.emailAddress" required>
         <div *ngIf="createForm?.controls['emailAddress']?.invalid && (createForm?.controls['email']?.dirty || createForm?.controls['email']?.touched)">
+
           <div *ngIf="createForm?.controls['emailAddress']?.errors?.required" class="err">Email is required.</div>
           <div *ngIf="createForm?.controls['emailAddress']?.errors?.email" class="err">Invalid email format.</div>
         </div>
       </div>
+
+
       <div class="form-group">
         <label for="age">Age:</label>
         <input type="number" class="form-control" id="age" min="16" max="70" name="age" [(ngModel)]="user.age" required>
@@ -117,12 +145,14 @@
       </div>
       <div class="form-group">
         <label for="imagePath1">Image:</label>
-        <input type="file" class="form-control" id="imagePath1" name="imagePath" (change)="onFileSelected($event)" required>
+        <input type="file" class="form-control" id="imagePath1" name="imagePath" (change)="onFileSelected($event)"
+          required>
       </div>
       <button type="submit" [disabled]="createForm.invalid" class="btn btn-primary">Submit</button>
     </form>
   </div>
 </ng-template>
+
 <!--add intersts modal section-->
 <ng-template #AddInterests>
   <div class="modal-header">
@@ -137,3 +167,4 @@
     </div>
   </div>
 </ng-template>
+

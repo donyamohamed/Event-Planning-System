@@ -1,4 +1,6 @@
+
 import { Component, OnInit, TemplateRef } from "@angular/core";
+
 import { CurrentUserDataService } from "@shared/Services/current-user-data.service";
 import { InterestsService } from "@shared/Services/interests.service";
 import { CurrentUser } from "@shared/Models/current-user";
@@ -8,17 +10,20 @@ import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { BrowserModule } from "@angular/platform-browser";
 import { RouterLink } from "@angular/router";
+
 import Swal from "sweetalert2";
 import { finalize } from "rxjs";
-
+import {UpcomingEventsComponent} from './upcoming-events/upcoming-events.component';
+import {HistoryeventComponent} from '../historyevent/historyevent.component';
 @Component({
-  imports: [FormsModule, CommonModule, RouterLink],
+  imports: [FormsModule, CommonModule, RouterLink,UpcomingEventsComponent,HistoryeventComponent],
   standalone: true,
   selector: "app-user-profile",
   templateUrl: "./user-profile.component.html",
   styleUrls: ["./user-profile.component.css"],
 })
 export class UserProfileComponent implements OnInit {
+
   AddInterest(id: any, interest: any) {
     console.log("iiiiiiiii", id);
     this.interestsService.AddInterest(id, interest).subscribe({
@@ -98,6 +103,7 @@ export class UserProfileComponent implements OnInit {
   //     });
   //   }
   // }
+
   user: CurrentUser | null = null;
   bsModalRef!: BsModalRef;
   AllInterests: Interests[] | any;
@@ -105,8 +111,10 @@ export class UserProfileComponent implements OnInit {
     private _userService: CurrentUserDataService,
     private modalService: BsModalService,
     private interestsService: InterestsService
+
   ) { }
   AllExistingInterests: any;
+
   ngOnInit(): void {
     this._userService.GetCurrentUserData().subscribe({
       next: (u: CurrentUser) => {
@@ -123,6 +131,7 @@ export class UserProfileComponent implements OnInit {
         this.AllInterests = interest;
         console.log("my interests :", this.AllInterests.result[0]);
       },
+
     });
     //all
     this.interestsService.GetAllInterests().subscribe({
@@ -150,6 +159,7 @@ export class UserProfileComponent implements OnInit {
   Wedding,
   Gathering,
   Other */
+
   getStatusLabel(status: number): string {
     switch (status) {
       case 0:
@@ -221,4 +231,6 @@ export class UserProfileComponent implements OnInit {
     //   },
     // });
   }
+
 }
+

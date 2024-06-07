@@ -1,0 +1,30 @@
+<div *ngIf="historyevent && historyevent.length > 0; else noEventTemplate">
+    <h2>
+        <img src="../../../assets/img/history1.jpg" alt="icon" />
+        Event History</h2>
+    <div *ngFor="let event of historyevent" class="container">
+        <div class="event">
+            <div class="eventp">
+                <div class="eventname">
+                    <h3>{{ event.name }}</h3>
+                </div>
+                <div class="todo">
+                    <a routerLink="/app/create-event" class="btn">To do CheckList</a>
+                </div>
+            </div>
+            <ul>
+                <li>
+                    <span class="icon">📅 Start Date:</span> {{ event.startDate }}
+                </li>
+                <li>
+                    <span class="icon">📅 End Date:</span> {{ event.endDate }}
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<ng-template #noEventTemplate>
+    <h1 class="no-event">
+        <img src="../../../assets/img/nohistory1.png" alt="icon" />
+     No EVENT HISTORY</h1>
+</ng-template>

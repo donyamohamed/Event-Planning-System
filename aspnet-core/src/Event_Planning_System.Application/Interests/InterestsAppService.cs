@@ -8,24 +8,32 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Event_Planning_System.Authorization.Users;
+
 using Microsoft.AspNetCore.Mvc;
 using Abp.Domain.Entities;
 using System;
+
 
 namespace Event_Planning_System.Interests
 {
 	public class InterestsAppService : ApplicationService, IUserIntersets
 	{
 		private readonly IRepository<Interest, int> _interestRepository;
-		private readonly UserManager _userManager;
+
+		private readonly IRepository<User, long> _userRepository;
+        private readonly UserManager _userManager;
 		private readonly IMapper _mapper;
 
-		public InterestsAppService(IRepository<Interest, int> interestRepository, UserManager userManager, IMapper mapper)
+		public InterestsAppService(IRepository<Interest, int> interestRepository, UserManager userManager, IMapper mapper , IRepository<User, long> userRepository)
+
 		{
 			_interestRepository = interestRepository;
 			_userManager = userManager;
 			_mapper = mapper;
-		}
+
+			_userRepository = userRepository;
+    }
+		
 		public async Task Add([FromHeader] int? id)
 		{
 			var userId = AbpSession.UserId.Value;
@@ -64,6 +72,7 @@ namespace Event_Planning_System.Interests
 			var interests = await _interestRepository.GetAllListAsync();
 			return interests;
 		}
+
 		public async Task<List<GetUserInterestsDTO>> GetUserIntersts()
 		{
 			var userId = AbpSession.UserId.Value;
@@ -74,5 +83,35 @@ namespace Event_Planning_System.Interests
 
 			return _mapper.Map<List<GetUserInterestsDTO>>(interests);
 		}
+
+
+		public async Task<List<GetAllInterstsDTO>> GetAllInterstsDTO()
+		{
+			var Interests = await _interestRepository.GetAll().ToListAsync();
+			return _mapper.Map<List<GetAllInterstsDTO>>(Interests);
+		}
+
+		public async Task<bool> GetHasInterests()
+		{
+            var UserId = AbpSession.UserId.Value;
+			var user = await _userRepository.GetAll().Where(a=>a.Id==UserId).Include(a=>a.Interests).FirstOrDefaultAsync();
+
+            return user.Interests.Any();
+
+        }
+
+        public async Task addUserInterests(List<int> interestIds)
+		{
+			var UserId = AbpSession.UserId.Value;
+			var user = await _userRepository.GetAsync(UserId);
+
+
+            user.Interests= interestIds.Select(id=> new Interest() { Id = id }).ToList();
+
+            await _userRepository.UpdateAsync(user);
+
+		}
+
+
 	}
 }

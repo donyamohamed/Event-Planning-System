@@ -62,7 +62,6 @@ export class NewPasswordComponent implements OnInit {
       }
     });
        
-
   }
 }
 

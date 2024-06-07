@@ -1,4 +1,5 @@
-﻿using Abp.Domain.Entities.Auditing;
+﻿using Abp.Domain.Entities;
+
 using Event_Planning_System.Authorization.Users;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ public enum StatusList
 }
 namespace Event_Planning_System.Enitities
 {
-    public class ToDoCheckList 
+    public class ToDoCheckList :IEntity<int>
     {
 		public int Id { get; set; }
 		[Required(ErrorMessage = "Status is required.")]
@@ -37,5 +38,9 @@ namespace Event_Planning_System.Enitities
 		[ForeignKey("EventId")]
 		public virtual Event Event { get; set; }
 
-	}
+        public bool IsTransient()
+        {
+            return ((IEntity<int>)Event).IsTransient();
+        }
+    }
 }

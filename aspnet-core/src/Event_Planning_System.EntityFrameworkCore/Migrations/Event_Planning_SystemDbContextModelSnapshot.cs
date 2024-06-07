@@ -1703,9 +1703,6 @@ namespace Event_Planning_System.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("EventId")
-                        .HasColumnType("int");
-
                     b.Property<string>("InvitationState")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");

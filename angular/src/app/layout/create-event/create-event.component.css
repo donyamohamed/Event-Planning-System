@@ -1,5 +1,5 @@
 .create-event {
-    max-width: 900px;
+    max-width: 950px;
     height: 85vh; 
     margin: 0 auto;
     padding: 30px;
@@ -12,6 +12,9 @@ body{
     overflow-x: none;
     overflow-y: hidden;
     overflow: hidden;
+}
+h2{
+    color: #fbaf1b;
 }
 
 textarea {
@@ -47,6 +50,7 @@ label {
 
 .right-column {
     margin-top: 35px !important;
+    margin-left: 20px;
 }
 
 .left-column, .right-column {
@@ -54,6 +58,9 @@ label {
     flex-direction: column;
     width: 48%;
     padding: 20px 20px;
+}
+#endDate{
+    margin-left: 5px;
 }
 
 input[type=file] {
@@ -97,9 +104,9 @@ select {
 
 .submit-button {
     width: 10%;
-    margin-left: 700px;
+    margin-left: 730px;
     padding: 12px 20px;
-    background-color: rgb(49, 49, 135);
+    background-color: #fbaf1b;
     color: #fff;
     border: none;
     border-radius: 5px;

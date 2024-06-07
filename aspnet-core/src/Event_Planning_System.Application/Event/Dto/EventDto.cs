@@ -38,7 +38,7 @@ namespace Event_Planning_System.Event.Dto
         public string Name { get; set; }
 
         [StringLength(500, ErrorMessage = "Description can't be longer than 500 characters.")]
-        public string Description { get; set; }
+        public string Description { get; set; } 
 
         [Required(ErrorMessage = "Location is required.")]
         [StringLength(200, ErrorMessage = "Location can't be longer than 200 characters.")]
@@ -66,7 +66,6 @@ namespace Event_Planning_System.Event.Dto
         public long UserId { get; set; }
      
         
-
         public int BudgetId { get; set; }
         
         public bool IsTransient()
