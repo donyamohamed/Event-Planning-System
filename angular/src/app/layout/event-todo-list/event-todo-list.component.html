@@ -1,0 +1,99 @@
+
+<div class="big-circle circle1"></div>
+<div class="big-circle circle2"></div>
+<div class="big-circle circle3"></div>
+<div class="big-circle circle4"></div>
+<div class="big-circle circle5"></div>
+<div class="big-circle circle6"></div>
+<div class="big-circle circle7"></div>
+<div class="container-fluid">
+  <div class="row">
+    
+    
+
+    <!-- Main content -->
+    <main role="main" class="col-md-8 ml-sm-auto col-lg-11 px-md-4">
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+        <h1 class="h2">Today main focus</h1>
+        <div class="task-status">
+          <div class="task-circle bg-todo"></div>
+          <span>TODO</span>
+        </div>
+        <div class="task-status">
+            <div class="task-circle bg-warning"></div>
+            <span>Inprogress</span>
+        </div>
+      <div class="task-status">
+        <div class="task-circle bg-success"></div>
+        <span>Done</span>
+      </div>
+  </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend align-items-center">
+          <div class="task-circle bg-danger"></div>
+          <div class="task-circle bg-warning"></div>
+          <div class="task-circle bg-secondary"></div>
+        </div>
+
+        <input type="text" class="form-control" id="task-text" placeholder="Enter task..."
+       aria-label="What's your next task?" aria-describedby="basic-addon2" [(ngModel)]="newTask.description">
+
+        <div class="input-group-append">
+          <input type="datetime-local" class="input-group-text calander" id="datepicker" [(ngModel)]="newTask.date"/>
+          <button class="btn btn-outline-secondary button" type="button" (click)="createToDoItem()">+</button>
+        </div>
+      </div>
+      <div class="task-list">
+        <div class="task" *ngFor="let task of todoItems">
+          <div class="task-content">
+            <div class="task-info">
+              <div class="task-details">
+                <div class="task-circle" [ngClass]="getTaskColor(task.status)" (click)="toggleTaskSelection(task)"></div>
+                
+                <div class="task-time">{{ task.date | date:'short' }}</div>
+                <span class="task-description" [ngClass]="{'red-line': isTaskOverdue(task), 'green-line': task.status.toLowerCase()==='done'}">{{ task.description }}</span>
+              </div>
+              <div class="task-actions">
+                <div class="task-checkbox" [ngClass]="{'border-red': isTaskOverdue(task) }">
+                  <input type="checkbox" id="custom-checkbox-{{task.id}}" [checked]="task.status.toLowerCase() === 'done'" [disabled]="task.status.toLowerCase() !== 'done'">
+                  <label for="custom-checkbox-{{task.id}}"></label>
+                </div>
+                <div class="task-delete">
+                  <label for="custom-checkbox-{{task.id}}">
+                    <span class="delete-icon" (click)="deleteTask(task.id)">&#x274C;</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+          <!-- <div *ngIf="selectedTask === task" class="other-circles">
+            <div class="task-circle bg-warning" (click)="updateTaskStatus(task, 'Inprogress')"></div>
+            <div class="task-circle bg-success" (click)="updateTaskStatus(task, 'Done')"></div>
+          </div> -->
+          <div *ngIf="selectedTask === task" class="other-circles">
+            <div *ngIf="task.status.toLowerCase() === 'inprogress'">
+            <div class="circle-wrapper">
+              <div class="task-circle bg-warning" (click)="updateTaskStatus(task, 'Inprogress')"></div>
+              <div class="task-circle bg-success" (click)="updateTaskStatus(task, 'Done')"></div>
+            </div>
+          </div>
+          <div *ngIf="task.status.toLowerCase() === 'todo'">
+            <div class="circle-wrapper">
+            <div class="task-circle bg-warning" (click)="updateTaskStatus(task, 'Inprogress')"></div>
+            <div class="task-circle bg-success" (click)="updateTaskStatus(task, 'Done')"></div>
+            </div>
+          </div>
+          <div *ngIf="task.status.toLowerCase() === 'done'">
+            <div class="circle-wrapper">
+            <div class="task-circle bg-todo" (click)="updateTaskStatus(task, 'Todo')"></div>
+            <div class="task-circle bg-warning" (click)="updateTaskStatus(task, 'Inprogress')"></div>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+      
+    </main>
+  </div>
+</div>

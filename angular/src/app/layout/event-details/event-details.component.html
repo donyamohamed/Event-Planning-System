@@ -1,0 +1,25 @@
+<div class="header-container">
+    <h2>Event Details</h2>
+    <a [routerLink]="'/app/todolist/' + event.id" class="btn">TodoList</a>
+</div>
+
+<section class="container">
+    <h3>{{ event?.name }}</h3>
+    <div *ngIf="event">
+        <img src="../../../assets/img/Event.jpg" alt="" srcset="">
+        <p><strong>Name:</strong> {{ event.name }}</p>
+        <p><strong>Description:</strong> {{ event.description }}</p>
+        <p><strong>Location:</strong> {{ event.location }}</p>
+        <p><strong>Start Date:</strong> {{ event.startDate }}</p>
+        <p><strong>End Date:</strong> {{ event.endDate }}</p>
+        <p><strong>Public:</strong> {{ event.isPublic ? 'Yes' : 'No' }}</p>
+        <p><strong>Max Count:</strong> {{ event.maxCount }}</p>
+        <!-- <img [src]="'../../../assets/img/' + event.eventImg" alt="" srcset=""> -->
+       
+        <p><strong>Category:</strong> {{ event.category }}</p>
+        <p><strong>Budget:</strong> {{ budgetAmount }}</p>
+    </div>
+    <div *ngIf="!event">
+        <p>Loading event details...</p>
+    </div>
+</section>

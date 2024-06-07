@@ -19,5 +19,12 @@ export class EventService {
   public getBudgetAmounts(): Observable<any> {
     return this.http.get<any>(this.budgetUrl);
   }
+
+
+   
+
+ 
+
+
 }
 
