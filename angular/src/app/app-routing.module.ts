@@ -20,7 +20,7 @@ import { ChangePasswordComponent } from './users/change-password/change-password
 import { UserProfileComponent } from './layout/user-profile/user-profile.component';
 import {UserEventComponent} from './layout/user-event/user-event.component';
 import {HistoryeventComponent} from './layout/historyevent/historyevent.component';
-import { InterstsComponent } from "./intersts/intersts.component";
+import {InterstsComponent } from "./intersts/intersts.component";
 import{TodoListComponent} from './layout/event-todo-list/event-todo-list.component'
 
 import{EventDetailsComponent} from './layout/event-details/event-details.component'

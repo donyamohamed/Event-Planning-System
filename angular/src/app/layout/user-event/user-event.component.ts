@@ -77,3 +77,4 @@ export class UserEventComponent implements OnInit {
     }
   }
 
+}

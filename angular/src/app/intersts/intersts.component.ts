@@ -47,9 +47,16 @@ export class InterstsComponent implements OnInit {
     }
   }
 
-
   onSubmit() {
     console.log('Selected Interests:', this.selectedInterestsId);
-    this.InterstsService.AddInterstsForUser(this.selectedInterestsId).subscribe();
+    this.InterstsService.AddInterstsForUser(this.selectedInterestsId).subscribe({
+      next: (response) => {
+        this.router.navigateByUrl("app/home");
+      },
+      error: (err) => {
+        console.error('Error adding interests:', err);
+      }
+    });
   }
+  
 }
