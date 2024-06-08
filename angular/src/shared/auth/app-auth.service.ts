@@ -29,9 +29,10 @@ export class AppAuthService {
     logout(reload?: boolean): void {
         abp.auth.clearToken();
         abp.utils.deleteCookie(AppConsts.authorization.encryptedAuthTokenName);
-        
+        this.clear(); //add by asmaa
         if (reload !== false) {
-            location.href = AppConsts.appBaseUrl;
+            // location.href = AppConsts.appBaseUrl;
+            this._router.navigate(['/account/login']);//by asmaa
         }
     }
 

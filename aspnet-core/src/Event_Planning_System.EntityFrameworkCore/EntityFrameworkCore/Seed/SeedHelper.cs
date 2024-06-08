@@ -7,6 +7,8 @@ using Abp.EntityFrameworkCore.Uow;
 using Abp.MultiTenancy;
 using Event_Planning_System.EntityFrameworkCore.Seed.Host;
 using Event_Planning_System.EntityFrameworkCore.Seed.Tenants;
+using Event_Planning_System.Enitities;
+using System.Linq;
 
 namespace Event_Planning_System.EntityFrameworkCore.Seed
 {
@@ -27,6 +29,8 @@ namespace Event_Planning_System.EntityFrameworkCore.Seed
             // Default tenant seed (in host database).
             new DefaultTenantBuilder(context).Create();
             new TenantRoleAndUserBuilder(context, 1).Create();
+            // seed intersts
+            SeedInterests(context);
         }
 
         private static void WithDbContext<TDbContext>(IIocResolver iocResolver, Action<TDbContext> contextAction)
@@ -42,6 +46,18 @@ namespace Event_Planning_System.EntityFrameworkCore.Seed
 
                     uow.Complete();
                 }
+            }
+        }
+
+        private static void SeedInterests(Event_Planning_SystemDbContext context)
+        {
+            if (!context.interests.Any())
+            {
+                foreach (EventCategory category in Enum.GetValues(typeof(EventCategory)))
+                {
+                    context.interests.Add(new Interest { Type = category });
+                }
+                context.SaveChanges();
             }
         }
     }
