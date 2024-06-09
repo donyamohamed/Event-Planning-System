@@ -1,8 +1,7 @@
-<div *ngIf="historyevent && historyevent.length > 0; else noEventTemplate">
+<div class="main-container" *ngIf="historyevent && historyevent.length > 0; else noEventTemplate">
     <h2>
-        <img src="../../../assets/img/history1.jpg" alt="icon" />
-        Event History
-    </h2>
+        <img src="../../../assets/img/eventHistory.png" alt="icon" />
+        Event History</h2>
     <div *ngFor="let event of historyevent" class="container">
         <div class="event">
             <div class="eventp">
