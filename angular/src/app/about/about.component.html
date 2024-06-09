@@ -1,136 +1,47 @@
-﻿<div [@routerTransition]>
-  <section class="content-header">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-12">
-          <h1>{{ "About" | localize }}</h1>
+﻿<div class="header">
+  <!--Content before waves-->
+  <div class="inner-header ">
+
+      <h1>Welcome to Eventa Planning System</h1>
+      <div class="content ">
+        <div class="image">
+          <img src="assets/img/about.svg" alt="about" />
+        </div>
+      
+        <div class="info">
+           
+            <p>Streamline your event planning process with our intuitive system. Create, manage, and track events effortlessly.</p>
+            <ul>
+                <li>Create detailed event plans</li>
+                <li>Manage tasks and deadlines</li>
+                <li>Invite guests and track RSVPs</li>
+                <li>Customize event details and settings</li>
+                <li>Manage budgets and expenses</li>
+         
+            </ul>
+          <button class="btn" [routerLink]="['../home']">Get Started</button>
         </div>
       </div>
-    </div>
-  </section>
-  <section class="content px-2">
-    <div class="container-fluid">
-      <div class="card">
-        <div class="card-body">
-          <p>
-            This is a simple startup template based on ASP.NET Boilerplate
-            framework and Module Zero. If you need an enterprise startup
-            project, check
-            <a href="http://aspnetzero.com?ref=abptmpl" target="_blank">
-              ASP.NET ZERO </a
-            >.
-          </p>
-          <h3>What is ASP.NET Boilerplate?</h3>
-          <p>
-            ASP.NET Boilerplate is an application framework built on latest
-            <strong>ASP.NET Core</strong> framework. It makes easy to use
-            authorization, dependency injection, validation, exception handling,
-            localization, logging, caching, background jobs and so on. It's
-            built on already familiar tools like Entity Framework, AutoMapper,
-            Castle Windsor...
-          </p>
-          <p>
-            ASP.NET Boilerplate implements
-            <strong>NLayer architecture</strong> (Domain, Application,
-            Infrastructure and Presentation Layers) and
-            <strong>Domain Driven Design</strong> (Entities, Repositories,
-            Domain/Application Services, DTO's...). Also implements and provides
-            a good infrastructure to implement common software development
-            <strong>best practices</strong>.
-          </p>
-          <h3>What is Module Zero?</h3>
-          <p>
-            ASP.NET Boilerplate framework is designed to be independent of any
-            database schema and to be as generic as possible. Therefore, It
-            leaves some concepts
-            <strong>abstract</strong> and <strong>optional</strong> (like audit
-            logging, permission and setting stores) which requires some
-            <strong>data store</strong>.
-          </p>
-          <p>
-            <strong>Module Zero </strong>implements all fundamental concepts of
-            ASP.NET Boilerplate framework such as
-            <a
-              href="http://www.aspnetboilerplate.com/Pages/Documents/Zero/Tenant-Management"
-              >tenant management</a
-            >
-            (<strong>multi-tenancy</strong>),
-            <a
-              href="http://www.aspnetboilerplate.com/Pages/Documents/Zero/Role-Management"
-            >
-              role management </a
-            >,
-            <a
-              href="http://www.aspnetboilerplate.com/Pages/Documents/Zero/User-Management"
-              >user management</a
-            >,
-            <a
-              href="http://www.aspnetboilerplate.com/Pages/Documents/Authorization"
-              >authorization</a
-            >
-            (<a
-              href="http://www.aspnetboilerplate.com/Pages/Documents/Zero/Permission-Management"
-            >
-              permission management </a
-            >),
-            <a
-              href="http://www.aspnetboilerplate.com/Pages/Documents/Setting-Management"
-              >setting management</a
-            >,
-            <a
-              href="http://www.aspnetboilerplate.com/Pages/Documents/Zero/Language-Management"
-            >
-              language management </a
-            >,
-            <a
-              href="http://www.aspnetboilerplate.com/Pages/Documents/Audit-Logging"
-              >audit logging</a
-            >
-            and so on.
-          </p>
-          <p>
-            Module-Zero defines entities and implements
-            <strong>domain logic</strong>
-            (domain layer) and leaves application and presentation layers to
-            you.
-          </p>
-          <h4>Based on Microsoft ASP.NET Core Identity</h4>
-          <p>
-            Module Zero is based on Microsoft's
-            <a
-              href="https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity"
-              target="_blank"
-              >ASP.NET Core Identity</a
-            >
-            library. It extends user and role managers and implements user and
-            role stores using generic repositories.
-          </p>
-          <h3>Documentation</h3>
-          <ul>
-            <li>
-              <a
-                href="https://www.aspnetboilerplate.com/Pages/Documents/Zero/Startup-Template-Core"
-                >Documentation for this template</a
-              >
-            </li>
-            <li>
-              <a href="http://www.aspnetboilerplate.com/Pages/Documents"
-                >ASP.NET Boilerplate documentation</a
-              >
-            </li>
-          </ul>
-          <h3>Source code</h3>
-          <p>
-            This template is developed open source on Github. You can contribute
-            to the template.
-            <a
-              href="https://github.com/aspnetboilerplate/module-zero-core-template"
-              target="_blank"
-              >https://github.com/aspnetboilerplate/module-zero-core-template</a
-            >
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
+  </div>
+  <!--Waves Container-->
+  <div>
+      <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+          <defs>
+              <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+          </defs>
+          <g class="parallax">
+              <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.7)" />
+              <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.5)" />
+              <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.3)" />
+              <use xlink:href="#gentle-wave" x="48" y="7" fill="#fff" />
+          </g>
+      </svg>
+  </div>
+  <!--Waves end-->
+  
 </div>
+<!--Header ends-->
+
+<!--Content starts-->
+
+<!--Content ends-->
