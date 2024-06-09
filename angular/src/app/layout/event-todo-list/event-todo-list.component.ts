@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ToDoList } from '../../../shared/Models/ToDoList';
 import { TodoListService } from '../../../shared/Services/todo-list.service';
-import { RouterLink } from '@angular/router';
+
+import { RouterLink, ActivatedRoute } from '@angular/router'; // Import ActivatedRoute
+
 import { FormsModule } from '@angular/forms';
 
 import { HttpClient } from '@angular/common/http';
@@ -25,11 +27,26 @@ export class TodoListComponent implements OnInit {
 
   userId: number | null = null; // Store the user ID
 
-  constructor(private todoListService: TodoListService, private http: HttpClient) { }
+  eventId: number | null = null; // Store the event ID
+
+  constructor(
+    private todoListService: TodoListService, 
+    private http: HttpClient, 
+    private route: ActivatedRoute // Inject ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
     this.getUserData();
-    this.getToDoList(5); // Example eventId
+    this.route.paramMap.subscribe(params => {
+      const id = params.get('id');
+      if (id) {
+        this.eventId = +id; // Convert string to number
+        this.getToDoList(this.eventId);
+      } else {
+        console.error('Event ID not found in the URL');
+      }
+    });
+
   }
 
   getUserData(): void {
@@ -61,6 +78,12 @@ export class TodoListComponent implements OnInit {
     }
 
 
+    if (this.eventId === null) {
+      alert('Event ID not available.');
+      return;
+    }
+
+
     const newItem: ToDoList = {
       id: 0, // Id should be set by the backend
       status: 'Todo',
@@ -68,7 +91,8 @@ export class TodoListComponent implements OnInit {
       description: this.newTask.description,
 
       userId: this.userId, // Use the fetched userId
-      eventId: 5 // Example eventId
+      eventId: this.eventId // Use the fetched eventId
+
     };
 
     console.log('Creating new task:', newItem); // Debug log
@@ -89,8 +113,6 @@ export class TodoListComponent implements OnInit {
   }
 
 
-      
-
   getToDoList(eventId: number): void {
     this.todoListService.getToDoCheckList(eventId).subscribe(
       (response: any) => {
@@ -109,10 +131,9 @@ export class TodoListComponent implements OnInit {
 
   getTaskColor(status: string): string {
     if (!status) {
-
       return 'bg-secondary'; 
     }
-  
+
 
     switch (status.toLowerCase()) {
       case 'todo':
@@ -122,11 +143,9 @@ export class TodoListComponent implements OnInit {
       case 'done':
         return 'bg-success';
       default:
-
         return 'bg-secondary'; 
     }
   }
-  
 
 
   isTaskOverdue(task: ToDoList): boolean {
@@ -134,7 +153,6 @@ export class TodoListComponent implements OnInit {
     const currentDate: Date = new Date();
     return taskDate < currentDate && (task.status.toLowerCase() === 'todo' || task.status.toLowerCase() === 'inprogress');
   }
-
 
   updateTaskStatus(taskToUpdate: ToDoList, newStatus: string): void {
     taskToUpdate.status = newStatus;
@@ -165,7 +183,9 @@ export class TodoListComponent implements OnInit {
       () => {
         console.log('Task deleted successfully');
         // Reload the todo list after deletion
-        this.getToDoList(5);
+        if (this.eventId !== null) {
+          this.getToDoList(this.eventId);
+        }
       },
       error => {
         console.error('Error deleting task:', error);

@@ -21,7 +21,6 @@
     <ProjectReference Include="..\Event_Planning_System.EntityFrameworkCore\Event_Planning_System.EntityFrameworkCore.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Event\Dto\" />
 
 
     <Folder Include="Guest\Dto\" />
