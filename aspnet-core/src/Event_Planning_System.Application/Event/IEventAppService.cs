@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Event_Planning_System.Event
 {
-    public interface IEventAppService : IAsyncCrudAppService<EventDto, int, EventDto, EventDto>
+    public interface IEventAppService : IAsyncCrudAppService<EventDto, int, PagedAndSortedResultRequestDto, CreateEventDto, EventDto>
     {
-        Task<CreateEventDto> CreateWithImageAsync(CreateEventDto input);
+        Task<EventDto> CreateAsync(CreateEventDto input);
         Task<List<EventDto>> GetUserEventsAsync(long userId);
         Task<List<EventDto>> GetUpcomingEventsForCurrentUserAsync(long userId);
         Task<List<EventDto>> GetHistoryEventAsync(long userId);
