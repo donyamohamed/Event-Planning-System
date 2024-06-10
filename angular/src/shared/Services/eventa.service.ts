@@ -7,7 +7,7 @@ import { Event } from '../Models/Event';
   providedIn: 'root'
 })
 export class EventService {
-  private baseUrl = "https://localhost:44311/api/services/app/Event/CreateWithImage";
+  private baseUrl = "https://localhost:44311/api/services/app/Event/Create";
   private budgetUrl = "https://localhost:44311/api/services/app/BudgetExpenseAppServices/GetAll";
 
   constructor(private http: HttpClient) { }

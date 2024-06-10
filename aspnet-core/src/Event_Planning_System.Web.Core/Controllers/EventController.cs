@@ -61,7 +61,7 @@ namespace Event_Planning_System.Controllers
         [HttpPost]
         public async Task CreateWithImage([FromForm] CreateEventDto formData)
         {
-            await _eventService.CreateWithImageAsync(formData)  ; 
+            await _eventService.CreateAsync(formData)  ; 
         }
     }
     }

@@ -3,7 +3,6 @@ using Abp.Application.Services.Dto;
 using Abp.Domain.Repositories;
 using AutoMapper;
 using Event_Planning_System.Event.Dto;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -12,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Event_Planning_System.Event
 {
-    public class EventAppService : AsyncCrudAppService<Enitities.Event, EventDto, int, EventDto>, IEventAppService
+    public class EventAppService : AsyncCrudAppService<Enitities.Event, EventDto, int, PagedAndSortedResultRequestDto, CreateEventDto, EventDto>, IEventAppService
     {
         private readonly IRepository<Enitities.Event, int> _repository;
         private readonly IMapper _mapper;
@@ -49,7 +48,7 @@ namespace Event_Planning_System.Event
             return _mapper.Map<List<EventDto>>(events);
         }
 
-        public async Task<CreateEventDto> CreateWithImageAsync([FromForm]CreateEventDto input)
+        public override async Task<EventDto> CreateAsync([FromForm] CreateEventDto input)
         {
             if (input.EventImgFile != null && input.EventImgFile.Length > 0)
             {
@@ -66,8 +65,8 @@ namespace Event_Planning_System.Event
 
             var eventEntity = _mapper.Map<Enitities.Event>(input);
             await _repository.InsertAsync(eventEntity);
-
-            return _mapper.Map<CreateEventDto>(eventEntity);
+            await CurrentUnitOfWork.SaveChangesAsync();
+            return _mapper.Map<EventDto>(eventEntity);
         }
     }
-    }
+}
