@@ -2,12 +2,15 @@ using Abp.Application.Services;
 using Abp.Application.Services.Dto;
 using Abp.Domain.Repositories;
 using AutoMapper;
+using Event_Planning_System.Enitities;
 using Event_Planning_System.Event.Dto;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Event_Planning_System.Event
@@ -17,10 +20,12 @@ namespace Event_Planning_System.Event
         private readonly IRepository<Enitities.Event, int> _repository;
         private readonly IMapper _mapper;
         private readonly string _imageFolderPath;
+        private readonly IRepository<Interest, int> _interestRepository;
 
-        public EventAppService(IRepository<Enitities.Event, int> repository, IMapper mapper) : base(repository)
+        public EventAppService(IRepository<Enitities.Event, int> repository, IMapper mapper, IRepository<Interest, int> interestRepository) : base(repository)
         {
             _repository = repository;
+            _interestRepository=interestRepository;
             _mapper = mapper;
             _imageFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images");
             if (!Directory.Exists(_imageFolderPath))
@@ -69,5 +74,29 @@ namespace Event_Planning_System.Event
 
             return _mapper.Map<CreateEventDto>(eventEntity);
         }
-    }
-    }
+
+        public async Task<List<EventDto>> GetPublicEventsByInterest()
+        {
+            var userId = AbpSession.UserId.Value;
+            var interests = await _interestRepository.GetAll()
+                .Include(i => i.Users)
+                .Where(i => i.Users.Any(u => u.Id == userId))
+                .ToListAsync();
+
+            List<EventDto> publicEvents = new List<EventDto>();
+
+            foreach (var interest in interests)
+            {
+                var events = await _repository.GetAll()
+                    .Where(e => e.Category == interest.Type && e.IsPublic)
+                    .ToListAsync();
+
+                var mappedEvents = _mapper.Map<List<EventDto>>(events);
+                publicEvents.AddRange(mappedEvents);
+            }
+
+            return publicEvents;
+        }
+            
+        }
+   }
