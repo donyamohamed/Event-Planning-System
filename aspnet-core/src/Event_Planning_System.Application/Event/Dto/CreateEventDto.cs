@@ -41,7 +41,7 @@ namespace Event_Planning_System.Event.Dto
 
         public long UserId { get; set; }
 
-        public int BudgetId { get; set; }
+    
 
         public IFormFile EventImgFile { get; set; }
     }
