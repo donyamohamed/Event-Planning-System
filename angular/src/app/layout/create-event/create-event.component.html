@@ -65,10 +65,7 @@
                     </label>
                 </div>
 
-                <label>Budget</label>
-                <select [(ngModel)]="eventData.budgetId" name="budgetId" required>
-                    <option *ngFor="let option of budgetOptions" [ngValue]="option.id">{{ option.amount }}</option>
-                </select>
+              
 
                 <label>Event Image</label>
                 <input type="file" (change)="onFileSelected($event)" name="eventImgFile" accept="image/png, image/jpeg">

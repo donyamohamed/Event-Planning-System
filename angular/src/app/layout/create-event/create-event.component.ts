@@ -18,14 +18,13 @@ export class CreateEventComponent implements OnInit {
   eventData: Event = new Event();
   enumeratorKeys = Object.values(Enumerator);
   username: string;
-  budgetOptions: { id: number, amount: number, description: string }[] = [];
-  today: Date = new Date();
+today: Date = new Date();
 
   constructor(private eventService: EventService, private http: HttpClient) { }
 
   ngOnInit(): void {
     this.getUserData();
-    this.fetchBudgetOptions();
+    
     this.setDefaultValues();
   }
 
@@ -39,21 +38,9 @@ export class CreateEventComponent implements OnInit {
       });
   }
 
-  fetchBudgetOptions(): void {
-    this.eventService.getBudgetAmounts()
-      .subscribe(response => {
-        if (response && response.result && response.result.items) {
-          this.budgetOptions = response.result.items;
-          this.setDefaultBudgetId();
-        }
-      });
-  }
 
-  setDefaultBudgetId(): void {
-    if (this.budgetOptions.length > 0) {
-      this.eventData.budgetId = this.budgetOptions[0].id;
-    }
-  }
+
+ 
 
   createEvent(): void {
     if (typeof this.eventData.startDate === 'string') {
@@ -73,8 +60,7 @@ export class CreateEventComponent implements OnInit {
     formData.append('eventImg', this.eventData.eventImg || '');
     formData.append('category', this.eventData.category || '');
     formData.append('userId', this.eventData.userId?.toString() || '');
-    formData.append('budgetId', this.eventData.budgetId?.toString() || '');
-    if (this.eventData.eventImgFile) {
+  if (this.eventData.eventImgFile) {
       formData.append('eventImgFile', this.eventData.eventImgFile);
     }
 
