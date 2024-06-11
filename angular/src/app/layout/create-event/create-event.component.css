@@ -1,20 +1,20 @@
 .create-event {
-    max-width: 950px;
-    height: 85vh; 
-    margin: 0 auto;
+    max-width: 1200px;
+    margin-left: 20px;
     padding: 30px;
     background: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    overflow-y: auto; 
+    height: auto;
 }
-body{
-    overflow-x: none;
+
+body {
+    overflow-x: hidden;
     overflow-y: hidden;
-    overflow: hidden;
 }
-h2{
-    color: #fbaf1b;
+
+h2 {
+    color: #050794;
+    text-align: center;
+    margin-left: 500px;
 }
 
 textarea {
@@ -32,54 +32,55 @@ label {
     font-weight: bold;
 }
 
-.create-event h2 {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
 .form-container {
-    padding: 20px 20px;
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-inner-container {
+    display: flex;
     justify-content: space-between;
-}
-
-.left-column {
-    padding: 50px 0 !important;
-}
-
-.right-column {
-    margin-top: 35px !important;
-    margin-left: 20px;
+    width: 100%;
 }
 
 .left-column, .right-column {
+    margin-top: 20px;
+    width: 600%;
     display: flex;
     flex-direction: column;
-    width: 48%;
-    padding: 20px 20px;
 }
-#endDate{
-    margin-left: 5px;
+.right-column{
+    margin-left: 50px;
+}
+h2 img {
+    width: 45px;
+    animation: swing 2s ease-in-out infinite;
+  }
+
+.image-container {
+    margin-left: 250px;
+    width: 15%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.image-container img {
+    margin-left: 50px;
+    height: auto;
+    width: 1500px !important;
+    
 }
 
 input[type=file] {
     border: none;
 }
 
-input {
-    border-right: none;
-    border-left: none;
-    border-top: none;
+input, select {
+    border: none;
     border-bottom: 1px solid blue;
     margin-bottom: 20px !important;
-}
-
-select {
-    border-right: none;
-    border-left: none;
-    border-top: none;
-    border-bottom: 1px solid blue;
 }
 
 .left-column > *, .right-column > * {
@@ -99,12 +100,10 @@ select {
 }
 
 .date-time-container > * {
-    width: 45%;
+    width: 48%;
 }
 
 .submit-button {
-    width: 10%;
-    margin-left: 730px;
     padding: 12px 20px;
     background-color: #fbaf1b;
     color: #fff;
@@ -112,8 +111,20 @@ select {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+   margin-top: 20px;
 }
 
 .submit-button:hover {
     background-color: #0056b3;
 }
+@keyframes swing {
+    0% {
+      transform: rotate(0deg);
+    }
+    50% {
+      transform: rotate(15deg);
+    }
+    100% {
+      transform: rotate(0deg);
+    }
+  }
