@@ -24,8 +24,6 @@
 
 
     <Folder Include="Guest\Dto\" />
-
-    <Folder Include="Notification\Dto\" />
   </ItemGroup>
   <ItemGroup>
 

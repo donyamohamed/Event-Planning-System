@@ -19,7 +19,6 @@ namespace Event_Planning_System.Interests
 	public class InterestsAppService : ApplicationService, IUserIntersets
 	{
 		private readonly IRepository<Interest, int> _interestRepository;
-
 		private readonly IRepository<User, long> _userRepository;
         private readonly UserManager _userManager;
 		private readonly IMapper _mapper;
