@@ -8,7 +8,7 @@ import { Observable, map } from 'rxjs';
   providedIn: 'root'
 })
 export class ShowInterestsService {
-  private baseUrl="https://localhost:44311/api/services/app/Interests/GetAllInterstsDTO";
+  private baseUrl="https://localhost:44311/api/services/app/Interests/GetAllInterstsForChoosing";
   private baseUrl2="https://localhost:44311/api/services/app/Interests/addUserInterests";
   private baseUrl3="https://localhost:44311/api/services/app/Interests/GetHasInterests";
 

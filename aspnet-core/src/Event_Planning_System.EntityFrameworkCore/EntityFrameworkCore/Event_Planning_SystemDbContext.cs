@@ -16,7 +16,7 @@ namespace Event_Planning_System.EntityFrameworkCore
         public DbSet<BudgetExpense> Budgets { get; set; }
         public DbSet<ToDoCheckList> ToDoChecks { get; set; }
 
-        public DbSet<Interest>  interests { get; set; }
+        public DbSet<Interest> interests { get; set; }
         public Event_Planning_SystemDbContext(DbContextOptions<Event_Planning_SystemDbContext> options)
             : base(options)
         {
@@ -26,13 +26,7 @@ namespace Event_Planning_System.EntityFrameworkCore
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Event>()
-                .HasOne(e => e.BudgetExpense)
-                .WithMany()
-                .HasForeignKey(e => e.BudgetId)
-                .OnDelete(DeleteBehavior.Restrict); // Set ON DELETE to NO ACTION or RESTRICT
 
-           
 
             modelBuilder.Entity<Notification>()
                 .HasOne(n => n.Event)
@@ -44,20 +38,26 @@ namespace Event_Planning_System.EntityFrameworkCore
                 .HasOne(n => n.User)
                 .WithMany(u => u.Notifications)
                 .HasForeignKey(n => n.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
-
+                .OnDelete(DeleteBehavior.Restrict); // Changed to Restrict to prevent multiple cascade paths
 
             modelBuilder.Entity<ToDoCheckList>()
-          .HasOne(t => t.Event)
-          .WithMany(e => e.ToDoCheckLists)
-          .HasForeignKey(t => t.EventId)
-          .OnDelete(DeleteBehavior.Restrict);
+                .HasOne(t => t.Event)
+                .WithMany(e => e.ToDoCheckLists)
+                .HasForeignKey(t => t.EventId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<ToDoCheckList>()
                 .HasOne(t => t.User)
                 .WithMany(u => u.ToDoChecks)
                 .HasForeignKey(t => t.UserId)
-                .OnDelete(DeleteBehavior.Cascade); // This can stay as Cascade
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Add this to prevent multiple cascade paths
+            modelBuilder.Entity<BudgetExpense>()
+                .HasOne(b => b.Event)
+                .WithMany(e => e.Budgets)
+                .HasForeignKey(b => b.EventId)
+                .OnDelete(DeleteBehavior.Restrict);
 
 
         }
@@ -69,5 +69,4 @@ namespace Event_Planning_System.EntityFrameworkCore
     }
 
 
-    }
-
+}

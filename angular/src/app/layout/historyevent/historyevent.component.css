@@ -4,7 +4,11 @@ body {
     margin: 0;
     padding: 0;
 }
-
+.main-container{
+    width:calc(100% - 270px);
+    margin-left:270px;
+    padding: 10px 30px;
+}
 .container {
     max-width: 1200px;
     margin: 20px auto;
@@ -25,11 +29,14 @@ h2 img {
 
 h2 {
     color: #050794;;
-    font-size: 30px;
-    margin-left: 500px;
-    margin-top: 20px;
+    font-size: 38px;
+   text-align: center;
+    margin: 60px auto 20px;
 }
 
+.todo a{
+    font-size: 13px;
+}
 .eventp {
     display: flex;
     justify-content: space-between;

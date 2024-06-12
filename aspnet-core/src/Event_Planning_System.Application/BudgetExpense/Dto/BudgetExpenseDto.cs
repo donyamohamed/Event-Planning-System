@@ -3,6 +3,7 @@ using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,9 +18,8 @@ namespace Event_Planning_System.BudgetExpense.Dto
         [Range(0, int.MaxValue, ErrorMessage = "Amount must be a non-negative integer.")]
         public int Amount { get; set; }
 
-        [Required(ErrorMessage = "Description is required.")]
-        [StringLength(500, ErrorMessage = "Description cannot be longer than 500 characters.")]
-        public string Description { get; set; }
+        [Required(ErrorMessage = "Name is required.")]
+        public string Name { get; set; }
 
         [Required(ErrorMessage = "Date is required.")]
         [DataType(DataType.Date)]
@@ -31,6 +31,9 @@ namespace Event_Planning_System.BudgetExpense.Dto
         {
             throw new NotImplementedException();
         }
+        public int EventId { get; set; }
+     
+
     }
 
 

@@ -47,7 +47,7 @@ namespace Event_Planning_System.Authorization.Accounts
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
             var encodedToken = Uri.EscapeDataString(token);
 
-            var callbackUrl = $"http://localhost:4200/account/newPassword?token={encodedToken}&email={user.EmailAddress}" ;
+            var callbackUrl = $"http://localhost:4200/account/newPassword?token={encodedToken}&email={user.EmailAddress}";
             var emailBodyTemplate = $"Please reset your password by clicking here: <a href='{callbackUrl}'>here</a>";
 
             await _emailService.SendEmailAsync(emailAddress, "Reset Password", emailBodyTemplate);
@@ -57,14 +57,14 @@ namespace Event_Planning_System.Authorization.Accounts
 
 
         [AbpAllowAnonymous]
-        public async Task<IdentityResult> ResetPassword(string token, string email,ResetPasswordDto model)
+        public async Task<IdentityResult> ResetPassword(string token, string email, ResetPasswordDto model)
         {
 
             var user = await _userManager.FindByNameOrEmailAsync(email);
 
             if (user == null)
                 throw new Exception("There is no current user!");
-  
+
             else
             if (model.NewPassword != model.ConfirmPassword)
                 throw new Exception("No matched password");
@@ -130,7 +130,7 @@ namespace Event_Planning_System.Authorization.Accounts
                 {
                     CanLogin = user.IsActive && (user.IsEmailConfirmed || !isEmailConfirmationRequiredForLogin),
                     ProfileImage = imagePath
-                    
+
                 };
 
                 return output;

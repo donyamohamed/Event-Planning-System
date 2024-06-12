@@ -1,7 +1,7 @@
 <div class="container">
     <form [formGroup]="interstsForm" class="row" (ngSubmit)="onSubmit()">
-        <h1>Choose your interests</h1>
-
+        <h2>Choose your interests</h2>
+<div class="buttons">
         <button type="button" class="btn" 
         
         *ngFor="let item of intersts"  
@@ -14,7 +14,8 @@
         
 
        </button>
-
+ </div>
         <button type="submit" class="btn btn-info">Next</button>
+
     </form>
 </div>

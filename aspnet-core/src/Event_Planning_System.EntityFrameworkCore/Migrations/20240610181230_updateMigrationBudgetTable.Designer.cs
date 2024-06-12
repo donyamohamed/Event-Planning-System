@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Event_Planning_System.Migrations
 {
     [DbContext(typeof(Event_Planning_SystemDbContext))]
-    [Migration("20240602214110_m4")]
-    partial class m4
+    [Migration("20240610181230_updateMigrationBudgetTable")]
+    partial class updateMigrationBudgetTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1624,15 +1624,19 @@ namespace Event_Planning_System.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Description")
+                    b.Property<int>("EventId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("UserId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EventId");
 
                     b.HasIndex("UserId");
 
@@ -1646,9 +1650,6 @@ namespace Event_Planning_System.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("BudgetId")
-                        .HasColumnType("int");
 
                     b.Property<int>("Category")
                         .HasColumnType("int");
@@ -1686,8 +1687,6 @@ namespace Event_Planning_System.Migrations
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("BudgetId");
 
                     b.HasIndex("UserId");
 
@@ -1758,15 +1757,26 @@ namespace Event_Planning_System.Migrations
                     b.Property<int>("EventId")
                         .HasColumnType("int");
 
+                    b.Property<long>("GuestId")
+                        .HasColumnType("bigint");
+
                     b.Property<int>("NType")
                         .HasColumnType("int");
 
                     b.Property<long>("UserId")
                         .HasColumnType("bigint");
 
+                    b.Property<bool>("isRead")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("status")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("EventId");
+
+                    b.HasIndex("GuestId");
 
                     b.HasIndex("UserId");
 
@@ -2136,30 +2146,30 @@ namespace Event_Planning_System.Migrations
 
             modelBuilder.Entity("Event_Planning_System.Enitities.BudgetExpense", b =>
                 {
+                    b.HasOne("Event_Planning_System.Enitities.Event", "Event")
+                        .WithMany("Budgets")
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("Event_Planning_System.Authorization.Users.User", "User")
                         .WithMany("Budgets")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Event");
+
                     b.Navigation("User");
                 });
 
             modelBuilder.Entity("Event_Planning_System.Enitities.Event", b =>
                 {
-                    b.HasOne("Event_Planning_System.Enitities.BudgetExpense", "BudgetExpense")
-                        .WithMany()
-                        .HasForeignKey("BudgetId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("Event_Planning_System.Authorization.Users.User", "User")
                         .WithMany("Events")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("BudgetExpense");
 
                     b.Navigation("User");
                 });
@@ -2172,13 +2182,21 @@ namespace Event_Planning_System.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Event_Planning_System.Authorization.Users.User", "User")
-                        .WithMany("Notifications")
-                        .HasForeignKey("UserId")
+                    b.HasOne("Event_Planning_System.Authorization.Users.User", "Guest")
+                        .WithMany()
+                        .HasForeignKey("GuestId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Event_Planning_System.Authorization.Users.User", "User")
+                        .WithMany("Notifications")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("Event");
+
+                    b.Navigation("Guest");
 
                     b.Navigation("User");
                 });
@@ -2194,7 +2212,7 @@ namespace Event_Planning_System.Migrations
                     b.HasOne("Event_Planning_System.Authorization.Users.User", "User")
                         .WithMany("ToDoChecks")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Event");
@@ -2340,6 +2358,8 @@ namespace Event_Planning_System.Migrations
 
             modelBuilder.Entity("Event_Planning_System.Enitities.Event", b =>
                 {
+                    b.Navigation("Budgets");
+
                     b.Navigation("Notifications");
 
                     b.Navigation("ToDoCheckLists");

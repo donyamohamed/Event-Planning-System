@@ -1,5 +1,4 @@
 body {
-    background-color: #9b5de5;
     color: #fff;
     position: relative;
 }
@@ -10,12 +9,15 @@ body {
     border-radius: 50%; /* Make it a circle */
     /* Set the background color */
     position: absolute; /* Position it wherever you want */
+
+    opacity: .7;
 }
 
 .circle1 {
-    top: 20px; /* Adjust the top position */
-    left: 20px; /* Adjust the left position */
-    background: #5551ff;
+    top: 60px; /* Adjust the top position */
+    left: 150px; /* Adjust the left position */
+    background: #ebb447;
+
 }
 
 .circle2 {
@@ -33,12 +35,14 @@ body {
 .circle4 {
     bottom: 50px; /* Adjust the bottom position */
     left: 150px; /* Adjust the left position */
-    background: #5551ff;
+
+    background: #ebb447;
 }
 .circle5 {
-    top: 200px; /* Adjust the top position */
+    top: 250px; /* Adjust the top position */
     left: 50px; /* Adjust the left position */
-    background-color: #ebb447
+    background-color: #5551ff;
+
 }
 .circle6 {
     top: 200px; /* Adjust the top position */
@@ -56,7 +60,10 @@ main {
 }
 
 h1.h2 {
-    color: #fff;
+
+    color: #5551ff;
+
+
 }
 
 .input-group {
