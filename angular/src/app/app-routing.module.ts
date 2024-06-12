@@ -114,6 +114,8 @@ import { UsersComponent } from './users/users.component';
 import { TenantsComponent } from './tenants/tenants.component';
 import { RolesComponent } from 'app/roles/roles.component';
 import { CreateEventComponent } from 'app/layout/create-event/create-event.component';
+import { SetExpensesComponent } from 'app/layout/set-expenses/set-expenses.component';
+
 import { ChangePasswordComponent } from './users/change-password/change-password.component';
 import { UserProfileComponent } from './layout/user-profile/user-profile.component';
 import { UserEventComponent } from './layout/user-event/user-event.component';
@@ -134,6 +136,9 @@ const routes: Routes = [
             { path: 'about', component: AboutComponent, canActivate: [AppRouteGuard] },
             { path: 'update-password', component: ChangePasswordComponent, canActivate: [AppRouteGuard] },
             { path: 'create-event', component: CreateEventComponent, canActivate: [AppRouteGuard] },
+           
+            { path: 'set-expenses', component: SetExpensesComponent, canActivate: [AppRouteGuard] },
+            
             { path: 'historyevent', component: HistoryeventComponent, canActivate: [AppRouteGuard] },
             { path: 'user-event', component: UserEventComponent, canActivate: [AppRouteGuard] },
             { path: 'Profile', component: UserProfileComponent, canActivate: [AppRouteGuard] },

@@ -18,14 +18,13 @@ export class CreateEventComponent implements OnInit {
   eventData: Event = new Event();
   enumeratorKeys = Object.values(Enumerator);
   username: string;
-  budgetOptions: { id: number, amount: number, description: string }[] = [];
-  today: Date = new Date();
+today: Date = new Date();
 
   constructor(private eventService: EventService, private http: HttpClient) { }
 
   ngOnInit(): void {
     this.getUserData();
-    this.fetchBudgetOptions();
+    
     this.setDefaultValues();
   }
 
@@ -39,21 +38,9 @@ export class CreateEventComponent implements OnInit {
       });
   }
 
-  fetchBudgetOptions(): void {
-    this.eventService.getBudgetAmounts()
-      .subscribe(response => {
-        if (response && response.result && response.result.items) {
-          this.budgetOptions = response.result.items;
-          this.setDefaultBudgetId();
-        }
-      });
-  }
 
-  setDefaultBudgetId(): void {
-    if (this.budgetOptions.length > 0) {
-      this.eventData.budgetId = this.budgetOptions[0].id;
-    }
-  }
+
+ 
 
   createEvent(): void {
     if (typeof this.eventData.startDate === 'string') {
@@ -73,34 +60,56 @@ export class CreateEventComponent implements OnInit {
     formData.append('eventImg', this.eventData.eventImg || '');
     formData.append('category', this.eventData.category || '');
     formData.append('userId', this.eventData.userId?.toString() || '');
-    formData.append('budgetId', this.eventData.budgetId?.toString() || '');
-    if (this.eventData.eventImgFile) {
+  if (this.eventData.eventImgFile) {
       formData.append('eventImgFile', this.eventData.eventImgFile);
     }
 
     this.eventService.createEvent(formData)
-      .subscribe(
-        (response) => {
-          this.eventData = new Event();
+    .subscribe(
+      (response) => {
+        console.log(response);
+        
+        this.eventData = new Event();
+        swal.fire({
+          title: 'Success',
+          text: 'Event added successfully!',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        }).then(() => {
           swal.fire({
-            title: 'Success',
-            text: 'Event added successfully!',
-            icon: 'success',
-            confirmButtonText: 'OK'
-          }).then(() => {
-            window.location.href = "/app/user-event";
+            title: 'Do you want to set event expenses now?',
+         
+        
+            html: '<img src="assets/img/Coins.gif" alt="Custom Icon" style="width: 200px; height: 150px;">',
+
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'Later',
+            customClass: {
+              confirmButton: 'swal2-confirm',
+              cancelButton: 'swal2-cancel'
+            },
+          }).then((result) => {
+            if (result.isConfirmed) {
+              window.location.href = `/app/set-expenses?eventId=${response.result.id}`;
+
+            } else {
+              window.location.href = "/app/user-event";
+            }
           });
-        },
-        (error) => {
-          console.error('Error creating event:', error);
-          swal.fire({
-            title: 'Error',
-            text: 'Failed to create event. Please try again later.',
-            icon: 'error',
-            confirmButtonText: 'OK'
-          });
-        }
-      );
+        });
+      },
+      (error) => {
+        console.error('Error creating event:', error);
+        swal.fire({
+          title: 'Error',
+          text: 'Failed to create event. Please try again later.',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
+      }
+    );
+  
   }
 
   onFileSelected(event: any): void {

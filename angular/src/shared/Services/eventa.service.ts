@@ -17,7 +17,7 @@ export class EventService {
     return this.http.post<any>(this.baseUrl, eventData);
   }
 
-  public getBudgetAmounts(): Observable<any> {
-    return this.http.get<any>(this.budgetUrl);
-  }
+  // public getBudgetAmounts(): Observable<any> {
+  //   return this.http.get<any>(this.budgetUrl);
+  // }
 }

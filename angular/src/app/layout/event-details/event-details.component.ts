@@ -5,7 +5,7 @@ import { EventBudgetService } from '../../../shared/Services/event-budget.servic
 import { Event } from '../../../shared/Models/Event';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-event-details',
   templateUrl: './event-details.component.html',
@@ -20,10 +20,15 @@ export class EventDetailsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router:Router,
     private eventDetailsService: EventdetailsService,
     private eventBudgetService: EventBudgetService // Inject EventBudgetService
   ) { }
 
+
+  navigateToSetExpenses(eventId: number): void {
+    this.router.navigate(['/app/set-expenses'], { queryParams: { eventId: eventId } });
+  }
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       this.eventId = Number(params.get('id'));

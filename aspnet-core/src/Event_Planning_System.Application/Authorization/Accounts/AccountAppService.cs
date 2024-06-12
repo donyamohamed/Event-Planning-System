@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using Abp.Authorization;
 using Abp.Configuration;
@@ -48,7 +47,7 @@ namespace Event_Planning_System.Authorization.Accounts
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
             var encodedToken = Uri.EscapeDataString(token);
 
-            var callbackUrl = $"http://localhost:4200/account/newPassword?token={encodedToken}&email={user.EmailAddress}" ;
+            var callbackUrl = $"http://localhost:4200/account/newPassword?token={encodedToken}&email={user.EmailAddress}";
             var emailBodyTemplate = $"Please reset your password by clicking here: <a href='{callbackUrl}'>here</a>";
 
             await _emailService.SendEmailAsync(emailAddress, "Reset Password", emailBodyTemplate);
@@ -58,14 +57,14 @@ namespace Event_Planning_System.Authorization.Accounts
 
 
         [AbpAllowAnonymous]
-        public async Task<IdentityResult> ResetPassword(string token, string email,ResetPasswordDto model)
+        public async Task<IdentityResult> ResetPassword(string token, string email, ResetPasswordDto model)
         {
 
             var user = await _userManager.FindByNameOrEmailAsync(email);
 
             if (user == null)
                 throw new Exception("There is no current user!");
-  
+
             else
             if (model.NewPassword != model.ConfirmPassword)
                 throw new Exception("No matched password");
@@ -90,20 +89,6 @@ namespace Event_Planning_System.Authorization.Accounts
 
             return new IsTenantAvailableOutput(TenantAvailabilityState.Available, tenant.Id);
         }
-        private bool IsImage(IFormFile file)
-        {
-            var allowedMimeTypes = new[] { "image/jpeg", "image/png", "image/jpg" };
-            var allowedExtensions = new[] { ".jpg", ".jpeg", ".png" };
-
-            var fileExtension = Path.GetExtension(file.FileName).ToLowerInvariant();
-
-            if (!string.IsNullOrEmpty(fileExtension) && allowedExtensions.Contains(fileExtension) && allowedMimeTypes.Contains(file.ContentType))
-            {
-                return true;
-            }
-
-            return false;
-        }
 
         [AbpAllowAnonymous]
         public async Task<RegisterOutput> Register([FromForm] RegisterInput input)
@@ -114,11 +99,6 @@ namespace Event_Planning_System.Authorization.Accounts
             {
                 if (input.ImageFile != null && input.ImageFile.Length > 0)
                 {
-                    if (!IsImage(input.ImageFile))
-                    {
-                        throw new Exception("Invalid image format. Only JPG, JPEG, and PNG are allowed.");
-                    }
-
                     string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "ProfileImages");
                     string uniqueFileName = Guid.NewGuid().ToString() + "_" + input.ImageFile.FileName;
                     string filePath = Path.Combine(uploadsFolder, uniqueFileName);
@@ -150,6 +130,7 @@ namespace Event_Planning_System.Authorization.Accounts
                 {
                     CanLogin = user.IsActive && (user.IsEmailConfirmed || !isEmailConfirmationRequiredForLogin),
                     ProfileImage = imagePath
+
                 };
 
                 return output;
@@ -159,7 +140,6 @@ namespace Event_Planning_System.Authorization.Accounts
                 throw ex;
             }
         }
-
 
         //public Task<RegisterOutput> Register(RegisterInput input)
         //{
