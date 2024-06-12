@@ -2,12 +2,20 @@
   <div class="header-container">
     <h2>Events</h2>
     <a routerLink="/app/create-event" class="btn">Create Event</a>
+
   </div>
-    <div class="card-container">
-    <div *ngFor="let event of events" class="card" [ngStyle]="{'background-image': 'url(https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)'}">
+  <div class="card-container">
+    <div
+      *ngFor="let event of events"
+      class="card"
+      [ngStyle]="{
+        'background-image':
+          'url(https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)'
+      }"
+    >
       <div class="date">
-        <div class="day">{{ event.startDate | date:'dd' }}</div>
-        <div class="month">{{ event.startDate | date:'MMM' }}</div>
+        <div class="day">{{ event.startDate | date : "dd" }}</div>
+        <div class="month">{{ event.startDate | date : "MMM" }}</div>
       </div>
       <div class="card-content">
         <h3>{{ event.name }}</h3>
@@ -15,11 +23,8 @@
 
         <button id="details" (click)="details(event)">View</button>
 
-
-        <button id="invite" (click)="guestAppearing(event)" >Guest</button>
-
+        <button id="invite" (click)="guestAppearing(event)">Guest</button>
       </div>
     </div>
   </div>
-  </div>
-  
+</div>

@@ -1,0 +1,90 @@
+.expense-form {
+  display: flex;
+  gap: 10px;
+  max-width: 400px;
+  margin: 20px auto;
+}
+.expense-form input {
+  border-radius: 15px;
+  border: 1px solid #fbaf1b;
+  outline: none;
+}
+
+.expense-form input,
+.expense-form button {
+  margin: 10px 0;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.add-btn {
+  background-color: #050794;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 15px;
+  padding:0px 4px;
+}
+
+.add-btn:hover {
+  background-color: #090cbc;
+}
+
+.expenses-list div {
+  display: flex;
+  justify-content: space-between;
+  margin: 5px 0;
+}
+
+.expenses-list button {
+  color: #050794;
+  border: none;
+  cursor: pointer;
+  border-radius: 15px;
+}
+.expenses-list button.delete {
+  color: rgb(192, 0, 0);
+  margin-left: 5px;
+}
+.expenses-list button:hover {
+  background-color: #fbaf1b;
+}
+.main-wrapper {
+  display: flex;
+  width: 90%;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 50px auto;
+  gap: 30px;
+}
+.expense-form div {
+  position: relative;
+}
+.expense-form div span {
+  position: absolute;
+  bottom: -15px;
+  left: 8px;
+  color: rgb(255 69 69);
+  font-weight: 400;
+}
+.expense-header {
+  width: 400px;
+}
+.expense-header img {
+  width: 100%;
+  height: 100%;
+  animation:slowBounce 6s infinite;
+}
+.row-ex {
+  border-bottom: 1px solid rgb(204,204,204);
+  margin-bottom: 4px;
+}
+@keyframes slowBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}

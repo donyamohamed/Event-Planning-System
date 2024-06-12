@@ -14,6 +14,11 @@ namespace Event_Planning_System.BudgetExpense
         public BudgetExpenseAppServices(IRepository<Enitities.BudgetExpense, int> repository) : base(repository)
         {
         }
+        public async Task<List<BudgetExpenseDto>> GetExpensesByUserAndEventAsync(int userId, int eventId)
+        {
+            var expenses = await Repository.GetAllListAsync(e => e.UserId == userId && e.EventId == eventId);
+            return ObjectMapper.Map<List<BudgetExpenseDto>>(expenses);
+        }
     }
 
 }

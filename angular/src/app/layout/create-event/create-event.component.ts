@@ -65,28 +65,51 @@ today: Date = new Date();
     }
 
     this.eventService.createEvent(formData)
-      .subscribe(
-        (response) => {
-          this.eventData = new Event();
+    .subscribe(
+      (response) => {
+        console.log(response);
+        
+        this.eventData = new Event();
+        swal.fire({
+          title: 'Success',
+          text: 'Event added successfully!',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        }).then(() => {
           swal.fire({
-            title: 'Success',
-            text: 'Event added successfully!',
-            icon: 'success',
-            confirmButtonText: 'OK'
-          }).then(() => {
-            window.location.href = "/app/user-event";
+            title: 'Do you want to set event expenses now?',
+         
+        
+            html: '<img src="assets/img/Coins.gif" alt="Custom Icon" style="width: 200px; height: 150px;">',
+
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'Later',
+            customClass: {
+              confirmButton: 'swal2-confirm',
+              cancelButton: 'swal2-cancel'
+            },
+          }).then((result) => {
+            if (result.isConfirmed) {
+              window.location.href = `/app/set-expenses?eventId=${response.result.id}`;
+
+            } else {
+              window.location.href = "/app/user-event";
+            }
           });
-        },
-        (error) => {
-          console.error('Error creating event:', error);
-          swal.fire({
-            title: 'Error',
-            text: 'Failed to create event. Please try again later.',
-            icon: 'error',
-            confirmButtonText: 'OK'
-          });
-        }
-      );
+        });
+      },
+      (error) => {
+        console.error('Error creating event:', error);
+        swal.fire({
+          title: 'Error',
+          text: 'Failed to create event. Please try again later.',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
+      }
+    );
+  
   }
 
   onFileSelected(event: any): void {
