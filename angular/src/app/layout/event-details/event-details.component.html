@@ -1,6 +1,11 @@
 <div class="header-container">
     <h2>Event Details</h2>
+  <div>
     <a [routerLink]="'/app/todolist/' + event.id" class="btn">TodoList</a>
+    <a (click)="navigateToSetExpenses(event.id)" class="btn btn-expense">Set Expenses</a>
+  </div>
+  
+
 </div>
 
 <section class="container">
@@ -17,7 +22,7 @@
         <!-- <img [src]="'../../../assets/img/' + event.eventImg" alt="" srcset=""> -->
        
         <p><strong>Category:</strong> {{ event.category }}</p>
-        <p><strong>Budget:</strong> {{ budgetAmount }}</p>
+     
     </div>
     <div *ngIf="!event">
         <p>Loading event details...</p>
