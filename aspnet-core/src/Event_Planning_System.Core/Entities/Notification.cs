@@ -1,4 +1,5 @@
-﻿using Abp.Domain.Entities.Auditing;
+﻿using Abp.Domain.Entities;
+using Abp.Domain.Entities.Auditing;
 using Event_Planning_System.Authorization.Users;
 using System;
 using System.Collections.Generic;
@@ -13,21 +14,16 @@ public enum Notification_Type
     AskForInvitation,
     Updated,
     Other
-
-
 }
 public enum Notification_Status
 {
     Pending,
     Accepted,
     Rejected,
-
-
-
 }
 namespace Event_Planning_System.Enitities
 {
-    public class Notification
+    public class notification : Entity<int>
     {
         public int Id { get; set; }
         [Required(ErrorMessage = "Content is required.")]

@@ -1,0 +1,54 @@
+<div class="main-wrapper">
+  <div class="expense-header">
+    <img src="assets/img/ree.svg" alt="expenses" />
+  </div>
+  <div class="right-content">
+    <div class="expense-form">
+      <div>
+        <input
+          type="text"
+          placeholder="Expense Name"
+          [(ngModel)]="newExpense.name"
+        />
+        <span *ngIf="showError && !newExpense.name" class="error-message"
+          >Expense name is required</span
+        >
+      </div>
+      <div>
+        <input
+          type="number"
+          placeholder="Amount"
+          [(ngModel)]="newExpense.amount"
+        />
+        <span *ngIf="showError && !newExpense.amount" class="error-message"
+          >Amount is required</span
+        >
+      </div>
+      <button
+        class="add-btn"
+        (click)="isUpdating ? confirmUpdate() : checkAndAddExpense()"
+      >
+        {{ isUpdating ? "Update" : "+" }}
+      </button>
+    </div>
+
+    <div *ngIf="expenses && expenses.length > 0" class="expenses-list">
+      <h3>
+        <img src="assets/img/accounts.png" width="40px" alt="expenses" />
+        Expenses
+      </h3>
+      <div *ngFor="let expense of expenses" class="row-ex">
+        <div >
+          {{ expense.name }} | {{ expense.amount }}EG | {{ expense.date | date }}
+        </div>
+        <div>
+        <button (click)="updateExpense(expense)">    <i class="fas fa-edit"></i></button>
+        <button (click)="deleteExpense(expense.id)" class="delete">  <i class="fas fa-trash-alt"></i></button>
+      </div>
+      </div>
+    </div>
+    <div *ngIf="!expenses || expenses.length === 0" class="no-expenses-message" style="color: #050794;">
+      Add event expenses!
+    </div>
+  </div>
+</div>

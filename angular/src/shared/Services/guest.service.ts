@@ -1,7 +1,7 @@
 import { GuestResponse } from "./../../app/guest/guest-response.model";
 import { GuestPerEventResponse } from "./../../app/guest/guest-per-event-response";
 import { Guest } from "./../Models/guest";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { GuestGetResponse } from "@app/guest/guest-get-response";
 import { Observable } from "rxjs";
@@ -25,8 +25,23 @@ export class GuestService {
   private baseUrlForGetAllPerEvent =
     "https://localhost:44311/api/services/app/Guest/GetEventGuests";
  
+    private baseUrlforExcel = 'https://localhost:44311/api/services/app/Guest/AddGuestsThroughExcelFile';
+
+    constructor(private httpClient: HttpClient) {}
   
-  constructor(private httpClient: HttpClient) {}
+    uploadFile(file: File): Observable<any> {
+      const formData: FormData = new FormData();
+      formData.append('file', file, file.name);
+  
+      const headers = new HttpHeaders();
+      headers.append('Content-Type', 'multipart/form-data');
+  
+      return this.httpClient.post<any>(this.baseUrlforExcel, formData, { headers: headers });
+    }
+
+
+
+
   public getAllGuest(): Observable<GuestResponse> {
     return this.httpClient.get<GuestResponse>(this.baseUrlForGetAll);
   }
