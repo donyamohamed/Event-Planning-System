@@ -13,7 +13,7 @@ body {
 }
 .right-content {
   margin-left: 270px;
-  width: 90%
+  width: 90%;
 }
 .user-card-full {
   position: fixed;
@@ -101,30 +101,6 @@ body {
   box-shadow: 0 1px 2.94px 0.06px rgba(4, 26, 55, 0.16);
 } */
 
-.card1 {
-  padding: 15px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  /* width: 22vw; */
-  background-color: #fbaf1b;
-  border-radius: 8px;
-  -webkit-box-shadow: 0 1px 2.94px 0.06px rgba(4, 26, 55, 0.16);
-  box-shadow: 0 1px 2.94px 0.06px rgba(4, 26, 55, 0.16);
-  border: none;
-  margin-bottom: 20px;
-  -webkit-transition: all 0.3s ease-in-out;
-  transition: all 0.3s ease-in-out;
-}
-
-.card1 .card-block {
-  padding: 15px;
-}
-
-.order-card i {
-  font-size: 26px;
-}
-
 .f-left {
   float: left;
 }
@@ -150,6 +126,7 @@ body {
 .grid-item {
   background-color: #b37a08;
   border: 1px solid rgba(247, 243, 243, 0.8);
+
   border-radius: 7px;
   font-size: 20px;
   padding: 7px;
@@ -185,16 +162,28 @@ body {
 
 .card1 {
   width: 25vw;
-  background-color: #fbaf1b;
+  display: flex;
+  /* background-color: #fbaf1b; */
+  background-color: #2626bc05;
+  border: 2px solid #050694;
   border-radius: 8px;
   -webkit-box-shadow: 0 1px 2.94px 0.06px rgba(4, 26, 55, 0.16);
   box-shadow: 0 1px 2.94px 0.06px rgba(4, 26, 55, 0.16);
-  border: none;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 20px;
+  padding: 10px;
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 }
+.card1:hover {
+  background-color: #050694;
 
+  color: white;
+}
+.card1:hover .btn-close{
+  color: #fbaf1b;
+}
 .card1 .card-block {
   padding: 15px;
 }

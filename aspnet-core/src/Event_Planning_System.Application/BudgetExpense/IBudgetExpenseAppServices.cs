@@ -10,5 +10,7 @@ namespace Event_Planning_System.BudgetExpense
 {
     public interface IBudgetExpenseAppServices :IAsyncCrudAppService<BudgetExpenseDto,int>
     {
+        Task<List<BudgetExpenseDto>> GetExpensesByUserAndEventAsync(int userId, int eventId);
+
     }
 }

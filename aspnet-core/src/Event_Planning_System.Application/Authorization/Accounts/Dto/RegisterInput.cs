@@ -40,6 +40,9 @@ namespace Event_Planning_System.Authorization.Accounts.Dto
 
         public IFormFile ImageFile { get; set; }
         public Gender Gender { get; set; }
+
+        [RegularExpression(@"^.+\.(png|jpg|jpeg)$", ErrorMessage = "Image must be in PNG, JPG, or JPEG format.")]
+
         public string Image {  get; set; }
    
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

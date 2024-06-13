@@ -11,6 +11,7 @@ using Event_Planning_System.Enitities;
 using Abp.Application.Services.Dto;
 using Event_Planning_System.Authorization.Users;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Http;
 
 namespace Event_Planning_System.Event.Dto
 {
@@ -66,8 +67,11 @@ namespace Event_Planning_System.Event.Dto
         public long UserId { get; set; }
      
         
-        public int BudgetId { get; set; }
-        
+   
+
+      
+        public IFormFile EventImgFile { get; set; }
+
         public bool IsTransient()
         {
             throw new NotImplementedException();

@@ -1,4 +1,4 @@
-.imgDiv img{
+/* .imgDiv img{
     width: 300px;
 }
 .oneByOne{
@@ -13,4 +13,64 @@
 .excel:hover, .oneByOne:hover{
     box-shadow: rgb(190, 190, 190) 5px 5px 50px;
     cursor: pointer;
+} */
+
+.imgDiv img {
+    width: 300px;
+}
+
+.oneByOne {
+    background-color: #b3d7f7;
+}
+
+.excel {
+    background-color: #CAEAD8;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.excel, .oneByOne {
+    box-shadow: rgb(209, 209, 209) 5px 5px 50px;
+}
+
+.excel:hover, .oneByOne:hover {
+    box-shadow: rgb(190, 190, 190) 5px 5px 50px;
+    cursor: pointer;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+    color: #28a745;
+    background-color: #fff;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+p {
+    margin-top: 10px;
+    color: #333;
 }

@@ -31,7 +31,7 @@ namespace Event_Planning_System.Authorization.Users
         public virtual string Image { get; set; }
 
 
-        public virtual ICollection<Notification> Notifications { get; set; } = new List<Notification>();
+        public virtual ICollection<notification> Notifications { get; set; } = new List<notification>();
         public virtual ICollection<Event> Events { get; set; } = new List<Event>();
         public virtual ICollection<Guest> Guests { get; set; } = new List<Guest>();
         public virtual ICollection<BudgetExpense> Budgets { get; set; } = new List<BudgetExpense>();

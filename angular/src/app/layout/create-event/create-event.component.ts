@@ -3,30 +3,28 @@ import { Event } from '../../../shared/Models/Event';
 import { EventService } from '../../../shared/Services/eventa.service';
 import { Enumerator } from "../../../shared/Models/Event";
 import { HttpClient } from '@angular/common/http';
+import swal from 'sweetalert2';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-create-event',
-  standalone: true,
+  standalone:true,
   imports:[FormsModule,CommonModule],
   templateUrl: './create-event.component.html',
   styleUrls: ['./create-event.component.css']
 })
 export class CreateEventComponent implements OnInit {
-  eventData: Event = new Event(); 
+  eventData: Event = new Event();
   enumeratorKeys = Object.values(Enumerator);
-  Enumerator = Enumerator;
-  username: string; 
-  budgetOptions: { id: number, amount: number, description: string }[] = [];
-  today: Date = new Date(); 
+  username: string;
+today: Date = new Date();
 
   constructor(private eventService: EventService, private http: HttpClient) { }
 
   ngOnInit(): void {
     this.getUserData();
-    this.fetchBudgetOptions();
+    
     this.setDefaultValues();
   }
 
@@ -40,44 +38,84 @@ export class CreateEventComponent implements OnInit {
       });
   }
 
-  fetchBudgetOptions(): void {
-    this.eventService.getBudgetAmounts()
-      .subscribe(response => {
-        if (response && response.result && response.result.items) {
-          this.budgetOptions = response.result.items;
-          this.setDefaultBudgetId();
-        }
-      });
-  }
 
-  setDefaultBudgetId(): void {
-    if (this.budgetOptions.length > 0) {
-      this.eventData.budgetId = this.budgetOptions[0].id;
-    }
-  }
+
+ 
 
   createEvent(): void {
-    this.eventService.createEvent(this.eventData)
-      .subscribe(() => {
-        this.eventData = new Event();
+    if (typeof this.eventData.startDate === 'string') {
+      this.eventData.startDate = new Date(this.eventData.startDate);
+    }
+    if (typeof this.eventData.endDate === 'string') {
+      this.eventData.endDate = new Date(this.eventData.endDate);
+    }
+    const formData = new FormData();
+    formData.append('name', this.eventData.name || '');
+    formData.append('description', this.eventData.description || '');
+    formData.append('location', this.eventData.location || '');
+    formData.append('startDate', this.eventData.startDate?.toISOString() || '');
+    formData.append('endDate', this.eventData.endDate?.toISOString() || '');
+    formData.append('isPublic', this.eventData.isPublic?.toString() || '');
+    formData.append('maxCount', this.eventData.maxCount?.toString() || '');
+    formData.append('eventImg', this.eventData.eventImg || '');
+    formData.append('category', this.eventData.category || '');
+    formData.append('userId', this.eventData.userId?.toString() || '');
+  if (this.eventData.eventImgFile) {
+      formData.append('eventImgFile', this.eventData.eventImgFile);
+    }
 
+    this.eventService.createEvent(formData)
+    .subscribe(
+      (response) => {
+        console.log(response);
+        
+        this.eventData = new Event();
         swal.fire({
           title: 'Success',
           text: 'Event added successfully!',
           icon: 'success',
           confirmButtonText: 'OK'
-        }).then(()=>{
-          window.location.href="/app/user-event"
-        })
-       
+        }).then(() => {
+          swal.fire({
+            title: 'Do you want to set event expenses now?',
+         
+        
+            html: '<img src="assets/img/Coins.gif" alt="Custom Icon" style="width: 200px; height: 150px;">',
 
-      });
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'Later',
+            customClass: {
+              confirmButton: 'swal2-confirm',
+              cancelButton: 'swal2-cancel'
+            },
+          }).then((result) => {
+            if (result.isConfirmed) {
+              window.location.href = `/app/set-expenses?eventId=${response.result.id}`;
+
+            } else {
+              window.location.href = "/app/user-event";
+            }
+          });
+        });
+      },
+      (error) => {
+        console.error('Error creating event:', error);
+        swal.fire({
+          title: 'Error',
+          text: 'Failed to create event. Please try again later.',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
+      }
+    );
+  
   }
 
   onFileSelected(event: any): void {
     const file = event.target.files[0];
     if (file) {
-      this.eventData.eventImg = file.name; 
+      this.eventData.eventImgFile = file;
     }
   }
 
