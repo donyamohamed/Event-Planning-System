@@ -77,19 +77,28 @@ namespace Event_Planning_System.Event
         public async Task<List<EventDto>> GetPublicEventsByInterest()
         {
             var userId = AbpSession.UserId.Value;
-            var interests = await _interestRepository.GetAll()
-                .Include(i => i.Users)
-                .Where(i => i.Users.Any(u => u.Id == userId))
-                .ToListAsync();
-
             List<EventDto> publicEvents = new List<EventDto>();
+            if (userId > 0)
+            {
+                var interests = await _interestRepository.GetAll()
+                    .Include(i => i.Users)
+                    .Where(i => i.Users.Any(u => u.Id == userId))
+                    .ToListAsync();
+                foreach (var interest in interests)
+                {
+                    var events = await _repository.GetAll()
+                        .Where(e => e.Category == interest.Type && e.IsPublic)
+                        .ToListAsync();
 
-            foreach (var interest in interests)
+                    var mappedEvents = _mapper.Map<List<EventDto>>(events);
+                    publicEvents.AddRange(mappedEvents);
+                }
+            }
+            else
             {
                 var events = await _repository.GetAll()
-                    .Where(e => e.Category == interest.Type && e.IsPublic)
-                    .ToListAsync();
-
+                        .Where(e => e.IsPublic)
+                        .ToListAsync();
                 var mappedEvents = _mapper.Map<List<EventDto>>(events);
                 publicEvents.AddRange(mappedEvents);
             }

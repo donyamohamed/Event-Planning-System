@@ -19,38 +19,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 })
 export class PublicEventsComponent implements  OnInit{
   public events: Event[]=[];
-  //sub: Subscription | null = null;
-  constructor(private PublicEventServ: HomeService){}
-  // async ngOnInit(): Promise<void> {
-
-  //   try {
-  //     const res: EventsResponse = await firstValueFrom(this.PublicEventServ.getPublicEvents());
-  //     console.log(res);
-  //     this.events = res.result;
-  //     console.log(this.events);  // Now this will log the updated events array
-  //   } catch (err) {
-  //     console.error('Error fetching public events:', err);
-  //   }
-
-  //   console.log(this.events);  // This will now correctly wait for the events to be fetched
-  // }
-
-  getUserData(): void {
-    //this.http.get<any>('https://localhost:44311/api/services/app/UserProfileAppServices/GetUserProfile')
-     // .subscribe(response => {
-       // if (response && response.result) {
-         // this.userId = response.result.id;
-          //console.log('User ID fetched:', this.userId); // Debug log
-         // Fetch events after getting the user ID
-      //  }
-     // }, error => {
-       // console.error('Error fetching user profile', error);
-     // });
-  }
+  public isLoading: boolean = true;
+    constructor(private PublicEventServ: HomeService){}
 
   ngOnInit(): void {
     this.fetchUserEvents();  // Call to get user data
     console.log(this.events);
+    // this.initializeLoader();
     
   }
 
@@ -59,12 +34,28 @@ export class PublicEventsComponent implements  OnInit{
       (data: EventsResponse) => {
        this.events=data.result
         console.log(this.events);
+        this.isLoading = false; 
         
       },
       (error) => {
         console.error('Error fetching user events', error);
+        this.isLoading = true; 
       }
     );
 
   }
+  
+  // initializeLoader() {
+  //   function hideLoader() {
+  //     const loadingElement = document.getElementById('loading');
+  //     if (loadingElement) {
+  //       loadingElement.style.display = 'none';
+  //     }
+  //   }
+
+  //   window.addEventListener('load', hideLoader);
+
+  //   // Strongly recommended: Hide loader after 20 seconds, even if the page hasn't finished loading
+  //   setTimeout(hideLoader, 20 * 1000);
+  // }
 }

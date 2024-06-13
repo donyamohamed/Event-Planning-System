@@ -374,12 +374,3 @@ section {
  .slideshow-wrapper .slides .slide-image { width:300px;}
 }
 
-#loading {
-  background: url('../../assets/img/Spin@1x-1.0s-200px-200px.gif') no-repeat center center;
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  z-index: 9999999;
-}

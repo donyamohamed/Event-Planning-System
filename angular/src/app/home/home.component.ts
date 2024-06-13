@@ -24,7 +24,7 @@ export class HomeComponent extends AppComponentBase implements AfterViewInit {
   ngAfterViewInit() {
     this.showSlides(this.slideIndex);
     this.adjustArrowPosition();
-    this.initializeLoader();
+    // this.initializeLoader();
   }
 
   showSlides(n: number) {
@@ -77,18 +77,5 @@ export class HomeComponent extends AppComponentBase implements AfterViewInit {
   }
 
 
-  initializeLoader() {
-    function hideLoader() {
-      const loadingElement = document.getElementById('loading');
-      if (loadingElement) {
-        loadingElement.style.display = 'none';
-      }
-    }
-
-    window.addEventListener('load', hideLoader);
-
-    // Strongly recommended: Hide loader after 20 seconds, even if the page hasn't finished loading
-    setTimeout(hideLoader, 20 * 1000);
-  }
 }
 // declare var $: any;

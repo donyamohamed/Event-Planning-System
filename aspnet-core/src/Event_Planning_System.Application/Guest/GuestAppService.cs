@@ -28,7 +28,7 @@ namespace Event_Planning_System.Guest
         private readonly IMapper _mapper;
         private readonly IRepository<User, long> _userRepository;
 
-        public GuestAppService(IRepository<Enitities.Guest, int> repository, IMapper mapper, IRepository<Enitities.Event, int> repositoryEvent) : base(repository)
+        public GuestAppService(IRepository<Enitities.Guest, int> repository, IMapper mapper, IRepository<Enitities.Event, int> repositoryEvent, IRepository<User, long> userRepository) : base(repository)
         {
             _repository = repository;
             _repositoryEvent= repositoryEvent;

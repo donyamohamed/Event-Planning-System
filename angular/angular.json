@@ -62,8 +62,8 @@
               "node_modules/abp-web-resources/Abp/Framework/scripts/libs/abp.moment.js",
 
               "node_modules/bootstrap/dist/js/bootstrap.min.js",
-              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
-              "node_modules/jquery/dist/jquery.min.js"
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+              
 
 
             ],
