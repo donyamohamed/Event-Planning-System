@@ -1,304 +1,142 @@
-﻿<div [@routerTransition]>
-  <!-- <section class="content-header">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-12">
-          <h1>{{ "HomePage" | localize }}</h1>
-        </div>
-      </div>
-    </div>
-  </section> -->
-  
-  <section class="content px-2">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-12">
-          <main class="Main" role="main">
-            <a id="control" href="#">Eventa</a>
-            <div id="borderBlack" class="border">
-                <div class="border-inner"></div>
-                <div class="border-inner"></div>
-                <div class="border-inner"></div>
-                <div class="border-inner"></div>
+﻿<header>
+  <!-- <div class="widget-slideshow-container" id="ui-start-page">
+    <div class="slider-container">
+      <div class="slider-elements">
+        <div class="ui-start-page mySlides " style="display: none;">
+          <div class="slider-element-container">
+            <div class="slider-img-wrapper" data-title="Beste Qualität">
+              <img class="slider-img" src="../../assets/img/eventa.jpg" > 
+              
             </div>
-              <div id="wrapper"></div>
-          </main>
+            <div class="slider-content">
+              <div class="title">Etikettenlieferant ohne Zwischenhandel</div>
+              <div class="content font-body">Die Herstellung von Etiketten in unserer eigenen Stanzerei ist unser
+                Kerngeschäft. Hierbei liegt einer unserer Schwerpunkte auf Versandetiketten für die Logistik.</div>
+              <a href="#link1" class="link font-body">Mehr Informationen</a>
+
+            </div>
+          </div>
 
         </div>
+
+        <div class="ui-start-page mySlides " style="display: block;">
+          <div class="slider-element-container">
+            <div class="slider-img-wrapper" data-title="Stetiger Optimierungsprozess">
+              <img class="slider-img" [src]="'../../assets/img/eventa.jpg'"> 
+              
+            </div>
+            <div class="slider-content">
+              <div class="title">Title Element Zwei</div>
+              <div class="content font-body">Hier kommt der Inhalt für das zweite Element rein. Hier kommt der Inhalt
+                für das zweite Element rein</div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <div class="ui-start-page mySlides " style="display: none;">
+          <div class="slider-element-container">
+            <div class="slider-img-wrapper" data-title="Taggleicher Versand">
+              <picture>
+                <source type="image/jpg" srcset="https://loremflickr.com/600/410/cat">
+                <img class="slider-img" src="https://loremflickr.com/600/410/cat" loading="lazy">
+               </picture>
+            </div>
+            <div class="slider-content">
+              <div class="title">Titel Element drei</div>
+              <div class="content font-body">Hier kommt der Inhalt für das dritte Element rein. Hier kommt der Inhalt
+                für das dritte Element rein</div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <div class="ui-start-page mySlides " style="display: none;">
+          <div class="slider-element-container">
+            <div class="slider-img-wrapper" data-title="Beste Rohmaterialien">
+              <picture>
+                <source type="image/jpg" srcset="https://loremflickr.com/600/410/rio">
+                <img class="slider-img" src="https://loremflickr.com/600/410/rio" loading="lazy"> 
+              </picture>
+            </div>
+            <div class="slider-content">
+              <div class="title">Titel Element vier</div>
+              <div class="content font-body">Hier kommt der Inhalt für das vierte Element rein. Hier kommt der Inhalt
+                für das vierte Element rein</div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <button class="slider-prev" type="button"  (click)="plusSlides(-1)"></button>
+        <button class="slider-next" type="button"  (click)="plusSlides(1)"></button>
+      
       </div>
-      <!-- <div class="row">
-        <div class="col-lg-3 col-6">
-          <div class="small-box bg-success">
-            <div class="inner">
-              <h3>8.2k+</h3>
-              <p>Stargazers</p>
-            </div>
-            <div class="icon">
-              <i class="fas fa-star"></i>
-            </div>
-            <a href="https://github.com/aspnetboilerplate/aspnetboilerplate/stargazers"
-              class="small-box-footer"
-              target="_blank">
-              More info
-              <i class="fas fa-arrow-circle-right"></i>
-            </a>
-          </div>
-        </div>
-        <div class="col-lg-3 col-6">
-          <div class="small-box bg-info">
-            <div class="inner">
-              <h3>140+</h3>
-              <p>Contributors</p>
-            </div>
-            <div class="icon">
-              <i class="fas fa-users"></i>
-            </div>
-            <a href="https://github.com/aspnetboilerplate/aspnetboilerplate/graphs/contributors"
-              class="small-box-footer"
-              target="_blank">
-              More info
-              <i class="fas fa-arrow-circle-right"></i>
-            </a>
-          </div>
-        </div>
-        <div class="col-lg-3 col-6">
-          <div class="small-box bg-warning">
-            <div class="inner">
-              <h3>1.6k+</h3>
-              <p>Used / Dependents</p>
-            </div>
-            <div class="icon">
-              <i class="fas fa-tools"></i>
-            </div>
-            <a href="https://github.com/aspnetboilerplate/aspnetboilerplate/network/dependents"
-              class="small-box-footer"
-              target="_blank">
-              More info
-              <i class="fas fa-arrow-circle-right"></i>
-            </a>
-          </div>
-        </div>
-        <div class="col-lg-3 col-6">
-          <div class="small-box bg-primary">
-            <div class="inner">
-              <h3>3.1k+</h3>
-              <p>Forks</p>
-            </div>
-            <div class="icon">
-              <i class="fas fa-code"></i>
-            </div>
-            <a href="https://github.com/aspnetboilerplate/aspnetboilerplate/network/members"
-              class="small-box-footer"
-              target="_blank">
-              More info
-              <i class="fas fa-arrow-circle-right"></i>
-            </a>
-          </div>
-        </div>
-      </div>
+
+    </div>
+  </div> -->
+  <!doctype html>
+<html lang="en">
+  <head>
+		<meta charset="UTF-8">
+		<title>Simple Slideshow with pure CSS3</title>
+	</head>
+	<body>	
+		<section class="bg-blue"> 
+			<article class="slideshow">
+
+				<header>
+					<h1>Simple slideshow with pure CSS3</h1>
+					<small>not responsive(yet)</small>
+				</header>
+				
+				<div class="slideshow-wrapper">
+					<ul class="slides">
+						<li class="slide-image">
+							<img src="http://placehold.it/700x300/333/whitesmoke&text=Slide%20+%20n1" />
+						</li>
+						<li class="slide-image">
+							<img src="../../assets/img/Event.jpg" />
+						</li>
+						<li class="slide-image">
+							<img src='../../assets/img/eventHistory.png' />
+						</li>
+						<li class="slide-image">
+							<!-- <img [src]="'../../assets/img/Event.jpg'" /> -->
+              <img src="../../assets/img/createEvent-removebg-preview.png" alt="" srcset="">
+						</li>
+					</ul>
+				</div>
+				
+				<footer>
+					<p class='text-center'><br />
+						Made with love <span class='heart'>&hearts;</span> by 
+						<a href="https://defidelis.herokuapp.com" title="Rafael Fidelis : Blog" class='transition-all' target="_blank">Rafael Fidelis</a>
+					</p>
+				</footer>
+		</article>
+		</section>
+	</body>
+</html>  
+</header>
+<div [@routerTransition]>
+ 
+
+  <!-- <app-public-events></app-public-events> -->
+
+  <section>
+    <div class="container-fluid">
       <div class="row">
-        <div class="col-12 col-sm-6 col-md-3">
-          <div class="info-box">
-            <span class="info-box-icon bg-primary elevation-1">
-              <i class="fas fa-plus-circle"></i>
-            </span>
-            <div class="info-box-content">
-              <span class="info-box-text">Commits</span>
-              <span class="info-box-number">
-                6,350+
-              </span>
-            </div>
-          </div>
-        </div>
-        <div class="col-12 col-sm-6 col-md-3">
-          <div class="info-box mb-3">
-            <span class="info-box-icon bg-warning elevation-1">
-              <i class="fas fa-exclamation-triangle"></i>
-            </span>
-            <div class="info-box-content">
-              <span class="info-box-text">Issues</span>
-              <span class="info-box-number">
-                170+
-              </span>
-            </div>
-          </div>
-        </div>
-        <div class="clearfix hidden-md-up"></div>
-        <div class="col-12 col-sm-6 col-md-3">
-          <div class="info-box mb-3">
-            <span class="info-box-icon bg-info elevation-1">
-              <i class="fas fa-tag"></i>
-            </span>
-            <div class="info-box-content">
-              <span class="info-box-text">Releases</span>
-              <span class="info-box-number">
-                200+
-              </span>
-            </div>
-          </div>
-        </div>
-        <div class="col-12 col-sm-6 col-md-3">
-          <div class="info-box mb-3">
-            <span class="info-box-icon bg-success elevation-1">
-              <i class="fas fa-eye"></i>
-            </span>
-            <div class="info-box-content">
-              <span class="info-box-text">Watching by</span>
-              <span class="info-box-number">
-                810+
-              </span>
-            </div>
-          </div>
+        <div class="col-12">
+          <div id="loading"></div>
+          <app-public-events></app-public-events>
+          
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-12">
-          <div class="card">
-            <div class="card-header">
-              <h3 class="card-title">Open Issues</h3>
-            </div>
-            <div class="card-body table-responsive p-0">
-              <table class="table table-hover text-nowrap">
-                <thead class="bg-light">
-                  <tr>
-                    <th>Id</th>
-                    <th class="w-25">Title</th>
-                    <th class="w-25">Labels</th>
-                    <th>Date</th>
-                    <th>Opened by</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>
-                      <a href="https://github.com/aspnetboilerplate/aspnetboilerplate/issues/5452"
-                        target="_blank">
-                        5452
-                      </a>
-                    </td>
-                    <td>Angular UI migration to AdminLTE 3</td>
-                    <td>
-                      <span class="badge badge-secondary mx-1">
-                        module-zero-core-template
-                      </span>
-                      <span class="badge badge-primary mx-1">
-                        feature
-                      </span>
-                    </td>
-                    <td>11 days ago</td>
-                    <td>iyilm4z</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <a href="https://github.com/aspnetboilerplate/aspnetboilerplate/issues/5391"
-                        target="_blank">
-                        5391
-                      </a>
-                    </td>
-                    <td>
-                      AbpCacheBase should lock the same object for sync and
-                      async
-                    </td>
-                    <td>
-                      <span class="badge badge-danger mx-1">
-                        bug
-                      </span>
-                      <span class="badge badge-success mx-1">
-                        pull request candidate
-                      </span>
-                    </td>
-                    <td>26 days ago</td>
-                    <td>acjh</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <a href="https://github.com/aspnetboilerplate/aspnetboilerplate/issues/5390"
-                        target="_blank">
-                        5390
-                      </a>
-                    </td>
-                    <td>AbpCache sliding/absolute expire time</td>
-                    <td>
-                      <span class="badge badge-warning mx-1">
-                        breaking-change
-                      </span>
-                      <span class="badge badge-info mx-1">enhancement</span>
-                    </td>
-                    <td>27 days ago</td>
-                    <td>ryancyq</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <div class="card">
-            <div class="card-header">
-              <h3 class="card-title">Closed Pull Requests</h3>
-            </div>
-            <div class="card-body table-responsive p-0">
-              <table class="table table-hover text-nowrap">
-                <thead class="bg-light">
-                  <tr>
-                    <th>Id</th>
-                    <th class="w-25">Title</th>
-                    <th class="w-25">Milestone</th>
-                    <th>Date</th>
-                    <th>Made by</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>
-                      <a href="https://github.com/aspnetboilerplate/aspnetboilerplate/pull/5430"
-                        target="_blank">
-                        5430
-                      </a>
-                    </td>
-                    <td>
-                      Added Dynamic-Parameter-System doc to documentation menu
-                    </td>
-                    <td>v5.6</td>
-                    <td>18 days ago</td>
-                    <td>maliming</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <a href="https://github.com/aspnetboilerplate/aspnetboilerplate/pull/5362"
-                        target="_blank">
-                        5362
-                      </a>
-                    </td>
-                    <td>
-                      Dynamic Parameter Module
-                    </td>
-                    <td>v5.4</td>
-                    <td>25 days ago</td>
-                    <td>demirmusa</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <a href="https://github.com/aspnetboilerplate/aspnetboilerplate/pull/4924"
-                        target="_blank">
-                        4924
-                      </a>
-                    </td>
-                    <td>
-                      ASP.NET Core 3.0 Upgrade
-                    </td>
-                    <td>v5.0</td>
-                    <td>Oct 15</td>
-                    <td>ismcagdas</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div> -->
     </div>
   </section>
+
 </div>
