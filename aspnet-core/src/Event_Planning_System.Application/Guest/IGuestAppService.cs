@@ -16,6 +16,6 @@ namespace Event_Planning_System.Guest
     {
         Task<List<GuestDto>> GetEventGuestsAsync(int guestId);
 
-        Task<IActionResult> AddGuestsThroughExcelFile([FromForm] IFormFile file);
+        Task<IActionResult> AddGuestsThroughExcelFile([FromForm] IFormFile file, int eventId);
     }
 }
