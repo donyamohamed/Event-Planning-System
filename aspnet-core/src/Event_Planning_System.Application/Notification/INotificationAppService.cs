@@ -2,7 +2,6 @@
 ﻿using Abp.Notifications;
 using Event_Planning_System.Enitities;
 using Event_Planning_System.Notification.Dto;
-using Event_Planning_System.Notification.Dto.Event_Planning_System.Notification.Dto;
 using Microsoft.AspNetCore.Mvc;
 
 using Abp.Application.Services;

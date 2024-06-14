@@ -6,7 +6,6 @@ using Event_Planning_System.Enitities;
 using Event_Planning_System.Event.Dto;
 using Event_Planning_System.Interests.DTO;
 using Event_Planning_System.Notification.Dto;
-using Event_Planning_System.Notification.Dto.Event_Planning_System.Notification.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
