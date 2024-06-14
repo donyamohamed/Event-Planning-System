@@ -10,7 +10,7 @@ namespace Event_Planning_System.EntityFrameworkCore
     public class Event_Planning_SystemDbContext : AbpZeroDbContext<Tenant, Role, User, Event_Planning_SystemDbContext>
     {
         /* Define a DbSet for each entity of the application */
-        public DbSet<Notification> Notifications { get; set; }
+        public DbSet<notification> Notifications { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<Guest> Guests { get; set; }
         public DbSet<BudgetExpense> Budgets { get; set; }
@@ -28,13 +28,13 @@ namespace Event_Planning_System.EntityFrameworkCore
 
 
 
-            modelBuilder.Entity<Notification>()
+            modelBuilder.Entity<notification>()
                 .HasOne(n => n.Event)
                 .WithMany(e => e.Notifications)
                 .HasForeignKey(n => n.EventId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Notification>()
+            modelBuilder.Entity<notification>()
                 .HasOne(n => n.User)
                 .WithMany(u => u.Notifications)
                 .HasForeignKey(n => n.UserId)

@@ -7,6 +7,7 @@ using Event_Planning_System.Guest.Dto;
 using ExcelDataReader;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -129,6 +130,7 @@ namespace Event_Planning_System.Guest
         {
             try
             {
+
                 var userId = AbpSession.UserId.Value;
                 var user = await _userRepository.GetAllIncluding(u => u.Guests).FirstOrDefaultAsync(u => u.Id == userId);
 
@@ -162,18 +164,23 @@ namespace Event_Planning_System.Guest
                     await file.CopyToAsync(stream);
                 }
 
+
                 var guestList = new List<GuestDto>();
+
 
                 using (var stream = System.IO.File.Open(filePath, FileMode.Open, FileAccess.Read))
                 {
                     using (var reader = ExcelReaderFactory.CreateReader(stream))
                     {
+
                         reader.Read(); // Skip the header row
+
 
                         while (reader.Read())
                         {
                             var guest = new GuestDto
                             {
+
                                 Name = reader.GetValue(0)?.ToString(),
                                 Phone = reader.GetValue(1)?.ToString(),
                                 InvitationState = reader.GetValue(2)?.ToString(),
@@ -184,6 +191,7 @@ namespace Event_Planning_System.Guest
 
                             guestList.Add(guest);
                         }
+
                     }
                 }
 
@@ -199,6 +207,7 @@ namespace Event_Planning_System.Guest
 
                 await _repositoryEvent.UpdateAsync(eventUser);
                 await _userRepository.UpdateAsync(user);
+
 
                 return new OkObjectResult("Successfully inserted");
             }
