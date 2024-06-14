@@ -3,7 +3,9 @@ using Abp.Domain.Repositories;
 using AutoMapper;
 using Event_Planning_System.Authorization.Users;
 using Event_Planning_System.Enitities;
+
 using Event_Planning_System.Notification.Dto;
+
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -47,4 +49,5 @@ namespace Event_Planning_System.Notification
             return notification.Id;
         }
     }
+
 }

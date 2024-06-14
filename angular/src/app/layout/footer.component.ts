@@ -4,6 +4,7 @@ import { AppComponentBase } from '@shared/app-component-base';
 @Component({
   selector: 'app-footer',
   templateUrl: './footer.component.html',
+  styleUrls:['./footer.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FooterComponent extends AppComponentBase {
