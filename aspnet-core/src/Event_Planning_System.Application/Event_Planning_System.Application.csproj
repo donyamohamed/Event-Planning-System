@@ -27,8 +27,6 @@
 
 
     <Folder Include="Guest\Uploads\" />
-
-    <Folder Include="Notification\Dto\" />
   </ItemGroup>
   <ItemGroup>
 

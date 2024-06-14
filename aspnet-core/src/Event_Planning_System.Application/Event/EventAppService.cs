@@ -40,8 +40,17 @@ namespace Event_Planning_System.Event
             var upcomingEvents = await _repository.GetAllListAsync(e => e.UserId == userId && e.StartDate >= today);
             return _mapper.Map<List<EventDto>>(upcomingEvents);
         }
+		
+        
+        public async Task<List<EventDto>> GetReminderOfUpcomming()
+		{
+            var userId = AbpSession.UserId.Value;
+			var today = DateTime.Today;
+			var upcomingEvents = await _repository.GetAllListAsync(e => e.UserId == userId && e.StartDate <= today.AddDays(5) && e.StartDate>today) ;
 
-        public async Task<List<EventDto>> GetHistoryEventAsync(long userId)
+			return _mapper.Map<List<EventDto>>(upcomingEvents);
+		}
+		public async Task<List<EventDto>> GetHistoryEventAsync(long userId)
         {
             var today = DateTime.Today;
             var events = await _repository.GetAllListAsync(e => e.UserId == userId && e.EndDate < today);
