@@ -39,6 +39,7 @@ namespace Event_Planning_System.Notification
             return _mapper.Map<List<notification>>(notifications);
         }
 
+
         public async Task<int> CreateNotification(NotificationDto input)
         {
             var notification = _mapper.Map<notification>(input);
