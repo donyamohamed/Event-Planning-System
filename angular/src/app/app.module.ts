@@ -42,7 +42,11 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 import { NotificatiosComponent } from "./layout/notifications/notificatios.component";
+
+import { PublicEventsComponent } from "./home/public-events/public-events.component";
+
 // import { CreateGuestModelComponent } from './guest/create-guest-model/create-guest-model.component';
 
 
@@ -98,6 +102,7 @@ import { NotificatiosComponent } from "./layout/notifications/notificatios.compo
         //     plugins: [dayGridPlugin]
         //   })
         // CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
-        , NotificatiosComponent] })
+
+        , NotificatiosComponent, PublicEventsComponent] })
 
 export class AppModule {}

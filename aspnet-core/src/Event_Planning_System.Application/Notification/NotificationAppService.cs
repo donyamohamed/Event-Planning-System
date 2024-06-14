@@ -17,21 +17,24 @@ using System.Threading.Tasks;
 
 namespace Event_Planning_System.Notification
 {
-	public class NotificationAppService : ApplicationService, INotificationAppService
-	{
-		private readonly IRepository<notification, int> _notificationRepository;
-		private readonly IRepository<User, long> _userRepository;
-		private readonly UserManager _userManager;
-		private readonly IMapper _mapper;
-		public NotificationAppService(IRepository<notification, int> interestRepository, UserManager userManager, IMapper mapper, IRepository<User, long> userRepository)
+    public class NotificationAppService : ApplicationService, INotificationAppService
+    {
+        private readonly IRepository<notification, int> _notificationRepository;
+        private readonly IRepository<User, long> _userRepository;
+        private readonly UserManager _userManager;
+        private readonly IMapper _mapper;
 
-		{
-			_notificationRepository = interestRepository;
-			_userManager = userManager;
-			_mapper = mapper;
-
-			_userRepository = userRepository;
-		}
+        public NotificationAppService(
+            IRepository<notification, int> notificationRepository,
+            UserManager userManager,
+            IMapper mapper,
+            IRepository<User, long> userRepository)
+        {
+            _notificationRepository = notificationRepository;
+            _userManager = userManager;
+            _mapper = mapper;
+            _userRepository = userRepository;
+        }
 
 		public async Task<int> CreateNotification(NotificationDto input)
 		{

@@ -98,7 +98,26 @@ namespace Event_Planning_System.Interests
             return user.Interests.Any();
 
         }
-        public async Task AddUserInterests(List<int> interestIds)
+
+       // public async Task AddUserInterests(List<int> interestIds)
+
+
+		/*public async Task addUserInterests(List<int> interestIds)
+		{
+			var UserId = AbpSession.UserId.Value;
+			var user = await _userRepository.GetAsync(UserId);
+
+            if (user == null)
+            {
+                throw new Exception("User not found.");
+            }
+
+			user.Interests= interestIds.Select(id => new Interest() { Id = id }).ToList();
+
+			await _userRepository.UpdateAsync(user);
+
+		}*/
+        public async Task addUserInterests(List<int> interestIds)
         {
             var userId = AbpSession.UserId.Value;
             var user = await _userRepository.GetAllIncluding(u => u.Interests).FirstOrDefaultAsync(u => u.Id == userId);
@@ -120,6 +139,7 @@ namespace Event_Planning_System.Interests
 
             await _userRepository.UpdateAsync(user);
         }
+
 
     }
 }
