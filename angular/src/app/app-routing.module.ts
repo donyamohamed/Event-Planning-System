@@ -1,3 +1,4 @@
+import { PublicEventsComponent } from './home/public-events/public-events.component';
 
 // import { NoGuestsComponent } from './guest/no-guests/no-guests.component';
 
@@ -146,6 +147,7 @@ const routes: Routes = [
             { path: 'todolist/:id', component: TodoListComponent, canActivate: [AppRouteGuard] },
             { path: 'showInterests', component: InterstsComponent, canActivate: [AppRouteGuard] },
             { path: 'addNewGuest', component: CreateGuestComponent, canActivate: [AppRouteGuard] },
+            { path: 'publicEvents', component: PublicEventsComponent, canActivate: [AppRouteGuard] },
             { path: 'NoGuests/:id', component: NoGuestsComponent, canActivate: [AppRouteGuard] },
             {
                 path: 'allGuests/:id',

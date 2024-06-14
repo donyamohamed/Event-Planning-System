@@ -1,5 +1,5 @@
 import { Subscription } from 'rxjs';
-import { Component, TemplateRef } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GuestService } from '@shared/Services/guest.service';
 import { Guest } from '@shared/Models/guest';
@@ -38,7 +38,15 @@ export class NoGuestsComponent {
       invitationState: ['', [Validators.required]]
     });
   }
-  AddGeust() {
+  ngOnInit(): void {
+    this.sub = this.activatedRouter.params.subscribe((params) => {
+      this.idEvent = params["id"];
+      // console.log(this.event);
+     
+      });
+    
+  }
+  AddGeust(){
     // this.sub= this.activatedRouter.params.subscribe(param=> {
     //   this.sub=this.guestSer.createGuest(this.guest).subscribe({
     //     next(result) {
@@ -53,20 +61,20 @@ export class NoGuestsComponent {
     //   })
     // });
     if (this.guestForm.valid) {
-      this.sub = this.activatedRouter.params.subscribe(param => {
-        this.guestSer.createGuest(this.guest).subscribe({
-          next: (result) => {
-            console.log(result);
-            this.router.navigateByUrl("app/allGuests/" + param["id"]);
-            this.modalRef.hide();
-          },
-          error: (err) => {
-            console.log(err);
-          }
-        });
+    this.sub = this.activatedRouter.params.subscribe(param => {
+      this.guestSer.createGuest(this.guest, this.idEvent).subscribe({
+        next: (result) => {
+          console.log(result);
+          this.router.navigateByUrl("app/allGuests/" + param["id"]);
+          this.modalRef.hide();
+        },
+        error: (err) => {
+          console.log(err);
+        }
       });
-    }
-  } //end AddGuest function
+    });
+   } //end AddGuest function
+  }
 
   openModal(template: TemplateRef<any>): void {
     this.modalRef = this.modalService.show(template);

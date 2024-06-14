@@ -58,7 +58,7 @@ export class AllGuestComponent implements OnInit {
   modalRef: BsModalRef;
   bsModalRef: any;
   guestForm: FormGroup;
-  idEvent: number = 0;
+  idEvent: number;
   event: Event = new Event();
   guestCount: number;
   maxCountOfGuest: number = 0;
@@ -134,7 +134,9 @@ export class AllGuestComponent implements OnInit {
 
   Save() {
     if (this.guestForm.valid) {
-      this.guestSer.createGuest(this.guest).subscribe({
+      console.log(this.idEvent);
+      
+      this.guestSer.createGuest(this.guest,this.idEvent).subscribe({
         next: (data) => {
           this.guest = data;
           console.log(data);

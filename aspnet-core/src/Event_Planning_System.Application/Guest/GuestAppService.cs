@@ -1,4 +1,5 @@
 ﻿using Abp.Application.Services;
+using Abp.Domain.Entities;
 using Abp.Domain.Repositories;
 using AutoMapper;
 using Event_Planning_System.Authorization.Users;
@@ -22,12 +23,15 @@ namespace Event_Planning_System.Guest
     {
 
         private readonly IRepository<Enitities.Guest, int> _repository;
+        private readonly IRepository<Enitities.Event, int> _repositoryEvent;
+
         private readonly IMapper _mapper;
         private readonly IRepository<User, long> _userRepository;
 
-        public GuestAppService(IRepository<Enitities.Guest, int> repository, IRepository<User, long> userRepository, IMapper mapper) : base(repository)
+        public GuestAppService(IRepository<Enitities.Guest, int> repository, IMapper mapper, IRepository<Enitities.Event, int> repositoryEvent, IRepository<User, long> userRepository) : base(repository)
         {
             _repository = repository;
+            _repositoryEvent= repositoryEvent;
             _mapper = mapper;
             _userRepository = userRepository;
         }
@@ -36,6 +40,16 @@ namespace Event_Planning_System.Guest
         {
             var guests = await _repository.GetAllListAsync(g => g.Events.Any(e => e.Id == eventId));
             return _mapper.Map<List<GuestDto>>(guests);
+        }
+        public async Task Add(Enitities.Guest guest, int eventId)
+        {
+            var eventUser = await _repositoryEvent.FirstOrDefaultAsync(eventId);
+            if (eventUser == null)
+            {
+                throw new EntityNotFoundException(typeof(Enitities.Event), eventId);
+            }
+            eventUser.Guests.Add(guest);
+            await _repositoryEvent.UpdateAsync(eventUser);
         }
 
 
