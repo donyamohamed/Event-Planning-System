@@ -5,11 +5,13 @@ using AutoMapper;
 using Event_Planning_System.Enitities;
 using Event_Planning_System.Event.Dto;
 using Microsoft.AspNetCore.Mvc;
+
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+
 using System.Threading.Tasks;
 
 namespace Event_Planning_System.Event
@@ -19,7 +21,9 @@ namespace Event_Planning_System.Event
         private readonly IRepository<Enitities.Event, int> _repository;
         private readonly IMapper _mapper;
         private readonly string _imageFolderPath;
+
         private readonly IRepository<Interest, int> _interestRepository;
+
 
         public EventAppService(IRepository<Enitities.Event, int> repository, IMapper mapper, IRepository<Interest, int> interestRepository) : base(repository)
         {
@@ -74,6 +78,7 @@ namespace Event_Planning_System.Event
             return _mapper.Map<EventDto>(eventEntity);
         }
 
+
         public async Task<List<EventDto>> GetPublicEventsByInterest()
         {
             var userId = AbpSession.UserId.Value;
@@ -108,3 +113,4 @@ namespace Event_Planning_System.Event
             
         }
    }
+

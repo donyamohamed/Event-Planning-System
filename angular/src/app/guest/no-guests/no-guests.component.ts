@@ -38,6 +38,7 @@ export class NoGuestsComponent {
       invitationState: ['', [Validators.required]]
     });
   }
+
   ngOnInit(): void {
     this.sub = this.activatedRouter.params.subscribe((params) => {
       this.idEvent = params["id"];
@@ -47,6 +48,7 @@ export class NoGuestsComponent {
     
   }
   AddGeust(){
+
     // this.sub= this.activatedRouter.params.subscribe(param=> {
     //   this.sub=this.guestSer.createGuest(this.guest).subscribe({
     //     next(result) {
@@ -61,6 +63,7 @@ export class NoGuestsComponent {
     //   })
     // });
     if (this.guestForm.valid) {
+
     this.sub = this.activatedRouter.params.subscribe(param => {
       this.guestSer.createGuest(this.guest, this.idEvent).subscribe({
         next: (result) => {
@@ -75,6 +78,7 @@ export class NoGuestsComponent {
     });
    } //end AddGuest function
   }
+
 
   openModal(template: TemplateRef<any>): void {
     this.modalRef = this.modalService.show(template);

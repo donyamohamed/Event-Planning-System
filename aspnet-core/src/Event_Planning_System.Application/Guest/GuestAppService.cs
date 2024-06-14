@@ -28,7 +28,9 @@ namespace Event_Planning_System.Guest
         private readonly IMapper _mapper;
         private readonly IRepository<User, long> _userRepository;
 
-        public GuestAppService(IRepository<Enitities.Guest, int> repository, IMapper mapper, IRepository<Enitities.Event, int> repositoryEvent, IRepository<User, long> userRepository) : base(repository)
+
+        public GuestAppService(IRepository<Enitities.Guest, int> repository, IRepository<User, long> userRepository, IMapper mapper) : base(repository)
+
         {
             _repository = repository;
             _repositoryEvent= repositoryEvent;
@@ -41,6 +43,7 @@ namespace Event_Planning_System.Guest
             var guests = await _repository.GetAllListAsync(g => g.Events.Any(e => e.Id == eventId));
             return _mapper.Map<List<GuestDto>>(guests);
         }
+
         public async Task Add(Enitities.Guest guest, int eventId)
         {
             var eventUser = await _repositoryEvent.FirstOrDefaultAsync(eventId);
@@ -51,6 +54,7 @@ namespace Event_Planning_System.Guest
             eventUser.Guests.Add(guest);
             await _repositoryEvent.UpdateAsync(eventUser);
         }
+
 
 
 
