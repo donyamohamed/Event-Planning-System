@@ -1,9 +1,59 @@
-<footer class="main-footer">
-  <strong>
-    Copyright &copy; {{ currentYear }}
-    <a href="javascript:;">Event_Planning_System</a>.
-  </strong>
-  <div class="float-right d-none d-sm-inline-block">
-    <b>{{ "Version" | localize }} </b> {{ versionText }}
-  </div>
+<footer class="">
+  <div class="container p-5">
+    <div class="row">
+        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12 logo m-0">
+            <!-- <img src="../../assets/img/Event.jpg" alt="" class="mb-3"> -->
+            <!-- <img src="../../assets/img/Event.jpg" alt="" class="mb-3"> -->
+            <h3 class="pe-2" style="color:#FBAF1B; font-weight: 700;">
+              Eventa
+            </h3>
+        </div>
+        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12 about m-0">
+            <h3 class="pb-3">About us</h3>
+            <ul class="p-0">
+                <li><a href="#"> Home</a></li>
+                <li><a routerLink="/app/about"> About Us</a></li>
+                <li><a routerLink="/app/about"> Contact</a></li>
+            </ul>
+        </div>
+        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12 links m-0 ">
+            <h3 class="pb-3">Useful Links</h3>
+            <ul class="p-0">
+                <li><a href="#"> Privacy Policy</a></li>
+                <li><a href="#"> Refund Policy</a></li>
+                <li><a href="#"> Shipping Informations</a></li>
+                <li><a href="#"> Terms & Conditions</a></li>
+                <li><a href="#"> FAQ’s</a></li>
+            </ul>
+        </div>
+        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12 contacts m-0">
+            <h3 class="pb-3">Contact</h3>
+            <ul class="p-0">
+                <li>123 Fifth Avenue, New York, NY 10160</li>
+                <li>contactinfo.com </li>
+                <li>929-242-6868</li>
+            </ul>
+        </div>
+    </div> <!-- end of row -->
+    <div class="row cpyright p-4 mb-3 d-flex">
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 p-4">
+            <!-- <p>Copyright &copy; 2024 Eyewear Store | Powered by Eyewear Store</p> -->
+            <strong>
+              Copyright &copy; {{ currentYear }}
+              <a href="javascript:;">Event_Planning_System</a>.
+            </strong>
+            <div class="float-right d-none d-sm-inline-block">
+              <b>{{ "Version" | localize }} </b> {{ versionText }}
+            </div>
+        </div>
+        <div class="social-links offset-xl-3 col-xl-3 offset-lg-3 col-lg-3 col-md-6 col-sm-12 col-12 p-4">
+            <a href="#facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#twitter"><i class="fa-brands fa-twitter"></i></a>
+            <a href="#instagram"><i class="fa-brands fa-instagram"></i></a>
+        </div>
+
+    </div> <!-- copyright -->
+</div>
+ 
+
 </footer>
