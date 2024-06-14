@@ -52,6 +52,7 @@ export class NoGuestsComponent {
 
     //   })
     // });
+
     if (this.guestForm.valid) {
       this.sub = this.activatedRouter.params.subscribe(param => {
         this.guestSer.createGuest(this.guest).subscribe({
@@ -73,10 +74,25 @@ export class NoGuestsComponent {
   }
 
 
-
-
   fileToUpload: File | null = null;
   uploadResponse: string = '';
+  eventId: number;
+
+
+  // ngOnInit(): void {
+  //   // Retrieve the eventId from the route parameters
+  //   this.eventId = +this.activatedRouter.snapshot.paramMap.get('eventId');
+  // }
+
+
+  ngOnInit(): void {
+    // Retrieve the eventId from the route parameters
+    this.activatedRouter.params.subscribe(params => {
+      this.eventId = +params['eventId'];
+      console.log("Event ID: ", this.eventId); // For debugging
+    });
+  }
+  
 
   handleFileInput(event: any): void {
     const file: File = event.target.files[0];
@@ -94,17 +110,17 @@ export class NoGuestsComponent {
 
   uploadFile(): void {
     if (this.fileToUpload) {
-      this.guestSer.uploadFile(this.fileToUpload).subscribe(
+      this.guestSer.uploadFile(this.fileToUpload, this.eventId).subscribe(
         (response) => {
           this.uploadResponse = 'File uploaded successfully';
-           this.router.navigateByUrl("app/allGuests/");
+          this.router.navigateByUrl('app/allGuests/');
         },
         (error) => {
           this.uploadResponse = `Error: ${error.message}`;
         }
       );
     } else {
-      this.uploadResponse = 'Please select a valid Excel file first';
+      this.uploadResponse = 'Please select a valid Excel file first.';
     }
   }
 

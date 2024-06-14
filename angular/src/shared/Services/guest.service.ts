@@ -26,15 +26,14 @@ export class GuestService {
     private baseUrlforExcel = 'https://localhost:44311/api/services/app/Guest/AddGuestsThroughExcelFile';
 
     constructor(private httpClient: HttpClient) {}
-  
-    uploadFile(file: File): Observable<any> {
+
+   public uploadFile(file: File, eventId: number): Observable<any> {
       const formData: FormData = new FormData();
       formData.append('file', file, file.name);
   
-      const headers = new HttpHeaders();
-      headers.append('Content-Type', 'multipart/form-data');
+      const url = `${this.baseUrlforExcel}?eventId=${eventId}`;
   
-      return this.httpClient.post<any>(this.baseUrlforExcel, formData, { headers: headers });
+      return this.httpClient.post<any>(url, formData);
     }
 
 
