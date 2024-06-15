@@ -12,6 +12,7 @@ export class NotificationsService {
    UpcommingURL="https://localhost:44311/api/services/app/Event/GetReminderOfUpcomming";
    UnreadCountURL="https://localhost:44311/api/services/app/Notification/GetNotificationCount";
    UpdateUrl='https://localhost:44311/api/services/app/Notification/UpdateNotificationStatus';
+   ReminderUnreadCount="https://localhost:44311/api/services/app/Event/GetReminderCount";
   constructor(private http:HttpClient) { }
   GetUserNotifications(){
    return this.http.get<Notifications[]>(this.URL);
@@ -25,5 +26,8 @@ export class NotificationsService {
   }
   UpdateNotificationStatus(updatedNotification:UpdateNotificationStatusDto){
     return this.http.put(this.UpdateUrl,updatedNotification);
+  }
+  GetReminderCount(){
+    return this.http.get(this.ReminderUnreadCount);
   }
 }

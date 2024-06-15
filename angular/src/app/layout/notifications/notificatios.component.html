@@ -1,5 +1,5 @@
 <div class="mr-2">
-        <div class="badge badge-danger ml-2" style="border-radius: 50%">{{count.result}}</div>
+        <div class="badge badge-danger ml-2" style="border-radius: 50%">{{AllCount}}</div>
         <div class="dropdown">
                 <i class="fa-regular fa-bell " style="cursor: pointer; font-size: 24px"
                         (click)="toggleCollapse($event)"></i>
@@ -9,7 +9,9 @@
                                 <h3 style="color: blue">Notifications✨</h3>
                         </div>
                         <div class="content" #con>
-                                <h6 class="alert alert-info mt-5 my-lg-5" *ngIf="AllNotifications.result.length === 0 && Upcomming.result.length===0 ">You Don't Have Any Notifications Yet!</h6>
+                                <h6 class="alert alert-info mt-5 my-lg-5"
+                                        *ngIf="AllNotifications.result.length === 0 && Upcomming.result.length===0 ">You
+                                        Don't Have Any Notifications Yet!</h6>
                                 @for (item of AllNotifications.result; track $index) {
                                 <div style="display: flex; flex-direction: row; margin-bottom: 10px;"
                                         *ngIf="item.status==0">
@@ -51,8 +53,8 @@
                                                 <div
                                                         style="display: flex; flex-direction: row;justify-content: space-between;">
                                                         <p style="font-size: 14px; margin: 0;">📍 {{item.location}}</p>
-                                                        <button (click)="changeFontWeight()"
-                                                                class="btn btn-link  mt-0 font-weight-lighter">set as
+                                                        <button (click)="changeFontWeight(item)"
+                                                                class="btn btn-link  mt-0 font-weight-lighter" >set as
                                                                 seen</button>
                                                 </div>
                                         </div>

@@ -117,7 +117,8 @@ export class NotificatiosComponent implements OnInit {
   }
   AllNotifications: Notifications[] | any;
   Upcomming: Event[] | any;
-  count: number | any;
+  count: number | any=0;
+  count2:number|any=0;
   ngOnInit(): void {
     this.Service.GetUserNotifications().subscribe({
       next: n => {
@@ -134,9 +135,16 @@ export class NotificatiosComponent implements OnInit {
         this.count = c;
       }
     });
+    this.Service.GetReminderCount().subscribe({
+      next:r=>{
+        this.count2=r;
+      }
+    });
   }
+  AllCount:number=this.count+this.count2;
   fontWeight: string = 'bold';
-  changeFontWeight() {
+  changeFontWeight(item:any) {
+
     this.fontWeight= 'normal';
   
   }

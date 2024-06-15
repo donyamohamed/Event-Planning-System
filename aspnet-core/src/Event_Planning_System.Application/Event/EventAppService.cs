@@ -31,9 +31,9 @@ namespace Event_Planning_System.Event
         private readonly IRepository<Interest, int> _interestRepository;
 
 
-        //public EventAppService(IRepository<Enitities.Event, int> repository, IMapper mapper, IRepository<Interest, int> interestRepository) : base(repository)
-        public EventAppService(IRepository<Enitities.Event, int> repository, IRepository<Enitities.Guest, int> guestRepository,
-            IRepository<Enitities.BudgetExpense, int> budgetExpenseRepository, IRepository<Interest, int> interestRepository,
+       
+        public EventAppService(IRepository<Enitities.Event, int> repository, IRepository<Enitities.Guest, int> guestRepository, IRepository<Interest, int> interestRepository,
+            IRepository<Enitities.BudgetExpense, int> budgetExpenseRepository,
             IRepository<Enitities.ToDoCheckList, int> toDoCheckListRepository, IMapper mapper, IEmailService emailService) : base(repository)
         {
             _repository = repository;
@@ -74,6 +74,25 @@ namespace Event_Planning_System.Event
 
 			return _mapper.Map<List<EventDto>>(upcomingEvents);
 		}
+		public async Task<int> GetReminderCount()
+		{
+			var userId = AbpSession.UserId.Value;
+			var notifications = await GetReminderOfUpcomming();
+			var NewNotification = notifications.Where(n => n.isRead == false).Count();
+			return NewNotification;
+		}
+		public async Task UpdateReminderStatus([FromBody] UpdateEventStatusDto input)
+		{
+            var old =await  GetReminderOfUpcomming();
+            var res=  old.FirstOrDefault(r=>r.Id==input.Id);
+			if (res == null)
+			{
+				throw new Abp.UI.UserFriendlyException("Reminder not found");
+			}
+            res.isRead = true;
+            await CurrentUnitOfWork.SaveChangesAsync();
+		}
+
 		public async Task<List<EventDto>> GetHistoryEventAsync(long userId)
         {
             var today = DateTime.Today;
@@ -106,16 +125,9 @@ namespace Event_Planning_System.Event
 
         public async Task<List<EventDto>> GetPublicEventsByInterest()
         {
-            List<EventDto> publicEvents = new List<EventDto>();
+            var publicEvents = new HashSet<EventDto>();
+            var orderedPublicEvents = new List<EventDto>();
             var userId = AbpSession.UserId;
-
-            // Fetch public events
-            var publicEventsFromDb = await _repository.GetAll()
-                .Where(e => e.IsPublic)
-                .ToListAsync();
-
-            var mappedPublicEvents = _mapper.Map<List<EventDto>>(publicEventsFromDb);
-            publicEvents.AddRange(mappedPublicEvents);
 
             // Fetch interests and interest-based events if user is authenticated
             if (userId.HasValue && userId > 0)
@@ -132,14 +144,35 @@ namespace Event_Planning_System.Event
                         .ToListAsync();
 
                     var mappedInterestEvents = _mapper.Map<List<EventDto>>(interestEvents);
-                    publicEvents.AddRange(mappedInterestEvents);
+
+                    foreach (var eventDto in mappedInterestEvents)
+                    {
+                        if (publicEvents.Add(eventDto))
+                        {
+                            orderedPublicEvents.Add(eventDto);
+                        }
+                    }
                 }
             }
 
-            // Return distinct events to avoid duplicates
-            return publicEvents.Distinct().ToList();
-        }
+            // Fetch public events
+            var publicEventsFromDb = await _repository.GetAll()
+                .Where(e => e.IsPublic)
+                .ToListAsync();
 
+            var mappedPublicEvents = _mapper.Map<List<EventDto>>(publicEventsFromDb);
+
+            foreach (var eventDto in mappedPublicEvents)
+            {
+                if (publicEvents.Add(eventDto))
+                {
+                    orderedPublicEvents.Add(eventDto);
+                }
+            }
+
+            // Return the ordered list of events with interest-based events first
+            return orderedPublicEvents;
+        }
 
         public async Task DeleteEventWithDetailsAsync(int eventId)
         {
@@ -164,7 +197,11 @@ namespace Event_Planning_System.Event
             await _guestRepository.DeleteAsync(g => g.Events.Any(e => e.Id == eventId));
             await _repository.DeleteAsync(eventEntity);
         }
-
-
     }
+
 }
+
+        
+
+
+  

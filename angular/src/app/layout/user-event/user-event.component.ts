@@ -50,6 +50,7 @@ export class UserEventComponent implements OnInit {
       (data: Event[]) => {
         if (Array.isArray(data)) {
           this.events = data;
+          console.log(data);
         } else {
           console.error('Data is not an array', data);
         }
