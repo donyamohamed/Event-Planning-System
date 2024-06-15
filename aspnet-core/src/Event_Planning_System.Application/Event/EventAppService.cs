@@ -31,9 +31,9 @@ namespace Event_Planning_System.Event
         private readonly IRepository<Interest, int> _interestRepository;
 
 
-        public EventAppService(IRepository<Enitities.Event, int> repository, IMapper mapper, IRepository<Interest, int> interestRepository) : base(repository)
+        //public EventAppService(IRepository<Enitities.Event, int> repository, IMapper mapper, IRepository<Interest, int> interestRepository) : base(repository)
         public EventAppService(IRepository<Enitities.Event, int> repository, IRepository<Enitities.Guest, int> guestRepository,
-            IRepository<Enitities.BudgetExpense, int> budgetExpenseRepository,
+            IRepository<Enitities.BudgetExpense, int> budgetExpenseRepository, IRepository<Interest, int> interestRepository,
             IRepository<Enitities.ToDoCheckList, int> toDoCheckListRepository, IMapper mapper, IEmailService emailService) : base(repository)
         {
             _repository = repository;
@@ -140,9 +140,6 @@ namespace Event_Planning_System.Event
             return publicEvents.Distinct().ToList();
         }
 
-    }
-
-}
 
         public async Task DeleteEventWithDetailsAsync(int eventId)
         {
