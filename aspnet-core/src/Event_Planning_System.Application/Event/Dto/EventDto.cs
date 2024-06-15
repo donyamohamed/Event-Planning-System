@@ -52,8 +52,8 @@ namespace Event_Planning_System.Event.Dto
         [Required(ErrorMessage = "End date is required.")]
         [DataType(DataType.Date)]
         public DateTime EndDate { get; set; }
-
-        public bool IsPublic { get; set; }
+		public bool isRead { get; set; } = false;
+		public bool IsPublic { get; set; }
 
         [Range(1, 10000, ErrorMessage = "Max count must be between 1 and 10000.")]
         public int MaxCount { get; set; }

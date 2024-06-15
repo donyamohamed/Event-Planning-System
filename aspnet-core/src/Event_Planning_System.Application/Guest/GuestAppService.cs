@@ -1,10 +1,16 @@
 ﻿using Abp.Application.Services;
+using Abp.Domain.Entities;
 using Abp.Domain.Repositories;
 using AutoMapper;
+using Event_Planning_System.Authorization.Users;
+using Event_Planning_System.Enitities;
 using Event_Planning_System.Guest.Dto;
 using ExcelDataReader;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+
+using Microsoft.EntityFrameworkCore;
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,12 +23,20 @@ namespace Event_Planning_System.Guest
     {
 
         private readonly IRepository<Enitities.Guest, int> _repository;
-        private readonly IMapper _mapper;
+        private readonly IRepository<Enitities.Event, int> _repositoryEvent;
 
-        public GuestAppService(IRepository<Enitities.Guest, int> repository, IMapper mapper) : base(repository)
+        private readonly IMapper _mapper;
+        private readonly IRepository<User, long> _userRepository;
+        private readonly IRepository<Enitities.Event, int> repositoryEvent;
+
+
+        public GuestAppService(IRepository<Enitities.Guest, int> repository, IRepository<User, long> userRepository, IRepository<Enitities.Event, int> repositoryEvent, IMapper mapper) : base(repository)
+
         {
             _repository = repository;
+            _repositoryEvent= repositoryEvent;
             _mapper = mapper;
+            _userRepository = userRepository;
         }
 
         public async Task<List<GuestDto>> GetEventGuestsAsync(int eventId)
@@ -31,19 +45,49 @@ namespace Event_Planning_System.Guest
             return _mapper.Map<List<GuestDto>>(guests);
         }
 
+        public async Task Add(Enitities.Guest guest, int eventId)
+        {
+            var eventUser = await _repositoryEvent.FirstOrDefaultAsync(eventId);
+            if (eventUser == null)
+            {
+                throw new EntityNotFoundException(typeof(Enitities.Event), eventId);
+            }
+            eventUser.Guests.Add(guest);
+            await _repositoryEvent.UpdateAsync(eventUser);
+        }
 
 
-        [HttpPost]
-        public async Task<IActionResult> AddGuestsThroughExcelFile([FromForm] IFormFile file)
+
+
+
+
+
+        public async Task<IActionResult> AddGuestsThroughExcelFile([FromForm] IFormFile file, int eventId)
         {
             try
             {
+
+                var userId = AbpSession.UserId.Value;
+                var user = await _userRepository.GetAllIncluding(u => u.Guests).FirstOrDefaultAsync(u => u.Id == userId);
+
+                if (user == null)
+                {
+                    throw new Exception("User not found.");
+                }
+
+                var eventUser = await _repositoryEvent.GetAllIncluding(e => e.Guests).FirstOrDefaultAsync(e => e.Id == eventId && e.UserId == userId);
+
+                if (eventUser == null)
+                {
+                    throw new Exception("Event not found or does not belong to the user.");
+                }
+
                 System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
 
                 if (file == null || file.Length == 0)
                     return new BadRequestObjectResult("No File uploaded");
 
-                var uploadsFolder = $"{Directory.GetCurrentDirectory()}";
+                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "uploads");
                 if (!Directory.Exists(uploadsFolder))
                 {
                     Directory.CreateDirectory(uploadsFolder);
@@ -56,35 +100,50 @@ namespace Event_Planning_System.Guest
                     await file.CopyToAsync(stream);
                 }
 
+
+                var guestList = new List<GuestDto>();
+
+
                 using (var stream = System.IO.File.Open(filePath, FileMode.Open, FileAccess.Read))
                 {
                     using (var reader = ExcelReaderFactory.CreateReader(stream))
                     {
-                        var guestList = new List<GuestDto>();
 
-                        reader.Read();
+                        reader.Read(); // Skip the header row
+
 
                         while (reader.Read())
                         {
                             var guest = new GuestDto
                             {
-                                // Id is auto increment
+
                                 Name = reader.GetValue(0)?.ToString(),
                                 Phone = reader.GetValue(1)?.ToString(),
                                 InvitationState = reader.GetValue(2)?.ToString(),
-                                Email = reader.GetValue(3)?.ToString()
+                                Email = reader.GetValue(3)?.ToString(),
+                                UserId = userId,
+                                EventId = eventId
                             };
 
                             guestList.Add(guest);
                         }
 
-                        foreach (var guest in guestList)
-                        {
-                            var entity = _mapper.Map<Enitities.Guest>(guest);
-                            await _repository.InsertAsync(entity);
-                        }
                     }
                 }
+
+                foreach (var guestDto in guestList)
+                {
+                    if (!eventUser.Guests.Any(g => g.Email == guestDto.Email)) // Check for existing guest by Email within the event
+                    {
+                        var entity = _mapper.Map<Enitities.Guest>(guestDto);
+                        eventUser.Guests.Add(entity);
+                        user.Guests.Add(entity);
+                    }
+                }
+
+                await _repositoryEvent.UpdateAsync(eventUser);
+                await _userRepository.UpdateAsync(user);
+
 
                 return new OkObjectResult("Successfully inserted");
             }

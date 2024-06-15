@@ -37,8 +37,8 @@ namespace Event_Planning_System.Enitities
 
         [StringLength(500, ErrorMessage = "Description can't be longer than 500 characters.")]
         public string Description { get; set; }
-
-        [Required(ErrorMessage = "Location is required.")]
+        public bool isRead { get; set; } = false;
+		[Required(ErrorMessage = "Location is required.")]
         [StringLength(200, ErrorMessage = "Location can't be longer than 200 characters.")]
         public string Location { get; set; }
 
@@ -66,7 +66,7 @@ namespace Event_Planning_System.Enitities
 
 
 
-        public virtual ICollection<Notification> Notifications { get; set; } = new List<Notification>();
+        public virtual ICollection<notification> Notifications { get; set; } = new List<notification>();
         public virtual ICollection<Guest> Guests { get; set; } = new List<Guest>();
 
         public virtual ICollection<BudgetExpense> Budgets { get; set; } = new List<BudgetExpense>();
