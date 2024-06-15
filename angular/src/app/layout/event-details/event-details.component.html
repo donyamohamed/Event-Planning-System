@@ -1,30 +1,36 @@
 <div class="header-container">
-    <h2>Event Details</h2>
-  <div>
+  <h2>Event Details</h2>
+  <div class="buttons">
     <a [routerLink]="'/app/todolist/' + event.id" class="btn">TodoList</a>
     <a (click)="navigateToSetExpenses(event.id)" class="btn btn-expense">Set Expenses</a>
   </div>
-  
-
 </div>
-
 <section class="container">
-    <h3>{{ event?.name }}</h3>
-    <div *ngIf="event">
-        <img src="../../../assets/img/Event.jpg" alt="" srcset="">
-        <p><strong>Name:</strong> {{ event.name }}</p>
-        <p><strong>Description:</strong> {{ event.description }}</p>
-        <p><strong>Location:</strong> {{ event.location }}</p>
-        <p><strong>Start Date:</strong> {{ event.startDate }}</p>
-        <p><strong>End Date:</strong> {{ event.endDate }}</p>
-        <p><strong>Public:</strong> {{ event.isPublic ? 'Yes' : 'No' }}</p>
-        <p><strong>Max Count:</strong> {{ event.maxCount }}</p>
-        <!-- <img [src]="'../../../assets/img/' + event.eventImg" alt="" srcset=""> -->
-       
-        <p><strong>Category:</strong> {{ event.category }}</p>
-     
+  <div class="event-details">
+    <div class="card-media">
+      <div class="card-media-object-container">
+        <div class="card-media-object" style="background-image: url(../../../assets/img/Event.jpg);"></div>
+        <!-- <div class="card-media-object" style="background-image: url('../../../assets/img{{ event.eventImg }}');"></div> -->
+
+      </div>
+      <div class="card-media-body">
+        <div class="card-media-body-top">
+          <p class="subtle"><strong>Name:</strong> {{ event.name }}</p> 
+          
+        </div>
+        <div class="card-media-body-supporting-bottom">
+          <p class="subtle"><strong>Start Date:</strong> {{ event.startDate | date: 'EEE, MMM dd, hh:mm a' }}</p>
+          <p class="subtle"><strong> End Date:</strong> {{ event.endDate | date: 'EEE, MMM dd, hh:mm a' }}</p>
+          <p class="subtle"><strong>Location:</strong> {{ event.location }}</p>
+          <p class="subtle"><strong>Type:</strong> {{ event.isPublic ? 'Public' : 'Private' }}</p>
+          <p><strong>Description:</strong> {{ event.description }}</p>
+          <p><strong>Category:</strong> {{ event.category }}</p>
+          <p><strong>Max Count:</strong> {{ event.maxCount }}</p>
+        </div>
+      </div>
     </div>
-    <div *ngIf="!event">
-        <p>Loading event details...</p>
-    </div>
+  </div>
+  <div *ngIf="!event" class="loading-message">
+    <p>Loading event details...</p>
+  </div>
 </section>

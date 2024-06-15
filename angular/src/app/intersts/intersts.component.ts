@@ -25,7 +25,7 @@ export class InterstsComponent implements OnInit {
 
     this.InterstsService.HasInterests().subscribe(x => {
       if (!x) {
-
+        this.router.navigate(['/app/showInterests']);
         this.InterstsService.GetAllInterests().subscribe({
           next: (data) => { this.intersts = data },
           error: (err) => { console.log(err); }

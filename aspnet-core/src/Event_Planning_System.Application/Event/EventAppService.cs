@@ -37,10 +37,12 @@ namespace Event_Planning_System.Event
             IRepository<Enitities.ToDoCheckList, int> toDoCheckListRepository, IMapper mapper, IEmailService emailService) : base(repository)
         {
             _repository = repository;
+
             _interestRepository=interestRepository;
             _guestRepository = guestRepository;
             _budgetExpenseRepository = budgetExpenseRepository;
             _toDoCheckListRepository = toDoCheckListRepository;
+
             _mapper = mapper;
             _emailService = emailService;
             _imageFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images");
@@ -101,40 +103,46 @@ namespace Event_Planning_System.Event
         }
 
 
+
         public async Task<List<EventDto>> GetPublicEventsByInterest()
         {
-            var userId = AbpSession.UserId.Value;
             List<EventDto> publicEvents = new List<EventDto>();
-            if (userId > 0)
+            var userId = AbpSession.UserId;
+
+            // Fetch public events
+            var publicEventsFromDb = await _repository.GetAll()
+                .Where(e => e.IsPublic)
+                .ToListAsync();
+
+            var mappedPublicEvents = _mapper.Map<List<EventDto>>(publicEventsFromDb);
+            publicEvents.AddRange(mappedPublicEvents);
+
+            // Fetch interests and interest-based events if user is authenticated
+            if (userId.HasValue && userId > 0)
             {
                 var interests = await _interestRepository.GetAll()
                     .Include(i => i.Users)
                     .Where(i => i.Users.Any(u => u.Id == userId))
                     .ToListAsync();
+
                 foreach (var interest in interests)
                 {
-                    var events = await _repository.GetAll()
+                    var interestEvents = await _repository.GetAll()
                         .Where(e => e.Category == interest.Type && e.IsPublic)
                         .ToListAsync();
 
-                    var mappedEvents = _mapper.Map<List<EventDto>>(events);
-                    publicEvents.AddRange(mappedEvents);
+                    var mappedInterestEvents = _mapper.Map<List<EventDto>>(interestEvents);
+                    publicEvents.AddRange(mappedInterestEvents);
                 }
             }
-            else
-            {
-                var events = await _repository.GetAll()
-                        .Where(e => e.IsPublic)
-                        .ToListAsync();
-                var mappedEvents = _mapper.Map<List<EventDto>>(events);
-                publicEvents.AddRange(mappedEvents);
-            }
 
-            return publicEvents;
+            // Return distinct events to avoid duplicates
+            return publicEvents.Distinct().ToList();
         }
-            
-        }
-   }
+
+    }
+
+}
 
         public async Task DeleteEventWithDetailsAsync(int eventId)
         {

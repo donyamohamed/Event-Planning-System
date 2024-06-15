@@ -131,11 +131,11 @@ const routes: Routes = [
         path: '',
         component: AppComponent,
         children: [
-            { path: 'home', component: HomeComponent, canActivate: [AppRouteGuard] },
+            { path: 'home', component: HomeComponent },
             { path: 'users', component: UsersComponent, data: { permission: 'Pages.Users' }, canActivate: [AppRouteGuard] },
             { path: 'roles', component: RolesComponent, data: { permission: 'Pages.Roles' }, canActivate: [AppRouteGuard] },
             { path: 'tenants', component: TenantsComponent, data: { permission: 'Pages.Tenants' }, canActivate: [AppRouteGuard] },
-            { path: 'about', component: AboutComponent, canActivate: [AppRouteGuard] },
+            { path: 'about', component: AboutComponent },
             { path: 'update-password', component: ChangePasswordComponent, canActivate: [AppRouteGuard] },
             { path: 'create-event', component: CreateEventComponent, canActivate: [AppRouteGuard] },
            
@@ -143,14 +143,16 @@ const routes: Routes = [
             
             { path: 'historyevent', component: HistoryeventComponent, canActivate: [AppRouteGuard] },
             { path: 'user-event', component: UserEventComponent, canActivate: [AppRouteGuard] },
+
             { path: 'Profile', component: UserProfileComponent, canActivate: [AppRouteGuard] },
             { path: 'Notifications', component:NotificatiosComponent , canActivate: [AppRouteGuard] },
+
             { path: 'eventDetails/:id', component: EventDetailsComponent, canActivate: [AppRouteGuard] },
             { path: 'todolist/:id', component: TodoListComponent, canActivate: [AppRouteGuard] },
             { path: 'showInterests', component: InterstsComponent, canActivate: [AppRouteGuard] },
             { path: 'addNewGuest', component: CreateGuestComponent, canActivate: [AppRouteGuard] },
 
-            { path: 'publicEvents', component: PublicEventsComponent, canActivate: [AppRouteGuard] },
+            { path: 'publicEvents', component: PublicEventsComponent},
 
             { path: 'NoGuests/:id', component: NoGuestsComponent, canActivate: [AppRouteGuard] },
             {

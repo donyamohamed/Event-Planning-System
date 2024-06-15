@@ -9,8 +9,8 @@ import { Event } from '@shared/Models/Event';
 })
 export class HomeService {
   private publicEventsUrl = "https://localhost:44311/api/services/app/Event/GetPublicEventsByInterest";
-  testData:Event[]=[];
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) {}
+
   getPublicEvents(): Observable<EventsResponse> {
     return this.http.get<EventsResponse>(this.publicEventsUrl);
   }
