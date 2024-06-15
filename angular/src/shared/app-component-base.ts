@@ -33,9 +33,10 @@ export abstract class AppComponentBase {
         this.notify = injector.get(NotifyService);
         this.setting = injector.get(SettingService);
         this.message = injector.get(MessageService);
+        this.elementRef = injector.get(ElementRef);
         this.multiTenancy = injector.get(AbpMultiTenancyService);
         this.appSession = injector.get(AppSessionService);
-        this.elementRef = injector.get(ElementRef);
+        
     }
 
     l(key: string, ...args: any[]): string {

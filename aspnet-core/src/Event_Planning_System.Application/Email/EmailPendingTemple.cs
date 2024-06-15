@@ -8,7 +8,7 @@ namespace Event_Planning_System.Email
 {
     public class EmailPendingTemple
     {
-        public static string YourInvitationRequestPending(string eventName, DateTime date, string eventAddress,string guestName)
+        public static string YourInvitationRequestPending(string eventName, DateTime date, string eventAddress,string guestName, string body)
         {
             return $@"
             <!DOCTYPE html>
@@ -158,7 +158,7 @@ namespace Event_Planning_System.Email
                     <div class='message'>
                            <p>Dear {guestName},</p>
                          <p>Thank you for requesting an invitation to {eventName}.</p>
-                         <p>Your request is currently pending. We will notify you once your request has been processed.</p>
+                         <p>{body}</p>
                          <p>Best regards,</p>
                          <p>The Event Planning Team</p>
                    </div>

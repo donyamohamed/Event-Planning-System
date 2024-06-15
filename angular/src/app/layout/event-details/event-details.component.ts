@@ -42,9 +42,7 @@ export class EventDetailsComponent implements OnInit {
         (data) => {
           this.event = data.result;
           console.log("Event Details:", data.result);
-          if (this.event?.budgetId) {
-            this.fetchBudgetAmount(this.event.budgetId); // Fetch budget amount if budgetId is available
-          }
+          
         },
         (error) => {
           console.error('Error fetching event details:', error);
@@ -53,15 +51,5 @@ export class EventDetailsComponent implements OnInit {
     }
   }
 
-  fetchBudgetAmount(budgetId: number): void {
-    this.eventBudgetService.getBudgetAmountById(budgetId).subscribe(
-      (data) => {
-        this.budgetAmount = data.result.amount; // Assuming the API returns the budget amount in the 'amount' field
-        console.log("Budget Amount:", this.budgetAmount);
-      },
-      (error) => {
-        console.error('Error fetching budget amount:', error);
-      }
-    );
-  }
+  
 }
