@@ -1,0 +1,23 @@
+.custom-dropdown-menu {
+    width: 400px !important;
+    position: absolute;
+    top: 20px; 
+    left: -300px; 
+    z-index: 1000; 
+}
+.badge-danger {
+    background-color: #dc3545;
+    color: white;
+    border-radius: 50%;
+    padding: 0.5em;
+    font-size: 12px; 
+    height: 16px;
+    width: 16px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .content{
+    max-height: 250px;
+    overflow-y: auto;
+  }

@@ -99,6 +99,9 @@ namespace Event_Planning_System.Interests
 
         }
 
+       // public async Task AddUserInterests(List<int> interestIds)
+
+
 		/*public async Task addUserInterests(List<int> interestIds)
 		{
 			var UserId = AbpSession.UserId.Value;

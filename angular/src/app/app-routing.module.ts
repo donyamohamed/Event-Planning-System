@@ -123,6 +123,8 @@ import { HistoryeventComponent } from './layout/historyevent/historyevent.compon
 import { InterstsComponent } from './intersts/intersts.component';
 import { TodoListComponent } from './layout/event-todo-list/event-todo-list.component';
 import { EventDetailsComponent } from './layout/event-details/event-details.component';
+import { NotificatiosComponent } from './layout/notifications/notificatios.component';
+
 
 const routes: Routes = [
     {
@@ -141,7 +143,10 @@ const routes: Routes = [
             
             { path: 'historyevent', component: HistoryeventComponent, canActivate: [AppRouteGuard] },
             { path: 'user-event', component: UserEventComponent, canActivate: [AppRouteGuard] },
-            { path: 'profile', component: UserProfileComponent, canActivate: [AppRouteGuard] },
+
+            { path: 'Profile', component: UserProfileComponent, canActivate: [AppRouteGuard] },
+            { path: 'Notifications', component:NotificatiosComponent , canActivate: [AppRouteGuard] },
+
             { path: 'eventDetails/:id', component: EventDetailsComponent, canActivate: [AppRouteGuard] },
             { path: 'todolist/:id', component: TodoListComponent, canActivate: [AppRouteGuard] },
             { path: 'showInterests', component: InterstsComponent, canActivate: [AppRouteGuard] },

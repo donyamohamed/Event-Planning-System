@@ -43,11 +43,12 @@ export class NoGuestsComponent {
     this.sub = this.activatedRouter.params.subscribe((params) => {
       this.idEvent = params["id"];
       // console.log(this.event);
-     
-      });
-    
+
+        console.log("Event ID: ", this.idEvent ); 
+    })
+
   }
-  AddGeust(){
+  AddGeust() {
 
     // this.sub= this.activatedRouter.params.subscribe(param=> {
     //   this.sub=this.guestSer.createGuest(this.guest).subscribe({
@@ -64,22 +65,20 @@ export class NoGuestsComponent {
     // });
     if (this.guestForm.valid) {
 
-    this.sub = this.activatedRouter.params.subscribe(param => {
-      this.guestSer.createGuest(this.guest, this.idEvent).subscribe({
-        next: (result) => {
-          console.log(result);
-          this.router.navigateByUrl("app/allGuests/" + param["id"]);
-          this.modalRef.hide();
-        },
-        error: (err) => {
-          console.log(err);
-        }
+      this.sub = this.activatedRouter.params.subscribe(param => {
+        this.guestSer.createGuest(this.guest, this.idEvent).subscribe({
+          next: (result) => {
+            console.log(result);
+            this.router.navigateByUrl("app/allGuests/" + param["id"]);
+            this.modalRef.hide();
+          },
+          error: (err) => {
+            console.log(err);
+          }
+        });
       });
-    });
-   } //end AddGuest function
+    } //end AddGuest function
   }
-
-
   openModal(template: TemplateRef<any>): void {
     this.modalRef = this.modalService.show(template);
   }
@@ -87,8 +86,10 @@ export class NoGuestsComponent {
 
 
 
+
   fileToUpload: File | null = null;
   uploadResponse: string = '';
+
 
   handleFileInput(event: any): void {
     const file: File = event.target.files[0];
@@ -106,19 +107,18 @@ export class NoGuestsComponent {
 
   uploadFile(): void {
     if (this.fileToUpload) {
-      this.guestSer.uploadFile(this.fileToUpload).subscribe(
+      this.guestSer.uploadFile(this.fileToUpload, this.idEvent).subscribe(
         (response) => {
           this.uploadResponse = 'File uploaded successfully';
-           this.router.navigateByUrl("app/allGuests/");
+          this.router.navigateByUrl('app/allGuests/'+this.idEvent);
         },
         (error) => {
           this.uploadResponse = `Error: ${error.message}`;
         }
       );
     } else {
-      this.uploadResponse = 'Please select a valid Excel file first';
+      this.uploadResponse = 'Please select a valid Excel file first.';
     }
   }
-
 
 }

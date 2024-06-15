@@ -1,0 +1,69 @@
+<div class="mr-2">
+        <div class="badge badge-danger ml-2" style="border-radius: 50%">{{count.result}}</div>
+        <div class="dropdown">
+                <i class="fa-regular fa-bell " style="cursor: pointer; font-size: 24px"
+                        (click)="toggleCollapse($event)"></i>
+                <div class="dropdown-menu custom-dropdown-menu p-3 " style="width: 200px"
+                        [ngClass]="{ show: isCollapsed }" aria-labelledby="dropdownMenuButton">
+                        <div class="dropdown-header">
+                                <h3 style="color: blue">Notifications✨</h3>
+                        </div>
+                        <div class="content" #con>
+                                <h6 class="alert alert-info mt-5 my-lg-5" *ngIf="AllNotifications.result.length === 0 && Upcomming.result.length===0 ">You Don't Have Any Notifications Yet!</h6>
+                                @for (item of AllNotifications.result; track $index) {
+                                <div style="display: flex; flex-direction: row; margin-bottom: 10px;"
+                                        *ngIf="item.status==0">
+                                        <div>
+                                                <img src="../../../assets/img/askForAttending.svg"
+                                                        style="width: 60px; height: auto; margin-right: 10px;" />
+                                        </div>
+                                        <div style="margin-top: 5px;">
+                                                <p style="font-weight: bold; margin: 0;">{{ item.content }} </p>
+                                                <p style="font-size: 14px; margin: 0; margin-bottom: 6px;">📅
+                                                        {{ item.date.split("T")[0] }}
+                                                </p>
+                                                <div style="display: flex; flex-direction: row;">
+                                                        <button class="btn btn-dark"
+                                                                (click)="Accept(item)">Accept</button>
+                                                        <button class="btn btn-danger ml-4"
+                                                                (click)="Reject(item)">Reject</button>
+                                                </div>
+                                        </div>
+
+                                </div>
+                                }
+                                <br>
+                                <!--upcomming-->
+                                @for (item of Upcomming.result; track $index) {
+                                <div style="display: flex; flex-direction: row; margin-bottom: 10px;">
+                                        <div>
+                                                <img src="../../../assets/img/CommingEventsImg.svg"
+                                                        style="width: 60px; height: auto; margin-right: 10px;" />
+                                        </div>
+                                        <div style="margin-top: 5px;">
+                                                <p style="font-weight: bold; margin: 0;" #text
+                                                        [ngStyle]="{'font-weight': fontWeight}">🎉 Don't forget about
+                                                        {{item.name}} 🎉</p>
+                                                <p style="font-size: 14px; margin: 0;">📅
+                                                        {{item.startDate.split("T")[0]}}</p>
+                                                <p style="font-size: 14px; margin: 0;">🕒
+                                                        {{item.startDate.split("T")[1]}}</p>
+                                                <div
+                                                        style="display: flex; flex-direction: row;justify-content: space-between;">
+                                                        <p style="font-size: 14px; margin: 0;">📍 {{item.location}}</p>
+                                                        <button (click)="changeFontWeight()"
+                                                                class="btn btn-link  mt-0 font-weight-lighter">set as
+                                                                seen</button>
+                                                </div>
+                                        </div>
+                                </div>
+                                }
+                        </div>
+                        <br>
+                        <hr style="margin: 15px" />
+                        <button class="btn btn-outline-dark dropdown-footer w-100" style="text-align: center">
+                                See All Notifications
+                        </button>
+                </div>
+        </div>
+</div>
