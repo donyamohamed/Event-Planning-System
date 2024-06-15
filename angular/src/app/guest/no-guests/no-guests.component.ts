@@ -1,5 +1,5 @@
 import { Subscription } from 'rxjs';
-import { Component, TemplateRef } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GuestService } from '@shared/Services/guest.service';
 import { Guest } from '@shared/Models/guest';
@@ -38,7 +38,18 @@ export class NoGuestsComponent {
       invitationState: ['', [Validators.required]]
     });
   }
+
+  ngOnInit(): void {
+    this.sub = this.activatedRouter.params.subscribe((params) => {
+      this.idEvent = params["id"];
+      // console.log(this.event);
+
+        console.log("Event ID: ", this.idEvent ); 
+    })
+
+  }
   AddGeust() {
+
     // this.sub= this.activatedRouter.params.subscribe(param=> {
     //   this.sub=this.guestSer.createGuest(this.guest).subscribe({
     //     next(result) {
@@ -53,8 +64,9 @@ export class NoGuestsComponent {
     //   })
     // });
     if (this.guestForm.valid) {
+
       this.sub = this.activatedRouter.params.subscribe(param => {
-        this.guestSer.createGuest(this.guest).subscribe({
+        this.guestSer.createGuest(this.guest, this.idEvent).subscribe({
           next: (result) => {
             console.log(result);
             this.router.navigateByUrl("app/allGuests/" + param["id"]);
@@ -65,9 +77,8 @@ export class NoGuestsComponent {
           }
         });
       });
-    }
-  } //end AddGuest function
-
+    } //end AddGuest function
+  }
   openModal(template: TemplateRef<any>): void {
     this.modalRef = this.modalService.show(template);
   }
@@ -75,8 +86,10 @@ export class NoGuestsComponent {
 
 
 
+
   fileToUpload: File | null = null;
   uploadResponse: string = '';
+
 
   handleFileInput(event: any): void {
     const file: File = event.target.files[0];
@@ -94,19 +107,18 @@ export class NoGuestsComponent {
 
   uploadFile(): void {
     if (this.fileToUpload) {
-      this.guestSer.uploadFile(this.fileToUpload).subscribe(
+      this.guestSer.uploadFile(this.fileToUpload, this.idEvent).subscribe(
         (response) => {
           this.uploadResponse = 'File uploaded successfully';
-           this.router.navigateByUrl("app/allGuests/");
+          this.router.navigateByUrl('app/allGuests/'+this.idEvent);
         },
         (error) => {
           this.uploadResponse = `Error: ${error.message}`;
         }
       );
     } else {
-      this.uploadResponse = 'Please select a valid Excel file first';
+      this.uploadResponse = 'Please select a valid Excel file first.';
     }
   }
-
 
 }

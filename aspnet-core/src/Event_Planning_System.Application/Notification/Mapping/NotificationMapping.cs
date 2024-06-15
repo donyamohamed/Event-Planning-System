@@ -13,7 +13,11 @@ namespace Event_Planning_System.Notification.Mapping
     {
         public NotificationMapping()
         {
+            CreateMap<NotificationDto, notification>();
 			CreateMap<notification, GetAllNotificationsDTO>();
+            CreateMap<notification,UpdateNotificationStatusDTO>();
+          
 		}
+
     }
 }

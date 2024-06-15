@@ -25,7 +25,6 @@ import {HistoryeventComponent} from '../historyevent/historyevent.component';
 export class UserProfileComponent implements OnInit {
 
   AddInterest(id: any, interest: any) {
-    console.log("iiiiiiiii", id);
     this.interestsService.AddInterest(id, interest).subscribe({
       next: i => {
         location.reload();

@@ -10,8 +10,13 @@ namespace Event_Planning_System.Event
     {
         Task<EventDto> CreateAsync(CreateEventDto input);
         Task<List<EventDto>> GetUserEventsAsync(long userId);
-        Task<List<EventDto>> GetUpcomingEventsForCurrentUserAsync(long userId);
+        public  Task<List<EventDto>> GetReminderOfUpcomming();
+
+		Task<List<EventDto>> GetUpcomingEventsForCurrentUserAsync(long userId);
         Task<List<EventDto>> GetHistoryEventAsync(long userId);
+
+        Task<List<EventDto>> GetPublicEventsByInterest();
+
 
          Task DeleteEventWithDetailsAsync(int eventId);
 

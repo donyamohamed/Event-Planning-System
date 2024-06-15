@@ -29,6 +29,6 @@ namespace Event_Planning_System.Guest.Dto
         [RegularExpression(@"^[0-9]{10}$", ErrorMessage = "Phone must be a 10-digit number.")]
         public string Phone { get; set; }
         public long UserId { get; set; }
-        //public int EventId { get; set; }
+        public int EventId { get; set; }
     }
 }
