@@ -1,141 +1,26 @@
 ﻿<app-header></app-header>
-<header>
-  <!-- <div class="widget-slideshow-container" id="ui-start-page">
-    <div class="slider-container">
-      <div class="slider-elements">
-        <div class="ui-start-page mySlides " style="display: none;">
-          <div class="slider-element-container">
-            <div class="slider-img-wrapper" data-title="Beste Qualität">
-              <img class="slider-img" src="../../assets/img/eventa.jpg" > 
-              
-            </div>
-            <div class="slider-content">
-              <div class="title">Etikettenlieferant ohne Zwischenhandel</div>
-              <div class="content font-body">Die Herstellung von Etiketten in unserer eigenen Stanzerei ist unser
-                Kerngeschäft. Hierbei liegt einer unserer Schwerpunkte auf Versandetiketten für die Logistik.</div>
-              <a href="#link1" class="link font-body">Mehr Informationen</a>
-
-            </div>
-          </div>
-
-        </div>
-
-        <div class="ui-start-page mySlides " style="display: block;">
-          <div class="slider-element-container">
-            <div class="slider-img-wrapper" data-title="Stetiger Optimierungsprozess">
-              <img class="slider-img" [src]="'../../assets/img/eventa.jpg'"> 
-              
-            </div>
-            <div class="slider-content">
-              <div class="title">Title Element Zwei</div>
-              <div class="content font-body">Hier kommt der Inhalt für das zweite Element rein. Hier kommt der Inhalt
-                für das zweite Element rein</div>
-
-            </div>
-          </div>
-
-        </div>
-
-        <div class="ui-start-page mySlides " style="display: none;">
-          <div class="slider-element-container">
-            <div class="slider-img-wrapper" data-title="Taggleicher Versand">
-              <picture>
-                <source type="image/jpg" srcset="https://loremflickr.com/600/410/cat">
-                <img class="slider-img" src="https://loremflickr.com/600/410/cat" loading="lazy">
-               </picture>
-            </div>
-            <div class="slider-content">
-              <div class="title">Titel Element drei</div>
-              <div class="content font-body">Hier kommt der Inhalt für das dritte Element rein. Hier kommt der Inhalt
-                für das dritte Element rein</div>
-
-            </div>
-          </div>
-
-        </div>
-
-        <div class="ui-start-page mySlides " style="display: none;">
-          <div class="slider-element-container">
-            <div class="slider-img-wrapper" data-title="Beste Rohmaterialien">
-              <picture>
-                <source type="image/jpg" srcset="https://loremflickr.com/600/410/rio">
-                <img class="slider-img" src="https://loremflickr.com/600/410/rio" loading="lazy"> 
-              </picture>
-            </div>
-            <div class="slider-content">
-              <div class="title">Titel Element vier</div>
-              <div class="content font-body">Hier kommt der Inhalt für das vierte Element rein. Hier kommt der Inhalt
-                für das vierte Element rein</div>
-
-            </div>
-          </div>
-
-        </div>
-
-        <button class="slider-prev" type="button"  (click)="plusSlides(-1)"></button>
-        <button class="slider-next" type="button"  (click)="plusSlides(1)"></button>
-      
-      </div>
+<header class="home-header">
+  <div class="big-div">
+    <div class="inner-div">
+      <p>Boston Corporate Events</p>
+      <h1>
+        UNIQUE
+        <br>
+        CREATIVE
+        <br>
+        EXTRAORDINARY
+      </h1>
 
     </div>
-  </div> -->
-  
- 
-  <!doctype html>
-<html lang="en">
-  <head>
-		<meta charset="UTF-8">
-		<title>Simple Slideshow with pure CSS3</title>
-	</head>
-	<body>	
-		<section class="bg-blue"> 
-			<article class="slideshow">
-
-				<header>
-					<h1>Simple slideshow with pure CSS3</h1>
-					<small>not responsive(yet)</small>
-				</header>
-				
-				<div class="slideshow-wrapper">
-					<ul class="slides">
-						<li class="slide-image">
-							<img src="http://placehold.it/700x300/333/whitesmoke&text=Slide%20+%20n1" />
-						</li>
-						<li class="slide-image">
-							<img src="../../assets/img/Event.jpg" />
-						</li>
-						<li class="slide-image">
-							<img src='../../assets/img/eventHistory.png' />
-						</li>
-						<li class="slide-image">
-							<!-- <img [src]="'../../assets/img/Event.jpg'" /> -->
-              <img src="../../assets/img/createEvent-removebg-preview.png" alt="" srcset="">
-						</li>
-					</ul>
-				</div>
-				
-				<footer>
-					<p class='text-center'><br />
-						Made with love <span class='heart'>&hearts;</span> by 
-						<a href="https://defidelis.herokuapp.com" title="Rafael Fidelis : Blog" class='transition-all' target="_blank">Rafael Fidelis</a>
-					</p>
-				</footer>
-		</article>
-		</section>
-	</body>
-</html>  
+  </div>
 </header>
 <div [@routerTransition]>
- 
-
-  <!-- <app-public-events></app-public-events> -->
 
   <section>
-    <div class="container-fluid">
+    <div class="container m-2 p-2">
       <div class="row">
         <div class="col-12">
           <app-public-events></app-public-events>
-          
         </div>
       </div>
     </div>

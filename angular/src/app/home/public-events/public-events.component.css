@@ -12,6 +12,7 @@ body {
     align-items: flex-start;
     align-content: center;
     flex-wrap: wrap;
+    justify-content: space-evenly;
 }
 
 h2 {
