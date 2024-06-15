@@ -63,5 +63,11 @@ namespace Event_Planning_System.Controllers
         {
             await _eventService.CreateAsync(formData)  ; 
         }
+        [HttpDelete]
+        public async Task<IActionResult> DeleteEvent(int id)
+        {
+            await _eventService.DeleteEventWithDetailsAsync(id);
+            return Ok();
+        }
     }
     }

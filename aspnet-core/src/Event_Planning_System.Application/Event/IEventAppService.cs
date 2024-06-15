@@ -17,6 +17,9 @@ namespace Event_Planning_System.Event
 
         Task<List<EventDto>> GetPublicEventsByInterest();
 
+
+         Task DeleteEventWithDetailsAsync(int eventId);
+
     }
 
 }
