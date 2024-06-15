@@ -8,30 +8,28 @@ import { Event } from '../Models/Event'; // Adjust the import path as necessary
   providedIn: 'root'
 })
 export class UserEventsService {
-  private apiUrl = 'https://localhost:44311/api/services/app/Event/GetUserEvents';
-
-
+  private apiUrl = 'https://localhost:44311/api/services/app/Event';
 
   constructor(private http: HttpClient) {}
 
   getUserEvents(userId: number): Observable<Event[]> {
-    const url = `${this.apiUrl}?userId=${userId}`;
+    const url = `${this.apiUrl}/GetUserEvents?userId=${userId}`;
     return this.http.get<{ result: Event[] }>(url).pipe(
-      map(response => response.result) // Assuming the API returns an object with a `result` property
+      map(response => response.result)
     );
-   
-
-  
-    
   }
 
-  private baseUrl = 'https://localhost:44311/api/services/app/Event';
   getUpcomingEventsForCurrentUser(userId: number): Observable<Event[]> {
-    const url = `${this.baseUrl}/GetUpcomingEventsForCurrentUser?userId=${userId}`;
+    const url = `${this.apiUrl}/GetUpcomingEventsForCurrentUser?userId=${userId}`;
     return this.http.get<{ result: Event[] }>(url).pipe(
-      map(response => response.result) // Assuming the API returns an object with a `result` property
+      map(response => response.result)
     );
- 
   }
-  
+
+  deleteEvent(eventId: number): Observable<void> {
+    const url = `${this.apiUrl}/DeleteEventWithDetails?eventId=${eventId}`;
+    return this.http.delete<void>(url);
+  }
 }
+
+  
