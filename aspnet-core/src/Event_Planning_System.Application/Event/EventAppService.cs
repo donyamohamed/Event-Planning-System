@@ -74,6 +74,25 @@ namespace Event_Planning_System.Event
 
 			return _mapper.Map<List<EventDto>>(upcomingEvents);
 		}
+		public async Task<int> GetReminderCount()
+		{
+			var userId = AbpSession.UserId.Value;
+			var notifications = await GetReminderOfUpcomming();
+			var NewNotification = notifications.Where(n => n.isRead == false).Count();
+			return NewNotification;
+		}
+		public async Task UpdateReminderStatus([FromBody] UpdateEventStatusDto input)
+		{
+            var old =await  GetReminderOfUpcomming();
+            var res=  old.FirstOrDefault(r=>r.Id==input.Id);
+			if (res == null)
+			{
+				throw new Abp.UI.UserFriendlyException("Reminder not found");
+			}
+            res.isRead = true;
+            await CurrentUnitOfWork.SaveChangesAsync();
+		}
+
 		public async Task<List<EventDto>> GetHistoryEventAsync(long userId)
         {
             var today = DateTime.Today;

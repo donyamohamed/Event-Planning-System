@@ -64,8 +64,8 @@ namespace Event_Planning_System.Notification
 			{
 				throw new Abp.UI.UserFriendlyException("Notification not found");
 			}
-
 			old.status = input.status;
+			old.isRead = true;
 			//old.Content = input.content;
 			await _notificationRepository.UpdateAsync(old);
 		}
