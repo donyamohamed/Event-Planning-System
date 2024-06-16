@@ -1,86 +1,98 @@
-<div class="create-event">
+<div class="container create-event">
     <h2>
         <img src="../../../assets/img/beautiful-meticulously-designed-event-planning-icon-event-planning-icon-120778365-transformed.webp">
-        Create Event</h2>
+        Create Event
+    </h2>
     <form (ngSubmit)="createEvent()" #eventForm="ngForm" class="form-container">
-        <div class="form-inner-container">
-            <div class="left-column">
-                <label>User Name</label>
-                <input type="text" [value]="username" name="username" placeholder="Username" readonly>
-                <input type="hidden" [value]="eventData.userId" name="userId">
-
-                <label>Event Name</label>
-                <input type="text" [(ngModel)]="eventData.name" name="name" placeholder="Event Name" required>
-                <div *ngIf="eventForm.controls['name'].invalid && (eventForm.controls['name'].dirty || eventForm.controls['name'].touched)" class="error-message">
-                    <div *ngIf="eventForm.controls['name'].errors.required">Name is required</div>
-                </div>
-
-                <label>Event Location</label>
-                <input type="text" [(ngModel)]="eventData.location" name="location" placeholder="Event Location" required>
-                <div *ngIf="eventForm.controls['location'].invalid && (eventForm.controls['location'].dirty || eventForm.controls['location'].touched)" class="error-message">
-                    <div *ngIf="eventForm.controls['location'].errors.required">Location is required</div>
-                </div>
-
-                <div class="date-time-container">
-                    <div>
-                        <label>Start Date</label><br>
-                        <input type="datetime-local" [(ngModel)]="eventData.startDate" name="startDate" id="startDate" required>
-                        <div *ngIf="eventForm.controls['startDate'].invalid && (eventForm.controls['startDate'].dirty || eventForm.controls['startDate'].touched)" class="error-message">
-                            <div *ngIf="eventForm.controls['startDate'].errors.required">Start Date is required</div>
+        <div class="form-inner-container row">
+            <div class="col-lg-8 col-md-12">
+                <div class="row">
+                    <div class="col-md-6">
+                        <!-- Left side form fields -->
+                        <div class="form-group">
+                            <label>User Name</label>
+                            <input type="text" [value]="username" name="username" class="form-control" placeholder="Username" readonly>
+                            <input type="hidden" [value]="eventData.userId" name="userId">
                         </div>
-                    </div>&ensp;
-                    <div>
-                        <label>End Date</label><br>
-                        <input type="datetime-local" [(ngModel)]="eventData.endDate" name="endDate" id="endDate" required>
-                        <div *ngIf="eventForm.controls['endDate'].invalid && (eventForm.controls['endDate'].dirty || eventForm.controls['endDate'].touched)" class="error-message">
-                            <div *ngIf="eventForm.controls['endDate'].errors.required">End Date is required</div>
+                        <div class="form-group">
+                            <label>Event Name</label>
+                            <input type="text" [(ngModel)]="eventData.name" name="name" class="form-control" placeholder="Event Name" required>
+                            <div *ngIf="eventForm.controls['name'].invalid && (eventForm.controls['name'].dirty || eventForm.controls['name'].touched)" class="error-message">
+                                <div *ngIf="eventForm.controls['name'].errors.required">Name is required</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Event Location</label>
+                            <input type="text" [(ngModel)]="eventData.location" name="location" class="form-control" placeholder="Event Location" required>
+                            <div *ngIf="eventForm.controls['location'].invalid && (eventForm.controls['location'].dirty || eventForm.controls['location'].touched)" class="error-message">
+                                <div *ngIf="eventForm.controls['location'].errors.required">Location is required</div>
+                            </div>
+                        </div>
+                        <div class="form-group date-container">
+                            <div>
+                                <label>Start Date</label>
+                                <input type="datetime-local" [(ngModel)]="eventData.startDate" name="startDate" class="form-control" required>
+                                <div *ngIf="eventForm.controls['startDate'].invalid && (eventForm.controls['startDate'].dirty || eventForm.controls['startDate'].touched)" class="error-message">
+                                    <div *ngIf="eventForm.controls['startDate'].errors.required">Start Date is required</div>
+                                </div>
+                            </div>
+                            <div>
+                                <label>End Date</label>
+                                <input type="datetime-local" [(ngModel)]="eventData.endDate" name="endDate" class="form-control" required>
+                                <div *ngIf="eventForm.controls['endDate'].invalid && (eventForm.controls['endDate'].dirty || eventForm.controls['endDate'].touched)" class="error-message">
+                                    <div *ngIf="eventForm.controls['endDate'].errors.required">End Date is required</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Attendees</label>
+                            <input type="number" [(ngModel)]="eventData.maxCount" name="maxCount" class="form-control" placeholder="Max Attendees" required>
+                            <div *ngIf="eventForm.controls['maxCount'].invalid && (eventForm.controls['maxCount'].dirty || eventForm.controls['maxCount'].touched)" class="error-message">
+                                <div *ngIf="eventForm.controls['maxCount'].errors.required">Max Attendees is required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <!-- Right side form fields -->
+                        <div class="form-group">
+                            <label>Event Category</label>
+                            <select [(ngModel)]="eventData.category" name="category" class="form-control" title="Event Category" required>
+                                <option *ngFor="let key of enumeratorKeys" [ngValue]="key">{{ key }}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Choose Event Type</label>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input type="radio" [(ngModel)]="eventData.isPublic" [value]="true" name="isPublic" class="form-check-input" required>
+                                    Public
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input type="radio" [(ngModel)]="eventData.isPublic" [value]="false" name="isPublic" class="form-check-input">
+                                    Private
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Event Image</label>
+                            <input type="file" (change)="onFileSelected($event)" name="eventImgFile" class="form-control-file" accept="image/png, image/jpeg">
+                        </div>
+                        <div class="form-group">
+                            <label>Event Description</label>
+                            <textarea [(ngModel)]="eventData.description" name="description" class="form-control" placeholder="Event Description" required></textarea>
+                            <div *ngIf="eventForm.controls['description'].invalid && (eventForm.controls['description'].dirty || eventForm.controls['description'].touched)" class="error-message">
+                                <div *ngIf="eventForm.controls['description'].errors.required">Description is required</div>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-                <label>Attendees</label>
-                <input type="number" [(ngModel)]="eventData.maxCount" name="maxCount" placeholder="Max Attendees" required>
-                <div *ngIf="eventForm.controls['maxCount'].invalid && (eventForm.controls['maxCount'].dirty || eventForm.controls['maxCount'].touched)" class="error-message">
-                    <div *ngIf="eventForm.controls['maxCount'].errors.required">Max Attendees is required</div>
-                </div>
                 <button type="submit" [disabled]="!eventForm.form.valid" class="submit-button">Create</button>
             </div>
-
-      
-            <div class="right-column">
-                <label>Event Category</label>
-                <select [(ngModel)]="eventData.category" name="category" title="Event Category" required>
-                    <option *ngFor="let key of enumeratorKeys" [ngValue]="key">{{ key }}</option>
-                </select>
-
-                <div>
-                    <label style="margin-top: 5px;">Choose Event Type</label><br>
-                    <label style="margin-top: 12px;">
-                        <input type="radio" [(ngModel)]="eventData.isPublic" [value]="true" name="isPublic" required>
-                        Public
-                    </label>
-                    <label style="margin-top:12px; margin-left: 100px;">
-                        <input type="radio" [(ngModel)]="eventData.isPublic" [value]="false" name="isPublic">
-                        Private
-                    </label>
-                </div>
-
-              
-
-                <label>Event Image</label>
-                <input type="file" (change)="onFileSelected($event)" name="eventImgFile" accept="image/png, image/jpeg">
-
-                <label>Event Description</label>
-                <textarea type="text" [(ngModel)]="eventData.description" name="description" placeholder="Event Description" required></textarea>
-                <div *ngIf="eventForm.controls['description'].invalid && (eventForm.controls['description'].dirty || eventForm.controls['description'].touched)" class="error-message">
-                    <div *ngIf="eventForm.controls['description'].errors.required">Description is required</div>
-                </div>
-            </div>
-
-            <div class="image-container">
-                <img src="../../../assets/img/EventCreated-transformed.webp"  alt="Event Image">
+            <div class="col-lg-4 col-md-12 image-container" >
+                <img src="../../../assets/img/EventCreated-transformed (1).jpg" style="margin-left:5vw"  alt="Event Image" class="img-fluid larger-image">
             </div>
         </div>
-
     </form>
 </div>
