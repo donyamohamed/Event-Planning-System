@@ -1,28 +1,23 @@
 .create-event {
   max-width: 1200px;
-  margin-left: 20px;
+  margin: 20px auto 20px 20px;
   padding: 30px;
   background: #ffffff;
-  height: auto;
 }
+
 button.swal2-confirm.swal2-styled {
-  background-color: #050794 !important; /* Green color for confirm button */
+  background-color: #050794 !important;
   color: white !important;
 }
 
 button.swal2-cancel.swal2-styled {
-  background-color: #fbaf1b !important; /* Red color for cancel button */
+  background-color: #fbaf1b !important;
   color: white !important;
-}
-body {
-  overflow-x: hidden;
-  overflow-y: hidden;
 }
 
 h2 {
   color: #050794;
   text-align: center;
-  margin-left: 500px;
 }
 
 textarea {
@@ -30,103 +25,41 @@ textarea {
   border-radius: 10px;
   height: 100px;
   border: 1px solid #ddd;
+  width: 100%; /* Ensures the textarea fits within the column */
 }
 
 label {
-  display: inline-block;
-  margin-right: 10px;
   color: rgb(49, 49, 135);
   font-size: 16px;
   font-weight: bold;
 }
 
-.form-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.form-inner-container {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-}
-
-.left-column,
-.right-column {
-  margin-top: 20px;
-  width: 600%;
-  display: flex;
-  flex-direction: column;
-}
-.right-column {
-  margin-left: 50px;
-}
-h2 img {
-  width: 45px;
-  animation: swing 2s ease-in-out infinite;
-}
-
-.image-container {
-  margin-left: 250px;
-  width: 15%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .image-container img {
-  margin-left: 50px;
+  margin-top: 40px;
+  width: 100%;
   height: auto;
-  width: 1500px !important;
-}
-
-input[type="file"] {
-  border: none;
-}
-
-input,
-select {
-  border: none;
-  border-bottom: 1px solid blue;
-  margin-bottom: 20px !important;
-}
-
-.left-column > *,
-.right-column > * {
-  margin-bottom: 1rem;
 }
 
 .error-message {
   color: red;
   font-size: 0.8rem;
-  margin-top: -0.8rem;
-  margin-bottom: 0.8rem;
-}
-
-.date-time-container {
-  display: flex;
-  justify-content: space-between;
-}
-
-.date-time-container > * {
-  width: 48%;
 }
 
 .submit-button {
-  padding: 12px 20px;
   background-color: #fbaf1b;
   color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
   transition: background-color 0.3s ease;
-  margin-top: 20px;
 }
 
 .submit-button:hover {
   background-color: #0056b3;
 }
+
+h2 img {
+  width: 45px;
+  animation: swing 2s ease-in-out infinite;
+}
+
 @keyframes swing {
   0% {
     transform: rotate(0deg);
@@ -136,5 +69,40 @@ select {
   }
   100% {
     transform: rotate(0deg);
+  }
+}
+
+.date-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap; /* Ensures the inputs wrap if necessary */
+}
+
+.date-container > div {
+  flex: 1; /* Ensures both date inputs take up equal space */
+  min-width: calc(50% - 10px); /* Ensures they don't shrink too much */
+}
+
+.larger-image {
+  width: 100%;
+  max-width: 500px; 
+  height: auto;
+}
+
+/* Responsive design */
+@media (max-width: 991px) {
+  .date-container {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 767px) {
+  .form-inner-container {
+    flex-direction: column;
+  }
+  .image-container {
+    order: -1;
+    margin-bottom: 20px;
   }
 }
