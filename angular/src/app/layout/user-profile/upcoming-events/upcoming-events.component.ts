@@ -28,6 +28,7 @@ export class UpcomingEventsComponent implements OnInit {
   viewDate: Date = new Date();
   attendingEvents: Event[] = [];
   createdEvents: Event[] = [];
+  upcomingEvents: Event[] = [];
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
     plugins: [dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin, bootstrap5Plugin],
@@ -55,21 +56,21 @@ export class UpcomingEventsComponent implements OnInit {
       this.attendingEvents = events.map(event => ({ ...event, source: 'attending' }));
 
       this.userEvent.getUpcomingEventsToAttendForCurrentUser(userId).subscribe(createdEvents => {
-        this.createdEvents = createdEvents.map(event => ({ ...event, source: 'created' }));
+        this.createdEvents = createdEvents.map(event => ({ ...event, source: 'upcoming' }));
 
         // Combine events and set them to calendarOptions.events
         const allEvents = [...this.attendingEvents, ...this.createdEvents];
+        this.upcomingEvents = allEvents; // Update the upcomingEvents array
 
         this.calendarOptions.events = allEvents.map(event => ({
           title: event.name,
           start: event.startDate,
           end: event.endDate,
-      
+          color: event.source === 'attending' ? '#3498db' : '#fdbd57'  
         }));
       });
     });
   }
-
 
   showCalendar(): void {
     this.showCalendarView = true;

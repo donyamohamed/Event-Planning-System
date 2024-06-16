@@ -27,6 +27,7 @@ export class Event {
         public eventImgFile: File |  undefined |null = null, 
         public category: string | undefined = undefined,
         public userId: number | undefined = undefined,
-        public budgetId: number | undefined = undefined
+        public budgetId: number | undefined = undefined,
+        public source?: 'attending' | 'upcoming' //by asma
     ) {}
 }
