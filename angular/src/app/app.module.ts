@@ -47,6 +47,8 @@ import { NotificatiosComponent } from "./layout/notifications/notificatios.compo
 
 import { PublicEventsComponent } from "./home/public-events/public-events.component";
 
+
+
 // import { CreateGuestModelComponent } from './guest/create-guest-model/create-guest-model.component';
 
 
@@ -98,6 +100,8 @@ import { PublicEventsComponent } from "./home/public-events/public-events.compon
         NgxPaginationModule,
         NgbModule,
         FullCalendarModule
+     
+     
         // FullCalendarModule.forRoot({
         //     plugins: [dayGridPlugin]
         //   })

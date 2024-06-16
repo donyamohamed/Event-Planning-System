@@ -1,6 +1,7 @@
+// src/app/upcoming-events/upcoming-events.component.ts
 import { Component, OnInit } from '@angular/core';
 import { UserEventsService } from '@shared/Services/user-events.service';
-import {AppSessionService} from '@shared/session/app-session.service'
+import { AppSessionService } from '@shared/session/app-session.service';
 import { Event } from '../../../../shared/Models/Event';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -25,7 +26,8 @@ import bootstrap5Plugin from '@fullcalendar/bootstrap5';
 })
 export class UpcomingEventsComponent implements OnInit {
   viewDate: Date = new Date();
-  upcomingEvents: Event[] = [];
+  attendingEvents: Event[] = [];
+  createdEvents: Event[] = [];
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
     plugins: [dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin, bootstrap5Plugin],
@@ -34,44 +36,40 @@ export class UpcomingEventsComponent implements OnInit {
       center: 'title',
       right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
     },
-    eventColor: '#b9ecab',
     themeSystem: 'bootstrap5',
     events: []
   };
   showCalendarView: boolean = true;
   activeButton: string = 'calendar';
 
-  constructor(private userEvent: UserEventsService,  private appSessionService: AppSessionService) {}
+  constructor(private userEvent: UserEventsService, private appSessionService: AppSessionService) {}
 
   ngOnInit() {
     this.loadUpcomingEvents();
   }
 
   loadUpcomingEvents(): void {
-    // const userId = 1;
     const userId = this.appSessionService.userId;
 
     this.userEvent.getUpcomingEventsForCurrentUser(userId).subscribe(events => {
-      this.upcomingEvents = events;
-      console.log(events)
-      console.log(events[0].startDate)
+      this.attendingEvents = events.map(event => ({ ...event, source: 'attending' }));
 
-      // this.calendarOptions = {
-      //   ...this.calendarOptions,
-      //   events: events.map(event => ({
-      //     title: event.name,
-      //     start: event.startDate,
-      //     end: event.endDate,
-      //     display: 'background'
-      //   }))
-      // };
-      this.calendarOptions.events = events.map(event => ({
-        title: event.name,
-        start: event.startDate,
-        end: event.endDate,
-      }));
+      this.userEvent.getUpcomingEventsToAttendForCurrentUser(userId).subscribe(createdEvents => {
+        this.createdEvents = createdEvents.map(event => ({ ...event, source: 'created' }));
+
+        // Combine events and set them to calendarOptions.events
+        const allEvents = [...this.attendingEvents, ...this.createdEvents];
+
+        this.calendarOptions.events = allEvents.map(event => ({
+          title: event.name,
+          start: event.startDate,
+          end: event.endDate,
+      
+        }));
+      });
     });
   }
+
 
   showCalendar(): void {
     this.showCalendarView = true;

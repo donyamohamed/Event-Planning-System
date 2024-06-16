@@ -48,8 +48,13 @@ namespace Event_Planning_System.Notification
 			var AllNotifications =await _notificationRepository.GetAll().Where(i => i.UserId == userId).ToListAsync();
 			return AllNotifications;
 		}
-
-		public async Task<int> GetNotificationCount()
+        public async Task<List<notification>> GetAllNotifications()
+        {
+           
+            var AllNotifications = await _notificationRepository.GetAll().ToListAsync();
+            return AllNotifications;
+        }
+        public async Task<int> GetNotificationCount()
 		{
 			var notifications = await GetAllUserNotifications();
 			var NewNotification = notifications.Where(n => n.isRead == false).Count();

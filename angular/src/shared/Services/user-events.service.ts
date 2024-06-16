@@ -9,7 +9,7 @@ import { Event } from '../Models/Event'; // Adjust the import path as necessary
 })
 export class UserEventsService {
   private apiUrl = 'https://localhost:44311/api/services/app/Event';
-
+private apiGuestUrl='https://localhost:44311/api/UpcomingEventUserAttended'
   constructor(private http: HttpClient) {}
 
   getUserEvents(userId: number): Observable<Event[]> {
@@ -20,11 +20,20 @@ export class UserEventsService {
   }
 
   getUpcomingEventsForCurrentUser(userId: number): Observable<Event[]> {
+    const url = `${this.apiGuestUrl}/GetUserAcceptedUpcomingEvents?userId=${userId}`;
+    return this.http.get<{ result: Event[] }>(url).pipe(
+      map(response => response.result)
+    );
+  }
+
+
+  getUpcomingEventsToAttendForCurrentUser(userId: number): Observable<Event[]> {
     const url = `${this.apiUrl}/GetUpcomingEventsForCurrentUser?userId=${userId}`;
     return this.http.get<{ result: Event[] }>(url).pipe(
       map(response => response.result)
     );
   }
+
 
   deleteEvent(eventId: number): Observable<void> {
     const url = `${this.apiUrl}/DeleteEventWithDetails?eventId=${eventId}`;

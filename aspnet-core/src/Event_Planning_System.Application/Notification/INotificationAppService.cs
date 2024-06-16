@@ -19,7 +19,9 @@ namespace Event_Planning_System.Notification
 	public interface INotificationAppService
 	{
 		Task<List<notification>> GetAllUserNotifications();
-		Task<int> CreateNotification(NotificationDto input);
+	Task<List<notification>> GetAllNotifications();
+
+        Task<int> CreateNotification(NotificationDto input);
 		Task<int> GetNotificationCount();
 		Task UpdateNotificationStatus(UpdateNotificationStatusDTO input);
 	}
