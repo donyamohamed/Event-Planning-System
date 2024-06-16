@@ -24,14 +24,20 @@
 
   <div *ngIf="showCalendarView; else cardView" class="calendar-container">
     <full-calendar [options]="calendarOptions"></full-calendar>
+    <div class="guide">
+      <div><span></span>Will Attend</div>
+      <div><span></span>My Event</div>
+
+    </div>
+
   </div>
 
   <ng-template #cardView>
     <div
-      *ngIf="upcomingEvents && upcomingEvents.length > 0; else noEvents"
+      *ngIf="loadUpcomingEvents && loadUpcomingEvents.length > 0; else noEvents"
       class="cards"
     >
-      <div *ngFor="let event of upcomingEvents" class="card mb-3">
+      <div *ngFor="let event of loadUpcomingEvents" class="card mb-3">
         <div class="card-header">
           <p>
             Event Name: <span>{{ event.name }}</span>

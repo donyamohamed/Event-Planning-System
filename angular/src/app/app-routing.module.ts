@@ -1,3 +1,4 @@
+import { PublicEventsComponent } from './home/public-events/public-events.component';
 
 // import { NoGuestsComponent } from './guest/no-guests/no-guests.component';
 
@@ -97,7 +98,6 @@
 // export class AppRoutingModule {}
 
 
-
 import { NoGuestsComponent } from './guest/no-guests/no-guests.component';
 import { CreateGuestComponent } from './guest/create-guest/create-guest.component';
 import { GetByIdGuestComponent } from './guest/get-by-id-guest/get-by-id-guest.component';
@@ -123,17 +123,19 @@ import { HistoryeventComponent } from './layout/historyevent/historyevent.compon
 import { InterstsComponent } from './intersts/intersts.component';
 import { TodoListComponent } from './layout/event-todo-list/event-todo-list.component';
 import { EventDetailsComponent } from './layout/event-details/event-details.component';
+import { NotificatiosComponent } from './layout/notifications/notificatios.component';
+
 
 const routes: Routes = [
     {
         path: '',
         component: AppComponent,
         children: [
-            { path: 'home', component: HomeComponent, canActivate: [AppRouteGuard] },
+            { path: 'home', component: HomeComponent },
             { path: 'users', component: UsersComponent, data: { permission: 'Pages.Users' }, canActivate: [AppRouteGuard] },
             { path: 'roles', component: RolesComponent, data: { permission: 'Pages.Roles' }, canActivate: [AppRouteGuard] },
             { path: 'tenants', component: TenantsComponent, data: { permission: 'Pages.Tenants' }, canActivate: [AppRouteGuard] },
-            { path: 'about', component: AboutComponent, canActivate: [AppRouteGuard] },
+            { path: 'about', component: AboutComponent },
             { path: 'update-password', component: ChangePasswordComponent, canActivate: [AppRouteGuard] },
             { path: 'create-event', component: CreateEventComponent, canActivate: [AppRouteGuard] },
            
@@ -141,11 +143,17 @@ const routes: Routes = [
             
             { path: 'historyevent', component: HistoryeventComponent, canActivate: [AppRouteGuard] },
             { path: 'user-event', component: UserEventComponent, canActivate: [AppRouteGuard] },
+
             { path: 'Profile', component: UserProfileComponent, canActivate: [AppRouteGuard] },
+            { path: 'Notifications', component:NotificatiosComponent , canActivate: [AppRouteGuard] },
+
             { path: 'eventDetails/:id', component: EventDetailsComponent, canActivate: [AppRouteGuard] },
             { path: 'todolist/:id', component: TodoListComponent, canActivate: [AppRouteGuard] },
             { path: 'showInterests', component: InterstsComponent, canActivate: [AppRouteGuard] },
             { path: 'addNewGuest', component: CreateGuestComponent, canActivate: [AppRouteGuard] },
+
+            { path: 'publicEvents', component: PublicEventsComponent},
+
             { path: 'NoGuests/:id', component: NoGuestsComponent, canActivate: [AppRouteGuard] },
             {
                 path: 'allGuests/:id',

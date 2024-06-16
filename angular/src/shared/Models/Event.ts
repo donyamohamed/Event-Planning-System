@@ -24,9 +24,10 @@ export class Event {
         public isPublic: boolean | undefined = undefined,
         public maxCount: number | undefined = undefined,
         public eventImg: string | undefined = undefined,
-        public eventImgFile: File | null = null, 
+        public eventImgFile: File |  undefined |null = null, 
         public category: string | undefined = undefined,
         public userId: number | undefined = undefined,
-        public budgetId: number | undefined = undefined
+        public budgetId: number | undefined = undefined,
+        public source?: 'attending' | 'upcoming' //by asma
     ) {}
 }

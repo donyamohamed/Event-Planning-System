@@ -52,7 +52,7 @@ describe("AppComponent", () => {
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-        HttpClientJsonpModule,
+        HttpClientJzzsonpModule,
         ModalModule.forChild(),
         BsDropdownModule.forRoot(),
         CollapseModule.forRoot(),

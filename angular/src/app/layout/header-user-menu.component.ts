@@ -19,6 +19,7 @@ export class HeaderUserMenuComponent implements OnInit {
   getUserImage(): string {
     return this.user.image ? `https://localhost:44311/${this.user.image}` : 'assets/img/user.jpg';
   }
+ 
   ngOnInit(): void {
   //  this.getUserImage();
     this._userService.GetCurrentUserData().subscribe({

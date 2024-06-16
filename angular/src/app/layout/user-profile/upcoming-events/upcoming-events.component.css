@@ -107,7 +107,28 @@ h2 img {
 .fc-day.fc-day-fri.fc-day-today.fc-daygrid-day {
   background-color: #f5ff0791 !important;
 }
-
+.guide{
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+.guide span{
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 4px;
+}
+.guide div{
+  font-size: 12px;
+  margin: 10px 0px;
+}
+.guide div:nth-child(1) span{
+  background-color: #3498db;
+}
+.guide div:nth-child(2) span{
+  background-color: #fdbd57;
+}
 @keyframes swing {
   0% {
     transform: rotate(0deg);
