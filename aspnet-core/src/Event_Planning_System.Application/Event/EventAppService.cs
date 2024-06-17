@@ -52,6 +52,19 @@ namespace Event_Planning_System.Event
             }
         }
 
+        public async Task<IEnumerable<EventDto>> GetEventsByIds(IEnumerable<int> eventIds)
+        {
+            if (eventIds == null || !eventIds.Any())
+            {
+                return new List<EventDto>();
+            }
+
+            var events = await _repository.GetAll()
+                                          .Where(e => eventIds.Contains(e.Id))
+                                          .ToListAsync();
+
+            return _mapper.Map<List<EventDto>>(events);
+        }
         public async Task<List<EventDto>> GetUserEventsAsync(long userId)
         {
             var events = await _repository.GetAllListAsync(e => e.UserId == userId);

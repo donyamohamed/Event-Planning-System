@@ -19,6 +19,7 @@ namespace Event_Planning_System.Event
 
 		Task UpdateReminderStatus([FromBody] UpdateEventStatusDto input);
 		Task DeleteEventWithDetailsAsync(int eventId);
+        Task<IEnumerable<EventDto>> GetEventsByIds(IEnumerable<int> eventIds);
     }
 
 }

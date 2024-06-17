@@ -15,6 +15,9 @@
     <EmbeddedResource Include="Localization\SourceFiles\*.xml" Exclude="bin\**;obj\**;**\*.xproj;packages\**;@(EmbeddedResource)" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Localization\SourceFiles\Event_Planning_System-ar.xml" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Abp.AutoMapper" Version="9.2.2" />
     <PackageReference Include="Abp.ZeroCore.EntityFrameworkCore" Version="9.2.2" />
     <PackageReference Include="AutoMapper" Version="13.0.1" />

@@ -38,16 +38,25 @@
         Expenses
       </h3>
       <div *ngFor="let expense of expenses" class="row-ex">
-        <div >
-          {{ expense.name }} | {{ expense.amount }}EG | {{ expense.date | date }}
+        <div>
+          {{ expense.name }} | {{ expense.amount }}EG |
+          {{ expense.date | date }}
         </div>
         <div>
-        <button (click)="updateExpense(expense)">    <i class="fas fa-edit"></i></button>
-        <button (click)="deleteExpense(expense.id)" class="delete">  <i class="fas fa-trash-alt"></i></button>
-      </div>
+          <button (click)="updateExpense(expense)">
+            <i class="fas fa-edit"></i>
+          </button>
+          <button (click)="deleteExpense(expense.id)" class="delete">
+            <i class="fas fa-trash-alt"></i>
+          </button>
+        </div>
       </div>
     </div>
-    <div *ngIf="!expenses || expenses.length === 0" class="no-expenses-message" style="color: #050794;">
+    <div
+      *ngIf="!expenses || expenses.length === 0"
+      class="no-expenses-message"
+      style="color: #050794"
+    >
       Add event expenses!
     </div>
   </div>
