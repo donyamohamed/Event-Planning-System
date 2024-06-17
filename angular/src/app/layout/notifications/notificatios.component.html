@@ -1,5 +1,5 @@
 <div class="mr-2">
-        <div class="badge badge-danger ml-2" style="border-radius: 50%">{{count.result}}</div>
+        <div class="badge badge-danger ml-2" style="border-radius: 50%">{{AllCount}}</div>
         <div class="dropdown">
                 <i class="fa-regular fa-bell " style="cursor: pointer; font-size: 24px"
                         (click)="toggleCollapse($event)"></i>
@@ -9,10 +9,10 @@
                                 <h3 style="color: blue">Notifications✨</h3>
                         </div>
                         <div class="content" #con>
-                                <h6 class="alert alert-info mt-5 my-lg-5"
-                                        *ngIf="AllNotifications.result.length === 0 && Upcomming.result.length===0 ">You
+                                <h6 class="alert alert-info mt-5 my-lg-5 text-center"
+                                        *ngIf="AllCount==0 && Upcomming.result.length===0">You
                                         Don't Have Any Notifications Yet!</h6>
-                                @for (item of AllNotifications.result; track $index) {
+                                @for (item of AllNotifications; track $index) {
                                 <div style="display: flex; flex-direction: row; margin-bottom: 10px;"
                                         *ngIf="item.status==0">
                                         <div>
@@ -20,10 +20,19 @@
                                                         style="width: 60px; height: auto; margin-right: 10px;" />
                                         </div>
                                         <div style="margin-top: 5px;">
-                                                <p style="font-weight: bold; margin: 0;">{{ item.content }} </p>
-                                                <p style="font-size: 14px; margin: 0; margin-bottom: 6px;">📅
-                                                        {{ item.date.split("T")[0] }}
+                                                <b>
+                                                       
+                                                        {{ item.content }} from {{ getGuestData(item.guestId) }}
+                                                      <i class="text-uppercase">
+                                                        {{ guestData.result.fullName }}
+                                                      </i>  </b><br>
+                                                        <div style="display: flex; flex-direction: row;font-size: 14px;"> 📧 {{ guestData.result.emailAddress }}</div>
+                                                        
+                                               
+                                                <p class="small-text">
+                                                        📅 {{ item.date.split("T")[0] }}
                                                 </p>
+
                                                 <div style="display: flex; flex-direction: row;">
                                                         <button class="btn btn-dark"
                                                                 (click)="Accept(item)">Accept</button>
@@ -44,7 +53,8 @@
                                         </div>
                                         <div style="margin-top: 5px;">
                                                 <p style="font-weight: bold; margin: 0;" #text
-                                                        [ngStyle]="{'font-weight': fontWeight}">🎉 Don't forget about
+                                                        [ngStyle]="{'font-weight':item.isRead==true? 'normal' :'bold'}">
+                                                        🎉 Don't forget about
                                                         {{item.name}} 🎉</p>
                                                 <p style="font-size: 14px; margin: 0;">📅
                                                         {{item.startDate.split("T")[0]}}</p>
@@ -54,7 +64,8 @@
                                                         style="display: flex; flex-direction: row;justify-content: space-between;">
                                                         <p style="font-size: 14px; margin: 0;">📍 {{item.location}}</p>
                                                         <button (click)="changeFontWeight(item)"
-                                                                class="btn btn-link  mt-0 font-weight-lighter" >set as
+                                                                [ngStyle]="{'color':item.isRead==true? 'gray':'black','text-align':'center'}"
+                                                                [disabled]="item.isRead==true" class="btn btn-warning">
                                                                 seen</button>
                                                 </div>
                                         </div>

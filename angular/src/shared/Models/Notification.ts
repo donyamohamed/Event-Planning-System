@@ -14,6 +14,10 @@ export class UpdateNotificationStatusDto {
   constructor(public id: number,
     public status: NotificationStatus) {  }
 }
+export class UpdateReminderStatusDto {
+  constructor(public id: number,
+    public isRead: boolean) {  }
+}
 
 export enum NotificationStatus {
   Pending,
