@@ -6,12 +6,13 @@ import { Event } from '@shared/Models/Event';
 import Swal from 'sweetalert2';
 import { combineLatest } from 'rxjs';
 import { CurrentUser } from '@shared/Models/current-user';
+import { SharedModule } from "../../../shared/shared.module";
 @Component({
-  selector: 'app-notifications',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './notificatios.component.html',
-  styleUrl: './notificatios.component.css'
+    selector: 'app-notifications',
+    standalone: true,
+    templateUrl: './notificatios.component.html',
+    styleUrl: './notificatios.component.css',
+    imports: [CommonModule, SharedModule]
 })
 export class NotificatiosComponent implements OnInit {
   EventData: Event | any;

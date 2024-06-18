@@ -7,13 +7,14 @@ import { HttpClient } from '@angular/common/http';
 import swal from 'sweetalert2';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { SharedModule } from "../../../shared/shared.module";
 
 @Component({
-  selector: 'app-create-event',
-  standalone: true,
-  imports: [FormsModule, CommonModule],
-  templateUrl: './create-event.component.html',
-  styleUrls: ['./create-event.component.css']
+    selector: 'app-create-event',
+    standalone: true,
+    templateUrl: './create-event.component.html',
+    styleUrls: ['./create-event.component.css'],
+    imports: [FormsModule, CommonModule, SharedModule]
 })
 export class CreateEventComponent implements OnInit {
   @ViewChild('eventForm') eventForm: NgForm;

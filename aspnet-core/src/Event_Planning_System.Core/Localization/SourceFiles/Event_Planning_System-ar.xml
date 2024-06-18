@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="ar">
 	<texts>
-		<text name="HomePage" value="الصفحه الاساسيه" />
+		<text name="HomePage" value="الصفحة الرئيسية" />
 		<text name="About" value="من نحن" />
 		<text name="WelcomeMessage" value="مرحبا بك في تطبيقنا Eventa -_-" />
 		<text name="FormIsNotValidMessage" value="النموذج ليس رسالة صالحة" />
@@ -18,13 +18,13 @@
 		<text name="Password" value="كلمة المرور" />
 		<text name="NewPassword" value="كلمه المرور الجديده" />
 		<text name="ResetPassword" value="إعادة تعيين كلمة المرور" />
-		<text name="UpdatePassword" value="تطوير كلمة السر" />
+		<text name="UpdatePassword" value="تغيير كلمة السر" />
 		<text name="RememberMe" value="تذكرني" />
 		<text name="Login" value="تسجيل الدخول" />
 		<text name="LoginFailed" value="فشل تسجيل الدخول" />
 		<text name="NameSurname" value="اسم اللقب" />
 		<text name="UserName" value="اسم المستخدم" />
-		<text name="Name" value="الاسم" />
+		<text name="Name" value="الإسم" />
 		<text name="Surname" value="اللقب" />
 		<text name="EmailAddress" value="بريد اليكتروني" />
 		<text name="Tenants" value="مستخدمين" />
@@ -46,7 +46,7 @@
 		<text name="DatabaseConnectionString" value="آدرس اتصال پایگاه داده" />
 		<text name="Users" value="المستخدمون" />
 		<text name="IsActive" value="فعال" />
-		<text name="FullName" value=" الاسم الكامل" />
+		<text name="FullName" value=" الإسم الكامل" />
 		<text name="CreateNewUser" value="انشاء مستخدم جديد" />
 		<text name="Yes" value="نغم" />
 		<text name="No" value="لا" />
@@ -64,7 +64,7 @@
 		<text name="DisplayName">تعديل الاسم</text>
 		<text name="Edit">تعديل</text>
 		<text name="Delete">حذف</text>
-		<text name="CreateNewRole">انشاء دور جديد</text>
+		<text name="CreateNewRole">إنشاء دور جديد</text>
 		<text name="RoleName">اسم الدور </text>
 		<text name="Actions">عملیات</text>
 		<text name="CouldNotCompleteLoginOperation">ورود انجام نشد. لطفا مجددا اقدام نمایید.</text>
@@ -113,9 +113,9 @@
 		<text name="ResetPasswordStepOneInfo" value="إعادة تعيين كلمة المرور" />
 		<text name="ResetPasswordStepTwoInfo" value="إعادة تعيين كلمة المرور" />
 		<text name="UsersActivation">تفعيل المستخدمين</text>
-		<text name="Profile" value="الصفحه الشخصيه"/>
-		<text name="Events" value="الاحداث"/>
-		<text name="Recommended Events" value="الأحداث الموصى بها"/>
+		<text name="Profile" value="الصفحة الشخصية"/>
+		<text name="Events" value="المناسبات"/>
+		<text name="Recommended Events" value="المناسبات الموصى بها"/>
 		<text name="ConfirmNewPassword" vlaue="تأكيد كلمة المرور الجديدة" ></text>
 	    <text name="Search" value="بحث" />
 	    <text name="Save" value=" حفظ" />
@@ -124,7 +124,58 @@
 	    <text name="Log in" value="تسجيل الدخول" />
 	    <text name="Or Register?" value="سجل حساب ؟" />
         <text name="Forget Password" value="نسيت كلمه المرور" />
-
+         <!--esraa-->
+		<text name="Notifications" value="الإشعارات"/>
+		<text name="UNIQUE" value="تفرد" /> 
+		<text name="CREATIVE" value="إبداع" /> 
+		<text name="EXTRAORDINARY" value="تميز" /> 
+		<text name="Based on your Interests" value="بناء علي إهتماماتك" /> 
+		<text name="ABOUT US" value="من نحن" /> 
+		<text name="About us" value="من نحن"/>
+		<text name="Home" value="الصفحة الرئيسية"/>
+		<text name="Contact" value="تواصل معنا"/>
+		<text name="Useful Links" value="لينكات مفيدة"/>
+		<text name="Privacy Policy" value="سياسة الخصوصية"/>
+		<text name="Terms And Conditions" value="البنود و الظروف"/>
+		<text name="FAQ’s" value="الأسئلة الشائعة"/>
+		<text name="Do you really want to delete" value="هل أنت متأكد من أنك تريد حذف ؟"/>
+		<text name="Create Event" value="أنشيء مناسبة جديدة"/>
+		<text name="Yes, delete it!" value="نعم، قم بحذفه!"/>
+		<text name="No, keep it" value="لا، احتفظ بها"/>
+		<text name="There was an error deleting the event." value="لقد حدث خطأ أثناء حذف العنصر"/>
+		<text name="User Name" value="إسم المستخدم"/>
+		<text name="Event Name" value="إسم المناسبة"/>
+		<text name="Event Location" value="المكان"/>
+		<text name="Start Date" value="تاريخ البداية"/>
+		<text name="End Date" value="تاريخ الإنتهاء"/>
+		<text name="Attendees" value="الحضور"/>
+		<text name="Event Category" value="فئة الحدث"/>
+		<text name="Choose Event Type" value="اختر نوع الحدث"/>
+		<text name="Public" value="عام"/>
+		<text name="Private" value="خاص"/>
+		<text name="Event Image" value="صورة المناسبة"/>
+		<text name="Event Description" value=" وصف المناسبة"/>
+		<text name="Max Attendees" value="أقصي عدد للحضور"/>
+		<text name="Ask for invitation" value="طلب لحضور المناسبة"/>
+		<text name="View" value="تفاصيل"/>
+		<text name="Guest" value="الحضور"/>
+		<text name="Add one by one" value="إضافة واحدا تلو الآخر"/>
+		<text name="Add by excel sheet" value="الإضافة بواسطة إكسل"/>
+		<text name="Choose Excel File" value="إختر ملف إكسل"/>
+		<text name="Upload" value="إرفع"/>
+		<text name="Upload Guest List" value="تحميل قائمة الضيوف"/>
+		<text name="No Guests added yet!" value="!لا يوجد ضيوف بعد"/>
+		<text name="Phone" value="التليفون"/>
+		<text name="Email" value="البريد الإلكتروني"/>
+		<text name="Invitation State" value="حالة الدعوة"/>
+		<text name="Pending" value="قيد الانتظار"/>
+		<text name="Confirmed" value="مؤكد"/>
+		<text name="No. Guests:" value="العدد"/>
+		<text name="Send Invitation" value="أرسل الدعوة"/>Add Guest
+		
+		<text name="Add Guest" value="ضيف جديد"/>
+		
+		
 		
 	
 	</texts>

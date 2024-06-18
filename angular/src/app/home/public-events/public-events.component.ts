@@ -7,13 +7,14 @@ import { AskforInvitationService } from '../../../shared/Services/askfor-invitat
 import { EventsResponse } from '../../../app/home/eventInterface';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { SharedModule } from "../../../shared/shared.module";
 
 @Component({
-  selector: 'app-public-events',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './public-events.component.html',
-  styleUrls: ['./public-events.component.css']
+    selector: 'app-public-events',
+    standalone: true,
+    templateUrl: './public-events.component.html',
+    styleUrls: ['./public-events.component.css'],
+    imports: [CommonModule, SharedModule]
 })
 export class PublicEventsComponent implements OnInit {
   public events: Event[] = [];

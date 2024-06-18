@@ -5,13 +5,14 @@ import { Event } from '../../../shared/Models/Event';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { HttpClient } from '@angular/common/http'; // Updated import
 import swal from 'sweetalert2';
+import { SharedModule } from "../../../shared/shared.module";
 
 @Component({
-  selector: 'app-user-event',
-  standalone: true,
-  imports: [CommonModule, RouterLink],
-  templateUrl: './user-event.component.html',
-  styleUrls: ['./user-event.component.css']
+    selector: 'app-user-event',
+    standalone: true,
+    templateUrl: './user-event.component.html',
+    styleUrls: ['./user-event.component.css'],
+    imports: [CommonModule, RouterLink, SharedModule]
 })
 export class UserEventComponent implements OnInit {
   events: Event[] = [];
@@ -77,7 +78,7 @@ export class UserEventComponent implements OnInit {
 
   deleteEvent(event: Event): void {
     swal.fire({
-      title: `Do you really want to delete ${event.name}?`,
+      title: `Do you really want to delete ${event.name}?` ,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Yes, delete it!',
@@ -95,9 +96,10 @@ export class UserEventComponent implements OnInit {
           },
           (error) => {
             console.error('Error deleting event', error);
+            const localizedMessage = abp.localization.localize('There was an error deleting the event.', 'YourSourceName');
             swal.fire(
               'Error!',
-              'There was an error deleting the event.',
+              localizedMessage,
               'error'
             );
           }

@@ -146,3 +146,11 @@ h2 {
     width: 100%;
     z-index: 9999999; 
   }
+  .navbar-ltr {
+    direction: ltr;
+  }
+  
+  .navbar-rtl {
+    direction: rtl;
+  }
+  

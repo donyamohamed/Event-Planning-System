@@ -29,22 +29,22 @@ import { EmailRequest } from "../../../shared/Models/EmailRequest";
 
 import { Event } from "../../../shared/Models/Event";
 import { SmsRequest } from "@shared/Models/Sms";
+import { SharedModule } from "../../../shared/shared.module";
 
 
 @Component({
-  selector: "app-all-guest",
-  standalone: true,
-
-  imports: [
-    CommonModule,
-    RouterLink,
-    RouterOutlet,
-    FormsModule,
-    ReactiveFormsModule,
-  ],
-
-  templateUrl: "./all-guest.component.html",
-  styleUrl: "./all-guest.component.css",
+    selector: "app-all-guest",
+    standalone: true,
+    templateUrl: "./all-guest.component.html",
+    styleUrl: "./all-guest.component.css",
+    imports: [
+        CommonModule,
+        RouterLink,
+        RouterOutlet,
+        FormsModule,
+        ReactiveFormsModule,
+        SharedModule
+    ]
 })
 export class AllGuestComponent implements OnInit {
 
