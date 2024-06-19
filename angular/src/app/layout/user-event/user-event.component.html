@@ -1,7 +1,7 @@
 <div class="events">
   <div class="header-container">
-    <h2>Events</h2>
-    <a routerLink="/app/create-event" class="btn">Create Event</a>
+    <h2>{{"Events" | localize}}</h2>
+    <a routerLink="/app/create-event" class="btn">{{"Create Event" | localize}}</a>
   </div>
   <div class="card-container">
     <div
@@ -22,8 +22,8 @@
       <div class="card-content">
         <h3>{{ event.name }}</h3>
         <p>{{ event.location }}</p>
-        <button id="details" (click)="details(event)">View</button>
-        <button id="invite" (click)="guestAppearing(event)">Guest</button>
+        <button id="details" (click)="details(event)">{{"View"|localize}}</button>
+        <button id="invite" (click)="guestAppearing(event)">{{"Guest"|localize}}</button>
       </div>
     </div>
   </div>

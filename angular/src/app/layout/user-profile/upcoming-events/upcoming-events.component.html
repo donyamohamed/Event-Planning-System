@@ -34,10 +34,10 @@
 
   <ng-template #cardView>
     <div
-      *ngIf="upcomingEvents && upcomingEvents.length > 0; else noEvents"
+      *ngIf="loadUpcomingEvents && loadUpcomingEvents.length > 0; else noEvents"
       class="cards"
     >
-      <div *ngFor="let event of upcomingEvents" class="card mb-3">
+      <div *ngFor="let event of loadUpcomingEvents" class="card mb-3">
         <div class="card-header">
           <p>
             Event Name: <span>{{ event.name }}</span>

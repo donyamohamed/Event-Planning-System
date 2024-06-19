@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Event } from '../../../shared/Models/Event';
 import { EventService } from '../../../shared/Services/eventa.service';
 import { Enumerator } from "../../../shared/Models/Event";
@@ -6,25 +7,27 @@ import { HttpClient } from '@angular/common/http';
 import swal from 'sweetalert2';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { SharedModule } from "../../../shared/shared.module";
 
 @Component({
-  selector: 'app-create-event',
-  standalone:true,
-  imports:[FormsModule,CommonModule],
-  templateUrl: './create-event.component.html',
-  styleUrls: ['./create-event.component.css']
+    selector: 'app-create-event',
+    standalone: true,
+    templateUrl: './create-event.component.html',
+    styleUrls: ['./create-event.component.css'],
+    imports: [FormsModule, CommonModule, SharedModule]
 })
 export class CreateEventComponent implements OnInit {
+  @ViewChild('eventForm') eventForm: NgForm;
+
   eventData: Event = new Event();
   enumeratorKeys = Object.values(Enumerator);
   username: string;
-today: Date = new Date();
+  today: Date = new Date();
 
   constructor(private eventService: EventService, private http: HttpClient) { }
 
   ngOnInit(): void {
     this.getUserData();
-    
     this.setDefaultValues();
   }
 
@@ -37,10 +40,6 @@ today: Date = new Date();
         }
       });
   }
-
-
-
- 
 
   createEvent(): void {
     if (typeof this.eventData.startDate === 'string') {
@@ -60,56 +59,54 @@ today: Date = new Date();
     formData.append('eventImg', this.eventData.eventImg || '');
     formData.append('category', this.eventData.category || '');
     formData.append('userId', this.eventData.userId?.toString() || '');
-  if (this.eventData.eventImgFile) {
+    if (this.eventData.eventImgFile) {
       formData.append('eventImgFile', this.eventData.eventImgFile);
     }
 
     this.eventService.createEvent(formData)
-    .subscribe(
-      (response) => {
-        console.log(response);
-        
-        this.eventData = new Event();
-        swal.fire({
-          title: 'Success',
-          text: 'Event added successfully!',
-          icon: 'success',
-          confirmButtonText: 'OK'
-        }).then(() => {
+      .subscribe(
+        (response) => {
+          console.log(response);
+
+          this.eventData = new Event();
           swal.fire({
-            title: 'Do you want to set event expenses now?',
-         
-        
-            html: '<img src="assets/img/Coins.gif" alt="Custom Icon" style="width: 200px; height: 150px;">',
-
-            showCancelButton: true,
-            confirmButtonText: 'Yes',
-            cancelButtonText: 'Later',
-            customClass: {
-              confirmButton: 'swal2-confirm',
-              cancelButton: 'swal2-cancel'
-            },
-          }).then((result) => {
-            if (result.isConfirmed) {
-              window.location.href = `/app/set-expenses?eventId=${response.result.id}`;
-
-            } else {
-              window.location.href = "/app/user-event";
-            }
+            title: 'Success',
+            text: 'Event added successfully!',
+            icon: 'success',
+            confirmButtonText: 'OK'
+          }).then(() => {
+            swal.fire({
+              title: 'Do you want to set event expenses now?',
+              html: '<img src="assets/img/Coins.gif" alt="Custom Icon" style="width: 200px; height: 150px;">',
+              showCancelButton: true,
+              confirmButtonText: 'Yes',
+              cancelButtonText: 'Later',
+              customClass: {
+                confirmButton: 'swal2-confirm',
+                cancelButton: 'swal2-cancel'
+              },
+            }).then((result) => {
+              if (result.isConfirmed) {
+                window.location.href = `/app/set-expenses?eventId=${response.result.id}`;
+              } else {
+                window.location.href = "/app/user-event";
+              }
+            });
           });
-        });
-      },
-      (error) => {
-        console.error('Error creating event:', error);
-        swal.fire({
-          title: 'Error',
-          text: 'Failed to create event. Please try again later.',
-          icon: 'error',
-          confirmButtonText: 'OK'
-        });
-      }
-    );
-  
+
+          // Reset the form after successful creation
+          this.eventForm.resetForm();
+        },
+        (error) => {
+          console.error('Error creating event:', error);
+          swal.fire({
+            title: 'Error',
+            text: 'Failed to create event. Please try again later.',
+            icon: 'error',
+            confirmButtonText: 'OK'
+          });
+        }
+      );
   }
 
   onFileSelected(event: any): void {

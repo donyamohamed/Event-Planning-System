@@ -1,8 +1,8 @@
 <div class="events m-2 p-2">
 
   <div class="header-container">
-      <h2>Recommended Events</h2>
-      <h4 class="text-muted">Based on your Interests</h4>
+      <h2>{{"Recommended Events" | localize}}</h2>
+      <h4 class="text-muted" >{{"Based on your Interests" | localize}}</h4>
   </div>
 
   <div class="card-container">
@@ -18,7 +18,7 @@
           <div class="card-content">
               <h3>{{ event.name }}</h3>
               <p>{{ event.location }}</p>
-              <button class="btn btn-primary" (click)="askForInvitation(event)">Ask for invitation</button>
+              <button class="btn btn-primary" (click)="askForInvitation(event)">{{"Ask for invitation" | localize}}</button>
           </div>
       </div>
   </div>

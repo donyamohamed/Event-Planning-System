@@ -16,8 +16,7 @@ import { filter as _filter } from 'lodash-es';
   templateUrl: './header-language-menu.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HeaderLanguageMenuComponent extends AppComponentBase
-  implements OnInit {
+export class HeaderLanguageMenuComponent extends AppComponentBase implements OnInit {
   languages: abp.localization.ILanguageInfo[];
   currentLanguage: abp.localization.ILanguageInfo;
 
@@ -41,9 +40,13 @@ export class HeaderLanguageMenuComponent extends AppComponentBase
       abp.utils.setCookieValue(
         'Abp.Localization.CultureName',
         languageName,
-        new Date(new Date().getTime() + 5 * 365 * 86400000), // 5 year
+        new Date(new Date().getTime() + 5 * 365 * 86400000), // 5 years
         abp.appPath
       );
+
+      // Determine text direction
+      const isLTR = !['ar', 'he', 'fa', 'ur'].includes(languageName);
+      localStorage.setItem('isLTR', JSON.stringify(isLTR)); // Store direction preference
 
       window.location.reload();
     });

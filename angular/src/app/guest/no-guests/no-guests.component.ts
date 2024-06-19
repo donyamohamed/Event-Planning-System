@@ -7,14 +7,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { template } from 'lodash-es';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { FormsModule, FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from "../../../shared/shared.module";
 
 
 @Component({
-  selector: 'app-no-guests',
-  standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
-  templateUrl: './no-guests.component.html',
-  styleUrl: './no-guests.component.css'
+    selector: 'app-no-guests',
+    standalone: true,
+    templateUrl: './no-guests.component.html',
+    styleUrl: './no-guests.component.css',
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, SharedModule]
 })
 export class NoGuestsComponent {
   sub: Subscription | null = null;
