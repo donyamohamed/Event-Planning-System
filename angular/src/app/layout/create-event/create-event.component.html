@@ -11,12 +11,12 @@
                         <!-- Left side form fields -->
                         <div class="form-group">
                             <label>{{"User Name" | localize}}</label>
-                            <input type="text" [value]='username'   name="username" class="form-control" [placeholder]="'Username' | localize" readonly>
+                            <input type="text" [value]='username' name="username" class="form-control" [placeholder]="'Username' | localize" readonly>
                             <input type="hidden" [value]="eventData.userId" name="userId">
                         </div>
                         <div class="form-group">
                             <label>{{"Event Name" | localize}}</label>
-                            <input type="text" [(ngModel)]="eventData.name" name="name" class="form-control"  [placeholder]="'Event Name' | localize"  required>
+                            <input type="text" [(ngModel)]="eventData.name" name="name" class="form-control" [placeholder]="'Event Name' | localize" required>
                             <div *ngIf="eventForm.controls['name'].invalid && (eventForm.controls['name'].dirty || eventForm.controls['name'].touched)" class="error-message">
                                 <div *ngIf="eventForm.controls['name'].errors.required">Name is required</div>
                             </div>
@@ -31,14 +31,14 @@
                         <div class="form-group date-container">
                             <div>
                                 <label>{{"Start Date" | localize}}</label>
-                                <input type="datetime-local" [(ngModel)]="eventData.startDate" name="startDate" class="form-control" required>
+                                <input type="date" [(ngModel)]="eventData.startDate" name="startDate" class="form-control" [min]="today" (change)="validateDates()" required>
                                 <div *ngIf="eventForm.controls['startDate'].invalid && (eventForm.controls['startDate'].dirty || eventForm.controls['startDate'].touched)" class="error-message">
                                     <div *ngIf="eventForm.controls['startDate'].errors.required">Start Date is required</div>
                                 </div>
                             </div>
                             <div>
                                 <label>{{"End Date" | localize}}</label>
-                                <input type="datetime-local" [(ngModel)]="eventData.endDate" name="endDate" class="form-control" required>
+                                <input type="date" [(ngModel)]="eventData.endDate" name="endDate" class="form-control" [min]="today" (change)="validateDates()" required>
                                 <div *ngIf="eventForm.controls['endDate'].invalid && (eventForm.controls['endDate'].dirty || eventForm.controls['endDate'].touched)" class="error-message">
                                     <div *ngIf="eventForm.controls['endDate'].errors.required">End Date is required</div>
                                 </div>
@@ -46,7 +46,7 @@
                         </div>
                         <div class="form-group">
                             <label>{{"Attendees" | localize}}</label>
-                            <input type="number" [(ngModel)]="eventData.maxCount" name="maxCount" class="form-control"  [placeholder]="'Max Attendees' | localize"  required>
+                            <input type="number" [(ngModel)]="eventData.maxCount" name="maxCount" class="form-control" [placeholder]="'Max Attendees' | localize" required>
                             <div *ngIf="eventForm.controls['maxCount'].invalid && (eventForm.controls['maxCount'].dirty || eventForm.controls['maxCount'].touched)" class="error-message">
                                 <div *ngIf="eventForm.controls['maxCount'].errors.required">Max Attendees is required</div>
                             </div>
@@ -90,8 +90,8 @@
                 </div>
                 <button type="submit" [disabled]="!eventForm.form.valid" class="submit-button">{{"Create"|localize}}</button>
             </div>
-            <div class="col-lg-4 col-md-12 image-container" >
-                <img src="../../../assets/img/Work anniversary-pana.svg" style="margin-left:10vw"  alt="Event Image" class="img-fluid larger-image">
+            <div class="col-lg-4 col-md-12 image-container">
+                <img src="../../../assets/img/Work anniversary-pana.svg" style="margin-left:10vw" alt="Event Image" class="img-fluid larger-image">
             </div>
         </div>
     </form>
