@@ -124,5 +124,10 @@ namespace Event_Planning_System.Authorization.Users
         {
             identityResult.CheckErrors(LocalizationManager);
         }
+
+        public async Task<User> RegisterAsync(string name, string surname, string emailAddress, object value, string v1, Gender? gender, int? age, string imagePath, bool v2)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
