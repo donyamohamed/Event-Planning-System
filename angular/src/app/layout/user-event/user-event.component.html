@@ -24,6 +24,24 @@
         <p>{{ event.location }}</p>
         <button id="details" (click)="details(event)">{{"View"|localize}}</button>
         <button id="invite" (click)="guestAppearing(event)">{{"Guest"|localize}}</button>
+        <!-- <div class="share-buttons">
+          <a href="https://www.facebook.com/sharer/sharer.php?u={{ getEventUrl(event.id) }}" target="_blank">
+            Share on Facebook
+          </a>
+          <br>
+          <a href="https://twitter.com/intent/tweet?url={{ getEventUrl(event.id) }}&text={{ event.name }}" target="_blank">
+            Share on Twitter
+          </a>
+          <br>
+          <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ getEventUrl(event.id) }}" target="_blank">
+            Share on LinkedIn
+          </a>
+          <br>
+          <a href="https://api.whatsapp.com/send?text={{ event.name }}%20{{ getEventUrl(event.id) }}" target="_blank">
+            Share on WhatsApp
+          </a>
+        </div> -->
+      
       </div>
     </div>
   </div>
