@@ -12,5 +12,6 @@ namespace Event_Planning_System.Authorization.Accounts
 
         //Task<RegisterOutput> Register(RegisterInput input);
         Task<RegisterOutput> Register([FromForm] RegisterInput input);
+     //Task<RegisterOutput> RegisterByGoogle(GoogleRegisterInputs input);
     }
 }
