@@ -175,9 +175,12 @@
 		<text name="Details View" value="عرض التفاصيل" />
 		<text name="Calendar View" value="عرض التقويم" />
 		<text name="Upcoming Events" value="المناسبات القادمه" />
-		
-		
-         <!--esraa-->
+		<text name="Activate Account" value="تفعيل حساب" />
+		<text name="Welcome to our Eventa platform! Please click the button below to activate your account:" value="مرحبًا بكم في منصة Eventa الخاصة بنا! الرجاء الضغط على الزر أدناه لتفعيل حسابك:" />
+		<text name="Activate Your Account" value="فعل حسابك" />
+
+
+		<!--esraa-->
 		<text name="Notifications" value="الإشعارات"/>
 		<text name="UNIQUE" value="تفرد" /> 
 		<text name="CREATIVE" value="إبداع" /> 
