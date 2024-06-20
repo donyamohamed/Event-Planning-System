@@ -178,6 +178,17 @@
 		<text name="Activate Account" value="تفعيل حساب" />
 		<text name="Welcome to our Eventa platform! Please click the button below to activate your account:" value="مرحبًا بكم في منصة Eventa الخاصة بنا! الرجاء الضغط على الزر أدناه لتفعيل حسابك:" />
 		<text name="Activate Your Account" value="فعل حسابك" />
+		<text name="Loading event details..." value="جارٍ تحميل تفاصيل الحدث..." />
+		<text name="Max Count:" value="العدد الأقصى" />
+		<text name="Category:" value="الفئه" />
+		<text name="Type:" value="النوع" />
+		<text name="End Date:" value="تاريخ الانتهاء:" />
+		<text name="Start Date:" value="تاريخ البدء" />
+		<text name="Name:" value="الاسم" />
+		<text name="Set Expenses" value="تحديد النفقات" />
+		<text name="TodoList" value="عمل قائمة" />
+		<text name="Event Details" value="تفاصيل المناسبه" />
+
 
 
 		<!--esraa-->

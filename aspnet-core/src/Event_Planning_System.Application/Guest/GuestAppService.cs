@@ -59,8 +59,6 @@ namespace Event_Planning_System.Guest
 
 
 
-
-    
         public async Task<IActionResult> AddGuestsThroughExcelFile([FromForm] IFormFile file, int eventId)
         {
             try
@@ -91,7 +89,7 @@ namespace Event_Planning_System.Guest
                 {
                     using (var reader = ExcelReaderFactory.CreateReader(stream))
                     {
-                        reader.Read(); // Skip the header row if it exists
+                        reader.Read(); 
 
                         while (reader.Read())
                         {
