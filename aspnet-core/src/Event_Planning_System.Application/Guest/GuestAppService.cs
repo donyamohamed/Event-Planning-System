@@ -60,13 +60,11 @@ namespace Event_Planning_System.Guest
 
 
 
-
-
+    
         public async Task<IActionResult> AddGuestsThroughExcelFile([FromForm] IFormFile file, int eventId)
         {
             try
             {
-
                 var userId = AbpSession.UserId.Value;
                 var user = await _userRepository.GetAllIncluding(u => u.Guests).FirstOrDefaultAsync(u => u.Id == userId);
 
@@ -85,55 +83,36 @@ namespace Event_Planning_System.Guest
                 System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
 
                 if (file == null || file.Length == 0)
-                    return new BadRequestObjectResult("No File uploaded");
-
-                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "uploads");
-                if (!Directory.Exists(uploadsFolder))
-                {
-                    Directory.CreateDirectory(uploadsFolder);
-                }
-
-                var filePath = Path.Combine(uploadsFolder, file.FileName);
-
-                using (var stream = new FileStream(filePath, FileMode.Create))
-                {
-                    await file.CopyToAsync(stream);
-                }
-
+                    return new BadRequestObjectResult("No file uploaded");
 
                 var guestList = new List<GuestDto>();
 
-
-                using (var stream = System.IO.File.Open(filePath, FileMode.Open, FileAccess.Read))
+                using (var stream = file.OpenReadStream())
                 {
                     using (var reader = ExcelReaderFactory.CreateReader(stream))
                     {
-
-                        reader.Read(); // Skip the header row
-
+                        reader.Read(); // Skip the header row if it exists
 
                         while (reader.Read())
                         {
                             var guest = new GuestDto
                             {
-
                                 Name = reader.GetValue(0)?.ToString(),
                                 Phone = reader.GetValue(1)?.ToString(),
-                                InvitationState = reader.GetValue(2)?.ToString(),
-                                Email = reader.GetValue(3)?.ToString(),
+                                Email = reader.GetValue(2)?.ToString(),
+                                InvitationState = "Pending",
                                 UserId = userId,
                                 EventId = eventId
                             };
 
                             guestList.Add(guest);
                         }
-
                     }
                 }
 
                 foreach (var guestDto in guestList)
                 {
-                    if (!eventUser.Guests.Any(g => g.Email == guestDto.Email)) // Check for existing guest by Email within the event
+                    if (!eventUser.Guests.Any(g => g.Email == guestDto.Email))
                     {
                         var entity = _mapper.Map<Enitities.Guest>(guestDto);
                         eventUser.Guests.Add(entity);
@@ -144,7 +123,6 @@ namespace Event_Planning_System.Guest
                 await _repositoryEvent.UpdateAsync(eventUser);
                 await _userRepository.UpdateAsync(user);
 
-
                 return new OkObjectResult("Successfully inserted");
             }
             catch (Exception ex)
@@ -152,6 +130,7 @@ namespace Event_Planning_System.Guest
                 return new ObjectResult(ex.Message) { StatusCode = 500 };
             }
         }
+
 
     }
 }
