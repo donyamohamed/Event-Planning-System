@@ -16,16 +16,18 @@
                         </div>
                         <div class="form-group">
                             <label>{{"Event Name" | localize}}</label>
-                            <input type="text" [(ngModel)]="eventData.name" name="name" class="form-control" [placeholder]="'Event Name' | localize" required>
+                            <input type="text" [(ngModel)]="eventData.name" name="name" class="form-control" [placeholder]="'Event Name' | localize" required pattern="^[a-zA-Z0-9 ]+$">
                             <div *ngIf="eventForm.controls['name'].invalid && (eventForm.controls['name'].dirty || eventForm.controls['name'].touched)" class="error-message">
                                 <div *ngIf="eventForm.controls['name'].errors.required">Name is required</div>
+                                <div *ngIf="eventForm.controls['name'].errors.pattern">Name must be a string </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label>{{"Event Location" | localize}}</label>
-                            <input type="text" [(ngModel)]="eventData.location" name="location" class="form-control" [placeholder]="'Event Location' | localize" required>
+                            <input type="text" [(ngModel)]="eventData.location" name="location" class="form-control" [placeholder]="'Event Location' | localize" required pattern="^[a-zA-Z0-9 ]+$">
                             <div *ngIf="eventForm.controls['location'].invalid && (eventForm.controls['location'].dirty || eventForm.controls['location'].touched)" class="error-message">
                                 <div *ngIf="eventForm.controls['location'].errors.required">Location is required</div>
+                                <div *ngIf="eventForm.controls['location'].errors.pattern">Location must be a string </div>
                             </div>
                         </div>
                         <div class="form-group date-container">
@@ -81,9 +83,10 @@
                         </div>
                         <div class="form-group">
                             <label>{{"Event Description" | localize}}</label>
-                            <textarea [(ngModel)]="eventData.description" name="description" class="form-control" [placeholder]="'Event Description' | localize" required></textarea>
+                            <textarea [(ngModel)]="eventData.description" name="description" class="form-control" [placeholder]="'Event Description' | localize" required pattern="^[a-zA-Z0-9 ]+$"></textarea>
                             <div *ngIf="eventForm.controls['description'].invalid && (eventForm.controls['description'].dirty || eventForm.controls['description'].touched)" class="error-message">
                                 <div *ngIf="eventForm.controls['description'].errors.required">Description is required</div>
+                                <div *ngIf="eventForm.controls['description'].errors.pattern">Description must be a string </div>
                             </div>
                         </div>
                     </div>
