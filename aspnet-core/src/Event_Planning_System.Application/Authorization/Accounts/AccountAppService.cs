@@ -153,5 +153,12 @@ namespace Event_Planning_System.Authorization.Accounts
 
             await _emailService.SendEmailAsync(user.EmailAddress, "Registration Confirmation", emailBodyTemplate);
         }
+
+
+      
+
+      
+
     }
 }
+    

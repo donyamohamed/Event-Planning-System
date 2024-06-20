@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { NgForm, FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { Event } from '../../../shared/Models/Event';
 import { EventService } from '../../../shared/Services/eventa.service';
 import { Enumerator } from "../../../shared/Models/Event";
 import { HttpClient } from '@angular/common/http';
 import swal from 'sweetalert2';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from "../../../shared/shared.module";
 
@@ -14,7 +14,7 @@ import { SharedModule } from "../../../shared/shared.module";
     standalone: true,
     templateUrl: './create-event.component.html',
     styleUrls: ['./create-event.component.css'],
-    imports: [FormsModule, CommonModule, SharedModule]
+    imports: [FormsModule, ReactiveFormsModule, CommonModule, SharedModule]
 })
 export class CreateEventComponent implements OnInit {
   @ViewChild('eventForm') eventForm: NgForm;
@@ -22,9 +22,9 @@ export class CreateEventComponent implements OnInit {
   eventData: Event = new Event();
   enumeratorKeys = Object.values(Enumerator);
   username: string;
-  today: Date = new Date();
+  today: string = new Date().toISOString().split('T')[0]; // Today's date in 'YYYY-MM-DD' format
 
-  constructor(private eventService: EventService, private http: HttpClient) { }
+  constructor(private eventService: EventService, private http: HttpClient, private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.getUserData();
@@ -120,6 +120,12 @@ export class CreateEventComponent implements OnInit {
     this.eventData.isPublic = true;
     if (this.enumeratorKeys.length > 0) {
       this.eventData.category = this.enumeratorKeys[0];
+    }
+  }
+
+  validateDates() {
+    if (new Date(this.eventData.startDate) > new Date(this.eventData.endDate)) {
+      this.eventData.endDate = this.eventData.startDate;
     }
   }
 }

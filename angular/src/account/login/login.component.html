@@ -12,6 +12,10 @@
           {{ "Welcome to you again" | localize }}
         </h1>
         <br />
+        <button class="googleSign" (click)="signInWithGoogle()">
+          <i class="fa fa-envelope"></i> Sign In with google
+        </button>
+        <span class="orHr">Or</span>
         <!-- <h2 class="mb-3" style="font-family: 'MyCustomFont'; font-weight: bold;">{{ "LogIn" | localize }}</h2> -->
 
         <form
@@ -125,7 +129,7 @@
 
         <p class="mb-1 mt-3 ml-3">
           <a [routerLink]="['../register']">
-            {{ "Or Register?" | localize }}
+            {{ "Register?" | localize }}
             <!-- <i class="fa fa-arrow-left p-2 text-primary"></i> -->
           </a>
         </p>
