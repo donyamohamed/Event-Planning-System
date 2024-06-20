@@ -13,8 +13,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Authorization\Accounts\UploadedImages\**" />
+    <Compile Remove="Guest\Uploads\**" />
     <EmbeddedResource Remove="Authorization\Accounts\UploadedImages\**" />
+    <EmbeddedResource Remove="Guest\Uploads\**" />
     <None Remove="Authorization\Accounts\UploadedImages\**" />
+    <None Remove="Guest\Uploads\**" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Event_Planning_System.Core\Event_Planning_System.Core.csproj" />
@@ -24,9 +27,6 @@
 
 
     <Folder Include="Guest\Dto\" />
-
-
-    <Folder Include="Guest\Uploads\" />
 
 
     <Folder Include="Notification\Dto\" />

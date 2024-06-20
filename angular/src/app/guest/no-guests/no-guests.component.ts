@@ -8,6 +8,7 @@ import { template } from 'lodash-es';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { FormsModule, FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from "../../../shared/shared.module";
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -43,9 +44,8 @@ export class NoGuestsComponent {
   ngOnInit(): void {
     this.sub = this.activatedRouter.params.subscribe((params) => {
       this.idEvent = params["id"];
-      // console.log(this.event);
-
-        console.log("Event ID: ", this.idEvent ); 
+    
+       // console.log("Event ID: ", this.idEvent ); 
     })
 
   }
@@ -92,6 +92,51 @@ export class NoGuestsComponent {
   uploadResponse: string = '';
 
 
+  // handleFileInput(event: any): void {
+  //   const file: File = event.target.files[0];
+  //   const allowedExtensions = ['xls', 'xlsx'];
+  //   const fileExtension = file.name.split('.').pop()?.toLowerCase();
+
+  //   if (file && allowedExtensions.includes(fileExtension || '')) {
+  //     this.fileToUpload = file;
+  //     this.uploadResponse = '';
+  //   } else {
+  //     this.fileToUpload = null;
+  //     this.uploadResponse = 'Invalid file type. Please upload an Excel file.';
+  //   }
+  // }
+
+  // uploadFile(): void {
+  //   if (this.fileToUpload) {
+  //     this.guestSer.uploadFile(this.fileToUpload, this.idEvent).subscribe(
+  //       (response) => {
+  //         this.uploadResponse = 'File uploaded successfully';
+  //         this.router.navigateByUrl('app/allGuests/'+this.idEvent);
+  //       },
+  //       (error) => {
+  //         this.uploadResponse = `Error: ${error.message}`;
+  //       }
+  //     );
+  //   } else {
+  //     this.uploadResponse = 'Please select a valid Excel file first.';
+  //   }
+  // }
+
+  promptFileSelection(): void {
+    Swal.fire({
+      title: 'Enter the Name, Phone number, and Email. Each one in a column',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, got it!',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const fileInput = document.getElementById('file-upload') as HTMLInputElement;
+        fileInput.click();
+      }
+    });
+  }
+
   handleFileInput(event: any): void {
     const file: File = event.target.files[0];
     const allowedExtensions = ['xls', 'xlsx'];
@@ -111,7 +156,7 @@ export class NoGuestsComponent {
       this.guestSer.uploadFile(this.fileToUpload, this.idEvent).subscribe(
         (response) => {
           this.uploadResponse = 'File uploaded successfully';
-          this.router.navigateByUrl('app/allGuests/'+this.idEvent);
+          this.router.navigateByUrl('app/allGuests/' + this.idEvent);
         },
         (error) => {
           this.uploadResponse = `Error: ${error.message}`;
@@ -121,5 +166,4 @@ export class NoGuestsComponent {
       this.uploadResponse = 'Please select a valid Excel file first.';
     }
   }
-
 }

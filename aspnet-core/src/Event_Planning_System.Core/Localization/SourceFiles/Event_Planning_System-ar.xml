@@ -165,11 +165,16 @@
 		<text name="Reset Your Password" value="اعد ضبط كلمه السر" />
 		<text name="Choose your interests" value="اختر اهتماماتك" />
 		<text name="Next" value="التالي" />
-	
-		
-		
-		
-		
+	    <text name="No upcoming events." value="لا توجد مناسبات قادمة." />
+		<text name="Date:" value="تاريخ" />
+		<text name="Description:" value="الوصف" />
+        <text name="Location:" value="الموقع" />
+		<text name="Event Name:" value="اسم المناسبه" />
+		<text name="My Event" value="المناسبه الخاصه بي" />
+		<text name="Will Attend" value="من سوف يحضرون" />
+		<text name="Details View" value="عرض التفاصيل" />
+		<text name="Calendar View" value="عرض التقويم" />
+		<text name="Upcoming Events" value="المناسبات القادمه" />
 		
 		
          <!--esraa-->
