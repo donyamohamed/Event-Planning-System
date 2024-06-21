@@ -52,5 +52,30 @@ export class EventDetailsComponent implements OnInit {
     }
   }
 
+  shareOnFacebook(): void {
+    const shareUrl = `${window.location.origin}/event-details/${this.eventId}`;
+    const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
+    window.open(facebookShareUrl, '_blank');
+  }
+  shareOnTwitter(): void {
+    const shareUrl = `${window.location.origin}/event-details/${this.eventId}`;
+    const text = `Check out this event! ${this.event?.name}`;
+    const twitterShareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(text)}`;
+    window.open(twitterShareUrl, '_blank');
+  }
+
+  shareOnLinkedIn(): void {
+    const shareUrl = `${window.location.origin}/event-details/${this.eventId}`;
+    const title = this.event?.name;
+    const summary = this.event?.description;
+    const linkedInShareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}&title=${encodeURIComponent(title!)}&summary=${encodeURIComponent(summary!)}`;
+    window.open(linkedInShareUrl, '_blank');
+  }
+
+  shareOnWhatsApp(): void {
+    const shareUrl = `${window.location.origin}/event-details/${this.eventId}`;
+    const whatsAppShareUrl = `https://wa.me/?text=${encodeURIComponent(shareUrl)}`;
+    window.open(whatsAppShareUrl, '_blank');
+  }
   
 }

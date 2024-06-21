@@ -5,6 +5,7 @@ using AutoMapper;
 using Event_Planning_System.Email;
 using Event_Planning_System.Enitities;
 using Event_Planning_System.Event.Dto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 using Microsoft.EntityFrameworkCore;
@@ -153,44 +154,64 @@ namespace Event_Planning_System.Event
 			var orderedPublicEvents = new List<EventDto>();
 			var userId = AbpSession.UserId;
 
-			// Fetch interests and interest-based events if user is authenticated
 			if (userId.HasValue && userId > 0)
 			{
 				var interests = await _interestRepository.GetAll()
 					.Include(i => i.Users)
 					.Where(i => i.Users.Any(u => u.Id == userId))
 					.ToListAsync();
-
-				foreach (var interest in interests)
+				if (interests.Count > 0)
 				{
-					var interestEvents = await _repository.GetAll()
-						.Where(e => e.Category == interest.Type && e.IsPublic)
-						.ToListAsync();
+                    foreach (var interest in interests)
+                    {
+                        var interestEvents = await _repository.GetAll()
+                            .Where(e => e.Category == interest.Type && e.IsPublic && e.UserId != userId)
+                            .ToListAsync();
 
-					var mappedInterestEvents = _mapper.Map<List<EventDto>>(interestEvents);
+                        var mappedInterestEvents = _mapper.Map<List<EventDto>>(interestEvents);
 
-					foreach (var eventDto in mappedInterestEvents)
-					{
-						if (publicEvents.Add(eventDto))
-						{
-							orderedPublicEvents.Add(eventDto);
-						}
-					}
+                        foreach (var eventDto in mappedInterestEvents)
+                        {
+                            if (publicEvents.Add(eventDto))
+                            {
+                                orderedPublicEvents.Add(eventDto);
+                            }
+                        }
+                    }
 				}
-			}
-
-			// Fetch public events
-			var publicEventsFromDb = await _repository.GetAll()
-				.Where(e => e.IsPublic)
-				.ToListAsync();
-
-			var mappedPublicEvents = _mapper.Map<List<EventDto>>(publicEventsFromDb);
-
-			foreach (var eventDto in mappedPublicEvents)
-			{
-				if (publicEvents.Add(eventDto))
+				else
 				{
-					orderedPublicEvents.Add(eventDto);
+                    var publicEventsFromDb = await _repository.GetAll()
+                    .Where(e => e.IsPublic && e.UserId != userId)
+                    .ToListAsync();
+
+                    var mappedPublicEvents = _mapper.Map<List<EventDto>>(publicEventsFromDb);
+
+                    foreach (var eventDto in mappedPublicEvents)
+                    {
+                        if (publicEvents.Add(eventDto))
+                        {
+                            orderedPublicEvents.Add(eventDto);
+                        }
+                    }
+                }
+				
+			}
+			else
+			{
+
+				var publicEventsFromDb = await _repository.GetAll()
+					.Where(e => e.IsPublic)
+					.ToListAsync();
+
+				var mappedPublicEvents = _mapper.Map<List<EventDto>>(publicEventsFromDb);
+
+				foreach (var eventDto in mappedPublicEvents)
+				{
+					if (publicEvents.Add(eventDto))
+					{
+						orderedPublicEvents.Add(eventDto);
+					}
 				}
 			}
 
@@ -221,7 +242,20 @@ namespace Event_Planning_System.Event
 			await _guestRepository.DeleteAsync(g => g.Events.Any(e => e.Id == eventId));
 			await _repository.DeleteAsync(eventEntity);
 		}
-	}
+        public async Task<EventDto> GetEventByIdAsync(int id)
+        {
+            var eventEntity = await _repository.GetAll()
+                                               .FirstOrDefaultAsync(e => e.Id == id);
+            if (eventEntity == null)
+            {
+                throw new EntryPointNotFoundException("Event not found");
+            }
+
+            var eventDto = _mapper.Map<EventDto>(eventEntity);
+            return eventDto;
+        }
+
+    }
 
 }
 

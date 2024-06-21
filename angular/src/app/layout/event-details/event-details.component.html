@@ -19,6 +19,7 @@
           
         </div>
         <div class="card-media-body-supporting-bottom">
+
           <p class="subtle"><strong>{{"Start Date:" |localize}}</strong> {{ event.startDate | date: 'EEE, MMM dd, hh:mm a' }}</p>
           <p class="subtle"><strong> {{"End Date:" |localize}}</strong> {{ event.endDate | date: 'EEE, MMM dd, hh:mm a' }}</p>
           <p class="subtle"><strong>{{"Location:" |localize}}</strong> {{ event.location }}</p>
@@ -26,6 +27,15 @@
           <p><strong>{{"Description:" |localize}}</strong> {{ event.description }}</p>
           <p><strong>{{"Category:" |localize}}</strong> {{ event.category }}</p>
           <p><strong>{{"Max Count:" |localize}}</strong> {{ event.maxCount }}</p>
+        <p><strong>Share via :</strong>
+            <span class="social-account">
+              <button class="btn text-primary" (click)="shareOnFacebook()"><i class="fa-brands fa-facebook-f fa-x"></i></button> | 
+              <button class="btn text-primary" (click)="shareOnLinkedIn()"><i class="fa-brands fa-linkedin-in fa-x"></i></button> | 
+              <button class="btn text-dark" (click)="shareOnTwitter()"><i class="fa-brands fa-x-twitter fa-x"></i></button> | 
+              <button class="btn text-success" (click)="shareOnWhatsApp()"><i class="fa-brands fa-whatsapp fa-x"></i> </button>
+          </span>
+</p>
+
         </div>
       </div>
     </div>
