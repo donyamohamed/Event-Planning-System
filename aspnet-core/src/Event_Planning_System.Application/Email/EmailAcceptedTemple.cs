@@ -141,7 +141,7 @@ namespace Event_Planning_System.Email
             </head>
             <body>
                 <div class='poster'>
-                    <img class='header-img' src='https://cdn.pixabay.com/photo/2016/03/28/09/50/firework-1285261_1280.jpg' alt='Header Image'>
+                    <img class='header-img' src='https://ministrydesigns.com/mt-content/uploads/2021/02/church-welcome.jpg' alt='Header Image'>
                     <h1>Invitation Request</h1>
                     <h2>{eventName}</h2>
                     <div class='date-time'>

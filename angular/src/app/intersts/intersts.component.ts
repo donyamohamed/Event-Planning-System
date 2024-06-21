@@ -5,13 +5,14 @@ import { Interest } from '../../shared/Models/interestss';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { publicDecrypt } from 'crypto';
 import { Router } from '@angular/router';
+import { SharedModule } from "../../shared/shared.module";
 
 @Component({
-  selector: 'app-intersts',
-  standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
-  templateUrl: './intersts.component.html',
-  styleUrl: './intersts.component.css'
+    selector: 'app-intersts',
+    standalone: true,
+    templateUrl: './intersts.component.html',
+    styleUrl: './intersts.component.css',
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, SharedModule]
 })
 export class InterstsComponent implements OnInit {
 

@@ -11,28 +11,22 @@
                     <p>{{"Add one by one" | localize}}</p>
                 </div>
 
-                <!-- <div class="excel p-2">
-                    <i class="fas fa-file-excel text-success fa-2x"></i>
-                    <p>{{"Add by excel sheet"|localize}}</p>
-                </div> -->
                 <div class="excel">
-                    <h2>{{"Upload Guest List"|localize}}</h2>
-                    <label for="file-upload" class="custom-file-upload">
-                        <i class="fas fa-file-excel"></i> 
-                        <span *ngIf="fileToUpload">{{ fileToUpload.name }}</span>
-                        <span *ngIf="!fileToUpload">{{"Choose Excel File"|localize}}</span>
-                    </label>
-                    <input id="file-upload" type="file" accept=".xls,.xlsx" (change)="handleFileInput($event)" />
-                    <button (click)="uploadFile()">{{"Upload"|localize}}</button>
-                    <p>{{ uploadResponse }}</p>
-                </div>
-                
-
-
-
-
-                
+                    <h2>{{ "Upload Guest List" | localize }}</h2>
                   
+                    <label for="file-upload" class="custom-file-upload">
+                      <i class="fas fa-file-excel" ></i> 
+                      <span *ngIf="fileToUpload">{{ fileToUpload.name }}</span>
+                      <span *ngIf="!fileToUpload">{{ "" | localize }}</span>
+                    </label>
+                  
+                    <input id="file-upload" type="file" accept=".xls,.xlsx" (change)="handleFileInput($event)" style="display: none;" />
+                    <button style="background-color: rgb(60, 161, 60);" (click)="promptFileSelection()">{{ "Choose Excel File" | localize }}</button>
+                    <button  (click)="uploadFile()">{{ "Upload" | localize }}</button>
+                    <p>{{ uploadResponse }}</p>
+                  </div>
+                  
+ 
 
             </div>
         </div>

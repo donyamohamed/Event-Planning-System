@@ -1,59 +1,46 @@
 <div class="container mt-4">
   <h2>
     <img src="assets/img/next-date.png" alt="icon" />
-    Upcoming Events
+    {{"Upcoming Events" |localize}} 
   </h2>
   <div class="btn-groups mb-3">
-    <button
-      type="button"
-      class="btn"
-      [ngClass]="{ active: activeButton === 'calendar' }"
-      (click)="showCalendar()"
-    >
-      Calendar View
+    <button type="button" class="btn" [ngClass]="{ active: activeButton === 'calendar' }" (click)="showCalendar()">
+      {{"Calendar View" |localize}} 
     </button>
-    <button
-      type="button"
-      class="btn"
-      [ngClass]="{ active: activeButton === 'details' }"
-      (click)="showDetails()"
-    >
-      Details View
+    <button type="button" class="btn" [ngClass]="{ active: activeButton === 'details' }" (click)="showDetails()">
+      {{"Details View" |localize}} 
     </button>
   </div>
 
   <div *ngIf="showCalendarView; else cardView" class="calendar-container">
     <full-calendar [options]="calendarOptions"></full-calendar>
     <div class="guide">
-      <div><span></span>Will Attend</div>
-      <div><span></span>My Event</div>
+      <div><span></span>{{"Will Attend" |localize}} </div>
+      <div><span></span>{{"My Event" |localize}} </div>
 
     </div>
 
   </div>
 
   <ng-template #cardView>
-    <div
-      *ngIf="loadUpcomingEvents && loadUpcomingEvents.length > 0; else noEvents"
-      class="cards"
-    >
+    <div *ngIf="loadUpcomingEvents && loadUpcomingEvents.length > 0; else noEvents" class="cards">
       <div *ngFor="let event of loadUpcomingEvents" class="card mb-3">
         <div class="card-header">
           <p>
-            Event Name: <span>{{ event.name }}</span>
+           {{" Event Name:" |localize}}  <span>{{ event.name }}</span>
           </p>
-          <p>Category: {{ event.category }}</p>
+          <p>{{ "Category:"|localize }} {{ event.category }}</p>
         </div>
         <div class="card-body">
           <div class="event-details">
-            <p class="card-text">Location: {{ event.location }}</p>
+            <p class="card-text">{{"Location:" |localize }} {{ event.location }}</p>
             <p class="card-text">
               {{ event.isPublic ? "Public Event" : "Private Event" }}
             </p>
           </div>
-          <p class="card-text">Description: {{ event.description }}</p>
+          <p class="card-text">{{"Description:"|localize}} {{ event.description }}</p>
           <p class="card-subtitle">
-            Date:
+            {{"Date:"|localize }}
             {{ event.startDate | date : "short" }}
             <span *ngIf="!isSameDate(event.startDate, event.endDate)">
               - {{ event.endDate | date : "short" }}
@@ -65,6 +52,6 @@
   </ng-template>
 
   <ng-template #noEvents>
-    <div class="alert alert-warning" role="alert">No upcoming events.</div>
+    <div class="alert alert-warning" role="alert">{{"No upcoming events." |localize}} </div>
   </ng-template>
 </div>

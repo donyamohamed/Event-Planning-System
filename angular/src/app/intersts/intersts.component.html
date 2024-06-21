@@ -1,6 +1,6 @@
 <div class="container">
     <form [formGroup]="interstsForm" class="row" (ngSubmit)="onSubmit()">
-        <h2>Choose your interests</h2>
+        <h2>{{"Choose your interests" |localize}}</h2>
 <div class="buttons">
         <button type="button" class="btn" 
         
@@ -15,7 +15,7 @@
 
        </button>
  </div>
-        <button type="submit" class="btn btn-info">Next</button>
+        <button type="submit" class="btn btn-info">{{"Next"|localize}}</button>
 
     </form>
 </div>

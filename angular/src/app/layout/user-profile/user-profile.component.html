@@ -7,21 +7,20 @@
         <div class="card user-card-full shadow-lg">
           <div class="no-gutters">
             <div
-              class=" user-profile text-center d-flex flex-column align-items-center justify-content-center"
-            >
+              class=" user-profile text-center d-flex flex-column align-items-center justify-content-center" >
               <img
                 [src]="getUserImage()"
                 alt="User-Profile-Image"
                 class="img-fluid rounded-circle"
               />
               <h5>{{ user?.userName }}</h5>
-              <p>Planner</p>
+              <p>{{"Planner" |localize}}</p>
               <button
                 class="btn btn-outline-light btn-sm mt-2"
                 id="modalShow"
                 (click)="openModal(modalTemplate)"
               >
-                <i class="fas fa-edit"></i> Edit
+                <i class="fas fa-edit"></i>{{" Edit" |localize}}
               </button>
             </div>
             <div >
@@ -35,11 +34,11 @@
                 <br /><br /> -->
                 <div class="row">
                   <div style="margin-left: 0%">
-                    <p class="font-weight-bold mb-1">Email</p>
+                    <p class="font-weight-bold mb-1">{{"Email"| localize}}</p>
                     <h6 class="text-muted">{{ user?.emailAddress }}</h6>
                   </div>
                   <div >
-                    <p class="font-weight-bold mb-1">Gender</p>
+                    <p class="font-weight-bold mb-1">{{"Gender"| localize}}</p>
                     <h6 class="text-muted">
                       {{ user?.genderUser === "0" ? "Female" : "Male" }}
                     </h6>
@@ -47,7 +46,7 @@
                 </div>
                 <div class="row">
                   <div *ngIf="user?.age !== 0" >
-                    <p class="font-weight-bold mb-1">Age</p>
+                    <p class="font-weight-bold mb-1">{{"Age" | localize}}</p>
                     <h6 class="text-muted">{{ user?.age  }}</h6>
                   </div>
            
@@ -67,13 +66,13 @@
         <!-- Interests Section -->
         <div class="interests-header">
           <h4 style="border-left: 3px solid rgb(66, 66, 215);padding-left: 10px; color: #050694">
-            My Interests
+           {{"My Interests" | localize}}
           </h4>
           <button
             class="btn btn-outline-dark ml-3"
             (click)="openModal2(AddInterests)"
           >
-            <i class="fas fa-plus"></i> Add Interest
+            <i class="fas fa-plus"></i> {{"Add Interest" |localize}}
           </button>
         </div>
 
@@ -84,7 +83,7 @@
               class="text-center"
               style="color: #1d2027; margin: auto; margin-top: 25%"
             >
-              Please choose some interests! 🍒
+              {{"Please choose some interests! 🍒" | localize}}
             </h4>
             <div class="card1" *ngFor="let interest of AllInterests.result">
               <h6>{{ getStatusLabel(interest.type) }}</h6>
@@ -111,7 +110,7 @@
 <!-- end right content -->
 <ng-template #modalTemplate>
   <div class="modal-header">
-    <h4 class="modal-title" style="color: #1d2027">Edit My Profile</h4>
+    <h4 class="modal-title" style="color: #1d2027">{{"Edit My Profile" |localize}}</h4>
     <button
       type="button"
       class="close"
@@ -124,7 +123,7 @@
   <div class="modal-body">
     <form #createForm="ngForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
-        <label for="userName">User Name:</label>
+        <label for="userName">{{"User Name:"|localize}}</label>
 
         <input
           type="text"
@@ -148,31 +147,31 @@
             *ngIf="createForm?.controls['userName']?.errors?.required"
             class="err"
           >
-            User Name is required.
+            {{"User Name is required." |localize}}
           </div>
           <div
             *ngIf="createForm?.controls['userName']?.errors?.minlength"
             class="err"
           >
-            User Name must be at least 3 characters long.
+            {{"User Name must be at least 3 characters long." |localize}}
           </div>
           <div
             *ngIf="createForm?.controls['userName']?.errors?.maxlength"
             class="err"
           >
-            User Name must not exceed 50 characters.
+           {{" User Name must not exceed 50 characters." |localize}}
           </div>
 
           <div
             *ngIf="createForm?.controls['userName']?.errors?.pattern"
             class="err"
           >
-            Invalid username format.
+            {{"Invalid username format." |localize}}
           </div>
         </div>
       </div>
       <div class="form-group">
-        <label for="email">Email:</label>
+        <label for="email">{{"Email:"|localize}}</label>
 
         <input
           type="email"
@@ -193,19 +192,19 @@
             *ngIf="createForm?.controls['emailAddress']?.errors?.required"
             class="err"
           >
-            Email is required.
+           {{ "Email is required." |localize}}
           </div>
           <div
             *ngIf="createForm?.controls['emailAddress']?.errors?.email"
             class="err"
           >
-            Invalid email format.
+           {{" Invalid email format." |localize}}
           </div>
         </div>
       </div>
 
       <div class="form-group">
-        <label for="age">Age:</label>
+        <label for="age">{{"Age:" |localize}}</label>
         <input
           type="number"
           class="form-control"
@@ -227,26 +226,26 @@
             *ngIf="createForm?.controls['age']?.errors?.required"
             class="err"
           >
-            Age is required.
+            {{"Age is required." |localize}}
           </div>
           <div *ngIf="createForm?.controls['age']?.errors?.min" class="err">
-            Age must be at least 16.
+           {{" Age must be at least 16." |localize}}
           </div>
           <div *ngIf="createForm?.controls['age']?.errors?.max" class="err">
-            Age must not exceed 70.
+           {{" Age must not exceed 70." |localize}}
           </div>
         </div>
       </div>
       <div class="form-group">
-        <label for="genderUser">Gender:</label>
+        <label for="genderUser">{{"Gender:" |localize}}</label>
         <select
           [(ngModel)]="user.genderUser"
           required
           name="genderUser"
           class="form-control"
         >
-          <option value="1">Male</option>
-          <option value="0">Female</option>
+          <option value="1">{{"Male" |localize}}</option>
+          <option value="0">{{"Female" |localize}}</option>
         </select>
         <div
           *ngIf="
@@ -259,12 +258,12 @@
             *ngIf="createForm?.controls['genderUser'].errors?.required"
             class="err"
           >
-            Gender is required.
+           {{" Gender is required." |localize}}
           </div>
         </div>
       </div>
       <div class="form-group">
-        <label for="imagePath1">Image:</label>
+        <label for="imagePath1">{{"Image:" |localize}}</label>
         <input
           type="file"
           class="form-control"
@@ -279,7 +278,7 @@
         [disabled]="createForm.invalid"
         class="btn btn-primary"
       >
-        Submit
+        {{"Submit" |localize}}
       </button>
     </form>
   </div>
@@ -288,7 +287,7 @@
 <!--add intersts modal section-->
 <ng-template #AddInterests>
   <div class="modal-header">
-    <h4 class="modal-title" style="color: #1d2027">Add Interests 💖</h4>
+    <h4 class="modal-title" style="color: #1d2027">{{"Add Interests 💖" |localize}}</h4>
     <button
       type="button"
       class="close"
