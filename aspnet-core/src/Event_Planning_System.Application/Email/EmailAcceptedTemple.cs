@@ -33,7 +33,7 @@ namespace Event_Planning_System.Email
                         display: grid;
                         place-items: center;
                         background-color: lavender;
-                        background-image: url('{backgroundImage}');
+                        background-image: url('https://cdn.pixabay.com/photo/2016/12/18/00/47/structure-1914730_960_720.jpg');
                         background-size: cover;
                         background-position: center;
                         font-family: 'PT Sans Narrow', sans-serif;

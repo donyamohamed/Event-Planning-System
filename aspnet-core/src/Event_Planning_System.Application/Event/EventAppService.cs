@@ -5,11 +5,18 @@ using AutoMapper;
 using Event_Planning_System.Email;
 using Event_Planning_System.Enitities;
 using Event_Planning_System.Event.Dto;
+<<<<<<< HEAD
 using Event_Planning_System.Image;
 using Microsoft.AspNetCore.Mvc;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+=======
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+
+using Microsoft.EntityFrameworkCore;
+>>>>>>> df1c13f7d64f7fec6bcb0cd770210734c0671c23
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -26,6 +33,7 @@ namespace Event_Planning_System.Event
 		private readonly IRepository<Enitities.Guest, int> _guestRepository;
 		private readonly IRepository<Enitities.BudgetExpense, int> _budgetExpenseRepository;
 		private readonly IRepository<Enitities.ToDoCheckList, int> _toDoCheckListRepository;
+<<<<<<< HEAD
         private readonly ICloudinaryService _cloudinaryService;
         private readonly IMapper _mapper;
 		private readonly IEmailService _emailService;
@@ -42,11 +50,31 @@ namespace Event_Planning_System.Event
 		{
 			_repository = repository;
 			_cloudinaryService = cloudinaryService;
+=======
+		private readonly IMapper _mapper;
+		private readonly IEmailService _emailService;
+		private readonly string _imageFolderPath;
+
+		private readonly IRepository<Interest, int> _interestRepository;
+
+
+
+		public EventAppService(IRepository<Enitities.Event, int> repository, IRepository<Enitities.Guest, int> guestRepository, IRepository<Interest, int> interestRepository,
+			IRepository<Enitities.BudgetExpense, int> budgetExpenseRepository,
+			IRepository<Enitities.ToDoCheckList, int> toDoCheckListRepository, IMapper mapper, IEmailService emailService) : base(repository)
+		{
+			_repository = repository;
+
+>>>>>>> df1c13f7d64f7fec6bcb0cd770210734c0671c23
 			_interestRepository = interestRepository;
 			_guestRepository = guestRepository;
 			_budgetExpenseRepository = budgetExpenseRepository;
 			_toDoCheckListRepository = toDoCheckListRepository;
+<<<<<<< HEAD
 			_logger=logger;
+=======
+
+>>>>>>> df1c13f7d64f7fec6bcb0cd770210734c0671c23
 			_mapper = mapper;
 			_emailService = emailService;
 			_imageFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images");
@@ -128,7 +156,7 @@ namespace Event_Planning_System.Event
 			return _mapper.Map<List<EventDto>>(events);
 		}
 
-        public override async Task<EventDto> CreateAsync([FromForm] CreateEventDto input)
+		public override async Task<EventDto> CreateAsync([FromForm] CreateEventDto input)
         {
             if (input.EventImgFile != null && input.EventImgFile.Length > 0)
             {
@@ -164,50 +192,70 @@ namespace Event_Planning_System.Event
 
 
 
-        public async Task<List<EventDto>> GetPublicEventsByInterest()
+		public async Task<List<EventDto>> GetPublicEventsByInterest()
 		{
 			var publicEvents = new HashSet<EventDto>();
 			var orderedPublicEvents = new List<EventDto>();
 			var userId = AbpSession.UserId;
 
-			// Fetch interests and interest-based events if user is authenticated
 			if (userId.HasValue && userId > 0)
 			{
 				var interests = await _interestRepository.GetAll()
 					.Include(i => i.Users)
 					.Where(i => i.Users.Any(u => u.Id == userId))
 					.ToListAsync();
-
-				foreach (var interest in interests)
+				if (interests.Count > 0)
 				{
-					var interestEvents = await _repository.GetAll()
-						.Where(e => e.Category == interest.Type && e.IsPublic)
-						.ToListAsync();
+                    foreach (var interest in interests)
+                    {
+                        var interestEvents = await _repository.GetAll()
+                            .Where(e => e.Category == interest.Type && e.IsPublic && e.UserId != userId)
+                            .ToListAsync();
 
-					var mappedInterestEvents = _mapper.Map<List<EventDto>>(interestEvents);
+                        var mappedInterestEvents = _mapper.Map<List<EventDto>>(interestEvents);
 
-					foreach (var eventDto in mappedInterestEvents)
-					{
-						if (publicEvents.Add(eventDto))
-						{
-							orderedPublicEvents.Add(eventDto);
-						}
-					}
+                        foreach (var eventDto in mappedInterestEvents)
+                        {
+                            if (publicEvents.Add(eventDto))
+                            {
+                                orderedPublicEvents.Add(eventDto);
+                            }
+                        }
+                    }
 				}
-			}
-
-			// Fetch public events
-			var publicEventsFromDb = await _repository.GetAll()
-				.Where(e => e.IsPublic)
-				.ToListAsync();
-
-			var mappedPublicEvents = _mapper.Map<List<EventDto>>(publicEventsFromDb);
-
-			foreach (var eventDto in mappedPublicEvents)
-			{
-				if (publicEvents.Add(eventDto))
+				else
 				{
-					orderedPublicEvents.Add(eventDto);
+                    var publicEventsFromDb = await _repository.GetAll()
+                    .Where(e => e.IsPublic && e.UserId != userId)
+                    .ToListAsync();
+
+                    var mappedPublicEvents = _mapper.Map<List<EventDto>>(publicEventsFromDb);
+
+                    foreach (var eventDto in mappedPublicEvents)
+                    {
+                        if (publicEvents.Add(eventDto))
+                        {
+                            orderedPublicEvents.Add(eventDto);
+                        }
+                    }
+                }
+				
+			}
+			else
+			{
+
+				var publicEventsFromDb = await _repository.GetAll()
+					.Where(e => e.IsPublic)
+					.ToListAsync();
+
+				var mappedPublicEvents = _mapper.Map<List<EventDto>>(publicEventsFromDb);
+
+				foreach (var eventDto in mappedPublicEvents)
+				{
+					if (publicEvents.Add(eventDto))
+					{
+						orderedPublicEvents.Add(eventDto);
+					}
 				}
 			}
 
@@ -238,7 +286,20 @@ namespace Event_Planning_System.Event
 			await _guestRepository.DeleteAsync(g => g.Events.Any(e => e.Id == eventId));
 			await _repository.DeleteAsync(eventEntity);
 		}
-	}
+        public async Task<EventDto> GetEventByIdAsync(int id)
+        {
+            var eventEntity = await _repository.GetAll()
+                                               .FirstOrDefaultAsync(e => e.Id == id);
+            if (eventEntity == null)
+            {
+                throw new EntryPointNotFoundException("Event not found");
+            }
+
+            var eventDto = _mapper.Map<EventDto>(eventEntity);
+            return eventDto;
+        }
+
+    }
 
 }
 

@@ -21,7 +21,6 @@ export class HeaderUserMenuComponent implements OnInit {
       ? this.user.image
       : "assets/img/user.jpg";
   }
-
  
   ngOnInit(): void {
   //  this.getUserImage();

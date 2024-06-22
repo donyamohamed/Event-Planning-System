@@ -7,6 +7,8 @@ using System.IO;
 using Event_Planning_System.Event.Dto;
 using Microsoft.AspNetCore.Http;
 using System;
+using Abp.Domain.Repositories;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Event_Planning_System.Controllers
 {
@@ -69,5 +71,15 @@ namespace Event_Planning_System.Controllers
             await _eventService.DeleteEventWithDetailsAsync(id);
             return Ok();
         }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetEvent(int id)
+        {
+            var eventDto = await _eventService.GetEventByIdAsync(id);
+            if (eventDto == null)
+            {
+                return NotFound();
+            }
+            return Ok(eventDto);
+        }
     }
-    }
+}

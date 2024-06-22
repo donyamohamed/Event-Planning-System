@@ -144,6 +144,7 @@ namespace Event_Planning_System.Authorization.Accounts
                 {
                     CanLogin = user.IsActive && (user.IsEmailConfirmed || !isEmailConfirmationRequiredForLogin),
                     ProfileImage = imagePath
+
                 };
 
                 return output;

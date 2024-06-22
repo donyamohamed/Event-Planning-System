@@ -17,6 +17,7 @@ import { SharedModule } from "../../../shared/shared.module";
 export class UserEventComponent implements OnInit {
   events: Event[] = [];
   userId: number | null = null;
+  // baseUrl: string = 'https://localhost:44311/api/services/app/Event/GetEventById?id='; // Replace with your actual base URL
 
   constructor(
     private userEventsService: UserEventsService,
@@ -106,4 +107,7 @@ export class UserEventComponent implements OnInit {
       }
     });
   }
+  // getEventUrl(eventId: number): string {
+  //   return `${this.baseUrl}${eventId}`;
+  // }
 }
