@@ -40,10 +40,7 @@ export class UserEventComponent implements OnInit {
         console.error('Error fetching user profile', error);
       });
   }
-<<<<<<< HEAD
 
-=======
->>>>>>> 845dc930c55d93ed4ae36bfc25712512aaefe2a5
   fetchUserEvents(): void {
     if (this.userId === null) {
       console.error('User ID is not available.');

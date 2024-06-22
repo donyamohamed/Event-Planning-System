@@ -8,10 +8,8 @@ import { template } from 'lodash-es';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { FormsModule, FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from "../../../shared/shared.module";
-<<<<<<< HEAD
-=======
+
 import Swal from 'sweetalert2';
->>>>>>> 845dc930c55d93ed4ae36bfc25712512aaefe2a5
 
 
 @Component({
@@ -47,14 +45,14 @@ export class NoGuestsComponent {
   ngOnInit(): void {
     this.sub = this.activatedRouter.params.subscribe((params) => {
       this.idEvent = params["id"];
-<<<<<<< HEAD
+
       // console.log(this.event);
 
         console.log("Event ID: ", this.idEvent ); 
-=======
+
     
        // console.log("Event ID: ", this.idEvent ); 
->>>>>>> 845dc930c55d93ed4ae36bfc25712512aaefe2a5
+
     })
 
   }
@@ -101,8 +99,6 @@ export class NoGuestsComponent {
   uploadResponse: string = '';
 
 
-<<<<<<< HEAD
-=======
   // handleFileInput(event: any): void {
   //   const file: File = event.target.files[0];
   //   const allowedExtensions = ['xls', 'xlsx'];
@@ -148,7 +144,6 @@ export class NoGuestsComponent {
     });
   }
 
->>>>>>> 845dc930c55d93ed4ae36bfc25712512aaefe2a5
   handleFileInput(event: any): void {
     const file: File = event.target.files[0];
     const allowedExtensions = ['xls', 'xlsx'];
@@ -168,11 +163,7 @@ export class NoGuestsComponent {
       this.guestSer.uploadFile(this.fileToUpload, this.idEvent).subscribe(
         (response) => {
           this.uploadResponse = 'File uploaded successfully';
-<<<<<<< HEAD
-          this.router.navigateByUrl('app/allGuests/'+this.idEvent);
-=======
           this.router.navigateByUrl('app/allGuests/' + this.idEvent);
->>>>>>> 845dc930c55d93ed4ae36bfc25712512aaefe2a5
         },
         (error) => {
           this.uploadResponse = `Error: ${error.message}`;
@@ -182,8 +173,4 @@ export class NoGuestsComponent {
       this.uploadResponse = 'Please select a valid Excel file first.';
     }
   }
-<<<<<<< HEAD
-
-=======
->>>>>>> 845dc930c55d93ed4ae36bfc25712512aaefe2a5
 }
