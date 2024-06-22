@@ -8,6 +8,7 @@ import { template } from 'lodash-es';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { FormsModule, FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from "../../../shared/shared.module";
+import Swal from 'sweetalert2';
 
 import Swal from 'sweetalert2';
 
@@ -45,10 +46,6 @@ export class NoGuestsComponent {
   ngOnInit(): void {
     this.sub = this.activatedRouter.params.subscribe((params) => {
       this.idEvent = params["id"];
-
-      // console.log(this.event);
-
-        console.log("Event ID: ", this.idEvent ); 
 
     
        // console.log("Event ID: ", this.idEvent ); 

@@ -175,4 +175,4 @@ namespace Event_Planning_System.Authorization.Accounts
 
     }
 }
-    
+

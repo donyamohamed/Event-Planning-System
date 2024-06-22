@@ -16,25 +16,42 @@ import { Location } from '@angular/common';
   animations: [appModuleAnimation()],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomeComponent extends AppComponentBase implements AfterViewInit {
+export class HomeComponent extends AppComponentBase implements AfterViewInit, OnInit {
   slideIndex: number = 1;
+  private shouldRefresh: boolean = false;
 
-  constructor(injector: Injector) {
+  constructor(
+    injector: Injector,
+    private location: Location
+  ) {
     super(injector);
+  }
+
+  ngOnInit() {
+    // Check if should refresh the page
+    if (this.location.path() === '/app/home') {
+      if (!sessionStorage.getItem('refreshed')) {
+        sessionStorage.setItem('refreshed', 'true');
+        this.refreshPage();
+      }
+    } else {
+      sessionStorage.removeItem('refreshed');
+    }
+  }
+
+  refreshPage() {
+    window.location.reload();
   }
 
   ngAfterViewInit() {
     this.showSlides(this.slideIndex);
     this.adjustArrowPosition();
-    // this.initializeLoader();
   }
 
   showSlides(n: number) {
-    let i: number;
     const slides = document.getElementsByClassName(
       "ui-start-page mySlides"
     ) as HTMLCollectionOf<HTMLElement>;
-    //const navlabels = document.getElementsByClassName("navlabel");
 
     if (n > slides.length) {
       this.slideIndex = 1;
@@ -42,25 +59,17 @@ export class HomeComponent extends AppComponentBase implements AfterViewInit {
     if (n < 1) {
       this.slideIndex = slides.length;
     }
-    for (i = 0; i < slides.length; i++) {
+    for (let i = 0; i < slides.length; i++) {
       slides[i].style.display = "none";
     }
-    // for (i = 0; i < navlabels.length; i++) {
-    //   navlabels[i].className = navlabels[i].className.replace(" active", "");
-    // }
     if (slides.length > 0) {
       slides[this.slideIndex - 1].style.display = "block";
-      //navlabels[this.slideIndex - 1].className += " active";
     }
   }
 
   plusSlides(n: number) {
     this.showSlides((this.slideIndex += n));
   }
-
-  // currentSlide(n: number) {
-  //   this.showSlides(this.slideIndex = n);
-  // }
 
   adjustArrowPosition() {
     if (window.innerWidth < 768) {
@@ -77,7 +86,4 @@ export class HomeComponent extends AppComponentBase implements AfterViewInit {
   onResize(event: Event) {
     this.adjustArrowPosition();
   }
-
-
 }
-// declare var $: any;
