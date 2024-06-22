@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using System.Net.Mail;
+using Microsoft.AspNetCore.Mvc;
 namespace Event_Planning_System.Email
 {
     public class EmailService : Event_Planning_SystemAppServiceBase, IEmailService
@@ -34,6 +35,5 @@ namespace Event_Planning_System.Email
                 _logger.LogError($"Failed to send email. Status code: {response.StatusCode}");
             }
         }
-
     }
 }

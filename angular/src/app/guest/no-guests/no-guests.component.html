@@ -4,16 +4,30 @@
             <div class="imgDiv p-2">
                 <img src="../../../assets/img/looov.jpg" alt="" srcset="">
             </div>
-            <h3>No Guests added yet!</h3>
+            <h3>{{"No Guests added yet!"| localize}}</h3>
             <div class="d-flex justify-content-evenly m-5 p-5">
                 <div class="oneByOne p-2" (click)="openModal(template)">
                     <i class="fa fa-user text-primary fa-2x" aria-hidden="true"></i>
-                    <p>Add one by one</p>
+                    <p>{{"Add one by one" | localize}}</p>
                 </div>
-                <div class="excel p-2">
-                    <i class="fas fa-file-excel text-success fa-2x"></i>
-                    <p>Add one or more <br> from excel sheet</p>
-                </div>
+
+                <div class="excel">
+                    <h2>{{ "Upload Guest List" | localize }}</h2>
+                  
+                    <label for="file-upload" class="custom-file-upload">
+                      <i class="fas fa-file-excel" ></i> 
+                      <span *ngIf="fileToUpload">{{ fileToUpload.name }}</span>
+                      <span *ngIf="!fileToUpload">{{ "" | localize }}</span>
+                    </label>
+                  
+                    <input id="file-upload" type="file" accept=".xls,.xlsx" (change)="handleFileInput($event)" style="display: none;" />
+                    <button style="background-color: rgb(60, 161, 60);" (click)="promptFileSelection()">{{ "Choose Excel File" | localize }}</button>
+                    <button  (click)="uploadFile()">{{ "Upload" | localize }}</button>
+                    <p>{{ uploadResponse }}</p>
+                  </div>
+                  
+ 
+
             </div>
         </div>
     </div>

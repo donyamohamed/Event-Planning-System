@@ -4,6 +4,7 @@ import { finalize } from 'rxjs/operators';
 import { TokenService, LogService, UtilsService } from 'abp-ng2-module';
 import { AppConsts } from '@shared/AppConsts';
 import { UrlHelper } from '@shared/helpers/UrlHelper';
+
 import {
     AuthenticateModel,
     AuthenticateResultModel,
@@ -21,7 +22,8 @@ export class AppAuthService {
         private _router: Router,
         private _utilsService: UtilsService,
         private _tokenService: TokenService,
-        private _logService: LogService
+        private _logService: LogService,
+      
     ) {
         this.clear();
     }
@@ -29,9 +31,11 @@ export class AppAuthService {
     logout(reload?: boolean): void {
         abp.auth.clearToken();
         abp.utils.deleteCookie(AppConsts.authorization.encryptedAuthTokenName);
-        
+        this.clear(); //add by asmaa
+        sessionStorage.removeItem('refreshed');
         if (reload !== false) {
-            location.href = AppConsts.appBaseUrl;
+            // location.href = AppConsts.appBaseUrl;
+            this._router.navigate(['/account/login']);//by asmaa
         }
     }
 
@@ -50,13 +54,10 @@ export class AppAuthService {
             });
     }
 
-    private processAuthenticateResult(
-        authenticateResult: AuthenticateResultModel
-    ) {
+    private  processAuthenticateResult(authenticateResult: AuthenticateResultModel): void {
         this.authenticateResult = authenticateResult;
 
         if (authenticateResult.accessToken) {
-            // Successfully logged in
             this.login(
                 authenticateResult.accessToken,
                 authenticateResult.encryptedAccessToken,
@@ -64,8 +65,6 @@ export class AppAuthService {
                 this.rememberMe
             );
         } else {
-            // Unexpected result!
-
             this._logService.warn('Unexpected authenticateResult!');
             this._router.navigate(['account/login']);
         }
@@ -103,5 +102,8 @@ export class AppAuthService {
         this.authenticateModel.rememberClient = false;
         this.authenticateResult = null;
         this.rememberMe = false;
+      
     }
+
+    
 }

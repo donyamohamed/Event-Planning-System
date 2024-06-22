@@ -39,7 +39,7 @@ namespace Event_Planning_System.Controllers
                 }
 
                
-                var htmlBody = EmailTemplate.GetInvitationEmail(emailRequest.EventName, emailRequest.Date,emailRequest.EventAddress);
+                var htmlBody = EmailTemplate.GetInvitationEmail(emailRequest.EventName, emailRequest.Date,emailRequest.EventAddress,emailRequest.EventImage);
 
                 await _emailService.SendEmailAsync(emailRequest.ToEmail, emailRequest.Subject, htmlBody);
                 _logger.LogInformation("Invitation email sent successfully.");
@@ -51,8 +51,6 @@ namespace Event_Planning_System.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
-       
-
         [HttpPost()]
         public async Task<IActionResult> SendInvitationBySms([FromBody] SmsRequest smsRequest)
         {
@@ -64,6 +62,98 @@ namespace Event_Planning_System.Controllers
             await _smsService.SendSmsAsync(smsRequest);
             return Ok(new { message = "SMS sent successfully!" });
         }
+        [HttpPost]
+        public async Task<IActionResult> SendPendingEmail([FromBody] EmailRequest emailRequest)
+        {
+            string[] emailParts = emailRequest.ToEmail?.Split('@');
+            string guestName = emailParts != null && emailParts.Length > 0 ? emailParts[0] : "Guest";
+
+            try
+            {
+                if (emailRequest == null)
+                {
+                    return BadRequest("Invalid email request.");
+                }
+
+                if (string.IsNullOrEmpty(emailRequest.Subject) || string.IsNullOrEmpty(emailRequest.Body))
+                {
+                    return BadRequest("Email subject and body cannot be empty.");
+                }
+
+                var htmlBody = EmailPendingTemple.YourInvitationRequestPending(emailRequest.EventName, emailRequest.Date, emailRequest.EventAddress, guestName, emailRequest.Body, emailRequest.EventImage);
+
+                await _emailService.SendEmailAsync(emailRequest.ToEmail, emailRequest.Subject, htmlBody);
+                _logger.LogInformation("Pending invitation email sent successfully.");
+                return Ok("Pending invitation email sent successfully.");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error sending pending invitation email.");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpPost()]
+        public async Task<IActionResult> SendAcceptanceEmail([FromBody] EmailRequest emailRequest)
+        {
+            string[] emailParts = emailRequest.ToEmail.Split('@');
+            string guestName = emailParts[0];
+            try
+            {
+                if (emailRequest == null)
+                {
+                    return BadRequest("Invalid email request.");
+                }
+
+                if (string.IsNullOrEmpty(emailRequest.Subject) || string.IsNullOrEmpty(emailRequest.Body))
+                {
+                    return BadRequest("Email subject and body cannot be empty.");
+                }
+
+
+                var htmlBody = EmailAcceptedTemple.YourInvitationRequestAccepted(emailRequest.EventName, emailRequest.Date, emailRequest.EventAddress, guestName, emailRequest.EventImage);
+
+                await _emailService.SendEmailAsync(emailRequest.ToEmail, emailRequest.Subject, htmlBody);
+                _logger.LogInformation("Invitation email sent successfully.");
+                return Ok("Invitation email sent successfully.");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error sending invitation email.");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+        [HttpPost()]
+        public async Task<IActionResult> SendRejectionEmail([FromBody] EmailRequest emailRequest)
+        {
+            string[] emailParts = emailRequest.ToEmail.Split('@');
+            string guestName = emailParts[0];
+            try
+            {
+                if (emailRequest == null)
+                {
+                    return BadRequest("Invalid email request.");
+                }
+
+                if (string.IsNullOrEmpty(emailRequest.Subject) || string.IsNullOrEmpty(emailRequest.Body))
+                {
+                    return BadRequest("Email subject and body cannot be empty.");
+                }
+
+
+                var htmlBody = EmailRejectedTemple.YourInvitationRequestRejected(emailRequest.EventName, emailRequest.Date, emailRequest.EventAddress, guestName, emailRequest.EventImage);
+
+                await _emailService.SendEmailAsync(emailRequest.ToEmail, emailRequest.Subject, htmlBody);
+                _logger.LogInformation("Invitation email sent successfully.");
+                return Ok("Invitation email sent successfully.");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error sending invitation email.");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
     }
 }
 

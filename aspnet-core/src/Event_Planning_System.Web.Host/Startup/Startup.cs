@@ -17,6 +17,7 @@ using Abp.AspNetCore.SignalR.Hubs;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System.IO;
+using Event_Planning_System.Image;
 
 namespace Event_Planning_System.Web.Host.Startup
 {
@@ -65,7 +66,8 @@ namespace Event_Planning_System.Web.Host.Startup
                         .AllowCredentials()
                 )
             );
-
+            services.AddSingleton<CloudinaryConfig>();
+            services.AddTransient<ICloudinaryService, CloudinaryService>();
             // Swagger - Enable this line and the related lines in Configure method to enable swagger UI
             ConfigureSwagger(services);
 

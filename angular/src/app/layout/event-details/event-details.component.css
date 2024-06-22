@@ -1,97 +1,122 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
-    margin: 0;
-    padding: 20px;
+html {
+  background-color: #fefefe;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
 }
 
 .header-container {
-    display: flex;
-    align-items: center; 
-    justify-content: space-between; 
+  margin-bottom: 20px;
+  padding: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-h2 {
-    padding: 30px 60px;
-    display: block;
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
 }
 
-.btn {
-    display: inline-block;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    text-align: center;
-    text-decoration: none;
-    color: #fff;
-    background-color: #050794;
-    border: none;
-    border-radius: 4px;
-    transition: background-color 0.3s;
-    margin-right: 10px;
-}
-  
-.btn:hover {
-    background-color: #5551ff;
-}
-/* event-details.component.css */
-
-
-  
-  /* Style for the event details section */
-  .container {
-    border: 1px solid #ccc; /* Add a border for visual separation */
-    padding: 20px;
-    border-radius: 5px; /* Add border radius for rounded corners */
-    background-color: #f9f9f9; /* Light background color */
-  }
-  h3 {
-    padding: 30px 60px;
-    display: block;
-  }
- 
-  
-  
-  /* Style for the loading message */
-  .loading-message {
-    font-style: italic;
-    color: #888;
-  }
-  
-/* event-details.component.css */
-
-/* Header Container */
-.header-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 20px;
-    background-color: #f0f0f0; /* Example background color */
+.header-container h2 {
+  font-size: 24px;
+  margin: 0;
 }
 
-/* Title */
-h2 {
-    font-size: 24px;
-    color: #333; /* Example color */
+.header-container .btn {
+  display: inline-block;
+  margin-right: 10px;
+  padding: 8px 16px;
+  background-color: #41C1F2;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
 }
 
-/* Event Details */
-.container p {
-    font-size: 16px;
-    margin-bottom: 8px;
+.header-container .btn:hover {
+  background-color: #1e90ff;
 }
 
-/* Loading Message */
-.container p.loading-message {
-    font-style: italic;
-    color: #999; /* Example color */
+.header-container .btn-expense {
+  background-color: #F7931E;
 }
 
-/* Image */
-.container img {
-    max-width: 100%;
-    height: auto;
-    margin-top: 10px;
-    border-radius: 4px;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1); /* Example box shadow */
+.header-container .btn-expense:hover {
+  background-color: #ff8c00;
+}
+
+.container {
+  margin: 0 auto;
+  width: 800px;
+}
+
+.container h3 {
+  font-size: 20px;
+  margin-top: 0;
+}
+
+.card-media {
+  border-radius: 2px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .12);
+  height: auto;
+  margin-bottom: 25px;
+  transition: all 300ms ease-out;
+  width: 100%;
+  display: flex;
+}
+
+.card-media:hover {
+  box-shadow: 0 5px 14px rgba(0, 0, 0, .2);
+}
+
+.card-media-object-container {
+  width: 35%;
+}
+
+.card-media-object {
+  width: 100%;
+  height: 100%;
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+}
+
+.card-media-body {
+  background-color: #fff;
+  padding: 15px;
+  width: 65%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card-media-body-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-media-body-top-icons {
+  display: flex;
+  align-items: center;
+}
+
+.card-media-body-heading {
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+.card-media-body-supporting-bottom-text {
+  color: #888;
+}
+
+.card-media-link {
+  color: #41C1F2;
+  text-decoration: none;
 }

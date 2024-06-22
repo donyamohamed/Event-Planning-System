@@ -1,119 +1,114 @@
 .create-event {
-    max-width: 950px;
-    height: 85vh; 
-    margin: 0 auto;
-    padding: 30px;
-    background: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    overflow-y: auto; 
+  max-width: 1200px;
+  margin: 20px auto 20px 20px;
+  padding: 30px;
+  background: #ffffff;
 }
-body{
-    overflow-x: none;
-    overflow-y: hidden;
-    overflow: hidden;
+body {
+overflow-x:hidden !important;
 }
-h2{
-    color: #fbaf1b;
+
+button.swal2-confirm.swal2-styled {
+  background-color: #050794 !important;
+  color: white !important;
+}
+
+button.swal2-cancel.swal2-styled {
+  background-color: #fbaf1b !important;
+  color: white !important;
+}
+
+h2 {
+  color: #050794;
+  text-align: center;
 }
 
 textarea {
-    background-color: #f5f5f5;
-    border-radius: 10px;
-    height: 100px;
-    border: 1px solid #ddd;
+  background-color: #f5f5f5;
+  border-radius: 10px;
+  height: 100px;
+  border: 1px solid #ddd;
+  width: 100%; /* Ensures the textarea fits within the column */
 }
 
 label {
-    display: inline-block;
-    margin-right: 10px;
-    color: rgb(49, 49, 135);
-    font-size: 16px;
-    font-weight: bold;
+  color: rgb(49, 49, 135);
+  font-size: 16px;
+  font-weight: bold;
 }
 
-.create-event h2 {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.form-container {
-    padding: 20px 20px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-}
-
-.left-column {
-    padding: 50px 0 !important;
-}
-
-.right-column {
-    margin-top: 35px !important;
-    margin-left: 20px;
-}
-
-.left-column, .right-column {
-    display: flex;
-    flex-direction: column;
-    width: 48%;
-    padding: 20px 20px;
-}
-#endDate{
-    margin-left: 5px;
-}
-
-input[type=file] {
-    border: none;
-}
-
-input {
-    border-right: none;
-    border-left: none;
-    border-top: none;
-    border-bottom: 1px solid blue;
-    margin-bottom: 20px !important;
-}
-
-select {
-    border-right: none;
-    border-left: none;
-    border-top: none;
-    border-bottom: 1px solid blue;
-}
-
-.left-column > *, .right-column > * {
-    margin-bottom: 1rem;
+.image-container img {
+  margin-top: 40px;
+  width: 100%;
+  height: auto;
 }
 
 .error-message {
-    color: red;
-    font-size: 0.8rem;
-    margin-top: -0.8rem;
-    margin-bottom: 0.8rem;
-}
-
-.date-time-container {
-    display: flex;
-    justify-content: space-between;
-}
-
-.date-time-container > * {
-    width: 45%;
+  color: red;
+  font-size: 0.8rem;
 }
 
 .submit-button {
-    width: 10%;
-    margin-left: 730px;
-    padding: 12px 20px;
-    background-color: #fbaf1b;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+  background-color: #fbaf1b;
+  padding:10px 20px;
+  border:none;
+  border-radius: 5px;
+  color: #fff;
+  transition: background-color 0.3s ease;
 }
 
 .submit-button:hover {
-    background-color: #0056b3;
+  background-color: #0056b3;
+}
+
+h2 img {
+  width: 45px;
+  animation: swing 2s ease-in-out infinite;
+}
+
+@keyframes swing {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(15deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.date-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap; /* Ensures the inputs wrap if necessary */
+}
+
+.date-container > div {
+  flex: 1; /* Ensures both date inputs take up equal space */
+  min-width: calc(50% - 10px); /* Ensures they don't shrink too much */
+}
+
+.larger-image {
+  width: 100%;
+  max-width: 500px; 
+  height: auto;
+}
+
+/* Responsive design */
+@media (max-width: 991px) {
+  .date-container {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 767px) {
+  .form-inner-container {
+    flex-direction: column;
+  }
+  .image-container {
+    order: -1;
+    margin-bottom: 20px;
+  }
 }

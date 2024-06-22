@@ -11,6 +11,7 @@ using Event_Planning_System.Enitities;
 using Abp.Application.Services.Dto;
 using Event_Planning_System.Authorization.Users;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Http;
 
 namespace Event_Planning_System.Event.Dto
 {
@@ -51,8 +52,8 @@ namespace Event_Planning_System.Event.Dto
         [Required(ErrorMessage = "End date is required.")]
         [DataType(DataType.Date)]
         public DateTime EndDate { get; set; }
-
-        public bool IsPublic { get; set; }
+		public bool isRead { get; set; } = false;
+		public bool IsPublic { get; set; }
 
         [Range(1, 10000, ErrorMessage = "Max count must be between 1 and 10000.")]
         public int MaxCount { get; set; }
@@ -66,8 +67,11 @@ namespace Event_Planning_System.Event.Dto
         public long UserId { get; set; }
      
         
-        public int BudgetId { get; set; }
-        
+   
+
+      
+        public IFormFile EventImgFile { get; set; }
+
         public bool IsTransient()
         {
             throw new NotImplementedException();

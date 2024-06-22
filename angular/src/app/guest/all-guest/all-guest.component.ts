@@ -29,22 +29,22 @@ import { EmailRequest } from "../../../shared/Models/EmailRequest";
 
 import { Event } from "../../../shared/Models/Event";
 import { SmsRequest } from "@shared/Models/Sms";
+import { SharedModule } from "../../../shared/shared.module";
 
 
 @Component({
-  selector: "app-all-guest",
-  standalone: true,
-
-  imports: [
-    CommonModule,
-    RouterLink,
-    RouterOutlet,
-    FormsModule,
-    ReactiveFormsModule,
-  ],
-
-  templateUrl: "./all-guest.component.html",
-  styleUrl: "./all-guest.component.css",
+    selector: "app-all-guest",
+    standalone: true,
+    templateUrl: "./all-guest.component.html",
+    styleUrl: "./all-guest.component.css",
+    imports: [
+        CommonModule,
+        RouterLink,
+        RouterOutlet,
+        FormsModule,
+        ReactiveFormsModule,
+        SharedModule
+    ]
 })
 export class AllGuestComponent implements OnInit {
 
@@ -58,7 +58,7 @@ export class AllGuestComponent implements OnInit {
   modalRef: BsModalRef;
   bsModalRef: any;
   guestForm: FormGroup;
-  idEvent: number = 0;
+  idEvent: number;
   event: Event = new Event();
   guestCount: number;
   maxCountOfGuest: number = 0;
@@ -134,7 +134,9 @@ export class AllGuestComponent implements OnInit {
 
   Save() {
     if (this.guestForm.valid) {
-      this.guestSer.createGuest(this.guest).subscribe({
+      console.log(this.idEvent);
+      
+      this.guestSer.createGuest(this.guest,this.idEvent).subscribe({
         next: (data) => {
           this.guest = data;
           console.log(data);
@@ -170,6 +172,7 @@ export class AllGuestComponent implements OnInit {
     this.emailObj.EventAddress = this.event.location;
     this.emailObj.EventName = this.event.name;
     this.emailObj.Date = this.event.startDate;
+    this.emailObj.EventImage=this.event.eventImg;
     // new Date("2024-05-27T07:01:10.782Z");
     this.invitation.sendInvitationByEmail(this.emailObj).subscribe({
       next: (data) => {

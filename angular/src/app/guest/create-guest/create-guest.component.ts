@@ -9,13 +9,14 @@ import { Subscription } from "rxjs";
 
 import { Guest } from "@shared/Models/guest";
 import { FormsModule } from "@angular/forms";
+import { SharedModule } from "../../../shared/shared.module";
 
 @Component({
-  selector: "app-create-guest",
-  standalone: true,
-  imports: [CommonModule,FormsModule],
-  templateUrl: "./create-guest.component.html",
-  styleUrl: "./create-guest.component.css",
+    selector: "app-create-guest",
+    standalone: true,
+    templateUrl: "./create-guest.component.html",
+    styleUrl: "./create-guest.component.css",
+    imports: [CommonModule, FormsModule, SharedModule]
 })
 export class CreateGuestComponent //implements OnInit 
 {
@@ -37,16 +38,16 @@ export class CreateGuestComponent //implements OnInit
   }
 
   Save() {
-    this.guestSer.createGuest(this.guest).subscribe({
-      next: (data) => {
-        this.guest=data;
-        console.log("gust"+this.guest);
-        console.log(data);
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+    // this.guestSer.createGuest(this.guest).subscribe({
+    //   next: (data) => {
+    //     this.guest=data;
+    //     console.log("gust"+this.guest);
+    //     console.log(data);
+    //   },
+    //   error: (err) => {
+    //     console.log(err);
+    //   },
+    // });
     console.log(this.guest);
     this.router.navigateByUrl("/app/allGuests");
   }

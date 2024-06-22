@@ -6,7 +6,7 @@ body {
 }
 
 .events .card-container {
-    max-width: 80%;
+    max-width: 90%;
     margin: auto;
     display: flex;
     align-items: flex-start;
@@ -17,8 +17,6 @@ body {
 h2 {
     padding: 30px 60px;
     display: block;
-    
-    /* font-size: 1.5em; */
 }
 
 .card {
@@ -37,10 +35,17 @@ h2 {
     margin: 20px;
 }
 
-.date {
+.header {
     position: absolute;
     top: 10px;
+    left: 10px;
     right: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.date {
     background-color: white;
     width: 50px;
     height: 50px;
@@ -71,6 +76,7 @@ h2 {
     padding: 10px;
     text-align: center;
     margin: 10px;
+    position: relative;
 }
 
 .card-content h3 {
@@ -93,8 +99,9 @@ h2 {
     font-size: 1em;
     margin: 5px 5px;
 }
+
 #invite {
-    background:#fbaf1b ;
+    background: #fbaf1b;
     color: #fff;
     border: none;
     padding: 10px 15px;
@@ -105,16 +112,33 @@ h2 {
 }
 
 #invite:hover {
-    background:#ebb447 ;
+    background: #ebb447;
 }
+
 #details:hover {
     background: #5551ff;
 }
+
+#delete {
+    background: #ff4d4d;
+    color: #fff;
+    border: none;
+    padding: 15px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.8em;
+}
+
+#delete:hover {
+    background: #ff1a1a;
+}
+
 .header-container {
     display: flex;
-    align-items: center; 
-    justify-content: space-between; 
-  }
+    align-items: center;
+    justify-content: space-between;
+}
+
 .btn {
     display: inline-block;
     padding: 10px 20px;
@@ -128,8 +152,8 @@ h2 {
     border-radius: 4px;
     transition: background-color 0.3s;
     margin-right: 10px;
-  }
-  
-  .btn:hover {
+}
+
+.btn:hover {
     background-color: #5551ff;
-  }
+}

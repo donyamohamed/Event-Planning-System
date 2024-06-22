@@ -42,6 +42,13 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
+import { NotificatiosComponent } from "./layout/notifications/notificatios.component";
+
+import { PublicEventsComponent } from "./home/public-events/public-events.component";
+
+
+
 // import { CreateGuestModelComponent } from './guest/create-guest-model/create-guest-model.component';
 
 
@@ -52,9 +59,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
         AppComponent,
         HomeComponent,
         AboutComponent,
-
-       // CreateGuestModelComponent,
-
+        // CreateGuestModelComponent,
         // tenants
         TenantsComponent,
         CreateTenantDialogComponent,
@@ -78,9 +83,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
         SidebarComponent,
         SidebarLogoComponent,
         SidebarUserPanelComponent,
-        SidebarMenuComponent
+        SidebarMenuComponent,
     ],
-    bootstrap: [AppComponent], imports: [CommonModule,
+    bootstrap: [AppComponent],
+    providers: [provideHttpClient(withInterceptorsFromDi(), withJsonpSupport())], imports: [CommonModule,
         FormsModule,
         ReactiveFormsModule,
         HttpClientModule,
@@ -92,15 +98,15 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
         ServiceProxyModule,
         SharedModule,
         NgxPaginationModule,
-
         NgbModule,
         FullCalendarModule
+     
+     
         // FullCalendarModule.forRoot({
         //     plugins: [dayGridPlugin]
         //   })
         // CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
-      
-    ]
-        , providers: [provideHttpClient(withInterceptorsFromDi(), withJsonpSupport())] })
+
+        , NotificatiosComponent, PublicEventsComponent] })
 
 export class AppModule {}

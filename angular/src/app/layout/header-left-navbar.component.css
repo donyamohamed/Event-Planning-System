@@ -1,0 +1,114 @@
+.navbar-ltr {
+  direction: ltr;
+}
+
+.navbar-rtl {
+  direction: rtl;
+}
+
+.loader {
+  display: inline-block;
+  position: relative;
+  top: 0;
+  left: 0;
+  transform: none;
+  margin: 0;
+}
+
+.loader span {
+  animation: animate 5s linear infinite;
+  background-image: url('https://i.postimg.cc/3JfYgrnj/water-2.png');
+  background-repeat: repeat-x;
+  margin: 0;
+  padding: 0;
+  
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+@keyframes animate {
+  0% {
+    background-position: left 0px top 150px;
+  }
+
+  40% {
+    background-position: left 600px top -30px;
+  }
+
+  80% {
+    background-position: left 1400px top -30px;
+  }
+
+  100% {
+    background-position: left 2000px top 150px;
+  }
+}
+
+/* Main Title Styles */
+.main-title {
+  text-align: center;
+  font-size: calc(10px + 1vw); /* Adjusted to fit better in the navbar */
+  animation: opacity-anim 0s 5s 1, word-spacing-anim 1.1s ease-out 1;
+}
+
+.main-title > [class^="main-title__"] {
+  text-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+}
+
+.main-title__left-word,
+.main-title__right-word {
+  animation: opacity-anim 2s ease-out 1;
+}
+
+.main-title__left-word {
+  color: #9abcdd;
+}
+
+/* Background Blend Mode Support */
+.main-title__center-word {
+  mix-blend-mode: difference;
+}
+
+.main-title__right-word {
+  color: #ed5c5c;
+}
+
+/* Progressive Enhancement for Background Clip Support */
+@supports (-webkit-background-clip: text) or (background-clip: text) {
+  .main-title__left-word,
+  .main-title__right-word {
+    color: transparent;
+    background-color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+
+  .main-title__left-word {
+    background-image: url(https://farm5.staticflickr.com/4203/35176168661_6fcb6ea88a_o.gif);
+  }
+
+  .main-title__right-word {
+    background-image: url(https://farm5.staticflickr.com/4465/37910962346_7eb9ed0163_o.gif);
+  }
+}
+
+/* Animations */
+@keyframes word-spacing-anim {
+  0% {
+    word-spacing: 10rem;
+  }
+  100% {
+    word-spacing: auto;
+  }
+}
+
+@keyframes opacity-anim {
+  0% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+

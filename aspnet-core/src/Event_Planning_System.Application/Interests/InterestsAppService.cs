@@ -19,7 +19,6 @@ namespace Event_Planning_System.Interests
 	public class InterestsAppService : ApplicationService, IUserIntersets
 	{
 		private readonly IRepository<Interest, int> _interestRepository;
-
 		private readonly IRepository<User, long> _userRepository;
         private readonly UserManager _userManager;
 		private readonly IMapper _mapper;
@@ -100,8 +99,25 @@ namespace Event_Planning_System.Interests
 
         }
 
-    
-        public async Task AddUserInterests(List<int> interestIds)
+       // public async Task AddUserInterests(List<int> interestIds)
+
+
+		/*public async Task addUserInterests(List<int> interestIds)
+		{
+			var UserId = AbpSession.UserId.Value;
+			var user = await _userRepository.GetAsync(UserId);
+
+            if (user == null)
+            {
+                throw new Exception("User not found.");
+            }
+
+			user.Interests= interestIds.Select(id => new Interest() { Id = id }).ToList();
+
+			await _userRepository.UpdateAsync(user);
+
+		}*/
+        public async Task addUserInterests(List<int> interestIds)
         {
             var userId = AbpSession.UserId.Value;
             var user = await _userRepository.GetAllIncluding(u => u.Interests).FirstOrDefaultAsync(u => u.Id == userId);
@@ -123,6 +139,7 @@ namespace Event_Planning_System.Interests
 
             await _userRepository.UpdateAsync(user);
         }
+
 
     }
 }

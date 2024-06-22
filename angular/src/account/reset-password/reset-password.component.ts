@@ -4,13 +4,14 @@ import { ResetpasswordService } from '../../shared/Services/resetpassword.servic
 import { Router} from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { Subject } from 'rxjs';
+import { SharedModule } from "../../shared/shared.module";
 
 @Component({
-  selector: 'app-reset-password',
-  standalone: true,
-  imports: [CommonModule , FormsModule],
-  templateUrl: './reset-password.component.html',
-  styleUrl: './reset-password.component.css'
+    selector: 'app-reset-password',
+    standalone: true,
+    templateUrl: './reset-password.component.html',
+    styleUrl: './reset-password.component.css',
+    imports: [CommonModule, FormsModule, SharedModule]
 })
 export class ResetPasswordComponent {
   errorMessage: Subject<string> = new Subject<string>();

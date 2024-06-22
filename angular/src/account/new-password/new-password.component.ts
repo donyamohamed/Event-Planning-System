@@ -7,14 +7,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NewPassword } from '@shared/Models/NewPassword';
 import { NewPasswordService } from '@shared/Services/new-password.service';
+import { SharedModule } from "../../shared/shared.module";
 
 
 @Component({
-  selector: 'app-new-password',
-  standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
-  templateUrl: './new-password.component.html',
-  styleUrl: './new-password.component.css'
+    selector: 'app-new-password',
+    standalone: true,
+    templateUrl: './new-password.component.html',
+    styleUrl: './new-password.component.css',
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, SharedModule]
 })
 export class NewPasswordComponent implements OnInit {
 

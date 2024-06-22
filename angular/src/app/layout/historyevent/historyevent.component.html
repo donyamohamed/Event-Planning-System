@@ -9,7 +9,7 @@
                     <h3>{{ event.name }}</h3>
                 </div>
                 <div class="todo">
-                    <a routerLink="/app/create-event" class="btn">To do CheckList</a>
+                    <a [routerLink]="['/app/todolist', event.id]" class="btn">To do CheckList</a>
                 </div>
             </div>
             <ul>
@@ -26,5 +26,6 @@
 <ng-template #noEventTemplate>
     <h1 class="no-event">
         <img src="../../../assets/img/nohistory1.png" alt="icon" />
-     No EVENT HISTORY</h1>
+        No EVENT HISTORY
+    </h1>
 </ng-template>
