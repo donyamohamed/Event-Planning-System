@@ -10,7 +10,7 @@
           <img src="../../../assets/img/Spin@1x-1.0s-200px-200px.gif" alt="" class="p-5 m-5">
       </div> <!-- Show loading div if isLoading is true -->
 
-      <div *ngFor="let event of events" class="card" [ngStyle]="{'background-image': 'url(https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)'}">
+      <div *ngFor="let event of events" class="card" [ngStyle]="{'background-image': 'url(' + (event.eventImg ? event.eventImg : '../../assets/img/Event.jpg') + ')'}">
           <div class="date">
               <div class="day">{{ event.startDate | date:'dd' }}</div>
               <div class="month">{{ event.startDate | date:'MMM' }}</div>

@@ -36,7 +36,7 @@ export class EventDetailsComponent implements OnInit {
       this.loadEventDetails();
     });
   }
-
+ 
   loadEventDetails(): void {
     if (this.eventId) {
       this.eventDetailsService.getEventById(this.eventId).subscribe(

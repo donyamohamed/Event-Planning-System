@@ -6,7 +6,7 @@ body {
 }
 
 .events .card-container {
-    max-width: 80%;
+    max-width: 90%;
     margin: auto;
     display: flex;
     align-items: flex-start;

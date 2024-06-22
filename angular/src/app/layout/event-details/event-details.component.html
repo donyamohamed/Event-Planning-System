@@ -9,9 +9,7 @@
   <div class="event-details">
     <div class="card-media">
       <div class="card-media-object-container">
-        <div class="card-media-object" style="background-image: url(../../../assets/img/Event.jpg);"></div>
-        <!-- <div class="card-media-object" style="background-image: url('../../../assets/img{{ event.eventImg }}');"></div> -->
-
+        <img class="card-media-object" [src]="event.eventImg ? event.eventImg : '../../assets/img/Event.jpg'" alt="Event Image">
       </div>
       <div class="card-media-body">
         <div class="card-media-body-top">
@@ -19,7 +17,6 @@
           
         </div>
         <div class="card-media-body-supporting-bottom">
-
           <p class="subtle"><strong>{{"Start Date:" |localize}}</strong> {{ event.startDate | date: 'EEE, MMM dd, hh:mm a' }}</p>
           <p class="subtle"><strong> {{"End Date:" |localize}}</strong> {{ event.endDate | date: 'EEE, MMM dd, hh:mm a' }}</p>
           <p class="subtle"><strong>{{"Location:" |localize}}</strong> {{ event.location }}</p>

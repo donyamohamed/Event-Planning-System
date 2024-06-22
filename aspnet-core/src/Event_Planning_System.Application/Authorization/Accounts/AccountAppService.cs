@@ -7,6 +7,7 @@ using Abp.Zero.Configuration;
 using Event_Planning_System.Authorization.Accounts.Dto;
 using Event_Planning_System.Authorization.Users;
 using Event_Planning_System.Email;
+using Event_Planning_System.Image;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -20,17 +21,20 @@ namespace Event_Planning_System.Authorization.Accounts
         private readonly IEmailService _emailService;
         private readonly UserManager _userManager;
         private readonly IWebHostEnvironment _hostingEnvironment;
+        private readonly ICloudinaryService _cloudinaryService;
 
         public AccountAppService(
             UserRegistrationManager userRegistrationManager,
             UserManager userManager,
             IEmailService emailService,
-            IWebHostEnvironment hostingEnvironment)
+            IWebHostEnvironment hostingEnvironment,
+            ICloudinaryService cloudinaryService)
         {
             _userRegistrationManager = userRegistrationManager;
             _emailService = emailService;
             _userManager = userManager;
             _hostingEnvironment = hostingEnvironment;
+            _cloudinaryService = cloudinaryService;
         }
 
         [AbpAllowAnonymous]
@@ -99,16 +103,26 @@ namespace Event_Planning_System.Authorization.Accounts
             {
                 if (input.ImageFile != null && input.ImageFile.Length > 0)
                 {
-                    string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "ProfileImages");
-                    string uniqueFileName = Guid.NewGuid().ToString() + "_" + input.ImageFile.FileName;
-                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-
-                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    // Upload image to Cloudinary
+                    using (var memoryStream = new MemoryStream())
                     {
-                        await input.ImageFile.CopyToAsync(fileStream);
-                    }
+                        await input.ImageFile.CopyToAsync(memoryStream);
+                        memoryStream.Position = 0; // Reset stream position before uploading
 
-                    imagePath = "/ProfileImages/" + uniqueFileName;
+                        string fileName = Guid.NewGuid().ToString() + "_" + input.ImageFile.FileName;
+
+                        var uploadResult = await _cloudinaryService.UploadImageAsync(memoryStream, fileName);
+
+                        if (uploadResult.StatusCode == System.Net.HttpStatusCode.OK)
+                        {
+                            imagePath = uploadResult.SecureUrl.ToString(); // Cloudinary URL of uploaded image
+                        }
+
+                        else
+                        {
+                            throw new Exception($"Failed to upload image to Cloudinary: {uploadResult.Error.Message}");
+                        }
+                    }
                 }
 
                 var user = await _userRegistrationManager.RegisterAsync(
@@ -140,13 +154,14 @@ namespace Event_Planning_System.Authorization.Accounts
                 throw ex;
             }
         }
+    
 
-        //public Task<RegisterOutput> Register(RegisterInput input)
-        //{
-        //    throw new NotImplementedException();
-        //}
+    //public Task<RegisterOutput> Register(RegisterInput input)
+    //{
+    //    throw new NotImplementedException();
+    //}
 
-        private async Task SendRegistrationConfirmationEmail(User user)
+    private async Task SendRegistrationConfirmationEmail(User user)
         {
             var activationLink = $"http://localhost:4200/account/activate/{user.Id}";
             var emailBodyTemplate = $"Thank you for registering! Click <a href='{activationLink}'>here</a> to activate your account.";

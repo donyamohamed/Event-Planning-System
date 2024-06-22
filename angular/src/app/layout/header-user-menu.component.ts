@@ -17,7 +17,9 @@ export class HeaderUserMenuComponent implements OnInit {
     private cdr: ChangeDetectorRef
   ) {}
   getUserImage(): string {
-    return this.user.image ? `https://localhost:44311/${this.user.image}` : 'assets/img/user.jpg';
+    return this.user?.image
+      ? this.user.image
+      : "assets/img/user.jpg";
   }
  
   ngOnInit(): void {
@@ -36,5 +38,8 @@ export class HeaderUserMenuComponent implements OnInit {
 
   logout(): void {
     this._authService.logout();
+  }
+  get isLoggedIn(): boolean {
+    return this.user !== null;
   }
 }
