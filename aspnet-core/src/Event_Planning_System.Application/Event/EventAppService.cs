@@ -9,6 +9,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 using Microsoft.EntityFrameworkCore;
+using Event_Planning_System.Image;
+using Microsoft.AspNetCore.Mvc;
+
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -25,25 +30,27 @@ namespace Event_Planning_System.Event
 		private readonly IRepository<Enitities.Guest, int> _guestRepository;
 		private readonly IRepository<Enitities.BudgetExpense, int> _budgetExpenseRepository;
 		private readonly IRepository<Enitities.ToDoCheckList, int> _toDoCheckListRepository;
-		private readonly IMapper _mapper;
+        private readonly ICloudinaryService _cloudinaryService;
+        private readonly IMapper _mapper;
 		private readonly IEmailService _emailService;
 		private readonly string _imageFolderPath;
+        private readonly ILogger<EventAppService> _logger;
 
-		private readonly IRepository<Interest, int> _interestRepository;
+        private readonly IRepository<Interest, int> _interestRepository;
 
 
 
 		public EventAppService(IRepository<Enitities.Event, int> repository, IRepository<Enitities.Guest, int> guestRepository, IRepository<Interest, int> interestRepository,
-			IRepository<Enitities.BudgetExpense, int> budgetExpenseRepository,
-			IRepository<Enitities.ToDoCheckList, int> toDoCheckListRepository, IMapper mapper, IEmailService emailService) : base(repository)
+            IRepository<Enitities.BudgetExpense, int> budgetExpenseRepository,
+			IRepository<Enitities.ToDoCheckList, int> toDoCheckListRepository, IMapper mapper, IEmailService emailService, ICloudinaryService cloudinaryService, ILogger<EventAppService> logger) : base(repository)
 		{
 			_repository = repository;
-
+			_cloudinaryService = cloudinaryService;
 			_interestRepository = interestRepository;
 			_guestRepository = guestRepository;
 			_budgetExpenseRepository = budgetExpenseRepository;
 			_toDoCheckListRepository = toDoCheckListRepository;
-
+			_logger=logger;
 			_mapper = mapper;
 			_emailService = emailService;
 			_imageFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images");
@@ -125,30 +132,43 @@ namespace Event_Planning_System.Event
 			return _mapper.Map<List<EventDto>>(events);
 		}
 
-		public override async Task<EventDto> CreateAsync([FromForm] CreateEventDto input)
-		{
-			if (input.EventImgFile != null && input.EventImgFile.Length > 0)
-			{
-				var fileName = Guid.NewGuid().ToString() + Path.GetExtension(input.EventImgFile.FileName);
-				var filePath = Path.Combine(_imageFolderPath, fileName);
+        public override async Task<EventDto> CreateAsync([FromForm] CreateEventDto input)
+        {
+            if (input.EventImgFile != null && input.EventImgFile.Length > 0)
+            {
+                try
+                {
+                    using (var stream = input.EventImgFile.OpenReadStream())
+                    {
+                        var uploadResult = await _cloudinaryService.UploadImageAsync(stream, input.EventImgFile.FileName);
+                        if (uploadResult.StatusCode == System.Net.HttpStatusCode.OK)
+                        {
+                            input.EventImg = uploadResult.Url.ToString();
+                        }
+                        else
+                        {
+                            _logger.LogError("Cloudinary upload failed: {0}", uploadResult.Error?.Message);
+                            throw new Exception($"Cloudinary upload failed: {uploadResult.Error?.Message}");
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Error uploading image to Cloudinary");
+                    throw new Exception("There was an error uploading the image to Cloudinary.", ex);
+                }
+            }
 
-				using (var stream = new FileStream(filePath, FileMode.Create))
-				{
-					await input.EventImgFile.CopyToAsync(stream);
-				}
-
-				input.EventImg = $"/images/{fileName}";
-			}
-
-			var eventEntity = _mapper.Map<Enitities.Event>(input);
-			await _repository.InsertAsync(eventEntity);
-			await CurrentUnitOfWork.SaveChangesAsync();
-			return _mapper.Map<EventDto>(eventEntity);
-		}
+            var eventEntity = _mapper.Map<Enitities.Event>(input);
+            await _repository.InsertAsync(eventEntity);
+            await CurrentUnitOfWork.SaveChangesAsync();
+            return _mapper.Map<EventDto>(eventEntity);
+        }
 
 
 
-		public async Task<List<EventDto>> GetPublicEventsByInterest()
+
+        public async Task<List<EventDto>> GetPublicEventsByInterest()
 		{
 			var publicEvents = new HashSet<EventDto>();
 			var orderedPublicEvents = new List<EventDto>();

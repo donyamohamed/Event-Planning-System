@@ -148,4 +148,7 @@ export class PublicEventsComponent implements OnInit {
   saveEventDataToSession(event: Event): void {
     sessionStorage.setItem('selectedEvent', JSON.stringify(event));
   }
+  getBackgroundImage(event: any) {
+    return event.eventImg ? event.eventImg : 'https://cdn.pixabay.com/photo/2016/03/28/09/50/firework-1285261_1280.jpg';
+  }
 }

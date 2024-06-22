@@ -1,7 +1,10 @@
 ﻿using Abp.Application.Services;
 using Abp.Domain.Entities;
+using Abp.Domain.Entities;
 using Abp.Domain.Repositories;
 using AutoMapper;
+using Event_Planning_System.Authorization.Users;
+using Event_Planning_System.Enitities;
 using Event_Planning_System.Authorization.Users;
 using Event_Planning_System.Enitities;
 using Event_Planning_System.Guest.Dto;
@@ -12,7 +15,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 using System;
+using ExcelDataReader;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+
+using Microsoft.EntityFrameworkCore;
+
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -25,6 +36,8 @@ namespace Event_Planning_System.Guest
         private readonly IRepository<Enitities.Guest, int> _repository;
         private readonly IRepository<Enitities.Event, int> _repositoryEvent;
 
+        
+
         private readonly IMapper _mapper;
         private readonly IRepository<User, long> _userRepository;
         private readonly IRepository<Enitities.Event, int> repositoryEvent;
@@ -35,7 +48,9 @@ namespace Event_Planning_System.Guest
         {
             _repository = repository;
             _repositoryEvent= repositoryEvent;
+            _repositoryEvent= repositoryEvent;
             _mapper = mapper;
+            _userRepository = userRepository;
             _userRepository = userRepository;
         }
 

@@ -10,6 +10,8 @@ import { FormsModule, FormBuilder, FormGroup, Validators, ReactiveFormsModule } 
 import { SharedModule } from "../../../shared/shared.module";
 import Swal from 'sweetalert2';
 
+import Swal from 'sweetalert2';
+
 
 @Component({
     selector: 'app-no-guests',
@@ -44,8 +46,10 @@ export class NoGuestsComponent {
   ngOnInit(): void {
     this.sub = this.activatedRouter.params.subscribe((params) => {
       this.idEvent = params["id"];
+
     
        // console.log("Event ID: ", this.idEvent ); 
+
     })
 
   }

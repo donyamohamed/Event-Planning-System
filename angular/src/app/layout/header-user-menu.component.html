@@ -5,6 +5,7 @@
       class="user-image img-circle elevation-2"
       [src]="getUserImage()"
       alt="User Image"
+      *ngIf="isLoggedIn"
     /> 
   </a>
   <div class="dropdown-menu dropdown-menu-right" *dropdownMenu>

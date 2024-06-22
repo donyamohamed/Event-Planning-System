@@ -190,7 +190,7 @@ export class UserProfileComponent implements OnInit {
   }
   getUserImage(): string {
     return this.user?.image
-      ? `https://localhost:44311/${this.user.image}`
+      ? this.user.image
       : "assets/img/user.jpg";
   }
 

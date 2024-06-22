@@ -17,6 +17,7 @@ using Abp.AspNetCore.SignalR.Hubs;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System.IO;
+using Event_Planning_System.Image;
 
 namespace Event_Planning_System.Web.Host.Startup
 {
@@ -65,9 +66,12 @@ namespace Event_Planning_System.Web.Host.Startup
                         .AllowCredentials()
                 )
             );
+           
 
             // Swagger - Enable this line and the related lines in Configure method to enable swagger UI
             ConfigureSwagger(services);
+            services.AddSingleton<CloudinaryConfig>();
+            services.AddTransient<ICloudinaryService, CloudinaryService>();
 
             // Configure Abp and Dependency Injection
             services.AddAbpWithoutCreatingServiceProvider<Event_Planning_SystemWebHostModule>(
@@ -86,7 +90,7 @@ namespace Event_Planning_System.Web.Host.Startup
             app.UseAbp(options => { options.UseAbpRequestLocalization = false; }); // Initializes ABP framework.
 
             app.UseCors(_defaultCorsPolicyName); // Enable CORS!
-          
+
 
             app.UseStaticFiles();
 

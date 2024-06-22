@@ -9,9 +9,7 @@
   <div class="event-details">
     <div class="card-media">
       <div class="card-media-object-container">
-        <div class="card-media-object" style="background-image: url(../../../assets/img/Event.jpg);"></div>
-        <!-- <div class="card-media-object" style="background-image: url('../../../assets/img{{ event.eventImg }}');"></div> -->
-
+        <img class="card-media-object" [src]="event.eventImg ? event.eventImg : '../../assets/img/Event.jpg'" alt="Event Image">
       </div>
       <div class="card-media-body">
         <div class="card-media-body-top">
@@ -27,6 +25,7 @@
           <p><strong>{{"Description:" |localize}}</strong> {{ event.description }}</p>
           <p><strong>{{"Category:" |localize}}</strong> {{ event.category }}</p>
           <p><strong>{{"Max Count:" |localize}}</strong> {{ event.maxCount }}</p>
+
         <p><strong>Share via :</strong>
             <span class="social-account">
               <button class="btn text-primary" (click)="shareOnFacebook()"><i class="fa-brands fa-facebook-f fa-x"></i></button> | 
@@ -35,6 +34,7 @@
               <button class="btn text-success" (click)="shareOnWhatsApp()"><i class="fa-brands fa-whatsapp fa-x"></i> </button>
           </span>
 </p>
+
 
         </div>
       </div>

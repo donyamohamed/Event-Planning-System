@@ -8,8 +8,11 @@ namespace Event_Planning_System.Email
 {
     public class EmailPendingTemple
     {
-        public static string YourInvitationRequestPending(string eventName, DateTime date, string eventAddress,string guestName, string body)
+        public static string YourInvitationRequestPending(string eventName, DateTime date, string eventAddress,string guestName, string body, string eventImg)
         {
+            string backgroundImage = string.IsNullOrEmpty(eventImg)
+               ? "https://cdn.pixabay.com/photo/2016/12/18/00/47/structure-1914730_960_720.jpg"
+               : eventImg;
             return $@"
             <!DOCTYPE html>
             <html>
@@ -141,7 +144,7 @@ namespace Event_Planning_System.Email
             </head>
             <body>
                 <div class='poster'>
-                    <img class='header-img' src='https://cdn.pixabay.com/photo/2016/03/28/09/50/firework-1285261_1280.jpg' alt='Header Image'>
+                    <img class='header-img' src='{backgroundImage}' alt='Header Image'>
                     <h1>Invitation Request </h1>
                     <h2>{eventName}</h2>
                     <div class='date-time'>

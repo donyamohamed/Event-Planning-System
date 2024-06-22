@@ -1,19 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="ar">
 	<texts>
+
 		  <!--nada-->
+
 		<text name="HomePage" value="الصفحة الرئيسية" />
 		<text name="About" value="من نحن" />
 		<text name="WelcomeMessage" value="مرحبا بك في تطبيقنا Eventa -_-" />
 		<text name="FormIsNotValidMessage" value="النموذج ليس رسالة صالحة" />
 		<text name="TenantNameCanNotBeEmpty" value="لا يمكن أن يكون اسم المستأجر فارغًا" />
 		<text name="InvalidUserNameOrPassword" value="خطأ في اسم المستخدم أو كلمة مرور" />
+
 		<text name="ThereIsNoTenantDefinedWithName{0}" value="لا يوجد مستخدم محدد بهذا الاسم" />
 		<text name="TenantIsNotActive" value="المستخدم غير مفعل على السيستم" />
 		<text name="UserIsNotActiveAndCanNotLogin" value="المستخدم غير نشط ولا يمكنه تسجيل الدخول" />
 		<text name="UserEmailIsNotConfirmedAndCanNotLogin">البريد الإلكتروني للمستخدم غير مؤكد ولا يمكن تسجيل الدخول</text>
 		<text name="UserLockedOutMessage">رساله متركه للمستخدم.</text>
 		<text name="PleaseEnterLoginInformation" value="الرجاء إدخال معلومات تسجيل الدخول" />
+
 		<text name="TenancyName" value="نام Tenant" />
 		<text name="UserNameOrEmail" value="اسم المستخدم أو كلمة مرور" />
 		<text name="Password" value="كلمة المرور" />
@@ -21,7 +25,9 @@
 		<text name="ResetPassword" value="إعادة تعيين كلمة المرور" />
 		<text name="UpdatePassword" value="تغيير كلمة السر" />
 		<text name="RememberMe" value="تذكرني" />
+
 		<text name="LogIn" value="تسجيل الدخول" />
+
 		<text name="LoginFailed" value="فشل تسجيل الدخول" />
 		<text name="NameSurname" value="اسم اللقب" />
 		<text name="UserName" value="اسم المستخدم" />
@@ -29,6 +35,7 @@
 		<text name="Surname" value="اللقب" />
 		<text name="EmailAddress" value="بريد اليكتروني" />
 		<text name="Tenants" value="مستخدمين" />
+
 		<text name="SavedSuccessfully" value="تم الحفظ بنجاح" />
 		<text name="CreateNewTenant" value="انشاء مستخدم" />
 		<text name="AdminEmailAddress" value="ايميل الادمن" />
@@ -53,7 +60,9 @@
 		<text name="No" value="لا" />
 		<text name="Optional" value="اختیاری" />
 		<text name="LeaveEmptyToSwitchToHost">اتركه فارغًا للتبديل إلى المضيف</text>
+
 		<text name="CurrentTenant">المستخدم الحالي</text>
+
 		<text name="NotSelected">لم يتم اختياره</text>
 		<text name="Change">تغییر</text>
 		<text name="ChangeTenant">تغيير المستأجر</text>
@@ -68,6 +77,7 @@
 		<text name="CreateNewRole">إنشاء دور جديد</text>
 		<text name="RoleName">اسم الدور </text>
 		<text name="Actions">عملیات</text>
+
 		<text name="CouldNotCompleteLoginOperation">لا يمكن إكمال عملية تسجيل الدخول.</text>
 		<text name="CouldNotValidateExternalUser">لا يمكن التحقق من صحة المستخدم الخارجي.</text>
 		<text name="EditRole">تعديل الدور </text>
@@ -125,6 +135,10 @@
 	    <text name="Log in" value="تسجيل الدخول" />
 	    <text name="Or Register?" value="سجل حساب ؟" />
         <text name="Forget Password" value="نسيت كلمه المرور" />
+
+
+         <!--esraa-->
+
         <text name="Welcome to Eventa Planning System" value="مرحبا بكم في نظام تنظيم المناسبات" />
         <text name="Streamline your event planning process with our intuitive system. Create, manage, and track events effortlessly." value="قم بتبسيط عملية التخطيط للمناسبات الخاص بك من خلال نظامنا المبسط. قم بإنشاء المناسبات وإدارتها وتتبعها بسهولة." />
         <text name="Create detailed event plans" value="انشاء خطط تفصيليه للمناسبات" />
