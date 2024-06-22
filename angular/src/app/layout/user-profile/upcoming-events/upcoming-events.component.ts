@@ -58,9 +58,9 @@ export class UpcomingEventsComponent implements OnInit {
       this.userEvent.getUpcomingEventsToAttendForCurrentUser(userId).subscribe(createdEvents => {
         this.createdEvents = createdEvents.map(event => ({ ...event, source: 'upcoming' }));
 
-        // Combine events and set them to calendarOptions.events
+       
         const allEvents = [...this.attendingEvents, ...this.createdEvents];
-        this.upcomingEvents = allEvents; // Update the upcomingEvents array
+        this.upcomingEvents = allEvents; 
 
         this.calendarOptions.events = allEvents.map(event => ({
           title: event.name,

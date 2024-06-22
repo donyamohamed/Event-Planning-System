@@ -8,6 +8,7 @@ import { EventsResponse } from '../../../app/home/eventInterface';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { SharedModule } from "../../../shared/shared.module";
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-public-events',
@@ -27,7 +28,8 @@ export class PublicEventsComponent implements OnInit {
     private PublicEventServ: HomeService,
     private askForInvitationServ: AskforInvitationService,
     private cdr: ChangeDetectorRef,
-    private http: HttpClient
+    private http: HttpClient,
+    private router:Router
   ) {}
 
   ngOnInit(): void {
@@ -147,5 +149,10 @@ export class PublicEventsComponent implements OnInit {
 
   saveEventDataToSession(event: Event): void {
     sessionStorage.setItem('selectedEvent', JSON.stringify(event));
+  }
+
+  public navigateToComponent(id: number) {
+  
+    this.router.navigateByUrl(`/app/Chat/${id}`);
   }
 }

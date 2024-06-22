@@ -1,37 +1,78 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import * as signalR from '@aspnet/signalr';
-
+import { ChatService } from '@shared/Services/chat.service';
+import { CommonModule } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+import { AppSessionService } from '@shared/session/app-session.service';
 @Component({
   selector: 'app-chat-component',
-  standalone: true,
-  imports: [CommonModule],
+  standalone:true,
+  imports: [CommonModule ],
   templateUrl: './chat-component.component.html',
-  styleUrls: ['./chat-component.component.css']  // Correct property name
+  
+  styleUrls: ['./chat-component.component.css']
 })
 export class ChatComponentComponent implements OnInit {
-  private hubConnection: signalR.HubConnection;
   public messages: string[] = [];
+  public userId = this.appSessionService.userId;
+public receiverId;
+  constructor(private chatService: ChatService,private route: ActivatedRoute, private appSessionService: AppSessionService) {}
 
+  
   ngOnInit() {
-    this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl('https://localhost:44311/chatHub')
-      .build();
-
-    this.hubConnection.start().catch(err => console.error('Error while starting connection: ' + err.toString()));
-
-    this.hubConnection.on('ReceiveMessage', (message) => {
-      this.messages.push(message);
+    this.loadMessages();
+    this.route.params.subscribe(params => {
+     this.receiverId = +params['plannerId'];
+      
+  
+  
     });
+  }
+  private loadMessages() {
+    this.chatService.getMessages(this.userId).subscribe(
+      messages => {
+        console.log(messages)
+        this.messages = messages.result;
+      },
+      error => {
+        console.error('Error fetching messages:', error);
+        // Handle error gracefully
+      }
+    );
   }
 
   public sendMessage(message: string) {
     const input = {
-      senderUserId: 8,  // Example sender ID
-      receiverUserId: 3,  // Example receiver ID
+      senderUserId: this.userId,  // Replace with actual sender ID
+      receiverUserId: this.receiverId,  // Replace with actual receiver ID
       message: message
     };
-    this.hubConnection.invoke('SendMessage', input)
-      .catch(err => console.error('Error while sending message: ' + err.toString()));
+
+    this.chatService.sendMessage(input).subscribe(
+      response => {
+        console.log('Message sent successfully:', response);
+        // Optionally, refresh messages after sending
+        this.loadMessages();
+      },
+      error => {
+        console.error('Error sending message:', error);
+        // Handle error gracefully
+      }
+    );
+  }
+
+  public getMessageDate(message: any): string {
+    return new Date(message.creationTime).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  }
+
+  // Helper function to get the time part of the message creation time
+  public getMessageTime(message: any): string {
+    return new Date(message.creationTime).toLocaleTimeString('en-US', {
+      hour: 'numeric',
+      minute: 'numeric'
+    });
   }
 }

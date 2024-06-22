@@ -20,6 +20,9 @@
               <p>{{ event.location }}</p>
               <button class="btn btn-primary" (click)="askForInvitation(event)">{{"Ask for invitation" | localize}}</button>
           </div>
+          <div class="Chat-icon" (click)="navigateToComponent(event.userId)">
+            <i class="fa fa-comments btn btn-primary"></i>
+          </div>
       </div>
   </div>
 </div>

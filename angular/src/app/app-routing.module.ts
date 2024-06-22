@@ -131,7 +131,7 @@ const routes: Routes = [
         path: '',
         component: AppComponent,
         children: [
-            { path: 'Chat', component: ChatComponentComponent },
+            { path: 'Chat/:plannerId', component: ChatComponentComponent },
             { path: 'home', component: HomeComponent },
             { path: 'users', component: UsersComponent, data: { permission: 'Pages.Users' }, canActivate: [AppRouteGuard] },
             { path: 'roles', component: RolesComponent, data: { permission: 'Pages.Roles' }, canActivate: [AppRouteGuard] },

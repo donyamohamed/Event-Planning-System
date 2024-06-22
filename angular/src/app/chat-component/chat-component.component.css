@@ -1,0 +1,104 @@
+/* Style for the entire chat container */
+.chat-container {
+    width: 100%;
+    max-width: 85%;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 5px;
+    font-family: Arial, sans-serif;
+  }
+  .message-start{
+    padding: 8px;
+    border-radius: 8px;
+    width: fit-content;
+    text-align: center;
+    margin: auto;
+    background-color: #abadf9a1;
+    color: #050794;
+    font-size: 13px;
+  }
+  .date-divider{
+    padding: 8px;
+    border-radius: 8px;
+    width: fit-content;
+    text-align: center;
+    margin: 6px auto;
+    font-size: 13px;
+    color: #333;
+    background-color: #f4f2f2;
+  }
+  /* Style for the message container */
+  .messages {
+    max-height: 400px; /* Limit height and add overflow for scrolling */
+    overflow-y: auto; /* Enable vertical scrolling */
+    display:flex;
+    flex-direction:column;
+  }
+  
+  /* Style for each message */
+  .message {
+    position: relative;
+    margin-bottom: 10px;
+    padding:12px 8px;
+    min-width:160px;
+    border-radius: 8px;
+    width: fit-content;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  }
+  .message .time{
+    position: absolute;
+    right: 5px;
+    bottom: 2px;
+    font-size: 12px;
+    color: #333;
+  }
+  
+
+  .sender-message {
+    align-self: flex-start;
+    background-color: #ececec; 
+    
+  }
+  
+
+  .receiver-message {
+    align-self: flex-end;
+    color: white;
+    background-color: #28a745; 
+    margin-right: 20px;
+  }
+  
+  /* Style for the message content */
+  .message-content {
+    margin-left: 10px;
+  }
+  
+  /* Style for the input field */
+  .input-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    gap:2%;
+  }
+  
+  .input-section input {
+    width: 92%;
+    border-radius: 25px;
+    border: 1px solid #333;
+    outline: none;
+    padding: 10px;
+    font-size: 16px;
+  }
+  
+  .input-section button {
+    width: 6%;
+    border-radius: 40%;
+    color: white;
+    background-color: #050794;
+    outline: none;
+    padding: 10px;
+    font-size: 16px;
+  }
+  
