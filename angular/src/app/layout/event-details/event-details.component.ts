@@ -6,12 +6,13 @@ import { Event } from '../../../shared/Models/Event';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { SharedModule } from "../../../shared/shared.module";
 @Component({
-  selector: 'app-event-details',
-  templateUrl: './event-details.component.html',
-  styleUrls: ['./event-details.component.css'],
-  standalone:true,
-  imports: [CommonModule,RouterLink,FormsModule],
+    selector: 'app-event-details',
+    templateUrl: './event-details.component.html',
+    styleUrls: ['./event-details.component.css'],
+    standalone: true,
+    imports: [CommonModule, RouterLink, FormsModule, SharedModule]
 })
 export class EventDetailsComponent implements OnInit {
   event: Event | undefined;
@@ -35,7 +36,7 @@ export class EventDetailsComponent implements OnInit {
       this.loadEventDetails();
     });
   }
-
+ 
   loadEventDetails(): void {
     if (this.eventId) {
       this.eventDetailsService.getEventById(this.eventId).subscribe(

@@ -36,8 +36,10 @@ export class NotificatiosComponent implements OnInit {
       body: `Congratulation, Your Request Have Been Submitted For The Event`,
       eventName: this.EventData.result.name,
       date: this.EventData.result.startDate,
-      eventAddress: this.EventData.result.location
+      eventAddress: this.EventData.result.location,
+      eventImage:this.EventData.result.eventImg
     };
+    console.log(emailData.eventImage);
     this.oldObj.id = item.id;
     this.oldObj.status = NotificationStatus.Rejected;
     Swal.fire({
@@ -100,7 +102,8 @@ export class NotificatiosComponent implements OnInit {
       body: `Congratulation, Your Request Have Been Submitted For The Event`,
       eventName: this.EventData.result.name,
       date: this.EventData.result.startDate,
-      eventAddress: this.EventData.result.location
+      eventAddress: this.EventData.result.location,
+      eventImage:this.EventData.result.eventImg
     };
     this.oldObj.id = item.id;
     this.oldObj.status = NotificationStatus.Accepted;

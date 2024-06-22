@@ -1,5 +1,5 @@
 
-import { Component, OnInit, TemplateRef } from "@angular/core";
+import { Component, OnInit, TemplateRef, ChangeDetectionStrategy } from "@angular/core";
 
 import { CurrentUserDataService } from "@shared/Services/current-user-data.service";
 import { InterestsService } from "@shared/Services/interests.service";
@@ -10,17 +10,18 @@ import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { BrowserModule } from "@angular/platform-browser";
 import { RouterLink } from "@angular/router";
-
 import Swal from "sweetalert2";
 import { finalize } from "rxjs";
 import {UpcomingEventsComponent} from './upcoming-events/upcoming-events.component';
 import {HistoryeventComponent} from '../historyevent/historyevent.component';
+import { SharedModule } from "../../../shared/shared.module";
 @Component({
-  imports: [FormsModule, CommonModule, RouterLink,UpcomingEventsComponent,HistoryeventComponent],
-  standalone: true,
-  selector: "app-user-profile",
-  templateUrl: "./user-profile.component.html",
-  styleUrls: ["./user-profile.component.css"],
+    standalone: true,
+    selector: "app-user-profile",
+    templateUrl: "./user-profile.component.html",
+    styleUrls: ["./user-profile.component.css"],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [FormsModule, CommonModule, RouterLink, UpcomingEventsComponent, HistoryeventComponent, SharedModule]
 })
 export class UserProfileComponent implements OnInit {
 
@@ -189,7 +190,7 @@ export class UserProfileComponent implements OnInit {
   }
   getUserImage(): string {
     return this.user?.image
-      ? `https://localhost:44311/${this.user.image}`
+      ? this.user.image
       : "assets/img/user.jpg";
   }
 

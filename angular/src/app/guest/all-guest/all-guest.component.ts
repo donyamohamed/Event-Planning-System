@@ -172,6 +172,7 @@ export class AllGuestComponent implements OnInit {
     this.emailObj.EventAddress = this.event.location;
     this.emailObj.EventName = this.event.name;
     this.emailObj.Date = this.event.startDate;
+    this.emailObj.EventImage=this.event.eventImg;
     // new Date("2024-05-27T07:01:10.782Z");
     this.invitation.sendInvitationByEmail(this.emailObj).subscribe({
       next: (data) => {

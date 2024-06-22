@@ -4,9 +4,11 @@ import {
   ChangeDetectionStrategy,
   AfterViewInit,
   HostListener,
+  OnInit
 } from "@angular/core";
 import { AppComponentBase } from "@shared/app-component-base";
 import { appModuleAnimation } from "@shared/animations/routerTransition";
+import { Location } from '@angular/common';
 
 @Component({
   templateUrl: "./home.component.html",

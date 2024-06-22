@@ -15,14 +15,14 @@ html {
   margin-bottom: 20px;
   padding: 10px 0;
   display: flex;
-  justify-content: space-between; /* Align items to the start and end */
-  align-items: center; /* Center items vertically */
+  justify-content: space-between;
+  align-items: center;
 }
 
 .buttons {
   display: flex;
-  justify-content: flex-end; /* Align items to the end of the flex container */
-  gap: 10px; /* Add some space between buttons */
+  justify-content: flex-end;
+  gap: 10px;
 }
 
 .header-container h2 {
@@ -66,11 +66,11 @@ html {
 .card-media {
   border-radius: 2px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, .12);
-  height: auto; /* Adjusted height to fit content */
+  height: auto;
   margin-bottom: 25px;
   transition: all 300ms ease-out;
   width: 100%;
-  display: flex; /* Ensures card-media is displayed as flex container */
+  display: flex;
 }
 
 .card-media:hover {
@@ -78,13 +78,11 @@ html {
 }
 
 .card-media-object-container {
-  background: none;
   width: 35%;
 }
 
 .card-media-object {
-  background-position: center center;
-  background-size: cover;
+  width: 100%;
   height: 100%;
   border-top-left-radius: 2px;
   border-bottom-left-radius: 2px;
@@ -110,16 +108,10 @@ html {
   align-items: center;
 }
 
-
-
-
-
 .card-media-body-heading {
   font-size: 18px;
   margin-top: 10px;
 }
-
-
 
 .card-media-body-supporting-bottom-text {
   color: #888;

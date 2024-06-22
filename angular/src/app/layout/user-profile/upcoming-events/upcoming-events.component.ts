@@ -12,17 +12,19 @@ import interactionPlugin from '@fullcalendar/interaction';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
 import bootstrap5Plugin from '@fullcalendar/bootstrap5';
+import { SharedModule } from "../../../../shared/shared.module";
 
 @Component({
-  selector: 'app-upcoming-events',
-  templateUrl: './upcoming-events.component.html',
-  styleUrls: ['./upcoming-events.component.css'],
-  standalone: true,
-  imports: [
-    FormsModule,
-    CommonModule,
-    FullCalendarModule
-  ]
+    selector: 'app-upcoming-events',
+    templateUrl: './upcoming-events.component.html',
+    styleUrls: ['./upcoming-events.component.css'],
+    standalone: true,
+    imports: [
+        FormsModule,
+        CommonModule,
+        FullCalendarModule,
+        SharedModule
+    ]
 })
 export class UpcomingEventsComponent implements OnInit {
   viewDate: Date = new Date();

@@ -9,6 +9,7 @@
                 <div class="oneByOne p-2" (click)="openModal(template)">
                     <i class="fa fa-user text-primary fa-2x" aria-hidden="true"></i>
                     <p>{{"Add one by one" | localize}}</p>
+<<<<<<< HEAD
                 </div>
 
                 <!-- <div class="excel p-2">
@@ -33,6 +34,26 @@
 
                 
                   
+=======
+                </div>
+
+                <div class="excel">
+                    <h2>{{ "Upload Guest List" | localize }}</h2>
+                  
+                    <label for="file-upload" class="custom-file-upload">
+                      <i class="fas fa-file-excel" ></i> 
+                      <span *ngIf="fileToUpload">{{ fileToUpload.name }}</span>
+                      <span *ngIf="!fileToUpload">{{ "" | localize }}</span>
+                    </label>
+                  
+                    <input id="file-upload" type="file" accept=".xls,.xlsx" (change)="handleFileInput($event)" style="display: none;" />
+                    <button style="background-color: rgb(60, 161, 60);" (click)="promptFileSelection()">{{ "Choose Excel File" | localize }}</button>
+                    <button  (click)="uploadFile()">{{ "Upload" | localize }}</button>
+                    <p>{{ uploadResponse }}</p>
+                  </div>
+                  
+ 
+>>>>>>> 845dc930c55d93ed4ae36bfc25712512aaefe2a5
 
             </div>
         </div>

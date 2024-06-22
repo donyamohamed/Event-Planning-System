@@ -6,7 +6,7 @@ import { CurrentUser } from '@shared/Models/current-user';
 @Component({
   selector: 'header-left-navbar',
   templateUrl: './header-left-navbar.component.html',
-  //styleUrl:'./header-left-navbar.component.css',
+  styleUrl:'./header-left-navbar.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderLeftNavbarComponent implements OnInit {

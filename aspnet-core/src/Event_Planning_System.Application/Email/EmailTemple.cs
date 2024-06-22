@@ -4,8 +4,12 @@ namespace Event_Planning_System.Email
 {
     public class EmailTemplate
     {
-        public static string GetInvitationEmail(string eventName, DateTime date, string eventAddress)
+        public static string GetInvitationEmail(string eventName, DateTime date, string eventAddress, string eventImg)
         {
+            // Determine the background image to use
+            string backgroundImage = string.IsNullOrEmpty(eventImg)
+                ? "https://cdn.pixabay.com/photo/2016/12/18/00/47/structure-1914730_960_720.jpg"
+                : eventImg;
             return $@"
             <!DOCTYPE html>
             <html>
@@ -114,7 +118,7 @@ namespace Event_Planning_System.Email
             </head>
             <body>
                 <div class='poster'>
-                    <img class='header-img' src='https://cdn.pixabay.com/photo/2016/03/28/09/50/firework-1285261_1280.jpg' alt='Header Image'>
+                    <img class='header-img' src='{backgroundImage}' alt='Header Image'>
                     <h1>Event Invitation</h1>
                     <h2>{eventName}</h2>
                     <div class='date-time'>
