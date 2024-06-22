@@ -17,6 +17,7 @@ using Abp.AspNetCore.SignalR.Hubs;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System.IO;
+using Event_Planning_System.Chats;
 
 namespace Event_Planning_System.Web.Host.Startup
 {
@@ -47,9 +48,11 @@ namespace Event_Planning_System.Web.Host.Startup
             AuthConfigurer.Configure(services, _appConfiguration);
 
             services.AddSignalR();
+			
+			services.AddTransient<IChatMessageAppService, ChatMessageAppService>();
 
-            // Configure CORS for angular2 UI
-            services.AddCors(
+			// Configure CORS for angular2 UI
+			services.AddCors(
                 options => options.AddPolicy(
                     _defaultCorsPolicyName,
                     builder => builder
@@ -99,7 +102,8 @@ namespace Event_Planning_System.Web.Host.Startup
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapHub<AbpCommonHub>("/signalr");
+				endpoints.MapHub<ChatHub>("/chatHub");
+				endpoints.MapHub<AbpCommonHub>("/signalr");
                 endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapControllerRoute("defaultWithArea", "{area}/{controller=Home}/{action=Index}/{id?}");
             });
