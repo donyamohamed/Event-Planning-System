@@ -4,6 +4,7 @@ using Event_Planning_System.Authorization.Roles;
 using Event_Planning_System.Authorization.Users;
 using Event_Planning_System.MultiTenancy;
 using Event_Planning_System.Enitities;
+using Event_Planning_System.Entities;
 
 namespace Event_Planning_System.EntityFrameworkCore
 {
@@ -15,8 +16,10 @@ namespace Event_Planning_System.EntityFrameworkCore
         public DbSet<Guest> Guests { get; set; }
         public DbSet<BudgetExpense> Budgets { get; set; }
         public DbSet<ToDoCheckList> ToDoChecks { get; set; }
+		public DbSet<ChatMessage> ChatMessage { get; set; }
 
-        public DbSet<Interest> interests { get; set; }
+
+		public DbSet<Interest> interests { get; set; }
         public Event_Planning_SystemDbContext(DbContextOptions<Event_Planning_SystemDbContext> options)
             : base(options)
         {
