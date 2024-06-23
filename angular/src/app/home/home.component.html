@@ -1,6 +1,11 @@
 ﻿<app-header></app-header>
 <header class="home-header">
+  
   <div class="big-div">
+    <div>
+     
+      <app-intersts *ngIf="!hasInterests && isLoggedIn"></app-intersts>
+    </div>
     <div class="inner-div">
       <!-- <p>Boston Corporate Events</p> -->
       <h1>
