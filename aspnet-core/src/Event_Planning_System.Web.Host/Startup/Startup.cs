@@ -17,11 +17,9 @@ using Abp.AspNetCore.SignalR.Hubs;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System.IO;
-<<<<<<< HEAD
 using Event_Planning_System.Image;
-=======
 using Event_Planning_System.Chats;
->>>>>>> feature-UserChat
+
 
 namespace Event_Planning_System.Web.Host.Startup
 {
