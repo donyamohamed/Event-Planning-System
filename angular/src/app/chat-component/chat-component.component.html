@@ -1,20 +1,16 @@
 <div class="chat-container">
   <div class="messages">
-    <!-- Show welcome message if there are no messages -->
     <div *ngIf="messages.length === 0" class="message-start">
       <span class="centered">Start your conversation with the event creator or planner!</span>
     </div>
-
-    <!-- Loop through messages -->
+  
     <ng-container *ngFor="let message of messages; let i = index">
-      <!-- Display date divider if it's the first message of the day -->
       <ng-container *ngIf="i === 0 || (getMessageDate(message) !== getMessageDate(messages[i - 1]))">
         <div class="date-divider">
           {{ getMessageDate(message) }}
         </div>
       </ng-container>
-
-      <!-- Display message with appropriate styling -->
+    
       <div class="message" [ngClass]="{'sender-message': message.senderUserId === userId, 'receiver-message': message.receiverUserId === userId}">
         <span class="message-content">{{ message.message }}</span>
         <span class="time">{{ getMessageTime(message) }}</span>
@@ -22,11 +18,10 @@
     </ng-container>
   </div>
 
-  <!-- Input section for new message -->
   <div class="input-section">
     <input type="text" #messageInput />
-    <button (click)="sendMessage(messageInput.value)">
-      <i class="fas fa-arrow-up"></i>
+    <button (click)="sendMessage(messageInput)">
+      <i class="fa-solid fa-paper-plane"></i>
     </button>
   </div>
 </div>

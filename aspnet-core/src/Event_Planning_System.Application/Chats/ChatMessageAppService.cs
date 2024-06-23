@@ -1,6 +1,7 @@
 ﻿using Abp.Application.Services;
 using Abp.Domain.Repositories;
 using Abp.Timing;
+using Event_Planning_System.Authorization.Users;
 using Event_Planning_System.Chats.DTO;
 using Event_Planning_System.Entities;
 using System.Collections.Generic;
@@ -12,10 +13,13 @@ namespace Event_Planning_System.Chats
     public class ChatMessageAppService : ApplicationService, IChatMessageAppService
     {
         private readonly IRepository<ChatMessage, long> _chatMessageRepository;
+		private readonly IRepository<User, long> _userRepository;
 
-        public ChatMessageAppService(IRepository<ChatMessage, long> chatMessageRepository)
+		public ChatMessageAppService(IRepository<ChatMessage, long> chatMessageRepository, IRepository<User, long> userRepository)
         {
             _chatMessageRepository = chatMessageRepository;
+            _userRepository = userRepository;
+
         }
 
         public async Task SendMessage(CreateChatMessageInput input)
@@ -43,5 +47,32 @@ namespace Event_Planning_System.Chats
                 CreationTime = m.CreationTime
             }).ToList();
         }
-    }
+		public async Task<List<UserChatDTO>> GetAllReceiversData()
+		{
+			var userId = AbpSession.UserId.Value;
+			var messages = await _chatMessageRepository
+				.GetAllListAsync(m => m.SenderUserId == userId);
+			HashSet<long> receiverIds = new HashSet<long>(messages.Select(m => m.ReceiverUserId));
+
+			List<UserChatDTO> users = new List<UserChatDTO>();
+			foreach (var receiverId in receiverIds)
+			{
+				var user = await _userRepository.GetAsync(receiverId); 
+				if (user != null)
+				{
+					var userDto = new UserChatDTO
+					{
+						RecieverId = user.Id,
+						UserName = user.UserName,
+                        Image=user.Image
+					};
+					users.Add(userDto);
+				}
+			}
+
+			return users;
+		}
+
+
+	}
 }
