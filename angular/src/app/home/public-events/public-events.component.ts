@@ -8,14 +8,14 @@ import { EventsResponse } from '../../../app/home/eventInterface';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { SharedModule } from "../../../shared/shared.module";
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
     selector: 'app-public-events',
     standalone: true,
     templateUrl: './public-events.component.html',
     styleUrls: ['./public-events.component.css'],
-    imports: [CommonModule, SharedModule]
+    imports: [CommonModule, SharedModule,RouterLink]
 })
 export class PublicEventsComponent implements OnInit {
   public events: Event[] = [];
@@ -29,7 +29,8 @@ export class PublicEventsComponent implements OnInit {
     private askForInvitationServ: AskforInvitationService,
     private cdr: ChangeDetectorRef,
     private http: HttpClient,
-    private router:Router
+    private router:Router,
+    private route: Router,
   ) {}
 
   ngOnInit(): void {
@@ -42,6 +43,11 @@ export class PublicEventsComponent implements OnInit {
       this.fetchUserDataAndProceed(event);
       sessionStorage.removeItem('selectedEvent');
       
+    }
+  }
+  details(event: Event): void {
+    if (this.events.length > 0) {
+      this.route.navigateByUrl("app/eventHomeDetails/" + event.id, { state: { event } });
     }
   }
 
