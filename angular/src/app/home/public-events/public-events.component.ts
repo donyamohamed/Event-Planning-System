@@ -8,6 +8,7 @@ import { EventsResponse } from '../../../app/home/eventInterface';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { SharedModule } from "../../../shared/shared.module";
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-public-events',
@@ -27,7 +28,8 @@ export class PublicEventsComponent implements OnInit {
     private PublicEventServ: HomeService,
     private askForInvitationServ: AskforInvitationService,
     private cdr: ChangeDetectorRef,
-    private http: HttpClient
+    private http: HttpClient,
+    private router:Router
   ) {}
 
   ngOnInit(): void {
@@ -150,5 +152,9 @@ export class PublicEventsComponent implements OnInit {
   }
   getBackgroundImage(event: any) {
     return event.eventImg ? event.eventImg : 'https://cdn.pixabay.com/photo/2016/03/28/09/50/firework-1285261_1280.jpg';
+  }
+  public navigateToComponent(id: number) {
+  
+    this.router.navigateByUrl(`/app/Chat/${id}`);
   }
 }

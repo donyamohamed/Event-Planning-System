@@ -8,7 +8,7 @@ import { template } from 'lodash-es';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { FormsModule, FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from "../../../shared/shared.module";
-import Swal from 'sweetalert2';
+
 
 
 @Component({
@@ -37,7 +37,7 @@ export class NoGuestsComponent {
       name: ['', [Validators.required, Validators.maxLength(100)]],
       phone: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
       email: ['', [Validators.required, Validators.email]],
-      invitationState: ['', [Validators.required]]
+      // invitationState: ['', [Validators.required]]
     });
   }
 
