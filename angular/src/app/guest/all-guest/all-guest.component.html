@@ -93,7 +93,7 @@
           <div *ngIf="guestForm.get('email').errors.email">Invalid email address.</div>
         </div>
       </div>
-      <div>
+      <!-- <div>
         <label for="invStatInput">Invitation State:</label>
         <select formControlName="invitationState" id="invStatInput" class="form-control"
           [(ngModel)]="guest.invitationState" required>
@@ -105,7 +105,7 @@
           class="text-danger">
           <div *ngIf="guestForm.get('invitationState').errors.required">Invitation state is required.</div>
         </div>
-      </div>
+      </div> -->
       <input class="btn btn-success" value="Add" type="submit" />
     </form>
   </div>
@@ -147,7 +147,7 @@
           <div *ngIf="guestForm.get('email').errors.email">Invalid email address.</div>
         </div>
       </div>
-      <div>
+      <!-- <div>
         <label for="invStatInput">Invitation State:</label>
         <select formControlName="invitationState" [(ngModel)]="guestEdit.invitationState" id="invStatInput"
           name="invStatInput" class="form-control" required>
@@ -159,7 +159,7 @@
           class="text-danger">
           <div *ngIf="guestForm.get('invitationState').errors.required">Invitation state is required.</div>
         </div>
-      </div>
+      </div> -->
       <input class="btn btn-success m-1" value="Update" type="submit" />
     </form>
   </div>
