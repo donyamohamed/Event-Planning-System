@@ -67,6 +67,7 @@ namespace Event_Planning_System.Guest
             {
                 throw new EntityNotFoundException(typeof(Enitities.Event), eventId);
             }
+            guest.InvitationState = "Pending";
             eventUser.Guests.Add(guest);
             await _repositoryEvent.UpdateAsync(eventUser);
         }
@@ -143,7 +144,26 @@ namespace Event_Planning_System.Guest
                 return new ObjectResult(ex.Message) { StatusCode = 500 };
             }
         }
+        public async Task UpdateInvitationState(int guestId, string newState)
+        {
+            var guest = await _repository.FirstOrDefaultAsync(guestId);
+            if (guest == null)
+            {
+                throw new EntityNotFoundException(typeof(Enitities.Guest), guestId);
+            }
 
+            guest.InvitationState = newState;
+            await _repository.UpdateAsync(guest);
+        }
 
+        public async Task<GuestDto> GetGuestByEmailAsync(string email)
+        {
+            var guest = await _repository.FirstOrDefaultAsync(g => g.Email == email);
+            if (guest == null)
+            {
+                throw new EntityNotFoundException(typeof(Enitities.Guest), email);
+            }
+            return _mapper.Map<GuestDto>(guest);
+        }
     }
 }

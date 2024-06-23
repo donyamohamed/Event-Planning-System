@@ -1,7 +1,7 @@
 <nav class=" navbar navbar-expand navbar-white navbar-light p-2">
   <header-left-navbar></header-left-navbar>
   <ul class="navbar-nav ml-auto">
-    <app-notifications></app-notifications>
+    <app-notifications  *ngIf="isLoggedIn"></app-notifications>
     <header-language-menu></header-language-menu>
     <header-user-menu></header-user-menu>
   </ul>
