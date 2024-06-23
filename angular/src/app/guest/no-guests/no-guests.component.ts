@@ -8,7 +8,7 @@ import { template } from 'lodash-es';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { FormsModule, FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from "../../../shared/shared.module";
-import Swal from 'sweetalert2';
+
 
 import Swal from 'sweetalert2';
 
