@@ -15,6 +15,7 @@
 
       <div class="header">
         <button id="delete" (click)="deleteEvent(event)" title="delete"> <i class="fas fa-trash"></i></button>
+        <button id="edit" (click)="openEditModal(Editetemplate,event.id)"  title="edit"> <i class="fa-solid fa-pen-to-square"></i></button>
         <div class="date">
           <div class="day">{{ event.startDate | date: 'dd' }}</div>
           <div class="month">{{ event.startDate | date: 'MMM' }}</div>
@@ -25,25 +26,310 @@
         <p>{{ event.location }}</p>
         <button id="details" (click)="details(event)">{{"View"|localize}}</button>
         <button id="invite" (click)="guestAppearing(event)">{{"Guest"|localize}}</button>
-        <!-- <div class="share-buttons">
-          <a href="https://www.facebook.com/sharer/sharer.php?u={{ getEventUrl(event.id) }}" target="_blank">
-            Share on Facebook
-          </a>
-          <br>
-          <a href="https://twitter.com/intent/tweet?url={{ getEventUrl(event.id) }}&text={{ event.name }}" target="_blank">
-            Share on Twitter
-          </a>
-          <br>
-          <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ getEventUrl(event.id) }}" target="_blank">
-            Share on LinkedIn
-          </a>
-          <br>
-          <a href="https://api.whatsapp.com/send?text={{ event.name }}%20{{ getEventUrl(event.id) }}" target="_blank">
-            Share on WhatsApp
-          </a>
-        </div> -->
-      
+        
       </div>
     </div>
   </div>
 </div>
+  <!---------------- edit Modal ---------------------->
+<!-- <ng-template #Editetemplate>
+  <div class="modal-header">
+    <h4 class="modal-title" style="color: #1D2027;">Update Guest</h4>
+    <button type="button" class="close" aria-label="Close" (click)="bsModalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="eventEditForm" (ngSubmit)="editEvent()">
+      <div>
+        <label for="nameInput">Name:</label>
+        <input formControlName="name" class="form-control" type="text" id="nameInput" name="nameInput"
+          [(ngModel)]="eventEdit.name" required />
+        <div *ngIf="eventEditForm.get('name').invalid && eventEditForm.get('name').touched" class="text-danger">
+          <div *ngIf="eventEditForm.get('name').errors.required">Name is required.</div>
+          <div *ngIf="eventEditForm.get('name').errors.maxlength">Name cannot be longer than 100 characters.</div>
+        </div>
+      </div>
+      <div>
+        <label for="phoneInput">Phone:</label>
+        <input formControlName="phone" class="form-control" type="text" id="phoneInput" name="phoneInput"
+          [(ngModel)]="eventEdit.category" required />
+        <!-- <div *ngIf="guestForm.get('phone').invalid && guestForm.get('phone').touched" class="text-danger">
+          <div *ngIf="guestForm.get('phone').errors.required">Phone is required.</div>
+          <div *ngIf="guestForm.get('phone').errors.pattern">Phone must be a 10-digit number.</div>
+        </div> --
+      </div>
+      <div>
+        <label for="emailInput">Email:</label>
+        <input formControlName="email" class="form-control" type="email" id="emailInput" name="emailInput"
+          [(ngModel)]="eventEdit.isPublic" required />
+        <!-- <div *ngIf="guestForm.get('email').invalid && guestForm.get('email').touched" class="text-danger">
+          <div *ngIf="guestForm.get('email').errors.required">Email is required.</div>
+          <div *ngIf="guestForm.get('email').errors.email">Invalid email address.</div>
+        </div> --
+      </div>
+      <div>
+        <label for="invStatInput">Invitation State:</label>
+        <select formControlName="invitationState" [(ngModel)]="eventEdit.location" id="invStatInput"
+          name="invStatInput" class="form-control" required>
+          <option value="" aria-readonly="true">Select State</option>
+          <option value="Pending">Pending</option>
+          <option value="Confirmed">Confirmed</option>
+        </select>
+        <!-- <div *ngIf="guestForm.get('invitationState').invalid && guestForm.get('invitationState').touched"
+          class="text-danger">
+          <div *ngIf="guestForm.get('invitationState').errors.required">Invitation state is required.</div>
+        </div> --
+      </div>
+      <input class="btn btn-success m-1" value="Update" type="submit" />
+    </form>
+  </div>
+</ng-template> -->
+
+<ng-template #Editetemplate>
+  <div class="modal-header">
+    <h4 class="modal-title" style="color: #1D2027;">Update Event</h4>
+    <button type="button" class="close" aria-label="Close" (click)="bsModalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="container create-event">
+      <form [formGroup]="eventEditForm" (ngSubmit)="editEvent()" class="form-container">
+        <div class="form-inner-container row">
+          <div class="col-lg-12 col-md-12">
+            <!-- <div class="row">
+              <div class="col-lg-6">
+                <!-- Left side form fields --
+                <div class="form-group">
+                  <label>{{"Event Name" | localize}}</label>
+                  <input type="text" formControlName="name" class="form-control" [placeholder]="'Event Name' | localize" required>
+                </div>
+                <div class="form-group">
+                  <label>{{"Event Location" | localize}}</label>
+                  <input type="text" formControlName="location" class="form-control" [placeholder]="'Event Location' | localize" required>
+                </div>
+                <div class="form-group date-container">
+                  <div>
+                    <label>{{"Start Date" | localize}}</label>
+                    <input type="date" formControlName="startDate" class="form-control" [min]="today" required>
+                  </div>
+                  <div>
+                    <label>{{"End Date" | localize}}</label>
+                    <input type="date" formControlName="endDate" class="form-control" [min]="today" required>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>{{"Attendees" | localize}}</label>
+                  <input type="number" formControlName="maxCount" class="form-control" [placeholder]="'Max Attendees' | localize" required>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <!-- Right side form fields --
+                <div class="form-group">
+                  <label>{{"Event Category" | localize}}</label>
+                  <select formControlName="category" class="form-control" title="Event Category" required>
+                    <option *ngFor="let key of enumeratorKeys" [ngValue]="key">{{ key }}</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>{{"Choose Event Type" | localize}}</label>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input type="radio" formControlName="isPublic" [value]="true" class="form-check-input" required>
+                      {{"Public" | localize}}
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input type="radio" formControlName="isPublic" [value]="false" class="form-check-input">
+                      {{"Private" | localize}}
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>{{"Event Image" | localize}}</label>
+                  <input type="file" (change)="onFileSelected($event)" class="form-control-file" accept="image/png, image/jpeg">
+                </div>
+                <div class="form-group">
+                  <label>{{"Event Description" | localize}}</label>
+                  <textarea formControlName="description" class="form-control" [placeholder]="'Event Description' | localize" required></textarea>
+                </div>
+              </div>
+            </div> -->
+            <div class="row">
+              <div class="col-lg-6">
+                <!-- Left side form fields -->
+                <div class="form-group">
+                  <label>{{"Event Name" | localize}}</label>
+                  <input type="text" formControlName="name" class="form-control" [placeholder]="'Event Name' | localize" required>
+                </div>
+                <div class="form-group">
+                  <label>{{"Event Location" | localize}}</label>
+                  <input type="text" formControlName="location" class="form-control" [placeholder]="'Event Location' | localize" required>
+                </div>
+                <div class="form-group date-container">
+                  <div>
+                    <label>{{"Start Date" | localize}}</label>
+                    <input type="date" formControlName="startDate" class="form-control" [min]="today" required>
+                  </div>
+                  <div>
+                    <label>{{"End Date" | localize}}</label>
+                    <input type="date" formControlName="endDate" class="form-control" [min]="today" required>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>{{"Attendees" | localize}}</label>
+                  <input type="number" formControlName="maxCount" class="form-control" [placeholder]="'Max Attendees' | localize" required>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <!-- Right side form fields -->
+                <div class="form-group">
+                  <label>{{"Event Category" | localize}}</label>
+                  <select formControlName="category" class="form-control" title="Event Category" required>
+                    <option *ngFor="let key of enumeratorKeys" [ngValue]="key">{{ key }}</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>{{"Choose Event Type" | localize}}</label>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input type="radio" formControlName="isPublic" [value]="true" class="form-check-input" required>
+                      {{"Public" | localize}}
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input type="radio" formControlName="isPublic" [value]="false" class="form-check-input">
+                      {{"Private" | localize}}
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>{{"Event Image" | localize}}</label>
+                  <input type="file" (change)="onFileSelected($event)" class="form-control-file" accept="image/png, image/jpeg">
+                </div>
+                <div class="form-group">
+                  <label>{{"Event Description" | localize}}</label>
+                  <textarea formControlName="description" class="form-control" [placeholder]="'Event Description' | localize" required></textarea>
+                </div>
+              </div>
+            </div>
+            <button type="submit" class="submit-button">{{"Update" | localize}}</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</ng-template>
+
+<!-- <ng-template #Editetemplate>
+  <div class="modal-header">
+    <h4 class="modal-title" style="color: #1D2027;">Update Event</h4>
+    <button type="button" class="close" aria-label="Close" (click)="bsModalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="container create-event">
+      <form [formGroup]="eventEditForm" (ngSubmit)="editEvent()" class="form-container">
+        <div class="form-inner-container row">
+          <div class="col-lg-12 col-md-12">
+            <div class="row">
+              <div class="col-lg-6">
+                <!-- Left side form fields -->
+                <!-- <div class="form-group">
+                  <label>{{"User Name" | localize}}</label>
+                  <input type="text" [value]='username' name="username" class="form-control" [placeholder]="'Username' | localize" readonly>
+                  <input type="hidden" [value]="eventEdit.userId" name="userId">
+                  guestForm.get('email').invalid && guestForm.get('email').touched
+                </div> --
+                <div class="form-group">
+                  <label>{{"Event Name" | localize}}</label>
+                  <input type="text" [(ngModel)]="eventEdit.name" name="name" class="form-control" [placeholder]="'Event Name' | localize" required pattern="^[a-zA-Z0-9 ]+$">
+                  <!-- <div *ngIf="eventEditForm.get('name').invalid && (eventEditForm.get('name').dirty || eventEditForm.get('name').touched)" class="error-message">
+                    <div *ngIf="eventEditForm.get('name').errors.required">Name is required</div>
+                    <div *ngIf="eventEditForm.get('name').errors.pattern">Name must be a string </div>
+                  </div> --
+                </div>
+                <div class="form-group">
+                  <label>{{"Event Location" | localize}}</label>
+                  <input type="text" [(ngModel)]="eventEdit.location" name="location" class="form-control" [placeholder]="'Event Location' | localize" required pattern="^[a-zA-Z0-9 ]+$">
+                  <!-- <div *ngIf="eventEditForm.get('location').invalid && (eventEditForm.get('location').dirty || eventEditForm.get('location').touched)" class="error-message">
+                    <div *ngIf="eventEditForm.get('location').errors.required">Location is required</div>
+                    <div *ngIf="eventEditForm.get('location').errors.pattern">Location must be a string </div>
+                  </div> --
+                </div>
+                <div class="form-group date-container">
+                  <div>
+                    <label>{{"Start Date" | localize}}</label>
+                    <input type="date" [(ngModel)]="eventEdit.startDate" name="startDate" class="form-control" [min]="today" (change)="validateDates()" required>
+                    <!-- <div *ngIf="eventEditForm.get('startDate').invalid && (eventEditForm.get('startDate').dirty || eventEditForm.get('startDate').touched)" class="error-message">
+                      <div *ngIf="eventEditForm.get('startDate').errors.required">Start Date is required</div>
+                    </div> --
+                  </div>
+                  <div>
+                    <label>{{"End Date" | localize}}</label>
+                    <input type="date" [(ngModel)]="eventEdit.endDate" name="endDate" class="form-control" [min]="today" (change)="validateDates()" required>
+                    <!-- <div *ngIf="eventEditForm.get('endDate').invalid && (eventEditForm.get('endDate').dirty || eventEditForm.get('endDate').touched)" class="error-message">
+                      <div *ngIf="eventEditForm.get('endDate').errors.required">End Date is required</div>
+                    </div> --
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>{{"Attendees" | localize}}</label>
+                  <input type="number" [(ngModel)]="eventEdit.maxCount" name="maxCount" class="form-control" [placeholder]="'Max Attendees' | localize" required>
+                  <!-- <div *ngIf="eventEditForm.get('maxCount').invalid && (eventEditForm.get('maxCount').dirty || eventEditForm.get('maxCount').touched)" class="error-message">
+                    <div *ngIf="eventEditForm.get('maxCount').errors.required">Max Attendees is required</div>
+                  </div> --
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <!-- Right side form fields --
+                <div class="form-group">
+                  <label>{{"Event Category" | localize}}</label>
+                  <select [(ngModel)]="eventEdit.category" name="category" class="form-control" title="Event Category" required>
+                    <option *ngFor="let key of enumeratorKeys" [ngValue]="key">{{ key }}</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>{{"Choose Event Type" | localize}}</label>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input type="radio" [(ngModel)]="eventEdit.isPublic" [value]="true" name="isPublic" class="form-check-input" required>
+                      {{"Public"|localize}}
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input type="radio" [(ngModel)]="eventEdit.isPublic" [value]="false" name="isPublic" class="form-check-input">
+                      {{"Private"|localize}}
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>{{"Event Image" | localize}}</label>
+                  <input type="file" [(ngModel)]="eventEdit.eventImgFile" (change)="onFileSelected($event)" name="eventImgFile" class="form-control-file" accept="image/png, image/jpeg">
+                </div>
+                <div class="form-group">
+                  <label>{{"Event Description" | localize}}</label>
+                  <textarea [(ngModel)]="eventEdit.description" name="description" class="form-control" [placeholder]="'Event Description' | localize" required pattern="^[a-zA-Z0-9 ]+$"></textarea>
+                  <!-- <div *ngIf="eventEditForm.get('description').invalid && (eventEditForm.get('description').dirty || eventEditForm.get('description').touched)" class="error-message">
+                    <div *ngIf="eventEditForm.get('description').errors.required">Description is required</div>
+                    <div *ngIf="eventEditForm.get('description').errors.pattern">Description must be a string </div>
+                  </div> --
+                </div>
+              </div>
+            </div>
+            <button type="submit" class="submit-button">{{"Update"|localize}}</button>
+          </div>
+          <!-- <div class="col-lg-4 col-md-12 image-container">
+            <img src="../../../assets/img/Work anniversary-pana.svg" style="margin-left:10vw" alt="Event Image" class="img-fluid larger-image">
+          </div> --
+        </div>
+      </form>
+    </div>
+  </div>
+</ng-template>
+ -->

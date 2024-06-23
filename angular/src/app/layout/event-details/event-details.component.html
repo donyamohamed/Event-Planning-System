@@ -26,7 +26,7 @@
           <p><strong>{{"Category:" |localize}}</strong> {{ event.category }}</p>
           <p><strong>{{"Max Count:" |localize}}</strong> {{ event.maxCount }}</p>
 
-        <p><strong>Share via :</strong>
+        <p *ngIf="event.isPublic"><strong>Share via :</strong>
             <span class="social-account">
               <button class="btn text-primary" (click)="shareOnFacebook()"><i class="fa-brands fa-facebook-f fa-x"></i></button> | 
               <button class="btn text-primary" (click)="shareOnLinkedIn()"><i class="fa-brands fa-linkedin-in fa-x"></i></button> | 
