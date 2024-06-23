@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 export class AskforInvitationService {
   private askforInvitationApi = "https://localhost:44311/api/services/app/Notification/CreateNotification";
   private pendingEmailApi = "https://localhost:44311/api/Invitation/SendPendingEmail";
+  private baseUrl = 'https://localhost:44311/api/services/app/Notification/CheckExistingInvitation';
 
   constructor(private http: HttpClient) {}
 
@@ -18,4 +19,8 @@ export class AskforInvitationService {
   sendPendingEmail(emailData: any): Observable<any> {
     return this.http.post<any>(this.pendingEmailApi, emailData);
   }
+  checkExistingInvitation(guestId: number, eventId: number): Observable<{ exists: boolean }> {
+    return this.http.post<any>(`${this.baseUrl}`, { guestId, eventId });
+  }
+  
 }

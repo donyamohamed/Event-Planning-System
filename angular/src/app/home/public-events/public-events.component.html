@@ -21,7 +21,7 @@
               <button class="btn btn-primary" (click)="askForInvitation(event)">{{"Ask for invitation" | localize}}</button>
               <button id="details" (click)="details(event)">{{"View"|localize}}</button>
           </div>
-          <div class="Chat-icon" (click)="navigateToComponent(event.userId)">
+          <div class="Chat-icon" (click)="navigateToComponent(event.userId)" *ngIf="isLoggedIn">
             <i class="fa fa-comments btn btn-primary"></i>
           </div>
 
