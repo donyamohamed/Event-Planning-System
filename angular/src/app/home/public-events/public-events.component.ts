@@ -8,42 +8,98 @@ import { EventsResponse } from '../../../app/home/eventInterface';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { SharedModule } from "../../../shared/shared.module";
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { GuestService } from '../../../shared/Services/guest.service'; // Adjust path as per your project structure
-
 @Component({
     selector: 'app-public-events',
     templateUrl: './public-events.component.html',
     styleUrls: ['./public-events.component.css'],
-    standalone:true,
-    imports: [CommonModule, SharedModule],
-    providers: [GuestService] // Ensure GuestService is provided
+    imports: [CommonModule, SharedModule,RouterLink]
 })
 export class PublicEventsComponent implements OnInit {
-    public events: Event[] = [];
-    public isLoading: boolean = true;
-    username: string;
-    guestEmail: string;
-    guestId: number;
+  public events: Event[] = [];
+  public isLoading: boolean = true;
+  username: string;
+  guestEmail: string;
+  guestId: number;
 
-    constructor(
-        private PublicEventServ: HomeService,
-        private askForInvitationServ: AskforInvitationService,
-        private cdr: ChangeDetectorRef,
-        private http: HttpClient,
-        private router: Router,
-        private guestService: GuestService // Inject GuestService
-    ) {}
+  constructor(
+    private PublicEventServ: HomeService,
+    private askForInvitationServ: AskforInvitationService,
+    private cdr: ChangeDetectorRef,
+    private http: HttpClient,
+    private router:Router,
+    private route: Router,
+  ) {}
 
-    ngOnInit(): void {
-        this.fetchUserEvents();
+  ngOnInit(): void {
+    this.fetchUserEvents();
 
-        // Check if there's a saved event after login
-        const savedEvent = sessionStorage.getItem('selectedEvent');
-        if (savedEvent) {
-            const event: Event = JSON.parse(savedEvent);
-            this.fetchUserDataAndProceed(event);
-            sessionStorage.removeItem('selectedEvent');
+    // Check if there's a saved event after login
+    const savedEvent = sessionStorage.getItem('selectedEvent');
+    if (savedEvent) {
+      const event: Event = JSON.parse(savedEvent);
+      this.fetchUserDataAndProceed(event);
+      sessionStorage.removeItem('selectedEvent');
+      
+    }
+  }
+  details(event: Event): void {
+    if (this.events.length > 0) {
+      this.route.navigateByUrl("app/eventHomeDetails/" + event.id, { state: { event } });
+    }
+  }
+
+  fetchUserEvents(): void {
+    this.PublicEventServ.getPublicEvents().subscribe(
+      (data: EventsResponse) => {
+        this.events = data.result;
+        console.log(this.events);
+        this.isLoading = false;
+        this.cdr.detectChanges();  // Manually trigger change detection
+      },
+      (error) => {
+        console.error('Error fetching user events', error);
+        this.isLoading = false; // Change to false to indicate loading finished
+      }
+    );
+  }
+
+  getUserData(): Observable<any> {
+    return this.http.get<any>('https://localhost:44311/api/services/app/UserProfileAppServices/GetUserProfile');
+  }
+
+  askForInvitation(event: Event): void {
+    this.getUserData().subscribe(
+      response => {
+        if (response && response.result) {
+          this.username = response.result.name;
+          this.guestId = response.result.id;
+          this.guestEmail = response.result.email;
+          this.createNotificationAndSendEmail(event);
+        } else {
+          this.saveEventDataToSession(event);
+          window.location.href = "/account/login";
+        }
+      },
+      error => {
+        console.error('Error fetching user data', error);
+        this.saveEventDataToSession(event);
+        window.location.href = "/account/login";
+      }
+    );
+  }
+
+  fetchUserDataAndProceed(event: Event): void {
+    this.getUserData().subscribe(
+      response => {
+        if (response && response.result) {
+          this.username = response.result.name;
+          this.guestId = response.result.id;
+          this.guestEmail = response.result.emailAddress;
+          console.log(this.guestEmail);
+          this.createNotificationAndSendEmail(event);
+
         }
     }
 

@@ -1,5 +1,6 @@
 import { ShareDetailesComponent } from './layout/share-detailes/share-detailes.component';
 import { PublicEventsComponent } from './home/public-events/public-events.component';
+import {EventHOmeDetailsComponent} from './layout/event-home-details/event-home-details.component';
 
 // import { NoGuestsComponent } from './guest/no-guests/no-guests.component';
 
@@ -154,7 +155,7 @@ const routes: Routes = [
             { path: 'todolist/:id', component: TodoListComponent, canActivate: [AppRouteGuard] },
             { path: 'showInterests', component: InterstsComponent, canActivate: [AppRouteGuard] },
             { path: 'addNewGuest', component: CreateGuestComponent, canActivate: [AppRouteGuard] },
-
+            {path:'eventHomeDetails/:id',component:EventHOmeDetailsComponent},
             { path: 'publicEvents', component: PublicEventsComponent },
 
             { path: 'NoGuests/:id', component: NoGuestsComponent, canActivate: [AppRouteGuard] },
