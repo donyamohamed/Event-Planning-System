@@ -67,6 +67,7 @@ namespace Event_Planning_System.Guest
             {
                 throw new EntityNotFoundException(typeof(Enitities.Event), eventId);
             }
+            guest.InvitationState = "Pending";
             eventUser.Guests.Add(guest);
             await _repositoryEvent.UpdateAsync(eventUser);
         }

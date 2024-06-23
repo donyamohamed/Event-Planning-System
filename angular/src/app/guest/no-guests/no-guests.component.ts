@@ -39,7 +39,7 @@ export class NoGuestsComponent {
       name: ['', [Validators.required, Validators.maxLength(100)]],
       phone: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
       email: ['', [Validators.required, Validators.email]],
-      invitationState: ['', [Validators.required]]
+      // invitationState: ['', [Validators.required]]
     });
   }
 
