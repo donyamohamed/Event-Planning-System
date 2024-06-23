@@ -8,8 +8,7 @@ import { template } from 'lodash-es';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { FormsModule, FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from "../../../shared/shared.module";
-
-
+import swal from 'sweetalert2';
 
 @Component({
     selector: 'app-no-guests',
@@ -125,7 +124,7 @@ export class NoGuestsComponent {
   // }
 
   promptFileSelection(): void {
-    Swal.fire({
+    swal.fire({
       title: 'Enter the Name, Phone number, and Email. Each one in a column',
       icon: 'warning',
       showCancelButton: true,
