@@ -38,7 +38,7 @@ import { PublicEventsComponent } from './home/public-events/public-events.compon
 //                 path: '',
 //                 component: AppComponent,
 //                 children: [
-                
+
 //                     { path: 'home', component: HomeComponent,  canActivate: [AppRouteGuard] },
 //                     { path: 'users', component: UsersComponent, data: { permission: 'Pages.Users' }, canActivate: [AppRouteGuard] },
 //                     { path: 'roles', component: RolesComponent, data: { permission: 'Pages.Roles' }, canActivate: [AppRouteGuard] },
@@ -47,7 +47,7 @@ import { PublicEventsComponent } from './home/public-events/public-events.compon
 //                     { path: 'update-password', component: ChangePasswordComponent, canActivate: [AppRouteGuard] },
 //                     { path: 'create-event', component: CreateEventComponent },
 //                     {path :'historyevent',component:HistoryeventComponent},
-                   
+
 
 
 
@@ -66,7 +66,7 @@ import { PublicEventsComponent } from './home/public-events/public-events.compon
 
 
 
-            
+
 //                     {
 //                         path:"Profile",
 //                         component:UserProfileComponent,
@@ -84,11 +84,11 @@ import { PublicEventsComponent } from './home/public-events/public-events.compon
 //                 { path: 'delete/:id', component: DeleteGuestComponent },
 //                 { path: 'showMore/:id', component: GetByIdGuestComponent }
 //             ]}
-            
+
 //                 ]
-               
+
 //             }
-            
+
 //         ])
 //     ],
 //     exports: [RouterModule]
@@ -125,13 +125,14 @@ import { InterstsComponent } from './intersts/intersts.component';
 import { TodoListComponent } from './layout/event-todo-list/event-todo-list.component';
 import { EventDetailsComponent } from './layout/event-details/event-details.component';
 import { NotificatiosComponent } from './layout/notifications/notificatios.component';
-
+import { ChatComponentComponent } from './../app/chat-component/chat-component.component'
 
 const routes: Routes = [
     {
         path: '',
         component: AppComponent,
         children: [
+            { path: 'Chat/:plannerId', component: ChatComponentComponent },
             { path: 'home', component: HomeComponent },
             { path: 'users', component: UsersComponent, data: { permission: 'Pages.Users' }, canActivate: [AppRouteGuard] },
             { path: 'roles', component: RolesComponent, data: { permission: 'Pages.Roles' }, canActivate: [AppRouteGuard] },
@@ -141,20 +142,20 @@ const routes: Routes = [
             { path: 'create-event', component: CreateEventComponent, canActivate: [AppRouteGuard] },
            
             { path: 'set-expenses', component: SetExpensesComponent, canActivate: [AppRouteGuard] },
-            
+
             { path: 'historyevent', component: HistoryeventComponent, canActivate: [AppRouteGuard] },
             { path: 'user-event', component: UserEventComponent, canActivate: [AppRouteGuard] },
 
             { path: 'Profile', component: UserProfileComponent, canActivate: [AppRouteGuard] },
-            { path: 'Notifications', component:NotificatiosComponent , canActivate: [AppRouteGuard] },
-
+            { path: 'Notifications', component: NotificatiosComponent, canActivate: [AppRouteGuard] },
+            
             { path: 'eventDetails/:id', component: EventDetailsComponent, canActivate: [AppRouteGuard] },
             { path: 'shareDetails/:id', component: ShareDetailesComponent, canActivate: [AppRouteGuard] },
             { path: 'todolist/:id', component: TodoListComponent, canActivate: [AppRouteGuard] },
             { path: 'showInterests', component: InterstsComponent, canActivate: [AppRouteGuard] },
             { path: 'addNewGuest', component: CreateGuestComponent, canActivate: [AppRouteGuard] },
 
-            { path: 'publicEvents', component: PublicEventsComponent},
+            { path: 'publicEvents', component: PublicEventsComponent },
 
             { path: 'NoGuests/:id', component: NoGuestsComponent, canActivate: [AppRouteGuard] },
             {
@@ -175,4 +176,4 @@ const routes: Routes = [
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
