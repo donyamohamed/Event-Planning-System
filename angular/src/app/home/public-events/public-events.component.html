@@ -1,15 +1,15 @@
 <div class="events m-2 p-2">
 
-  <div class="header-container">
+    <div class="header-container">
       <h2>{{"Recommended Events" | localize}}</h2>
-      <h4 class="text-muted" >{{"Based on your Interests" | localize}}</h4>
-  </div>
-
-  <div class="card-container">
+      <h4 class="text-muted">{{"Based on your Interests" | localize}}</h4>
+    </div>
+  
+    <div class="card-container">
       <div id="loading" *ngIf="isLoading" class="text-center">
-          <img src="../../../assets/img/Spin@1x-1.0s-200px-200px.gif" alt="" class="p-5 m-5">
+        <img src="../../../assets/img/Spin@1x-1.0s-200px-200px.gif" alt="" class="p-5 m-5">
       </div> <!-- Show loading div if isLoading is true -->
-
+  
       <div *ngFor="let event of events" class="card" [ngStyle]="{'background-image': 'url(' + (event.eventImg ? event.eventImg : '../../assets/img/Event.jpg') + ')'}">
           <div class="date">
               <div class="day">{{ event.startDate | date:'dd' }}</div>
@@ -24,7 +24,8 @@
           <div class="Chat-icon" (click)="navigateToComponent(event.userId)">
             <i class="fa fa-comments btn btn-primary"></i>
           </div>
-      </div>
-  </div>
-</div>
 
+      </div>
+    </div>
+  </div>
+  
