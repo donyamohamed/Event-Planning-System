@@ -449,7 +449,7 @@ section {
   bottom: 80px;
   right: 20px;
   background-color: white;
-  border: 2px solid #050794;
+  border: 2px solid #fbaf1b;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   z-index: 1000;
@@ -484,9 +484,17 @@ section {
 }
 
 .chat-body button {
-  background-color: #050794;
-  color: white;
-  border: none;
+  background-color: white;
+  color: #050794;
+  border-color: #fbaf1b;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.chat-body button:hover {
+  background-color: white;
+  color: #fbaf1b;
+  border-color: #050794;
   padding: 10px;
   border-radius: 5px;
   cursor: pointer;
