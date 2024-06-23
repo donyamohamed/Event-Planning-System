@@ -9,16 +9,20 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { SharedModule } from "../../../shared/shared.module";
 import { Router, RouterLink } from '@angular/router';
-import { GuestService } from '../../../shared/Services/guest.service'; // Adjust path as per your project structure
+import { GuestService } from '../../../shared/Services/guest.service';
+import Swal from 'sweetalert2';
+
 @Component({
-    selector: 'app-public-events',
-    templateUrl: './public-events.component.html',
-    styleUrls: ['./public-events.component.css'],
-    imports: [CommonModule, SharedModule,RouterLink]
+  selector: 'app-public-events',
+  templateUrl: './public-events.component.html',
+  styleUrls: ['./public-events.component.css'],
+  imports: [CommonModule, SharedModule, RouterLink],
+  standalone: true
 })
 export class PublicEventsComponent implements OnInit {
   public events: Event[] = [];
   public isLoading: boolean = true;
+  public isLoggedIn: boolean = false;
   username: string;
   guestEmail: string;
   guestId: number;
@@ -28,11 +32,12 @@ export class PublicEventsComponent implements OnInit {
     private askForInvitationServ: AskforInvitationService,
     private cdr: ChangeDetectorRef,
     private http: HttpClient,
-    private router:Router,
-    private route: Router,
+    private router: Router,
+    private guestService: GuestService
   ) {}
 
   ngOnInit(): void {
+    this.checkIfLoggedIn();
     this.fetchUserEvents();
 
     // Check if there's a saved event after login
@@ -41,12 +46,28 @@ export class PublicEventsComponent implements OnInit {
       const event: Event = JSON.parse(savedEvent);
       this.fetchUserDataAndProceed(event);
       sessionStorage.removeItem('selectedEvent');
-      
     }
   }
+
+  checkIfLoggedIn(): void {
+    this.getUserData().subscribe(
+      response => {
+        if (response && response.result) {
+          this.isLoggedIn = true;
+          this.username = response.result.name;
+          this.guestId = response.result.id;
+          this.guestEmail = response.result.email;
+        }
+      },
+      error => {
+        this.isLoggedIn = false;
+      }
+    );
+  }
+
   details(event: Event): void {
     if (this.events.length > 0) {
-      this.route.navigateByUrl("app/eventHomeDetails/" + event.id, { state: { event } });
+      this.router.navigateByUrl("app/eventHomeDetails/" + event.id, { state: { event } });
     }
   }
 
@@ -57,6 +78,7 @@ export class PublicEventsComponent implements OnInit {
         console.log(this.events);
         this.isLoading = false;
         this.cdr.detectChanges();  // Manually trigger change detection
+        this.checkMaxCountAndGuests();
       },
       (error) => {
         console.error('Error fetching user events', error);
@@ -65,8 +87,22 @@ export class PublicEventsComponent implements OnInit {
     );
   }
 
-  getUserData(): Observable<any> {
-    return this.http.get<any>('https://localhost:44311/api/services/app/UserProfileAppServices/GetUserProfile');
+  checkMaxCountAndGuests(): void {
+    this.events.forEach(event => {
+      this.guestService.getGuestsPerEvent(event.id).subscribe(
+        (response) => {
+          const guests = response.result;
+          const guestCount = guests.length;
+          // Dynamically add isButtonDisabled property
+          (event as any).isButtonDisabled = event.maxCount === guestCount;
+          // Trigger change detection manually
+          this.cdr.detectChanges();
+        },
+        (error) => {
+          console.error(`Error fetching guests for event ${event.name}`, error);
+        }
+      );
+    });
   }
 
   askForInvitation(event: Event): void {
@@ -76,7 +112,7 @@ export class PublicEventsComponent implements OnInit {
           this.username = response.result.name;
           this.guestId = response.result.id;
           this.guestEmail = response.result.email;
-          this.createNotificationAndSendEmail(event);
+          this.checkIfAlreadyRequested(event);
         } else {
           this.saveEventDataToSession(event);
           window.location.href = "/account/login";
@@ -98,152 +134,110 @@ export class PublicEventsComponent implements OnInit {
           this.guestId = response.result.id;
           this.guestEmail = response.result.emailAddress;
           console.log(this.guestEmail);
-          this.createNotificationAndSendEmail(event);
-
+          this.checkIfAlreadyRequested(event);
         }
+      },
+      error => {
+        console.error('Error fetching user data', error);
+      }
+    );
+  }
+
+  checkIfAlreadyRequested(event: Event): void {
+    if (event.userId === this.guestId) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Event Owner',
+        text: 'You cannot request an invitation to your own event.',
+        confirmButtonText: 'OK'
+      });
+      return;
     }
 
-    fetchUserEvents(): void {
-        this.PublicEventServ.getPublicEvents().subscribe(
-            (data: EventsResponse) => {
-                this.events = data.result;
-                console.log(this.events);
-                this.isLoading = false;
-                this.cdr.detectChanges();  // Manually trigger change detection
-                this.checkMaxCountAndGuests();
-            },
-            (error) => {
-                console.error('Error fetching user events', error);
-                this.isLoading = false; // Change to false to indicate loading finished
-            }
-        );
-    }
+    this.askForInvitationServ.checkExistingInvitation(this.guestId, event.id).subscribe(
+      response => {
+        console.log(response);
+        if (response) {
+          Swal.fire({
+            icon: 'info',
+            title: 'Invitation Request',
+            text: 'You have already requested an invitation for this event.',
+            confirmButtonText: 'OK'
+          });
+        } else {
+          this.createNotificationAndSendEmail(event);
+        }
+      },
+      error => {
+        console.error('Error checking existing invitation', error);
+      }
+    );
+  }
 
-    // Function to check maxCount against number of guests
-    // public-events.component.ts
-// public-events.component.ts
-checkMaxCountAndGuests(): void {
-  this.events.forEach(event => {
-      this.guestService.getGuestsPerEvent(event.id).subscribe(
-          (response) => {
-              const guests = response.result;
-              const guestCount = guests.length;
-              // Dynamically add isButtonDisabled property
-              (event as any).isButtonDisabled = event.maxCount === guestCount;
-              // Trigger change detection manually
-              this.cdr.detectChanges();
+  createNotificationAndSendEmail(event: Event): void {
+    const notificationData = {
+      content: `Invitation request for event: ${event.name}`,
+      date: new Date().toISOString(),
+      nType: 1,
+      isRead: false,
+      status: 0,
+      userId: event.userId,
+      guestId: this.guestId,
+      eventId: event.id
+    };
+
+    const emailData = {
+      toEmail: this.guestEmail,
+      subject: `Invitation Request for ${event.name}`,
+      body: `Your request is currently pending. We will notify you once your request has been processed.`,
+      eventName: event.name,
+      date: event.startDate,
+      eventAddress: event.location
+    };
+
+    this.askForInvitationServ.createNotification(notificationData).subscribe(
+      response => {
+        console.log('Notification created:', response);
+        this.askForInvitationServ.sendPendingEmail(emailData).subscribe(
+          emailResponse => {
+            console.log('Pending email sent:', emailResponse);
+            Swal.fire({
+              icon: 'success',
+              title: 'Request Sent',
+              text: 'Your invitation request has been sent successfully. Please wait for a response.',
+              confirmButtonText: 'OK'
+            });
           },
-          (error) => {
-              console.error(`Error fetching guests for event ${event.name}`, error);
+          emailError => {
+            console.error('Error sending pending email:', emailError);
+            if (emailError.error) {
+              console.error('Server error details:', emailError.error);
+            }
           }
-      );
-  });
-}
-
-
-    // Function to ask for invitation
-    askForInvitation(event: Event): void {
-        this.getUserData().subscribe(
-            response => {
-                if (response && response.result) {
-                    this.username = response.result.name;
-                    this.guestId = response.result.id;
-                    this.guestEmail = response.result.email;
-                    this.createNotificationAndSendEmail(event);
-                } else {
-                    this.saveEventDataToSession(event);
-                    window.location.href = "/account/login";
-                }
-            },
-            error => {
-                console.error('Error fetching user data', error);
-                this.saveEventDataToSession(event);
-                window.location.href = "/account/login";
-            }
         );
-    }
+      },
+      error => {
+        console.error('Error creating notification:', error);
+        if (error.error) {
+          console.error('Server error details:', error.error);
+        }
+      }
+    );
+  }
 
-    // Function to fetch user data and proceed
-    fetchUserDataAndProceed(event: Event): void {
-        this.getUserData().subscribe(
-            response => {
-                if (response && response.result) {
-                    this.username = response.result.name;
-                    this.guestId = response.result.id;
-                    this.guestEmail = response.result.emailAddress;
-                    console.log(this.guestEmail);
-                    this.createNotificationAndSendEmail(event);
-                }
-            },
-            error => {
-                console.error('Error fetching user data', error);
-            }
-        );
-    }
+  saveEventDataToSession(event: Event): void {
+    sessionStorage.setItem('selectedEvent', JSON.stringify(event));
+  }
 
-    // Function to create notification and send email
-    createNotificationAndSendEmail(event: Event): void {
-        const notificationData = {
-            content: `Invitation request for event: ${event.name}`,
-            date: new Date().toISOString(),
-            nType: 1,
-            isRead: false,
-            status: 0,
-            userId: event.userId,
-            guestId: this.guestId,
-            eventId: event.id
-        };
+  getBackgroundImage(event: any): string {
+    return event.eventImg ? event.eventImg : 'https://cdn.pixabay.com/photo/2016/03/28/09/50/firework-1285261_1280.jpg';
+  }
 
-        const emailData = {
-            toEmail: this.guestEmail,
-            subject: `Invitation Request for ${event.name}`,
-            body: `Your request is currently pending. We will notify you once your request has been processed.`,
-            eventName: event.name,
-            date: event.startDate,
-            eventAddress: event.location,
-        };
+  navigateToComponent(id: number): void {
+    this.router.navigateByUrl(`/app/Chat/${id}`);
+  }
 
-        this.askForInvitationServ.createNotification(notificationData).subscribe(
-            response => {
-                console.log('Notification created:', response);
-                this.askForInvitationServ.sendPendingEmail(emailData).subscribe(
-                    emailResponse => {
-                        console.log('Pending email sent:', emailResponse);
-                    },
-                    emailError => {
-                        console.error('Error sending pending email:', emailError);
-                        if (emailError.error) {
-                            console.error('Server error details:', emailError.error);
-                        }
-                    }
-                );
-            },
-            error => {
-                console.error('Error creating notification:', error);
-                if (error.error) {
-                    console.error('Server error details:', error.error);
-                }
-            }
-        );
-    }
-
-    // Function to save event data to session storage
-    saveEventDataToSession(event: Event): void {
-        sessionStorage.setItem('selectedEvent', JSON.stringify(event));
-    }
-
-    // Function to get background image for event
-    getBackgroundImage(event: any): string {
-        return event.eventImg ? event.eventImg : 'https://cdn.pixabay.com/photo/2016/03/28/09/50/firework-1285261_1280.jpg';
-    }
-
-    // Function to navigate to component based on userId
-    navigateToComponent(id: number): void {
-        this.router.navigateByUrl(`/app/Chat/${id}`);
-    }
-
-    // Function to get user data
-    getUserData(): Observable<any> {
-        return this.http.get<any>('https://localhost:44311/api/services/app/UserProfileAppServices/GetUserProfile');
-    }
+  getUserData(): Observable<any> {
+    return this.http.get<any>('https://localhost:44311/api/services/app/UserProfileAppServices/GetUserProfile');
+  }
 }
