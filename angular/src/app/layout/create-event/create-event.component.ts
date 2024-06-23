@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgForm, FormBuilder, Validators } from '@angular/forms';
+import { NgForm } from '@angular/forms';
 import { Event } from '../../../shared/Models/Event';
 import { EventService } from '../../../shared/Services/eventa.service';
 import { Enumerator } from "../../../shared/Models/Event";
@@ -22,9 +22,9 @@ export class CreateEventComponent implements OnInit {
     eventData: Event = new Event();
     enumeratorKeys = Object.values(Enumerator);
     username: string;
-    today: string = new Date().toISOString().split('T')[0]; // Today's date in 'YYYY-MM-DD' format
+    today: string = new Date().toISOString().slice(0, 16); // Today's date and time in 'YYYY-MM-DDTHH:MM' format
 
-    constructor(private eventService: EventService, private http: HttpClient, private fb: FormBuilder) {}
+    constructor(private eventService: EventService, private http: HttpClient) {}
 
     ngOnInit(): void {
         this.getUserData();

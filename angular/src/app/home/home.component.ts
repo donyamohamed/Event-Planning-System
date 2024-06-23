@@ -4,11 +4,12 @@ import {
   ChangeDetectionStrategy,
   AfterViewInit,
   HostListener,
-  OnInit
+  OnInit, ChangeDetectorRef
 } from "@angular/core";
 import { AppComponentBase } from "@shared/app-component-base";
 import { appModuleAnimation } from "@shared/animations/routerTransition";
 import { Location } from '@angular/common';
+import { SignalRServiceService } from '../../shared/Services/signal-rservice.service';
 
 @Component({
   templateUrl: "./home.component.html",
@@ -19,10 +20,22 @@ import { Location } from '@angular/common';
 export class HomeComponent extends AppComponentBase implements AfterViewInit, OnInit {
   slideIndex: number = 1;
   private shouldRefresh: boolean = false;
+  questions: string[] = [
+    "How can our system help streamline your event planning process?",
+    "What features does the system offer for creating event plans?",
+    "How does the system assist in managing tasks and deadlines?",
+    "Can I invite guests and track RSVPs through the system?",
+    "What customization options are available for event details and settings?"
+  ];
+  selectedQuestion: string = null;
+  answer: string = null;
+  connectionEstablished: boolean = false;
 
   constructor(
     injector: Injector,
-    private location: Location
+    private location: Location,
+    private signalRService: SignalRServiceService, 
+    private cdr: ChangeDetectorRef
   ) {
     super(injector);
   }
@@ -37,6 +50,19 @@ export class HomeComponent extends AppComponentBase implements AfterViewInit, On
     } else {
       sessionStorage.removeItem('refreshed');
     }
+    this.signalRService.startConnection().then(() => {
+      this.connectionEstablished = true;
+      this.signalRService.addReceiveAnswerListener();
+
+      // Listen to answers
+      this.signalRService.hubConnection.on('ReceiveAnswer', (answer: string) => {
+        this.answer = answer;
+        this.cdr.detectChanges();  // Manually trigger change detection
+      });
+    }).catch(err => {
+      console.error('SignalR connection error: ', err);
+      this.connectionEstablished = false;
+    });
   }
 
   refreshPage() {
@@ -85,5 +111,28 @@ export class HomeComponent extends AppComponentBase implements AfterViewInit, On
   @HostListener("window:resize", ["$event"])
   onResize(event: Event) {
     this.adjustArrowPosition();
+  }
+
+  askQuestion(question: string): void {
+    if (this.connectionEstablished) {
+      this.selectedQuestion = question;
+      this.answer = null;  // Clear previous answer
+      this.signalRService.askQuestion(this.selectedQuestion);
+    } else {
+      console.error('Connection is not established. Please try again later.');
+    }
+  }
+
+  resetQuestions(): void {
+    this.selectedQuestion = null;
+    this.answer = null;
+  }
+
+  openChat(): void {
+    document.getElementById('chatPopup').style.display = 'block';
+  }
+
+  closeChat(): void {
+    document.getElementById('chatPopup').style.display = 'none';
   }
 }

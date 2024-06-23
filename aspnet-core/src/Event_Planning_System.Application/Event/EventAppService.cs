@@ -250,7 +250,7 @@ namespace Event_Planning_System.Event
 			var today = DateTime.Today;
 			if (eventEntity.StartDate > today && eventEntity.EndDate > today)
 			{
-				var guests = await _guestRepository.GetAllListAsync(g => g.Events.Any(e => e.Id == eventId));
+				var guests = await _guestRepository.GetAllListAsync(g => g.Events.Any(e => e.Id == eventId ) && g.InvitationState != "Pending");
 				foreach (var guest in guests)
 				{
 					var htmlBody = EmailCanceledTemple.GenerateEventCancellationEmail(eventEntity.Name, eventEntity.StartDate, guest.Name);
