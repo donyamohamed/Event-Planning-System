@@ -8,12 +8,13 @@ import swal from 'sweetalert2';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from "../../../shared/shared.module";
+import * as Filter from 'bad-words';
 
 @Component({
     selector: 'app-create-event',
-    standalone: true,
     templateUrl: './create-event.component.html',
     styleUrls: ['./create-event.component.css'],
+    standalone:true,
     imports: [FormsModule, ReactiveFormsModule, CommonModule, SharedModule]
 })
 export class CreateEventComponent implements OnInit {
@@ -23,6 +24,7 @@ export class CreateEventComponent implements OnInit {
     enumeratorKeys = Object.values(Enumerator);
     username: string;
     today: string = new Date().toISOString().slice(0, 16); // Today's date and time in 'YYYY-MM-DDTHH:MM' format
+    filter = new Filter();
 
     constructor(private eventService: EventService, private http: HttpClient) {}
 
@@ -48,6 +50,18 @@ export class CreateEventComponent implements OnInit {
         if (typeof this.eventData.endDate === 'string') {
             this.eventData.endDate = new Date(this.eventData.endDate);
         }
+        
+        // Validate name and description against bad words
+        if (this.containsBadWords(this.eventData.name) || this.containsBadWords(this.eventData.description)) {
+            swal.fire({
+                title: 'Validation Error',
+                text: 'Event name or description contains inappropriate language.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+            return;
+        }
+        
         const formData = new FormData();
         formData.append('name', this.eventData.name || '');
         formData.append('description', this.eventData.description || '');
@@ -127,5 +141,9 @@ export class CreateEventComponent implements OnInit {
         if (new Date(this.eventData.startDate) > new Date(this.eventData.endDate)) {
             this.eventData.endDate = this.eventData.startDate;
         }
+    }
+
+    private containsBadWords(text: string): boolean {
+        return this.filter.isProfane(text);
     }
 }

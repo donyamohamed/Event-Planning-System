@@ -36,6 +36,7 @@
     "abp-ng2-module": "10.0.0",
     "abp-web-resources": "^5.9.1",
     "admin-lte-css-only": "^3.2.0",
+    "bad-words": "^3.0.4",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
     "core-js": "^3.33.3",
