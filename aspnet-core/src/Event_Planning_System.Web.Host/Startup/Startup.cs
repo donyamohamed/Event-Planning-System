@@ -104,6 +104,7 @@ namespace Event_Planning_System.Web.Host.Startup
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapHub<AbpCommonHub>("/signalr");
+                endpoints.MapHub<Entities.ChatHub>("/chatHub");
                 endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapControllerRoute("defaultWithArea", "{area}/{controller=Home}/{action=Index}/{id?}");
             });
