@@ -39,6 +39,10 @@
   text-align: center;
   padding-bottom: 10px;
 }
+.hidden {
+  display: none;
+}
+
 /* body {
   background: #f5f6f8;
 }

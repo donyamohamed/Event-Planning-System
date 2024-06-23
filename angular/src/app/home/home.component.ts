@@ -4,11 +4,16 @@ import {
   ChangeDetectionStrategy,
   AfterViewInit,
   HostListener,
-  OnInit
+  OnInit,
+  ChangeDetectorRef
 } from "@angular/core";
 import { AppComponentBase } from "@shared/app-component-base";
 import { appModuleAnimation } from "@shared/animations/routerTransition";
 import { Location } from '@angular/common';
+import { ShowInterestsService } from '../../shared/Services/show-interests.service';
+import { Router } from '@angular/router';  // Import Router
+import { CurrentUserDataService } from '@shared/Services/current-user-data.service';
+import { CurrentUser } from '@shared/Models/current-user'; 
 
 @Component({
   templateUrl: "./home.component.html",
@@ -19,10 +24,16 @@ import { Location } from '@angular/common';
 export class HomeComponent extends AppComponentBase implements AfterViewInit, OnInit {
   slideIndex: number = 1;
   private shouldRefresh: boolean = false;
+  hasInterests: boolean = false;  // Property to track if the user has interests
+  user: CurrentUser | null = null; // Declare the user property
 
   constructor(
     injector: Injector,
-    private location: Location
+    private location: Location,
+    private ShowInterestsService: ShowInterestsService,  // Inject ShowInterestsService
+    private router: Router,  // Inject Router
+    private _userService: CurrentUserDataService,
+    private cdr: ChangeDetectorRef
   ) {
     super(injector);
   }
@@ -37,6 +48,23 @@ export class HomeComponent extends AppComponentBase implements AfterViewInit, On
     } else {
       sessionStorage.removeItem('refreshed');
     }
+
+    // Check if the user has interests
+    this.ShowInterestsService.HasInterests().subscribe(x => {
+      this.hasInterests = x;  // Set the hasInterests property based on the response
+    });
+
+    // Load current user data
+    this._userService.GetCurrentUserData().subscribe({
+      next: (u: CurrentUser) => {
+        console.log('User data loaded:', u); // Debugging: Log the user data
+        this.user = u;
+        this.cdr.markForCheck(); // Manually trigger change detection
+      },
+      error: (err) => {
+        console.error('Failed to load user data', err);
+      }
+    });
   }
 
   refreshPage() {
@@ -85,5 +113,9 @@ export class HomeComponent extends AppComponentBase implements AfterViewInit, On
   @HostListener("window:resize", ["$event"])
   onResize(event: Event) {
     this.adjustArrowPosition();
+  }
+
+  get isLoggedIn(): boolean {
+    return this.user !== null;
   }
 }

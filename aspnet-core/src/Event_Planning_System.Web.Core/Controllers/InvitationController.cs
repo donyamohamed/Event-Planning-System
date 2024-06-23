@@ -41,7 +41,9 @@ namespace Event_Planning_System.Controllers
                     return BadRequest("Email subject and body cannot be empty.");
                 }
 
+
                 var htmlBody = EmailTemplate.GetInvitationEmail(emailRequest.EventName, emailRequest.Date, emailRequest.EventAddress, emailRequest.EventImage);
+
 
                 await _emailService.SendEmailAsync(emailRequest.ToEmail, emailRequest.Subject, htmlBody);
                 _logger.LogInformation("Invitation email sent successfully.");

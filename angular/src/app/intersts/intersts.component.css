@@ -1,5 +1,5 @@
 body {
-    background-color: white;
+ 
     color: white;
     font-family: Arial, sans-serif;
     display: flex;
@@ -9,14 +9,18 @@ body {
     margin: 0;
 }
 .container {
-    background-color: white;
+    background-color: rgb(250, 248, 248);
     padding: 20px;
-    border-radius: 10px;
+    border-radius: 15px;
     box-shadow: 0 4px 8px rgba(219, 198, 198, 0.2);
     width: 90%;
     max-width: 450px;
     text-align: center;
-    margin-top: 40px;
+  margin: 50px auto;
+
+border: 2px solid #2e2b25;
+    
+
 }
 h2 {
     margin-bottom: 30px;

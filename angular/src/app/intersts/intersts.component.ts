@@ -9,10 +9,10 @@ import { SharedModule } from "../../shared/shared.module";
 
 @Component({
     selector: 'app-intersts',
-    standalone: true,
+    // standalone: true,
     templateUrl: './intersts.component.html',
     styleUrl: './intersts.component.css',
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, SharedModule]
+    // imports: [CommonModule, FormsModule, ReactiveFormsModule, SharedModule]
 })
 export class InterstsComponent implements OnInit {
 
@@ -52,7 +52,8 @@ export class InterstsComponent implements OnInit {
     console.log('Selected Interests:', this.selectedInterestsId);
     this.InterstsService.AddInterstsForUser(this.selectedInterestsId).subscribe({
       next: (response) => {
-        this.router.navigateByUrl("app/home");
+        // this.router.navigateByUrl("app/home");
+        window.location.reload();
       },
       error: (err) => {
         console.error('Error adding interests:', err);

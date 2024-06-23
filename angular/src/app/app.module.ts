@@ -14,6 +14,8 @@ import { ServiceProxyModule } from '@shared/service-proxies/service-proxy.module
 import { SharedModule } from '@shared/shared.module';
 import { HomeComponent } from '@app/home/home.component';
 import { AboutComponent } from '@app/about/about.component';
+import { InterstsComponent } from '@app/intersts/intersts.component';
+
 // tenants
 import { TenantsComponent } from '@app/tenants/tenants.component';
 import { CreateTenantDialogComponent } from './tenants/create-tenant/create-tenant-dialog.component';
@@ -59,6 +61,7 @@ import { PublicEventsComponent } from "./home/public-events/public-events.compon
         AppComponent,
         HomeComponent,
         AboutComponent,
+        InterstsComponent,
         // CreateGuestModelComponent,
         // tenants
         TenantsComponent,

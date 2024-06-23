@@ -11,6 +11,7 @@ import { SharedModule } from "../../../shared/shared.module";
 import Swal from 'sweetalert2';
 
 
+
 @Component({
     selector: 'app-no-guests',
     standalone: true,
