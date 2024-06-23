@@ -17,5 +17,7 @@ namespace Event_Planning_System.Guest
         Task<List<GuestDto>> GetEventGuestsAsync(int guestId);
 
         Task<IActionResult> AddGuestsThroughExcelFile([FromForm] IFormFile file, int eventId);
+        Task UpdateInvitationState(int guestId, string newState);
+        Task<GuestDto> GetGuestByEmailAsync(string email);
     }
 }

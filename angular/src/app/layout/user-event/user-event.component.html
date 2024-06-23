@@ -5,12 +5,14 @@
   </div>
   <div class="card-container">
     <div
+
     *ngFor="let event of events"
     class="card"
     [ngStyle]="{
       'background-image': 'url(' + (event.eventImg ? event.eventImg : '../../assets/img/Event.jpg') + ')'
     }"
   >
+
       <div class="header">
         <button id="delete" (click)="deleteEvent(event)" title="delete"> <i class="fas fa-trash"></i></button>
         <div class="date">

@@ -44,8 +44,10 @@ export class NoGuestsComponent {
   ngOnInit(): void {
     this.sub = this.activatedRouter.params.subscribe((params) => {
       this.idEvent = params["id"];
+
     
        // console.log("Event ID: ", this.idEvent ); 
+
     })
 
   }

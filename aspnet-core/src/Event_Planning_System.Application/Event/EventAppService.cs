@@ -5,18 +5,15 @@ using AutoMapper;
 using Event_Planning_System.Email;
 using Event_Planning_System.Enitities;
 using Event_Planning_System.Event.Dto;
-<<<<<<< HEAD
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+
+using Microsoft.EntityFrameworkCore;
 using Event_Planning_System.Image;
 using Microsoft.AspNetCore.Mvc;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-=======
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-
-using Microsoft.EntityFrameworkCore;
->>>>>>> df1c13f7d64f7fec6bcb0cd770210734c0671c23
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -33,7 +30,6 @@ namespace Event_Planning_System.Event
 		private readonly IRepository<Enitities.Guest, int> _guestRepository;
 		private readonly IRepository<Enitities.BudgetExpense, int> _budgetExpenseRepository;
 		private readonly IRepository<Enitities.ToDoCheckList, int> _toDoCheckListRepository;
-<<<<<<< HEAD
         private readonly ICloudinaryService _cloudinaryService;
         private readonly IMapper _mapper;
 		private readonly IEmailService _emailService;
@@ -50,31 +46,11 @@ namespace Event_Planning_System.Event
 		{
 			_repository = repository;
 			_cloudinaryService = cloudinaryService;
-=======
-		private readonly IMapper _mapper;
-		private readonly IEmailService _emailService;
-		private readonly string _imageFolderPath;
-
-		private readonly IRepository<Interest, int> _interestRepository;
-
-
-
-		public EventAppService(IRepository<Enitities.Event, int> repository, IRepository<Enitities.Guest, int> guestRepository, IRepository<Interest, int> interestRepository,
-			IRepository<Enitities.BudgetExpense, int> budgetExpenseRepository,
-			IRepository<Enitities.ToDoCheckList, int> toDoCheckListRepository, IMapper mapper, IEmailService emailService) : base(repository)
-		{
-			_repository = repository;
-
->>>>>>> df1c13f7d64f7fec6bcb0cd770210734c0671c23
 			_interestRepository = interestRepository;
 			_guestRepository = guestRepository;
 			_budgetExpenseRepository = budgetExpenseRepository;
 			_toDoCheckListRepository = toDoCheckListRepository;
-<<<<<<< HEAD
 			_logger=logger;
-=======
-
->>>>>>> df1c13f7d64f7fec6bcb0cd770210734c0671c23
 			_mapper = mapper;
 			_emailService = emailService;
 			_imageFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images");
@@ -156,7 +132,7 @@ namespace Event_Planning_System.Event
 			return _mapper.Map<List<EventDto>>(events);
 		}
 
-		public override async Task<EventDto> CreateAsync([FromForm] CreateEventDto input)
+        public override async Task<EventDto> CreateAsync([FromForm] CreateEventDto input)
         {
             if (input.EventImgFile != null && input.EventImgFile.Length > 0)
             {
@@ -192,7 +168,7 @@ namespace Event_Planning_System.Event
 
 
 
-		public async Task<List<EventDto>> GetPublicEventsByInterest()
+        public async Task<List<EventDto>> GetPublicEventsByInterest()
 		{
 			var publicEvents = new HashSet<EventDto>();
 			var orderedPublicEvents = new List<EventDto>();
