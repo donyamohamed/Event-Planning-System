@@ -1,0 +1,17 @@
+<div class="dropdown">
+        <i class="fa-regular fa-message mt-3" style="cursor: pointer; font-size: 24px" (click)="toggleCollapse($event)"></i>
+    
+        <div class="dropdown-menu custom-dropdown-menu p-3" style="width: 200px" [ngClass]="{ show: isCollapsed }"
+            aria-labelledby="dropdownMenuButton">
+            <div class="dropdown-header">
+                <h3 style="color: blue">{{ 'Messages' | localize }}💫 </h3>
+            </div>
+            <!-- <div class="content">
+                <div *ngFor="let item of AllChats; let i = index" class="d-flex justify-content-center flex-row gap-2">
+                    <img class="img-circle w-25" [src]="item.image">
+                    <p>{{ item.userName }}</p>
+                </div>
+            </div> -->
+        </div>
+    </div>
+    
