@@ -191,7 +191,7 @@ export class UserProfileComponent implements OnInit {
   getUserImage(): string {
     return this.user?.image
       ? this.user.image
-      : "assets/img/user.jpg";
+      : "./../../assets/img/userImg.png";
   }
 
   openModal(template: any): void {

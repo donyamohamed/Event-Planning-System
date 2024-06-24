@@ -1,17 +1,24 @@
 <div class="dropdown">
-        <i class="fa-regular fa-message mt-3" style="cursor: pointer; font-size: 24px" (click)="toggleCollapse($event)"></i>
-    
-        <div class="dropdown-menu custom-dropdown-menu p-3" style="width: 200px" [ngClass]="{ show: isCollapsed }"
-            aria-labelledby="dropdownMenuButton">
-            <div class="dropdown-header">
-                <h3 style="color: blue">{{ 'Messages' | localize }}💫 </h3>
+    <i class="fa-regular fa-message mt-3" style="cursor: pointer; font-size: 24px" (click)="toggleCollapse($event)"></i>
+    <div class="dropdown-menu custom-dropdown-menu p-3" style="width: 200px" [ngClass]="{ show: isCollapsed }" aria-labelledby="dropdownMenuButton">
+      <div class="mb-3">
+        <h3 style="color: #050793">{{ 'Chats' | localize }} </h3>
+      </div>
+      <div class="main-wrapper">
+        <div *ngFor="let item of AllChats; let i = index" class="d-flex flex-row gap-2 main mb-2" (click)="LoadUserChat(item.recieverId)">
+            <div>
+              <img class="userImg" [src]="item.image ? item.image : defaultImage">
             </div>
-            <!-- <div class="content">
-                <div *ngFor="let item of AllChats; let i = index" class="d-flex justify-content-center flex-row gap-2">
-                    <img class="img-circle w-25" [src]="item.image">
-                    <p>{{ item.userName }}</p>
-                </div>
-            </div> -->
-        </div>
+            <div class="d-flex flex-column flex-grow-1">
+              <p class="text-bold">{{ item.userName }}</p>
+              <div *ngIf="getLastMsg(item.recieverId) as lastMsg" class="message-container">
+                <small class="message">{{ lastMsg.message }}</small>
+                <small class="time text-gray">{{ getMessageTime(lastMsg.creationTime) }}</small>
+              </div>
+            </div>
+          </div>
+          
+      </div>
     </div>
-    
+  </div>
+  

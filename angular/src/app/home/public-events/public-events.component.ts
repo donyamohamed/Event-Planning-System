@@ -41,7 +41,6 @@ export class PublicEventsComponent implements OnInit {
       const event: Event = JSON.parse(savedEvent);
       this.fetchUserDataAndProceed(event);
       sessionStorage.removeItem('selectedEvent');
-      
     }
   }
 
@@ -122,7 +121,6 @@ export class PublicEventsComponent implements OnInit {
       date: event.startDate,
       eventAddress: event.location
     };
-
     this.askForInvitationServ.createNotification(notificationData).subscribe(
       response => {
         console.log('Notification created:', response);

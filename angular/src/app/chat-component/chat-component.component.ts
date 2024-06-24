@@ -12,34 +12,38 @@ import { AppSessionService } from '@shared/session/app-session.service';
   styleUrls: ['./chat-component.component.css']
 })
 export class ChatComponentComponent implements OnInit {
-  public messages: string[] = [];
-  public userId = this.appSessionService.userId;
-  public receiverId;
+  public messages: any[] = [];
+  public userId: number;
+  public receiverId: number;
 
   constructor(
     private chatService: ChatService,
     private route: ActivatedRoute,
     private appSessionService: AppSessionService
-  ) {}
+  ) {
+    this.userId = this.appSessionService.userId;
+  }
 
   ngOnInit() {
-    this.loadMessages();
     this.route.params.subscribe(params => {
       this.receiverId = +params['plannerId'];
+      this.loadMessages();
     });
   }
 
   private loadMessages() {
-    this.chatService.getMessages(this.userId).subscribe(
-      messages => {
-        console.log(messages);
-        this.messages = messages.result;
-      },
-      error => {
-        console.error('Error fetching messages:', error);
-        // Handle error gracefully
-      }
-    );
+    if (this.receiverId) {
+      this.chatService.getMessages(this.userId, this.receiverId).subscribe(
+        messages => {
+          console.log(messages);
+          this.messages = messages.result;
+        },
+        error => {
+          console.error('Error fetching messages:', error);
+          // Handle error gracefully
+        }
+      );
+    }
   }
 
   public sendMessage(messageInput: HTMLInputElement) {
@@ -57,9 +61,7 @@ export class ChatComponentComponent implements OnInit {
     this.chatService.sendMessage(input).subscribe(
       response => {
         console.log('Message sent successfully:', response);
-     
         this.loadMessages();
-   
         messageInput.value = '';
       },
       error => {
