@@ -74,6 +74,13 @@ namespace Event_Planning_System.Notification
 			//old.Content = input.content;
 			await _notificationRepository.UpdateAsync(old);
 		}
+        public async Task<bool> CheckExistingInvitation(long guestId, int eventId)
+        {
+            var existingInvitation = await _notificationRepository.GetAll()
+                .AnyAsync(n => n.GuestId == guestId && n.EventId == eventId );
 
-	}
+            return existingInvitation;
+        }
+
+    }
 }

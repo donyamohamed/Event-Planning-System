@@ -1,0 +1,44 @@
+<div class="header-container">
+    <h2>{{"Event Details" }}</h2>
+    <div class="buttons">
+    </div>
+  </div>
+  <section class="container">
+    <div class="event-details">
+      <div class="card-media">
+        <div class="card-media-object-container">
+          <img class="card-media-object" [src]="event.eventImg ? event.eventImg : '../../assets/img/Event.jpg'" alt="Event Image">
+        </div>
+        <div class="card-media-body">
+          <div class="card-media-body-top">
+            <p class="subtle"><strong>{{"Name:" }}</strong> {{ event.name }}</p> 
+            
+          </div>
+          <div class="card-media-body-supporting-bottom">
+  
+            <p class="subtle"><strong>{{"Start Date:" }}</strong> {{ event.startDate  }}</p>
+            <p class="subtle"><strong> {{"End Date:" }}</strong> {{ event.endDate  }}</p>
+            <p class="subtle"><strong>{{"Location:" }}</strong> {{ event.location }}</p>
+            <p class="subtle"><strong>{{"Type:" }}</strong> {{ event.isPublic ? 'Public' : 'Private' }}</p>
+            <p><strong>{{"Description:" }}</strong> {{ event.description }}</p>
+            <p><strong>{{"Category:" }}</strong> {{ event.category }}</p>
+  
+          <p><strong>Share via :</strong>
+              <span class="social-account">
+                <button class="btn text-primary" (click)="shareOnFacebook()"><i class="fa-brands fa-facebook-f fa-x"></i></button> | 
+                <button class="btn text-primary" (click)="shareOnLinkedIn()"><i class="fa-brands fa-linkedin-in fa-x"></i></button> | 
+                <button class="btn text-dark" (click)="shareOnTwitter()"><i class="fa-brands fa-x-twitter fa-x"></i></button> | 
+                <button class="btn text-success" (click)="shareOnWhatsApp()"><i class="fa-brands fa-whatsapp fa-x"></i> </button>
+            </span>
+  </p>
+  
+  
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!event" class="loading-message">
+      <p>{{"Loading event details..." }}</p>
+    </div>
+  </section>
+  

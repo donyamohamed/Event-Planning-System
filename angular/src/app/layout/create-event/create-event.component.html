@@ -10,88 +10,88 @@
                     <div class="col-md-6">
                         <!-- Left side form fields -->
                         <div class="form-group">
-                            <label>{{"User Name" | localize}}</label>
-                            <input type="text" [value]='username' name="username" class="form-control" [placeholder]="'Username' | localize" readonly>
+                            <label>{{ "User Name" | localize }}</label>
+                            <input type="text" [value]="username" name="username" class="form-control" placeholder="{{ 'Username' | localize }}" readonly>
                             <input type="hidden" [value]="eventData.userId" name="userId">
                         </div>
                         <div class="form-group">
-                            <label>{{"Event Name" | localize}}</label>
-                            <input type="text" [(ngModel)]="eventData.name" name="name" class="form-control" [placeholder]="'Event Name' | localize" required pattern="^[a-zA-Z0-9 ]+$">
+                            <label>{{ "Event Name" | localize }}</label>
+                            <input type="text" [(ngModel)]="eventData.name" name="name" class="form-control" placeholder="{{ 'Event Name' | localize }}" required pattern="^[a-zA-Z0-9 ]+$">
                             <div *ngIf="eventForm.controls['name'].invalid && (eventForm.controls['name'].dirty || eventForm.controls['name'].touched)" class="error-message">
-                                <div *ngIf="eventForm.controls['name'].errors.required">Name is required</div>
-                                <div *ngIf="eventForm.controls['name'].errors.pattern">Name must be a string </div>
+                                <div *ngIf="eventForm.controls['name'].errors.required">{{ "Name is required" | localize }}</div>
+                                <div *ngIf="eventForm.controls['name'].errors.pattern">{{ "Name must be alphanumeric" | localize }}</div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label>{{"Event Location" | localize}}</label>
-                            <input type="text" [(ngModel)]="eventData.location" name="location" class="form-control" [placeholder]="'Event Location' | localize" required pattern="^[a-zA-Z0-9 ]+$">
+                            <label>{{ "Event Location" | localize }}</label>
+                            <input type="text" [(ngModel)]="eventData.location" name="location" class="form-control" placeholder="{{ 'Event Location' | localize }}" required pattern="^[a-zA-Z0-9 ]+$">
                             <div *ngIf="eventForm.controls['location'].invalid && (eventForm.controls['location'].dirty || eventForm.controls['location'].touched)" class="error-message">
-                                <div *ngIf="eventForm.controls['location'].errors.required">Location is required</div>
-                                <div *ngIf="eventForm.controls['location'].errors.pattern">Location must be a string </div>
+                                <div *ngIf="eventForm.controls['location'].errors.required">{{ "Location is required" | localize }}</div>
+                                <div *ngIf="eventForm.controls['location'].errors.pattern">{{ "Location must be alphanumeric" | localize }}</div>
                             </div>
                         </div>
                         <div class="form-group date-container">
                             <div>
-                                <label>{{"Start Date" | localize}}</label>
-                                <input type="date" [(ngModel)]="eventData.startDate" name="startDate" class="form-control" [min]="today" (change)="validateDates()" required>
+                                <label>{{ "Start Date" | localize }}</label>
+                                <input type="datetime-local" [(ngModel)]="eventData.startDate" name="startDate" class="form-control" [min]="today" (change)="validateDates()" required>
                                 <div *ngIf="eventForm.controls['startDate'].invalid && (eventForm.controls['startDate'].dirty || eventForm.controls['startDate'].touched)" class="error-message">
-                                    <div *ngIf="eventForm.controls['startDate'].errors.required">Start Date is required</div>
+                                    <div *ngIf="eventForm.controls['startDate'].errors.required">{{ "Start Date is required" | localize }}</div>
                                 </div>
                             </div>
                             <div>
-                                <label>{{"End Date" | localize}}</label>
-                                <input type="date" [(ngModel)]="eventData.endDate" name="endDate" class="form-control" [min]="today" (change)="validateDates()" required>
+                                <label>{{ "End Date" | localize }}</label>
+                                <input type="datetime-local" [(ngModel)]="eventData.endDate" name="endDate" class="form-control" [min]="today" (change)="validateDates()" required>
                                 <div *ngIf="eventForm.controls['endDate'].invalid && (eventForm.controls['endDate'].dirty || eventForm.controls['endDate'].touched)" class="error-message">
-                                    <div *ngIf="eventForm.controls['endDate'].errors.required">End Date is required</div>
+                                    <div *ngIf="eventForm.controls['endDate'].errors.required">{{ "End Date is required" | localize }}</div>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label>{{"Attendees" | localize}}</label>
-                            <input type="number" [(ngModel)]="eventData.maxCount" name="maxCount" class="form-control" [placeholder]="'Max Attendees' | localize" required>
+                            <label>{{ "Attendees" | localize }}</label>
+                            <input type="number" [(ngModel)]="eventData.maxCount" name="maxCount" class="form-control" placeholder="{{ 'Max Attendees' | localize }}" required>
                             <div *ngIf="eventForm.controls['maxCount'].invalid && (eventForm.controls['maxCount'].dirty || eventForm.controls['maxCount'].touched)" class="error-message">
-                                <div *ngIf="eventForm.controls['maxCount'].errors.required">Max Attendees is required</div>
+                                <div *ngIf="eventForm.controls['maxCount'].errors.required">{{ "Max Attendees is required" | localize }}</div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <!-- Right side form fields -->
                         <div class="form-group">
-                            <label>{{"Event Category" | localize}}</label>
-                            <select [(ngModel)]="eventData.category" name="category" class="form-control" title="Event Category" required>
+                            <label>{{ "Event Category" | localize }}</label>
+                            <select [(ngModel)]="eventData.category" name="category" class="form-control" title="{{ 'Event Category' | localize }}" required>
                                 <option *ngFor="let key of enumeratorKeys" [ngValue]="key">{{ key }}</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>{{"Choose Event Type" | localize}}</label>
+                            <label>{{ "Choose Event Type" | localize }}</label>
                             <div class="form-check">
                                 <label class="form-check-label">
                                     <input type="radio" [(ngModel)]="eventData.isPublic" [value]="true" name="isPublic" class="form-check-input" required>
-                                    {{"Public"|localize}}
+                                    {{ "Public" | localize }}
                                 </label>
                             </div>
                             <div class="form-check">
                                 <label class="form-check-label">
                                     <input type="radio" [(ngModel)]="eventData.isPublic" [value]="false" name="isPublic" class="form-check-input">
-                                   {{"Private"|localize}}
+                                    {{ "Private" | localize }}
                                 </label>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label>{{"Event Image" | localize}}</label>
+                            <label>{{ "Event Image" | localize }}</label>
                             <input type="file" (change)="onFileSelected($event)" name="eventImgFile" class="form-control-file" accept="image/png, image/jpeg">
                         </div>
                         <div class="form-group">
-                            <label>{{"Event Description" | localize}}</label>
-                            <textarea [(ngModel)]="eventData.description" name="description" class="form-control" [placeholder]="'Event Description' | localize" required pattern="^[a-zA-Z0-9 ]+$"></textarea>
+                            <label>{{ "Event Description" | localize }}</label>
+                            <textarea [(ngModel)]="eventData.description" name="description" class="form-control" placeholder="{{ 'Event Description' | localize }}" required pattern="^[a-zA-Z0-9 ]+$"></textarea>
                             <div *ngIf="eventForm.controls['description'].invalid && (eventForm.controls['description'].dirty || eventForm.controls['description'].touched)" class="error-message">
-                                <div *ngIf="eventForm.controls['description'].errors.required">Description is required</div>
-                                <div *ngIf="eventForm.controls['description'].errors.pattern">Description must be a string </div>
+                                <div *ngIf="eventForm.controls['description'].errors.required">{{ "Description is required" | localize }}</div>
+                                <div *ngIf="eventForm.controls['description'].errors.pattern">{{ "Description must be alphanumeric" | localize }}</div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <button type="submit" [disabled]="!eventForm.form.valid" class="submit-button">{{"Create"|localize}}</button>
+                <button type="submit" [disabled]="!eventForm.form.valid" class="submit-button">{{ "Create" | localize }}</button>
             </div>
             <div class="col-lg-4 col-md-12 image-container">
                 <img src="../../../assets/img/Work anniversary-pana.svg" style="margin-left:10vw" alt="Event Image" class="img-fluid larger-image">

@@ -39,6 +39,10 @@
   text-align: center;
   padding-bottom: 10px;
 }
+.hidden {
+  display: none;
+}
+
 /* body {
   background: #f5f6f8;
 }
@@ -415,3 +419,102 @@ section {
  .slideshow-wrapper .slides .slide-image { width:300px;}
 } */
 
+/* Chat Button */
+.chat-button-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.chat-button {
+  background-color: white;
+  color: #050794;
+  border: none;
+  padding: 15px 20px;
+  border-radius: 50px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+.chat-button img {
+  width: 24px;
+  height: 24px;
+}
+
+/* Chat Popup */
+.chat-popup {
+  display: none;
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  background-color: white;
+  border: 2px solid #fbaf1b;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  width: 300px;
+}
+
+.chat-header {
+  background-color: #fbaf1b;
+  color: white;
+  padding: 10px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chat-header h2 {
+  margin: 0;
+}
+
+.chat-header .close {
+  cursor: pointer;
+  color:white;
+}
+
+.chat-body {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.chat-body button {
+  background-color: white;
+  color: #050794;
+  border-color: #fbaf1b;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.chat-body button:hover {
+  background-color: white;
+  color: #fbaf1b;
+  border-color: #050794;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.panswer{
+  font-family: 'Quattrocento',Georgia, 'Times New Roman', Times, serif;
+  font-size: 14px;
+  line-height: 1.4em;
+  padding-top: 4px !important;
+  margin-bottom: 1px !important;
+  max-width: 800px;
+  text-align: center;
+  color: black;
+  word-wrap: break-word;
+  margin-left: auto;
+  margin-right: auto;
+  vertical-align: baseline;
+}
