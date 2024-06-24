@@ -1,4 +1,26 @@
 /* Style for the entire chat container */
+
+::-webkit-scrollbar {
+  width: 6px;  
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;  
+}
+
+
+::-webkit-scrollbar-thumb {
+  background-color: #050794;  
+  border-radius: 6px;  
+}
+
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #050794ce;  
+}
+
+
 .chat-container {
     width: 100%;
     max-width: 85%;
@@ -61,7 +83,7 @@
 
   .sender-message {
     align-self: flex-start;
-    background-color: #fbaf1b; 
+    background-color: #FBAF1B; 
     
   }
   
@@ -84,7 +106,7 @@
     justify-content: center;
     align-items: center;
     margin-top: 20px;
-    gap:2%;
+    gap:1%;
   }
   
   .input-section input {
@@ -97,7 +119,8 @@
   }
   
   .input-section button {
-    width: 6%;
+    width: 45px;
+    height: 45px;
     border-radius: 40%;
     color: white;
     background-color: #050794;

@@ -25,6 +25,8 @@ import { HistoryeventComponent } from './layout/historyevent/historyevent.compon
 import { InterstsComponent } from './intersts/intersts.component';
 import { TodoListComponent } from './layout/event-todo-list/event-todo-list.component';
 import { EventDetailsComponent } from './layout/event-details/event-details.component';
+import { EventHOmeDetailsComponent } from './layout/event-home-details/event-home-details.component';
+
 import { NotificatiosComponent } from './layout/notifications/notificatios.component';
 import { ChatComponentComponent } from './../app/chat-component/chat-component.component'
 import {ChatIconComponent} from './../app/chat-icon/chat-icon.component'
