@@ -24,5 +24,7 @@ namespace Event_Planning_System.Notification
         Task<int> CreateNotification(NotificationDto input);
 		Task<int> GetNotificationCount();
 		Task UpdateNotificationStatus(UpdateNotificationStatusDTO input);
-	}
+		Task<bool> CheckExistingInvitation(long guestId, int eventId);
+
+    }
 }

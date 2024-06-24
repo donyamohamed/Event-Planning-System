@@ -1,20 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { EventdetailsService } from '../../../shared/Services/eventdetails.service';
-import { EventBudgetService } from '../../../shared/Services/event-budget.service'; // Import EventBudgetService
+import { EventBudgetService } from '../../../shared/Services/event-budget.service'; 
 import { Event } from '../../../shared/Models/Event';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SharedModule } from "../../../shared/shared.module";
+
 @Component({
-    selector: 'app-event-details',
-    templateUrl: './event-details.component.html',
-    styleUrls: ['./event-details.component.css'],
-    standalone: true,
-    imports: [CommonModule,RouterLink,FormsModule,SharedModule]
+  selector: 'app-event-home-details',
+  standalone: true,
+  imports: [CommonModule,RouterLink,FormsModule,SharedModule],
+  templateUrl: './event-home-details.component.html',
+  styleUrl: './event-home-details.component.css'
 })
-export class EventDetailsComponent implements OnInit {
+export class EventHOmeDetailsComponent {
   event: Event | undefined;
   eventId: number | undefined;
   budgetAmount: number | undefined; // Define budgetAmount property
