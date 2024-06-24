@@ -112,3 +112,28 @@
 }
 
 
+
+
+/* profile.component.css */
+
+@keyframes swing {
+  0%, 100% { transform: rotate(0deg); }
+  20% { transform: rotate(15deg); }
+  40% { transform: rotate(-10deg); }
+  60% { transform: rotate(5deg); }
+  80% { transform: rotate(-5deg); }
+}
+
+@keyframes swingWithPause {
+  0%, 10%, 100% { transform: rotate(0deg); }
+  15% { transform: rotate(15deg); }
+  30% { transform: rotate(-10deg); }
+  45% { transform: rotate(5deg); }
+  60% { transform: rotate(-5deg); }
+  75%, 90% { transform: rotate(0deg); }
+}
+
+.login-swing {
+  display: inline-block;
+  animation: swingWithPause 7s ease-in-out infinite;
+}
