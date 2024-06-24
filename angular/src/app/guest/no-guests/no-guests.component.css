@@ -74,3 +74,17 @@ p {
     margin-top: 10px;
     color: #333;
 }
+.choose-file-btn{
+    margin-top: 10px;
+    margin-right: 5px;
+    padding: 10px 20px;
+    background-color: #30965f;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.choose-file-btn:hover{
+    background-color: #318a5a;
+}

@@ -59,27 +59,18 @@ namespace Event_Planning_System.Controllers
             return Ok(events);
         }
 
-       
+
         [HttpPost]
         public async Task CreateWithImage([FromForm] CreateEventDto formData)
         {
-            await _eventService.CreateAsync(formData)  ; 
+            await _eventService.CreateAsync(formData);
         }
+
         [HttpDelete]
         public async Task<IActionResult> DeleteEvent(int id)
         {
             await _eventService.DeleteEventWithDetailsAsync(id);
             return Ok();
-        }
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetEvent(int id)
-        {
-            var eventDto = await _eventService.GetEventByIdAsync(id);
-            if (eventDto == null)
-            {
-                return NotFound();
-            }
-            return Ok(eventDto);
         }
     }
 }
