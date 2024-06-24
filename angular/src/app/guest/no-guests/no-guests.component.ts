@@ -156,16 +156,34 @@ export class NoGuestsComponent {
   uploadFile(): void {
     if (this.fileToUpload) {
       this.guestSer.uploadFile(this.fileToUpload, this.idEvent).subscribe(
-        (response) => {
+        (response: any) => {
+          swal.fire({
+            title: 'Success',
+            text: response.result,
+            icon: 'success',
+            confirmButtonText: 'OK',
+          }).then((result) => {
+            this.router.navigateByUrl(`app/allGuests/${this.idEvent}`);
+          });
+    
           this.uploadResponse = 'File uploaded successfully';
-          this.router.navigateByUrl('app/allGuests/' + this.idEvent);
         },
-        (error) => {
-          this.uploadResponse = `Error: ${error.message}`;
+        (error: any) => {
+          console.log(error); 
+          swal.fire({
+            title: 'Error',
+            text: error.error.result,
+            icon: 'error',
+            confirmButtonText: 'OK'
+          });
+          
+          this.uploadResponse = `Error: ${error}`;
         }
       );
     } else {
       this.uploadResponse = 'Please select a valid Excel file first.';
     }
   }
+  
+  
 }
