@@ -171,7 +171,7 @@
 		<text name="My Interests" value="اهتماماتي" />
 		<text name="Planner" value="منظم المناسبه" />
 		<text name="success" value="نجاح" />
-		<text name="error" value="خطا" />
+		<text name="Error fill the Email" value="خطا املئ البريد الاكتروني" />
 		<text name="Confirm Password" value="تاكيد كلمة المرور" />
 		<text name="New Password" value="كلمه المرور" />
 		<text name="Send Email" value="ارسل بريد الكتروني" />
