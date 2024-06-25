@@ -72,6 +72,7 @@ h2 {
     padding: 10px;
     text-align: center;
     margin: 10px;
+    position: relative;
 }
 
 .card-content h3 {
@@ -154,3 +155,16 @@ h2 {
     direction: rtl;
   }
   
+  .Chat-icon{
+    background-color: #050794;
+    text-align: center;
+    padding:12px 15px;
+    border-radius: 5px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+  }
+  .Chat-icon i{
+    color: #fbaf1b;
+    font-size: 22px;
+  }

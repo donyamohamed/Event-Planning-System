@@ -47,9 +47,9 @@ namespace Event_Planning_System.Chats
             }
         }
 
-        public async Task<List<ChatMessageDto>> GetMessages(long userId)
+        public async Task<List<ChatMessageDto>> GetMessages(long userId,long receiverId)
         {
-            return await _chatMessageAppService.GetMessages(userId);
+            return await _chatMessageAppService.GetMessages(userId,receiverId);
         }
     }
 }

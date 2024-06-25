@@ -1,5 +1,3 @@
-<!-- <></> -->
-
 <div class="card container m-3 p-3 tableDiv shadow-lg">
 
   <div class="text-center imageDiv">
@@ -81,7 +79,7 @@
           required />
         <div *ngIf="guestForm.get('phone').invalid && guestForm.get('phone').touched" class="text-danger">
           <div *ngIf="guestForm.get('phone').errors.required">Phone is required.</div>
-          <div *ngIf="guestForm.get('phone').errors.pattern">{{{"Phone must be a 10-digit number |localize}}</div>
+          <div *ngIf="guestForm.get('phone').errors.pattern">{{"Phone must be a 10-digit number" |localize}}</div>
         </div>
       </div>
       <div>
@@ -93,19 +91,6 @@
           <div *ngIf="guestForm.get('email').errors.email">Invalid email address.</div>
         </div>
       </div>
-      <!-- <div>
-        <label for="invStatInput">{{"Invitation State"|localize}}</label>
-        <select formControlName="invitationState" id="invStatInput" class="form-control"
-          [(ngModel)]="guest.invitationState" required>
-          <option value="" aria-readonly="true">Select State</option>
-          <option value="Pending">Pending</option>
-          <option value="Confirmed">Confirmed</option>
-        </select>
-        <div *ngIf="guestForm.get('invitationState').invalid && guestForm.get('invitationState').touched"
-          class="text-danger">
-          <div *ngIf="guestForm.get('invitationState').errors.required">Invitation state is required.</div>
-        </div>
-      </div> -->
       <input class="btn btn-success" value="Add" type="submit" />
     </form>
   </div>
@@ -147,19 +132,6 @@
           <div *ngIf="guestForm.get('email').errors.email">Invalid email address.</div>
         </div>
       </div>
-      <!-- <div>
-        <label for="invStatInput">Invitation State:</label>
-        <select formControlName="invitationState" [(ngModel)]="guestEdit.invitationState" id="invStatInput"
-          name="invStatInput" class="form-control" required>
-          <option value="" aria-readonly="true">Select State</option>
-          <option value="Pending">Pending</option>
-          <option value="Confirmed">Confirmed</option>
-        </select>
-        <div *ngIf="guestForm.get('invitationState').invalid && guestForm.get('invitationState').touched"
-          class="text-danger">
-          <div *ngIf="guestForm.get('invitationState').errors.required">Invitation state is required.</div>
-        </div>
-      </div> -->
       <input class="btn btn-success m-1" value="Update" type="submit" />
     </form>
   </div>

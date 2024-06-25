@@ -15,8 +15,12 @@ body {
   margin-left: 270px;
   width: 90%;
 }
+.user-card-full.minimized {
+display: none;
+}
 .user-card-full {
-  position: fixed;
+  /* position: fixed; */
+  position: absolute;
   left: 10px;
   width: 250px;
   height: 90vh;
