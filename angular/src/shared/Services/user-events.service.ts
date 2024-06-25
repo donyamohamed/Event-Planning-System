@@ -1,3 +1,4 @@
+import { EventResponse } from './../../app/guest/event-response';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -38,6 +39,15 @@ private apiGuestUrl='https://localhost:44311/api/UpcomingEventUserAttended'
   deleteEvent(eventId: number): Observable<void> {
     const url = `${this.apiUrl}/DeleteEventWithDetails?eventId=${eventId}`;
     return this.http.delete<void>(url);
+  }
+  editEvent(event:Event): Observable<void> {
+    const url = `${this.apiUrl}/Update`;
+    return this.http.put<void>(url,event);
+  }
+
+  getEventById(id:Number): Observable<EventResponse> {
+    const url = `${this.apiUrl}/Get?Id=${id}`;
+    return this.http.get<EventResponse>(url);
   }
 }
 

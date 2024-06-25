@@ -27,6 +27,7 @@ using System.IO;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Abp.Runtime.Validation;
 
 namespace Event_Planning_System.Guest
 {
@@ -59,6 +60,7 @@ namespace Event_Planning_System.Guest
 
         public async Task Add(Enitities.Guest guest, int eventId)
         {
+            await ValidateGuestEmail(guest.Email);
             var eventUser = await _repositoryEvent.FirstOrDefaultAsync(eventId);
             if (eventUser == null)
             {
@@ -180,6 +182,14 @@ namespace Event_Planning_System.Guest
                 throw new EntityNotFoundException(typeof(Enitities.Guest), email);
             }
             return _mapper.Map<GuestDto>(guest);
+        }
+        private async Task ValidateGuestEmail(string email, int? id = null)
+        {
+            var existingGuest = await _repository.FirstOrDefaultAsync(g => g.Email == email);
+            if (existingGuest != null && (!id.HasValue || existingGuest.Id != id.Value))
+            {
+                throw new AbpValidationException("Email address already exists.");
+            }
         }
     }
 }
