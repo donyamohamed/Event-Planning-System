@@ -120,8 +120,8 @@ h2 {
 }
 
 #delete {
-    background: #ff4d4d;
-    color: #fff;
+    /* background: #ff4d4d; */
+    color: red;
     border: none;
     padding: 15px 15px;
     border-radius: 5px;
@@ -131,6 +131,23 @@ h2 {
 
 #delete:hover {
     background: #ff1a1a;
+    color: #fff;
+
+}
+#edit {
+    /* background: #ff4d4d; */
+    color: green;
+    border: none;
+    padding: 15px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.8em;
+}
+
+#edit:hover {
+    background: green;
+    color: #fff;
+
 }
 
 .header-container {

@@ -1,5 +1,5 @@
 import { EventResponse } from "./../../guest/event-response";
-import { Enumerator } from "./../../../shared/Models/ToDoList";
+import { Enumerator } from "./../../../shared/Models/Event";
 import { Event } from "./../../../shared/Models/Event";
 import { Component, OnInit, TemplateRef } from "@angular/core";
 import { CommonModule } from "@angular/common";
@@ -39,6 +39,13 @@ export class UserEventComponent implements OnInit {
   eventEdit: Event = new Event();
   enumeratorKeys = Object.values(Enumerator);
   today: string = new Date().toISOString().split("T")[0];
+  lastStartDate:Date= new Date();
+  lastEndDate:Date= new Date();
+   // Error properties
+   dateErrors = {
+    endDateError: '',
+    startDateError: ''
+  };
 
   // baseUrl: string = 'https://localhost:44311/api/services/app/Event/GetEventById?id='; // Replace with your actual base URL
 
@@ -65,6 +72,7 @@ export class UserEventComponent implements OnInit {
         "",
         [Validators.required, Validators.pattern("^[a-zA-Z0-9 ]+$")],
       ],
+      // eventImgFile: [null, [Validators.required]],
     });
   }
 
@@ -93,7 +101,11 @@ export class UserEventComponent implements OnInit {
     this.userEventsService.getEventById(id).subscribe({
       next: (data: EventResponse) => {
         this.eventEdit = data.result;
+        this.lastStartDate=this.eventEdit.startDate
+        this.lastEndDate=this.eventEdit.endDate
         console.log(this.eventEdit);
+        console.log(this.lastEndDate);
+        console.log(this.lastStartDate);
       },
       error: (err) => {
         console.log(err);
@@ -196,23 +208,71 @@ export class UserEventComponent implements OnInit {
       }
     });
   } // end of mark Form Group Touched function
-  onFileSelected(event: any): void {
-    const file = event.target.files[0];
-    if (file) {
-      this.eventEdit.eventImgFile = file;
-    }
-  }
 
-  setDefaultValues(): void {
-    this.eventEdit.isPublic = true;
-    if (this.enumeratorKeys.length > 0) {
-      this.eventEdit.category = this.enumeratorKeys[0];
-    }
-  }
+  // onFileSelected(event: any): void {
+  //   console.log(event);
+
+  //   const file = event.target.files[0].name;
+  //   console.log(file);
+
+  //   if (file) {
+  //     this.eventEdit.eventImg = file;
+  //   }
+  // }
+
+  // onFileSelected(event: any): void {
+  //   console.log(event);
+    
+  //   const file = event.target.files[0].name;
+  //   console.log(file);
+    
+  //   if (file) {
+  //     this.eventEditForm.patchValue({
+  //       eventImgFile: file
+  //     });
+  //     this.eventEditForm.get('eventImgFile')?.updateValueAndValidity();
+  //   }
+  // }
+
+  // setDefaultValues(): void {
+  //   this.eventEdit.isPublic = true;
+  //   if (this.enumeratorKeys.length > 0) {
+  //     this.eventEdit.category = this.enumeratorKeys[0];
+  //   }
+  // }
 
   validateDates() {
-    if (new Date(this.eventEdit.startDate) > new Date(this.eventEdit.endDate)) {
+    const startDate = new Date(this.eventEdit.startDate);
+    const endDate = new Date(this.eventEdit.endDate);
+    const lastStartDate = new Date(this.lastStartDate);
+
+    // Clear previous error messages
+    this.dateErrors.endDateError = '';
+    this.dateErrors.startDateError = '';
+
+    // Check if startDate is after endDate
+    if (startDate > endDate) {
       this.eventEdit.endDate = this.eventEdit.startDate;
+      this.dateErrors.endDateError = 'End date cannot be before start date.';
+    }
+
+    // Check if startDate is less than lastStartDate minus one day
+    const oneDayBeforeLastStartDate = new Date(lastStartDate);
+    oneDayBeforeLastStartDate.setDate(lastStartDate.getDate() - 1);
+
+    if (startDate < oneDayBeforeLastStartDate) {
+      this.dateErrors.startDateError = 'Start date is too far in the past compared to the last start date.';
+    }
+
+    // Check if startDate is within the next 24 hours
+    const now = new Date();
+    const twentyFourHoursLater = new Date(now);
+    twentyFourHoursLater.setHours(now.getHours() + 24);
+
+    if (startDate < twentyFourHoursLater) {
+      this.dateErrors.startDateError = 'Start date is within the next 24 hours.';
     }
   }
 }
+  
+
