@@ -19,24 +19,36 @@
     width: 300px;
 }
 
-.oneByOne {
-    background-color: #b3d7f7;
-}
 
-.excel {
-    background-color: #CAEAD8;
+
+.excel , .oneByOne {
+    background-color: #f7b738d1;
     padding: 20px;
     border-radius: 10px;
     text-align: center;
+    color: #013874;
     transition: box-shadow 0.3s ease-in-out;
+    border: 2px solid #f7b738;
 }
 
+.oneByOne {
+   
+    padding: 20px 30px;
+  
+  
+
+}
+.oneByOne i{
+    color: #0056b3;
+}
 .excel, .oneByOne {
-    box-shadow: rgb(209, 209, 209) 5px 5px 50px;
+    transition: .5s;
+    box-shadow: rgb(229, 229, 229) 5px 5px 50px;
 }
 
 .excel:hover, .oneByOne:hover {
-    box-shadow: rgb(190, 190, 190) 5px 5px 50px;
+    box-shadow: rgb(229, 229, 229) 5px 5px 50px;
+    transform:translateY(-10px);
     cursor: pointer;
 }
 
@@ -49,7 +61,7 @@ input[type="file"] {
     display: inline-block;
     padding: 6px 12px;
     cursor: pointer;
-    color: #28a745;
+    color: #30965f;
     background-color: #fff;
     border-radius: 5px;
     margin-top: 10px;
@@ -58,7 +70,7 @@ input[type="file"] {
 button {
     margin-top: 10px;
     padding: 10px 20px;
-    background-color: #007bff;
+    background-color: #0056b3;
     color: white;
     border: none;
     border-radius: 5px;
@@ -78,7 +90,7 @@ p {
     margin-top: 10px;
     margin-right: 5px;
     padding: 10px 20px;
-    background-color: #30965f;
+    background-color: #FBAF1B;
     color: white;
     border: none;
     border-radius: 5px;
@@ -86,5 +98,5 @@ p {
     transition: background-color 0.3s ease;
 }
 .choose-file-btn:hover{
-    background-color: #318a5a;
+    background-color: #f7b738;
 }
