@@ -40,7 +40,7 @@
   color: #050794;
   border: none;
   cursor: pointer;
-  border-radius: 15px;
+  border-radius: 15px;  
 }
 .expenses-list button.delete {
   color: rgb(192, 0, 0);
