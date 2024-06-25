@@ -48,6 +48,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NotificatiosComponent } from "./layout/notifications/notificatios.component";
 
 import { PublicEventsComponent } from "./home/public-events/public-events.component";
+import { ChatIconComponent } from "./chat-icon/chat-icon.component";
 
 
 
@@ -103,13 +104,11 @@ import { PublicEventsComponent } from "./home/public-events/public-events.compon
         NgxPaginationModule,
         NgbModule,
         FullCalendarModule
-     
-     
         // FullCalendarModule.forRoot({
         //     plugins: [dayGridPlugin]
         //   })
         // CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
-
-        , NotificatiosComponent, PublicEventsComponent] })
+        ,
+        NotificatiosComponent, PublicEventsComponent, ChatIconComponent] })
 
 export class AppModule {}

@@ -36,9 +36,6 @@ namespace Event_Planning_System.Guest
 
         private readonly IRepository<Enitities.Guest, int> _repository;
         private readonly IRepository<Enitities.Event, int> _repositoryEvent;
-
-        
-
         private readonly IMapper _mapper;
         private readonly IRepository<User, long> _userRepository;
         private readonly IRepository<Enitities.Event, int> repositoryEvent;
@@ -79,8 +76,10 @@ namespace Event_Planning_System.Guest
 
         public async Task<IActionResult> AddGuestsThroughExcelFile([FromForm] IFormFile file, int eventId)
         {
+
             try
             {
+                
                 var userId = AbpSession.UserId.Value;
                 var user = await _userRepository.GetAllIncluding(u => u.Guests).FirstOrDefaultAsync(u => u.Id == userId);
 
@@ -120,32 +119,49 @@ namespace Event_Planning_System.Guest
                                 UserId = userId,
                                 EventId = eventId
                             };
-
+                            
                             guestList.Add(guest);
                         }
+                        
                     }
                 }
 
-                foreach (var guestDto in guestList)
+                var MaxCountForGuests = _repositoryEvent.Get(eventId).MaxCount;
+                var CurrentGuestsInEvent= eventUser.Guests.Count;
+                var availablePlaces= MaxCountForGuests - CurrentGuestsInEvent;
+                var GuestsInsertedByExcel = guestList.Count;
+
+
+
+                if (availablePlaces < GuestsInsertedByExcel)
                 {
-                    if (!eventUser.Guests.Any(g => g.Email == guestDto.Email))
-                    {
-                        var entity = _mapper.Map<Enitities.Guest>(guestDto);
-                        eventUser.Guests.Add(entity);
-                        user.Guests.Add(entity);
-                    }
+                    return new BadRequestObjectResult($"You can only insert {availablePlaces} guests , but you are trying to insert {GuestsInsertedByExcel}.");
+
+                }
+
+                var guestsToAdd = guestList.Where(g => !eventUser.Guests.Any(eg => eg.Email == g.Email))
+                               .Take(availablePlaces)
+                               .ToList();
+
+                foreach (var guestDto in guestsToAdd)
+                {
+                    var entity = _mapper.Map<Enitities.Guest>(guestDto);
+                    eventUser.Guests.Add(entity);
+                    user.Guests.Add(entity);
                 }
 
                 await _repositoryEvent.UpdateAsync(eventUser);
                 await _userRepository.UpdateAsync(user);
 
-                return new OkObjectResult("Successfully inserted");
+                return new OkObjectResult($"Successfully inserted {guestsToAdd.Count} guests. still {availablePlaces - guestsToAdd.Count} you can insert");
             }
             catch (Exception ex)
             {
-                return new ObjectResult(ex.Message) { StatusCode = 500 };
+                return new ObjectResult($"There is an error ");
             }
         }
+
+
         public async Task UpdateInvitationState(int guestId, string newState)
         {
             var guest = await _repository.FirstOrDefaultAsync(guestId);

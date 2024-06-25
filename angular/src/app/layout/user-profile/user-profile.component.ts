@@ -24,7 +24,7 @@ import { SharedModule } from "../../../shared/shared.module";
     imports: [FormsModule, CommonModule, RouterLink, UpcomingEventsComponent, HistoryeventComponent, SharedModule]
 })
 export class UserProfileComponent implements OnInit {
-
+  isMinimized: boolean = false;
   AddInterest(id: any, interest: any) {
     this.interestsService.AddInterest(id, interest).subscribe({
       next: i => {
@@ -191,7 +191,7 @@ export class UserProfileComponent implements OnInit {
   getUserImage(): string {
     return this.user?.image
       ? this.user.image
-      : "assets/img/user.jpg";
+      : "./../../assets/img/userImg.png";
   }
 
   openModal(template: any): void {
@@ -231,6 +231,8 @@ export class UserProfileComponent implements OnInit {
     //   },
     // });
   }
-
+  toggleProfile() {
+    this.isMinimized = !this.isMinimized;
+  }
 }
 

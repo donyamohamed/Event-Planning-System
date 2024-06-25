@@ -12,7 +12,7 @@ namespace Event_Planning_System.Chats
 	{
 		Task SendMessage(CreateChatMessageInput input);
 
-		Task<List<ChatMessageDto>> GetMessages(long receiverUserId);
+		Task<List<ChatMessageDto>> GetMessages(long userId, long receiverId);
 
 	}
 

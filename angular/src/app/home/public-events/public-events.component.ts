@@ -68,6 +68,7 @@ export class PublicEventsComponent implements OnInit {
   details(event: Event): void {
     if (this.events.length > 0) {
       this.router.navigateByUrl("app/eventHomeDetails/" + event.id, { state: { event } });
+
     }
   }
 
@@ -194,7 +195,6 @@ export class PublicEventsComponent implements OnInit {
       date: event.startDate,
       eventAddress: event.location
     };
-
     this.askForInvitationServ.createNotification(notificationData).subscribe(
       response => {
         console.log('Notification created:', response);

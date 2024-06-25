@@ -1,0 +1,34 @@
+.custom-dropdown-menu {
+        width: 370px !important;
+        position: absolute;
+        top: 40px;
+        left: -300px;
+        z-index: 1000;
+}
+
+.userImg {
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+}
+
+.main-wrapper {
+        cursor: pointer;
+
+}
+
+.main {
+        padding: 5px;
+        background-color: rgb(241, 246, 249);
+        border-radius: 10px;
+}
+
+.message-container {
+        position: relative;
+}
+
+.time {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+}
