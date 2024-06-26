@@ -239,29 +239,30 @@ namespace Event_Planning_System.Event
 			return orderedPublicEvents;
 		}
 
-		public async Task DeleteEventWithDetailsAsync(int eventId)
-		{
-			var eventEntity = await _repository.GetAsync(eventId);
-			if (eventEntity == null)
-			{
-				throw new Abp.UI.UserFriendlyException("Event not found");
-			}
+        public async Task DeleteEventWithDetailsAsync(int eventId)
+        {
+            var eventEntity = await _repository.GetAsync(eventId);
+            if (eventEntity == null)
+            {
+                throw new Abp.UI.UserFriendlyException("Event not found");
+            }
 
-			var today = DateTime.Today;
-			if (eventEntity.StartDate > today && eventEntity.EndDate > today)
-			{
-				var guests = await _guestRepository.GetAllListAsync(g => g.Events.Any(e => e.Id == eventId ) && g.InvitationState != "Pending");
-				foreach (var guest in guests)
-				{
-					var htmlBody = EmailCanceledTemple.GenerateEventCancellationEmail(eventEntity.Name, eventEntity.StartDate, guest.Name);
-					await _emailService.SendEmailAsync(guest.Email, "Event Cancellation", htmlBody);
-				}
-			}
-			await _budgetExpenseRepository.DeleteAsync(be => be.EventId == eventId);
-			await _toDoCheckListRepository.DeleteAsync(tc => tc.EventId == eventId);
-			await _guestRepository.DeleteAsync(g => g.Events.Any(e => e.Id == eventId));
-			await _repository.DeleteAsync(eventEntity);
-		}
+            var today = DateTime.Today;
+            if (eventEntity.StartDate > today && eventEntity.EndDate > today)
+            {
+                var guests = await _guestRepository.GetAllListAsync(g => g.Events.Any(e => e.Id == eventId));
+                foreach (var guest in guests)
+                {
+                    var htmlBody = EmailCanceledTemple.GenerateEventCancellationEmail(eventEntity.Name, eventEntity.StartDate, guest.Name);
+                    await _emailService.SendEmailAsync(guest.Email, "Event Cancellation", htmlBody);
+                }
+            }
+            await _budgetExpenseRepository.DeleteAsync(be => be.EventId == eventId);
+            await _toDoCheckListRepository.DeleteAsync(tc => tc.EventId == eventId);
+            await _guestRepository.DeleteAsync(g => g.Events.Any(e => e.Id == eventId));
+            await _repository.DeleteAsync(eventEntity);
+        }
+
         public async Task<EventDto> GetEventByIdAsync(int id)
         {
             var eventEntity = await _repository.GetAll()

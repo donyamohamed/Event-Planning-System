@@ -725,6 +725,15 @@ section {
   border-radius: 5px;
   cursor: pointer;
 }
+.chat-body .p1{
+    font-size: 1vw;
+   
+}
+.chat-body .p2{
+  font-size: 1.15vw;
+  color: #080948;
+ 
+}
 
 .panswer {
   font-family: "Quattrocento", Georgia, "Times New Roman", Times, serif;
