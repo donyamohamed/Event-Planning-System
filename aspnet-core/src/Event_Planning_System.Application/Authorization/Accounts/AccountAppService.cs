@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Abp.Authorization;
 using Abp.Configuration;
@@ -38,15 +39,27 @@ namespace Event_Planning_System.Authorization.Accounts
         }
 
         [AbpAllowAnonymous]
-        public async Task<bool> SendResetPasswordLink(string emailAddress)
+        public async Task<IActionResult> SendResetPasswordLink(string emailAddress)
         {
+            string emailPattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+
+           
+            if (string.IsNullOrWhiteSpace(emailAddress) || emailAddress == "undefined")
+            {
+               return new  BadRequestObjectResult($"This emil can not be null or undefined");
+            }
             var user = await _userManager.FindByNameOrEmailAsync(emailAddress);
+            
+            if(! Regex.IsMatch(emailAddress , emailPattern) )
+            {
+                return new BadRequestObjectResult($"Invalid Email Formate");
+            }
 
             if (user == null)
-                throw new Exception("There is no current user!");
+               return new BadRequestObjectResult($"This user can not be found");
             else
             if (user.IsDeleted || !user.IsActive)
-                return false;
+                return new BadRequestObjectResult("The user is either deleted or inactive");
 
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
             var encodedToken = Uri.EscapeDataString(token);
@@ -56,7 +69,7 @@ namespace Event_Planning_System.Authorization.Accounts
 
             await _emailService.SendEmailAsync(emailAddress, "Reset Password", emailBodyTemplate);
 
-            return true;
+            return new OkObjectResult($"The Email sended successfully");
         }
 
 
@@ -67,11 +80,35 @@ namespace Event_Planning_System.Authorization.Accounts
             var user = await _userManager.FindByNameOrEmailAsync(email);
 
             if (user == null)
-                throw new Exception("There is no current user!");
+            {
+                return IdentityResult.Failed(new IdentityError
+                {
+                    Code="Unvalid user",
+                    Description="This is no current user "
+                });
+            }
+                
 
-            else
+            var PasswordPattern = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$";
+
+            if(!Regex.IsMatch( model.NewPassword , PasswordPattern))
+            {
+                return IdentityResult.Failed(new IdentityError
+                {
+                    Code = "InvalidPassword",
+                    Description = "Password must be at least 8 characters long, contain at least one lowercase letter, one uppercase letter, one number, and one special character."
+                });
+            }
+
             if (model.NewPassword != model.ConfirmPassword)
-                throw new Exception("No matched password");
+            {
+                return IdentityResult.Failed(new IdentityError
+                {
+                    Code = "NoyMathed",
+                    Description = "Password does not matched with confirm password"
+                });
+            }
+               
 
 
             return await _userManager.ResetPasswordAsync(user, token, model.NewPassword);
