@@ -52,13 +52,13 @@ EXTRAORDINARY</p>
       <span class="close" (click)="closeChat()">&times;</span>
     </div>
     <div class="chat-body">
-      <p *ngIf="!selectedQuestion">What are you inquiring about?</p>
+      <p class="p1" *ngIf="!selectedQuestion">What are you inquiring about?</p>
       <ng-container *ngIf="!selectedQuestion">
         <button *ngFor="let question of questions" (click)="askQuestion(question)">{{ question }}</button>
       </ng-container>
       <div *ngIf="answer" class="panswer">
-        <p>{{ selectedQuestion }}</p>
-        <p>{{ answer }}</p>
+        <p class="p2" >{{ selectedQuestion }}</p>
+        <p class="p1" >{{ answer }}</p>
         <button (click)="resetQuestions()">Ask another question</button>
       </div>
     </div>

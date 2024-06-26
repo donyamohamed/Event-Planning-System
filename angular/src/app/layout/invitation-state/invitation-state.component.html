@@ -1,0 +1,23 @@
+<div *ngIf="notifications && notifications.length > 0">
+  <h2>
+    <img src="../../../assets/img/invitation (1).png" alt="icon" />
+   Invitation State</h2>
+  <div *ngFor="let notification of notifications" class="notification-item">
+    <div class="notification-content">
+      <div>{{ notification.content }}</div>
+      <div class="notification-date">
+       <p><img src="../../../assets/img/eventHistory.png" alt="icon"srcset="">{{ notification.date }}</p> 
+      </div>
+    </div>
+    <div class="notification-status">
+      {{ getStatusString(notification.status) }}
+    </div>
+    <hr>
+  </div>
+</div>
+<div *ngIf="notifications && notifications.length === 0">
+  <p>No notifications found.</p>
+</div>
+<div *ngIf="!notifications">
+  <p>Loading notifications...</p>
+</div>

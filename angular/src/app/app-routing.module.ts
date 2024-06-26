@@ -26,6 +26,7 @@ import { InterstsComponent } from './intersts/intersts.component';
 import { TodoListComponent } from './layout/event-todo-list/event-todo-list.component';
 import { EventDetailsComponent } from './layout/event-details/event-details.component';
 import { EventHOmeDetailsComponent } from './layout/event-home-details/event-home-details.component';
+import {InvitationStateComponent } from './layout/invitation-state/invitation-state.component';
 
 import { NotificatiosComponent } from './layout/notifications/notificatios.component';
 import { ChatComponentComponent } from './../app/chat-component/chat-component.component'
@@ -48,7 +49,8 @@ const routes: Routes = [
 
             { path: 'historyevent', component: HistoryeventComponent, canActivate: [AppRouteGuard] },
             { path: 'user-event', component: UserEventComponent, canActivate: [AppRouteGuard] },
-
+            {path:'invitation-state' ,component:InvitationStateComponent,canActivate:[AppRouteGuard]},
+ 
             { path: 'Profile', component: UserProfileComponent, canActivate: [AppRouteGuard] },
             { path: 'Notifications', component: NotificatiosComponent, canActivate: [AppRouteGuard] },
             

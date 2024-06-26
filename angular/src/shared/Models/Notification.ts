@@ -7,7 +7,8 @@ export class Notifications {
     public isRead: boolean | undefined,
     public status: number | undefined,
     public guestId: number | undefined,
-    public eventId: number | undefined
+    public eventId: number | undefined, 
+    public eventName?: string 
   ) { }
 }
 export class UpdateNotificationStatusDto {
