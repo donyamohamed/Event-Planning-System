@@ -42,7 +42,7 @@ h2 {
     position: absolute;
     top: 10px;
     right: 10px;
-    background-color: white;
+    background-color: rgb(255, 255, 255);
     width: 50px;
     height: 50px;
     border-radius: 7px;
@@ -66,15 +66,22 @@ h2 {
     font-size: 0.9em;
 }
 
-.card-content {
+/* .card-content {
     background-color: white;
     border-radius: 7px;
     padding: 10px;
     text-align: center;
     margin: 10px;
     position: relative;
+} */
+.card-content {
+  background-color: rgba(255, 255, 255, 0.8); /* Adjust the last value (0.8) for transparency */
+  border-radius: 7px;
+  padding: 10px;
+  text-align: center;
+  margin: 10px;
+  position: relative;
 }
-
 .card-content h3 {
     margin: 0 0 10px;
     font-size: 1em;

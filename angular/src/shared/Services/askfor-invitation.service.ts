@@ -19,8 +19,8 @@ export class AskforInvitationService {
   sendPendingEmail(emailData: any): Observable<any> {
     return this.http.post<any>(this.pendingEmailApi, emailData);
   }
-  checkExistingInvitation(guestId: number, eventId: number): Observable<{ exists: boolean }> {
-    return this.http.post<any>(`${this.baseUrl}`, { guestId, eventId });
+  checkExistingInvitation(guestId: number, eventId: number): Observable<{ result: boolean }> {
+    return this.http.post<{ result: boolean }>(`${this.baseUrl}?guestId=${guestId}&eventId=${eventId}`, {});
   }
   
 }

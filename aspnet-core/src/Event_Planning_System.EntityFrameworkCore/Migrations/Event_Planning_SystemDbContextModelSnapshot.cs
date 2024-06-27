@@ -1851,6 +1851,41 @@ namespace Event_Planning_System.Migrations
                     b.ToTable("ChatMessage");
                 });
 
+            modelBuilder.Entity("Event_Planning_System.Entities.Feedback", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Body")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("EventId")
+                        .HasColumnType("int");
+
+                    b.Property<float>("Rate")
+                        .HasColumnType("real");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("EventId", "UserId")
+                        .IsUnique();
+
+                    b.ToTable("Feedbacks");
+                });
+
             modelBuilder.Entity("Event_Planning_System.MultiTenancy.Tenant", b =>
                 {
                     b.Property<int>("Id")
@@ -2254,6 +2289,25 @@ namespace Event_Planning_System.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Event_Planning_System.Entities.Feedback", b =>
+                {
+                    b.HasOne("Event_Planning_System.Enitities.Event", "Event")
+                        .WithMany("Feedbacks")
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Event_Planning_System.Authorization.Users.User", "User")
+                        .WithMany("Feedbacks")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Event");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Event_Planning_System.MultiTenancy.Tenant", b =>
                 {
                     b.HasOne("Event_Planning_System.Authorization.Users.User", "CreatorUser")
@@ -2375,6 +2429,8 @@ namespace Event_Planning_System.Migrations
 
                     b.Navigation("Events");
 
+                    b.Navigation("Feedbacks");
+
                     b.Navigation("Logins");
 
                     b.Navigation("Notifications");
@@ -2393,6 +2449,8 @@ namespace Event_Planning_System.Migrations
             modelBuilder.Entity("Event_Planning_System.Enitities.Event", b =>
                 {
                     b.Navigation("Budgets");
+
+                    b.Navigation("Feedbacks");
 
                     b.Navigation("Notifications");
 

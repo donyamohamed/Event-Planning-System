@@ -18,7 +18,7 @@ namespace Event_Planning_System.EntityFrameworkCore
         public DbSet<BudgetExpense> Budgets { get; set; }
         public DbSet<ToDoCheckList> ToDoChecks { get; set; }
 		public DbSet<ChatMessage> ChatMessage { get; set; }
-
+        public DbSet<Feedback> Feedbacks { get; set; }
 
 		public DbSet<Interest> interests { get; set; }
         public Event_Planning_SystemDbContext(DbContextOptions<Event_Planning_SystemDbContext> options)
@@ -82,6 +82,32 @@ namespace Event_Planning_System.EntityFrameworkCore
             });
            
 
+
+            // Composite unique index for Email and EventId
+            /*  modelBuilder.Entity<Guest>()
+                 .HasIndex(g => new { g.Email, g.EventId })
+                 .IsUnique();*/
+
+            //modelBuilder.Entity<Guest>()
+            //   .HasIndex(g => g.Email)
+            //   .IsUnique();
+
+            modelBuilder.Entity<Feedback>()
+                .HasOne(f => f.Event)
+                .WithMany(e => e.Feedbacks)
+                .HasForeignKey(f => f.EventId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Feedback>()
+                .HasOne(f => f.User)
+                .WithMany(u => u.Feedbacks)
+                .HasForeignKey(f => f.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Composite unique index for Feedback (EventId and UserId)
+            modelBuilder.Entity<Feedback>()
+                .HasIndex(f => new { f.EventId, f.UserId })
+                .IsUnique();
 
             // Composite unique index for Email and EventId
             /*  modelBuilder.Entity<Guest>()
