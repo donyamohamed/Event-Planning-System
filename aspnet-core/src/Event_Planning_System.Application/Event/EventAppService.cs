@@ -185,7 +185,7 @@ namespace Event_Planning_System.Event
                     foreach (var interest in interests)
                     {
                         var interestEvents = await _repository.GetAll()
-                            .Where(e => e.Category == interest.Type && e.IsPublic && e.UserId != userId)
+                            .Where(e => e.Category == interest.Type && e.IsPublic && e.UserId != userId && e.StartDate >= DateTime.Now)
                             .ToListAsync();
 
                         var mappedInterestEvents = _mapper.Map<List<EventDto>>(interestEvents);
@@ -202,7 +202,7 @@ namespace Event_Planning_System.Event
 				else
 				{
                     var publicEventsFromDb = await _repository.GetAll()
-                    .Where(e => e.IsPublic && e.UserId != userId)
+                    .Where(e => e.IsPublic && e.UserId != userId && e.StartDate >= DateTime.Now)
                     .ToListAsync();
 
                     var mappedPublicEvents = _mapper.Map<List<EventDto>>(publicEventsFromDb);
@@ -221,7 +221,7 @@ namespace Event_Planning_System.Event
 			{
 
 				var publicEventsFromDb = await _repository.GetAll()
-					.Where(e => e.IsPublic)
+					.Where(e => e.IsPublic && e.StartDate >= DateTime.Now)
 					.ToListAsync();
 
 				var mappedPublicEvents = _mapper.Map<List<EventDto>>(publicEventsFromDb);

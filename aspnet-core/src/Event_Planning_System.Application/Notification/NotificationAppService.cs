@@ -76,11 +76,17 @@ namespace Event_Planning_System.Notification
 		}
         public async Task<bool> CheckExistingInvitation(long guestId, int eventId)
         {
-            var existingInvitation = await _notificationRepository.GetAll()
-                .AnyAsync(n => n.GuestId == guestId && n.EventId == eventId );
+            // Count the number of notifications matching guestId and eventId
+            var count = await _notificationRepository
+                .GetAll()
+                .CountAsync(n => n.GuestId == guestId && n.EventId == eventId);
 
-            return existingInvitation;
+            // Return true if count is greater than zero, false otherwise
+            return count > 0;
         }
+
+
+
 
     }
 }

@@ -10,14 +10,13 @@ import 'moment-timezone';
 if (environment.production) {
     enableProdMode();
 }
-
 const bootstrap = () => {
     return platformBrowserDynamic().bootstrapModule(RootModule);
 };
 
 /* "Hot Module Replacement" is enabled as described on
  * https://medium.com/@beeman/tutorial-enable-hrm-in-angular-cli-apps-1b0d13b80130#.sa87zkloh
- */
+*/
 
 if (environment.hmr) {
     if (module['hot']) {
@@ -29,3 +28,4 @@ if (environment.hmr) {
 } else {
     bootstrap(); // Regular bootstrap
 }
+
