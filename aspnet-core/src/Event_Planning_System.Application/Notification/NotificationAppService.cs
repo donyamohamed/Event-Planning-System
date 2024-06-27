@@ -84,6 +84,24 @@ namespace Event_Planning_System.Notification
             // Return true if count is greater than zero, false otherwise
             return count > 0;
         }
+        public async Task<List<GetAllNotificationsDTO>> GetAskForInvitationNotifications(long guestId)
+        {
+            var notifications = await _notificationRepository.GetAll()
+                .Where(n => n.GuestId == guestId && n.NType == Notification_Type.AskForInvitation)
+                .Select(n => new GetAllNotificationsDTO
+                {
+                    Id = n.Id,
+                    Content = n.Content,
+                    Date = n.Date,
+                    NType = n.NType,
+                    isRead = n.isRead,
+                    status = n.status
+                })
+                .ToListAsync();
+
+            return notifications;
+        }
+
 
 
 

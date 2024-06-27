@@ -7,26 +7,6 @@ CREATIVE AND
 EXTRAORDINARY</p>
   </div>
 </header>
-<!-- <header class="home-header">
-  
-  <div class="big-div">
-    <div>
-     
-      <app-intersts *ngIf="!hasInterests && isLoggedIn"></app-intersts>
-    </div>
-    <div class="inner-div">
-      <!-- <p>Boston Corporate Events</p> 
-      <h1>
-        {{"UNIQUE" | localize}}
-        <br>
-       {{"CREATIVE" | localize}} 
-        <br>
-       {{"EXTRAORDINARY" | localize}} 
-      </h1>
-
-    </div>
-  </div>
-</header> -->
 <div [@routerTransition]>
 
   <section>
@@ -52,13 +32,13 @@ EXTRAORDINARY</p>
       <span class="close" (click)="closeChat()">&times;</span>
     </div>
     <div class="chat-body">
-      <p *ngIf="!selectedQuestion">What are you inquiring about?</p>
+      <p class="p1" *ngIf="!selectedQuestion">What are you inquiring about?</p>
       <ng-container *ngIf="!selectedQuestion">
         <button *ngFor="let question of questions" (click)="askQuestion(question)">{{ question }}</button>
       </ng-container>
       <div *ngIf="answer" class="panswer">
-        <p>{{ selectedQuestion }}</p>
-        <p>{{ answer }}</p>
+        <p class="p2" >{{ selectedQuestion }}</p>
+        <p class="p1" >{{ answer }}</p>
         <button (click)="resetQuestions()">Ask another question</button>
       </div>
     </div>

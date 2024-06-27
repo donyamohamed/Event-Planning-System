@@ -5,6 +5,7 @@ using Event_Planning_System.Authorization.Users;
 using Event_Planning_System.MultiTenancy;
 using Event_Planning_System.Enitities;
 using Event_Planning_System.Entities;
+using Abp.Domain.Entities;
 
 namespace Event_Planning_System.EntityFrameworkCore
 {
@@ -28,8 +29,6 @@ namespace Event_Planning_System.EntityFrameworkCore
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-
 
             modelBuilder.Entity<notification>()
                 .HasOne(n => n.Event)
@@ -61,6 +60,33 @@ namespace Event_Planning_System.EntityFrameworkCore
                 .WithMany(e => e.Budgets)
                 .HasForeignKey(b => b.EventId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Guest>()
+               .HasIndex(g => g.Email)
+            .IsUnique();
+
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.HasIndex(u => u.EmailAddress)
+                .IsUnique()
+                .HasAnnotation("RegularExpression", @"^[^@\s]+@[^@\s]+\.[^@\s]+$");
+
+                // Password configuration
+                entity.Property(u => u.Password)
+                    .IsRequired()
+                    .HasAnnotation("RegularExpression",
+                        @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$")
+                    .HasAnnotation("MinLength", 8);
+                   
+
+            });
+           
+
+
+            // Composite unique index for Email and EventId
+            /*  modelBuilder.Entity<Guest>()
+                 .HasIndex(g => new { g.Email, g.EventId })
+                 .IsUnique();*/
 
             //modelBuilder.Entity<Guest>()
             //   .HasIndex(g => g.Email)

@@ -18,6 +18,7 @@ import { SharedModule } from "../../shared/shared.module";
     imports: [CommonModule, FormsModule, ReactiveFormsModule, SharedModule]
 })
 export class NewPasswordComponent implements OnInit {
+  [x: string]: any;
 
   dataForPassword: NewPassword = new NewPassword('', '');
   newPasswordForm: FormGroup = new FormGroup({});
@@ -32,8 +33,9 @@ export class NewPasswordComponent implements OnInit {
 
   ngOnInit() {
     this.newPasswordForm = new FormGroup({
-      NewPassword: new FormControl(null, [Validators.required]),
+      NewPassword: new FormControl(null, [Validators.required , Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)]),
       ConfirmPassword: new FormControl(null, [Validators.required]),
+        // { validator: this.mustMatch('NewPassword', 'ConfirmPassword')}
     });
 
 
@@ -62,7 +64,27 @@ export class NewPasswordComponent implements OnInit {
         this.errorMessage.next(`Failed to change password`);
       }
     });
-       
+
   }
-}
+    mustMatch(controlName: string, matchingControlName: string) {
+
+      return (formGroup: FormGroup) => {
+        const control = formGroup.controls[controlName];
+        const matchingControl = formGroup.controls[matchingControlName];
+  
+        if (matchingControl.errors && !matchingControl.errors.mustMatch) {
+          return;
+        }
+  
+        if (control.value !== matchingControl.value) {
+          matchingControl.setErrors({ mustMatch: true });
+        } else {
+          matchingControl.setErrors(null);
+        }
+      };
+
+
+    }
+  }
+
 
