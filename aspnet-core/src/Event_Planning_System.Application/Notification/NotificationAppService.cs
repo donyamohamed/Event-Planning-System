@@ -101,10 +101,37 @@ namespace Event_Planning_System.Notification
 
             return notifications;
         }
+		public async Task<List<notification>> GetNotificationOfEventReview()
+		{
+			var currentGuestId = AbpSession.UserId.Value;
+			var yesterday = DateTime.Today.AddDays(-1).Date; 
+			var guestNotifications = await _notificationRepository
+				.GetAll()
+				.Where(n => n.GuestId == currentGuestId &&
+							n.status == Notification_Status.Accepted &&
+							n.Event.EndDate.Date == yesterday)
+				.ToListAsync();
+
+			return guestNotifications;
+		}
+		public async Task UpdateIsReviewdStatus([FromBody] UpdateIsReviewd input)
+		{
+			var notifications = await GetAllUserNotifications();
+			var old = notifications.FirstOrDefault(n => n.Id == input.Id);
+			if (old == null)
+			{
+				throw new Abp.UI.UserFriendlyException("Notification not found");
+			}
+			old.IsReviewTaken = true;
+			await _notificationRepository.UpdateAsync(old);
+		}
+		public async Task<int> GetCountOfNotReviewedUserEvents()
+		{
+			var res = await GetNotificationOfEventReview();
+			return res.Where(n=>n.IsReviewTaken==false).Count();
+		}
 
 
 
-
-
-    }
+	}
 }

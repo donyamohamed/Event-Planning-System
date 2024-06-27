@@ -39,6 +39,7 @@ namespace Event_Planning_System.Enitities
         public bool isRead { get; set; }
 
         public Notification_Status status { get; set; }
+        public bool IsReviewTaken { get; set; }=false;
         public long UserId { get; set; }
         [ForeignKey("UserId")]
         public virtual User User { get; set; }
