@@ -2,7 +2,7 @@
 
     <div class="header-container">
       <h2>{{"Recommended Events" | localize}}</h2>
-      <h4 class="text-muted">{{"Based on your Interests" | localize}}</h4>
+      <!-- <h4 class="text-muted">{{"Based on your Interests" | localize}}</h4> -->
     </div>
   
     <div class="card-container">
@@ -30,6 +30,6 @@
     </div>
     <div *ngIf="events.length == 0" class="noPublic-events text-center">
       <img src="../../../assets/img/Waiting.gif" alt="">
-      <h2>{{"No Events yet, Will come soon .... " | localize}}</h2>
+      <h4>{{"There are no events at this time, check back another day" | localize}}... <span>&#x23F3;</span></h4>
     </div>
   </div>

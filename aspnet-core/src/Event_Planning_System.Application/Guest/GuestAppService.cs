@@ -60,7 +60,7 @@ namespace Event_Planning_System.Guest
 
         public async Task Add(Enitities.Guest guest, int eventId)
         {
-            await ValidateGuestEmail(guest.Email);
+            await ValidateGuestEmail(guest.Email,eventId);
             var eventUser = await _repositoryEvent.FirstOrDefaultAsync(eventId);
             if (eventUser == null)
             {
@@ -183,10 +183,10 @@ namespace Event_Planning_System.Guest
             }
             return _mapper.Map<GuestDto>(guest);
         }
-        private async Task ValidateGuestEmail(string email, int? id = null)
+        private async Task ValidateGuestEmail(string email, int? eventId = null)
         {
-            var existingGuest = await _repository.FirstOrDefaultAsync(g => g.Email == email);
-            if (existingGuest != null && (!id.HasValue || existingGuest.Id != id.Value))
+            var existingGuest = await _repository.FirstOrDefaultAsync(g => g.Email == email && g.Events.Any(e => e.Id==eventId));
+            if (existingGuest != null)
             {
                 throw new AbpValidationException("Email address already exists.");
             }

@@ -1709,7 +1709,7 @@ namespace Event_Planning_System.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("InvitationState")
                         .IsRequired()
@@ -1725,9 +1725,6 @@ namespace Event_Planning_System.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Email")
-                        .IsUnique();
 
                     b.ToTable("Guests");
                 });

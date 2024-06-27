@@ -1,6 +1,10 @@
+:root{
+  --newBlue:#050794;
+}
 .card {
     border: none;
     border-radius: 1rem;
+    margin-left: auto;
   }
   
   .tableDiv {
@@ -13,19 +17,33 @@
     width: 200px;
   }
 
-  .btnDiv button ,.GuestCount{
+  .btnDiv button{
     background-color: #050794;
     color: white;
     border: 1px solid #050794;
-    border-bottom-left-radius: 6px;
-    border-bottom-right-radius: 6px;
-    border-top-left-radius: 6px;
-    border-top-right-radius: 6px;
+    border-radius: 6px;
 
   }
   .btnDiv button:hover{
     background-color: white;
     color: #050794;
+  }
+  .add-btns button{
+    color: white;
+    border-radius: 6px;
+
+  }
+  /* .add-btns button:hover{
+    background-color: white;
+    color: #050794;
+  } */
+  .GuestCount{
+    color: #050794;
+    font-size: larger;
+    font-weight: 700;
+  }
+  .GuestCount .acutal-GuestCount{
+   color: #FBAF1B;
   }
 
   
@@ -44,4 +62,14 @@
     color: #FBAF1B;
     background-color: white;
   }
+
+  .acutal-GuestCount {
+    animation: glow .5s infinite alternate;
+}
+
+@keyframes glow {
+    to {
+        text-shadow: 0 0 10px #FBAF1B;
+    }
+}
 
