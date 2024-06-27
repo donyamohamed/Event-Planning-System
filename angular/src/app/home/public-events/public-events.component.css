@@ -1,3 +1,7 @@
+:root{
+  --orangeColor: #FBAF1B;
+  --blueColor: #050794;
+}
 body {
     font-family: Arial, sans-serif;
     background-color: #f8f9fa;
@@ -16,10 +20,7 @@ body {
 }
 
 h2 {
-    /* padding: 30px 60px; */
     display: block;
-    
-    /* font-size: 1.5em; */
 }
 
 .card {
@@ -96,7 +97,7 @@ h2 {
     margin: 5px 5px;
 }
 #invite {
-    background:#fbaf1b ;
+    background: #FBAF1B;
     color: #fff;
     border: none;
     padding: 10px 15px;
@@ -138,11 +139,6 @@ h2 {
   }
 
   #loading {
-    /* background: url('../../../assets/img/Spin@1x-1.0s-200px-200px.gif') no-repeat center center; */
-    /* background-size: cover; */
-    /* position: absolute; 
-    top: 0;
-    left: 0;*/
     height: 100%;
     width: 100%;
     z-index: 9999999; 
@@ -165,9 +161,15 @@ h2 {
     left: 10px;
   }
   .Chat-icon i{
-    color: #fbaf1b;
+    color: #FBAF1B;
     font-size: 22px;
   }
-  /* .noPublic-events{
-    width: 400px;
-  } */
+
+  h2::after {
+    content: "";
+    display: block;
+    width: 100px;
+    height: 5px;
+    background-color: #FBAF1B;
+    margin: 20px auto;
+}

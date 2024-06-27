@@ -23,7 +23,7 @@
   </li>
   <li class="nav-item d-none d-sm-inline-block" *ngIf="isLoggedIn">
     <a class="nav-link" [routerLink]="['/app/user-event']">
-      {{ "Events" | localize }}
+      {{ "My Events" | localize }}
     </a>
   </li>
   <li class="nav-item d-none d-sm-inline-block" *ngIf="isLoggedIn">
@@ -33,7 +33,7 @@
   </li>
   <li class="nav-item d-none d-sm-inline-block" *ngIf="isLoggedIn">
     <a class="nav-link" [routerLink]="['/app/invitation-state']">
-      {{"InvitationState"}}
+      {{"Invitation State" | localize}}
     </a>
   </li>
 </ul>

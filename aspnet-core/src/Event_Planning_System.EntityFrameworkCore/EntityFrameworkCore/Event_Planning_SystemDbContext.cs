@@ -61,9 +61,6 @@ namespace Event_Planning_System.EntityFrameworkCore
                 .HasForeignKey(b => b.EventId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Guest>()
-               .HasIndex(g => g.Email)
-            .IsUnique();
 
             modelBuilder.Entity<User>(entity =>
             {
@@ -82,6 +79,9 @@ namespace Event_Planning_System.EntityFrameworkCore
             });
            
 
+           /* modelBuilder.Entity<Guest>()
+               .HasIndex(g => g.Email)
+            .IsUnique();*/
 
             // Composite unique index for Email and EventId
             /*  modelBuilder.Entity<Guest>()

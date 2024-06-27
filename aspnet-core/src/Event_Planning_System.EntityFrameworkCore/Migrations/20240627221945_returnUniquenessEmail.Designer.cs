@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Event_Planning_System.Migrations
 {
     [DbContext(typeof(Event_Planning_SystemDbContext))]
-    [Migration("20240625001314_uniqueGuestEmail")]
-    partial class uniqueGuestEmail
+    [Migration("20240627221945_returnUniquenessEmail")]
+    partial class returnUniquenessEmail
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1568,7 +1568,9 @@ namespace Event_Planning_System.Migrations
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(128)")
+                        .HasAnnotation("MinLength", 8)
+                        .HasAnnotation("RegularExpression", "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$");
 
                     b.Property<string>("PasswordResetCode")
                         .HasMaxLength(328)
@@ -1600,6 +1602,10 @@ namespace Event_Planning_System.Migrations
                     b.HasIndex("CreatorUserId");
 
                     b.HasIndex("DeleterUserId");
+
+                    b.HasIndex("EmailAddress")
+                        .IsUnique()
+                        .HasAnnotation("RegularExpression", "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$");
 
                     b.HasIndex("LastModifierUserId");
 
@@ -1706,7 +1712,7 @@ namespace Event_Planning_System.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("InvitationState")
                         .IsRequired()
@@ -1722,9 +1728,6 @@ namespace Event_Planning_System.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Email")
-                        .IsUnique();
 
                     b.ToTable("Guests");
                 });
