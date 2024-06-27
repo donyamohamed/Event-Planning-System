@@ -63,7 +63,7 @@ namespace Event_Planning_System.EntityFrameworkCore
 
             modelBuilder.Entity<Guest>()
                .HasIndex(g => g.Email)
-            .IsUnique();
+               .IsUnique();
 
             modelBuilder.Entity<User>(entity =>
             {

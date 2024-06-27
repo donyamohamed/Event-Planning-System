@@ -28,6 +28,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Abp.Runtime.Validation;
+using Abp.Collections.Extensions;
 
 namespace Event_Planning_System.Guest
 {
@@ -82,6 +83,7 @@ namespace Event_Planning_System.Guest
                 
                 var userId = AbpSession.UserId.Value;
                 var user = await _userRepository.GetAllIncluding(u => u.Guests).FirstOrDefaultAsync(u => u.Id == userId);
+                var gests = await _repository.GetAllListAsync();
 
                 if (user == null)
                 {
@@ -110,11 +112,23 @@ namespace Event_Planning_System.Guest
 
                         while (reader.Read())
                         {
+                            var name = reader.GetValue(0)?.ToString();
+                            var phone = reader.GetValue(1)?.ToString();
+                            var email = reader.GetValue(2)?.ToString();
+
+                            if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(phone) || string.IsNullOrWhiteSpace(email))
+                            {
+                                continue; // Skip invalid entries
+                            }
+
                             var guest = new GuestDto
                             {
-                                Name = reader.GetValue(0)?.ToString(),
-                                Phone = reader.GetValue(1)?.ToString(),
-                                Email = reader.GetValue(2)?.ToString(),
+                                //Name = reader.GetValue(0)?.ToString(),
+                                //Phone = reader.GetValue(1)?.ToString(),
+                                //Email = reader.GetValue(2)?.ToString(),
+                                Name = name,
+                                Phone = phone,
+                                Email = email,
                                 InvitationState = "Pending",
                                 UserId = userId,
                                 EventId = eventId
@@ -146,14 +160,18 @@ namespace Event_Planning_System.Guest
                 foreach (var guestDto in guestsToAdd)
                 {
                     var entity = _mapper.Map<Enitities.Guest>(guestDto);
-                    eventUser.Guests.Add(entity);
-                    user.Guests.Add(entity);
+                    var guest = gests.Where(g => g.Email== entity.Email).FirstOrDefault();
+                    var finalguest = guest ?? entity;
+
+                    eventUser.Guests.Add(finalguest);
+                    user.Guests.Add(finalguest);
                 }
 
                 await _repositoryEvent.UpdateAsync(eventUser);
                 await _userRepository.UpdateAsync(user);
 
                 return new OkObjectResult($"Successfully inserted {guestsToAdd.Count} guests. still {availablePlaces - guestsToAdd.Count} you can insert");
+            
             }
             catch (Exception ex)
             {

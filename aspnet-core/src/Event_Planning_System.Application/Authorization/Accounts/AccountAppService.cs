@@ -138,6 +138,8 @@ namespace Event_Planning_System.Authorization.Accounts
 
             try
             {
+             
+
                 if (input.ImageFile != null && input.ImageFile.Length > 0)
                 {
                     // Upload image to Cloudinary
@@ -161,6 +163,21 @@ namespace Event_Planning_System.Authorization.Accounts
                         }
                     }
                 }
+
+                var PasswordPattern = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$";
+                string emailPattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+
+
+                if (!Regex.IsMatch(input.EmailAddress, emailPattern))
+                {
+                    throw new Exception("Invalid Email Format");
+                }
+
+                if (!Regex.IsMatch(input.Password, PasswordPattern))
+                {
+                    throw new Exception("Password must be at least 8 characters long, contain at least one lowercase letter, one uppercase letter, one number, and one special character.");
+                }
+
 
                 var user = await _userRegistrationManager.RegisterAsync(
                     input.Name,
