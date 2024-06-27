@@ -63,7 +63,6 @@ html {
 }
 
 .event-info .category {
-  /* position: absolute; */
   right: 25px;
   top: 12px;
   font-size: 20px;
@@ -119,6 +118,7 @@ html {
   flex-direction: column;
   align-items: left;
   text-align: left;
+  margin-bottom: 5px;
 }
 
 .user-name h6 {
@@ -176,12 +176,38 @@ html {
 .share-icon{
   color:#050794;
 }
-#copy-link{
-  width: 15px;
-  height: 20px;
-}
-.link-forcopy p{
+
+
+.link-forcopy span{
   display:contents !important;
+}
+#swal2-html-container .link-forcopy{
+  border-radius: 2px;
+  background-color: #c4c3c3;
+}
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-bottom: 10px;
+  
+}
+
+ .btn:hover {
+  background-color: #1e90ff;
+}
+
+ .btn-expense {
+  background-color: #F7931E;
+  color: white;
+}
+
+ .btn-expense:hover {
+  background-color: #ff8c00;
+}
+.btn-todolist{
+  color: white;
+  background-color: #050794;
 }
 /* SweetAlert custom styles */
 .swal2-custom-popup .btn {
@@ -210,7 +236,7 @@ html {
   top: 50%;
   transform: translateY(-50%);
   cursor: pointer;
-  color: #495057;
+  color: #050794;
 }
 
 .swal2-custom-popup .link-forcopy {
@@ -220,7 +246,7 @@ html {
   padding: 5px;
   display: flex;
   align-items: center;
-  gap: 10px !important;
+  /* gap: 10px !important; */
 }
 
 

@@ -54,7 +54,7 @@ const routes: Routes = [
             { path: 'Profile', component: UserProfileComponent, canActivate: [AppRouteGuard] },
             { path: 'Notifications', component: NotificatiosComponent, canActivate: [AppRouteGuard] },
             
-            { path: 'eventDetails/:id', component: EventDetailsComponent, canActivate: [AppRouteGuard] },
+            { path: 'eventDetails/:id', component: EventDetailsComponent},
             { path: 'shareDetails/:id', component: ShareDetailesComponent, canActivate: [AppRouteGuard] },
             { path: 'todolist/:id', component: TodoListComponent, canActivate: [AppRouteGuard] },
             { path: 'showInterests', component: InterstsComponent, canActivate: [AppRouteGuard] },

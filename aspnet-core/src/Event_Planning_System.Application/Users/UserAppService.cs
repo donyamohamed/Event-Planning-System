@@ -280,8 +280,14 @@ namespace Event_Planning_System.Users
 
             await Activate(new EntityDto<long> { Id = userId });
         }
+        [AllowAnonymous] // Allow anonymous access if needed
+        public async Task<UserDto> GetUserById(long id)
+        {
+            var user = await GetEntityByIdAsync(id);
+            return MapToEntityDto(user);
+        }
 
-    
+
     }
 }
 

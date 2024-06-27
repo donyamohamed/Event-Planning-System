@@ -53,3 +53,7 @@
     </div>
   </div>
 </div>
+<div class="buttons" *ngIf="isEventCreator">
+  <a [routerLink]="'/app/todolist/' + event?.id" class="btn btn-todolist">{{ "TodoList" | localize }}</a>
+  <a (click)="navigateToSetExpenses(event?.id)" class="btn btn-expense">{{ "Set Expenses" | localize }}</a>
+</div>

@@ -16,7 +16,7 @@ namespace Event_Planning_System.Users
 
         Task<bool> ChangePassword(ChangePasswordDto input);
        Task ActivateUserById(long userId);
-
+        Task<UserDto> GetUserById(long id);
 
     }
 }
