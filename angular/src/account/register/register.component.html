@@ -22,7 +22,6 @@
             maxlength="64"
             [(ngModel)]="model.name"
             #nameModel="ngModel"
-            #nameEl
           />
           <div class="input-group-append">
             <div class="input-group-text">
@@ -54,10 +53,7 @@
             </div>
           </div>
         </div>
-        <abp-validation-summary
-          [control]="surnameModel"
-          [controlEl]="surnameEl"
-        ></abp-validation-summary>
+        <abp-validation-summary [control]="surnameModel"></abp-validation-summary>
       </div>
       <div class="form-group">
         <div class="input-group">
