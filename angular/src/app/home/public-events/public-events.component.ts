@@ -67,7 +67,7 @@ export class PublicEventsComponent implements OnInit {
 
   details(event: Event): void {
     if (this.events.length > 0) {
-      this.router.navigateByUrl("app/eventHomeDetails/" + event.id, { state: { event } });
+      this.router.navigateByUrl("app/eventDetails/" + event.id, { state: { event } });
 
     }
   }
@@ -134,7 +134,7 @@ export class PublicEventsComponent implements OnInit {
         if (response && response.result) {
           this.username = response.result.name;
           this.guestId = response.result.id;
-          console.log("nnnnnnnnn",response.result.id)
+         
           this.guestEmail = response.result.emailAddress;
           console.log(this.guestEmail);
           this.checkIfAlreadyRequested(event);

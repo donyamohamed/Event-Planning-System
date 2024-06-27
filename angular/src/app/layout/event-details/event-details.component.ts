@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { EventdetailsService } from '../../../shared/Services/eventdetails.service';
 import { EventBudgetService } from '../../../shared/Services/event-budget.service'; 
@@ -7,38 +7,53 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from "../../../shared/shared.module";
 import { UserService } from '../../../shared/Services/user-service.service';
+import { CurrentUserDataService } from '@shared/Services/current-user-data.service';
 import Swal from 'sweetalert2';
 
 @Component({
-    selector: 'app-event-details',
-    templateUrl: './event-details.component.html',
-    styleUrls: ['./event-details.component.css'],
-    standalone: true,
-    imports: [CommonModule, RouterLink, FormsModule, SharedModule]
+  selector: 'app-event-details',
+  templateUrl: './event-details.component.html',
+  styleUrls: ['./event-details.component.css'],
+  standalone: true,
+  imports: [CommonModule, RouterLink, FormsModule, SharedModule]
 })
 export class EventDetailsComponent implements OnInit {
   event: Event | undefined;
   eventId: number | undefined;
   budgetAmount: number | undefined; 
   user: any;
+  loggedInUserId: number | undefined;
+  isEventCreator: boolean = false; // Add this property
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private eventDetailsService: EventdetailsService,
     private eventBudgetService: EventBudgetService, 
-    private userService: UserService
+    private userService: UserService,
+    private currentUserData: CurrentUserDataService
   ) { }
-
-  navigateToSetExpenses(eventId: number): void {
-    this.router.navigate(['/app/set-expenses'], { queryParams: { eventId: eventId } });
-  }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       this.eventId = Number(params.get('id'));
       this.loadEventDetails();
     });
+
+    this.loadCurrentUser();
+  }
+
+  loadCurrentUser(): void {
+    this.currentUserData.GetCurrentUserData().subscribe(
+      response => {
+        console.log(response);
+        this.loggedInUserId = response.id;
+        this.checkIfEventCreator(); // Check if the event creator is the logged-in user
+      },
+      error => {
+        console.error('Error fetching user data', error);
+      }
+    );
   }
 
   loadEventDetails(): void {
@@ -47,18 +62,16 @@ export class EventDetailsComponent implements OnInit {
         (data) => {
           this.event = data.result;
           console.log("Event Details:", data.result);
-          if (this.event?.userId) {
-            this.userService.getUserById(this.event.userId).subscribe(
-              (userData) => {
-                console.log("User Data:", userData.result);
-                this.user = userData.result;
-                console.log("username", this.user.name);
-              },
-              (error) => {
-                console.error('Error fetching user data:', error);
-              }
-            );
-          }
+          this.userService.getUserById(this.event.userId).subscribe(
+            (userData) => {
+              this.user = userData.result;
+              console.log("User Data:", userData.result);
+              this.checkIfEventCreator(); // Check if the event creator is the logged-in user
+            },
+            (error) => {
+              console.error('Error fetching user data:', error);
+            }
+          );
         },
         (error) => {
           console.error('Error fetching event details:', error);
@@ -67,8 +80,25 @@ export class EventDetailsComponent implements OnInit {
     }
   }
 
+  checkIfEventCreator(): void {
+    if (this.event && this.loggedInUserId !== undefined) {
+      this.isEventCreator = (this.event.userId === this.loggedInUserId);
+      if (this.isEventCreator) {
+        console.log("The logged-in user is the creator of the event.");        
+      } else {
+        console.log("The logged-in user is not the creator of the event.");
+      }
+    }
+  }
+
+  navigateToSetExpenses(eventId: number): void {
+    this.router.navigate(['/app/set-expenses'], { queryParams: { eventId: eventId } });
+  }
+
   getUserImage(): string {
-    return this.user?.image ? this.user.image : "./../../assets/img/userImg.png";
+    return this.user?.image
+      ? this.user.image
+      : "https://static.vecteezy.com/system/resources/thumbnails/005/129/844/small/profile-user-icon-isolated-on-white-background-eps10-free-/  CCXX  ZXSD SCDSKMSMKMNSWE 4CV215541 1   Q .jpg";
   }
 
   openShareAlert(): void {
@@ -82,7 +112,7 @@ export class EventDetailsComponent implements OnInit {
         <button class="btn text-dark" id="share-twitter"><i class="fa-brands fa-x-twitter fa-x"></i></button> | 
         <button class="btn text-success" id="share-whatsapp"><i class="fa-brands fa-whatsapp fa-x"></i></button>
         <div class="mt-3 link-forcopy">
-          <p id="share-link" class="pr-5" >${shareUrl}</p>
+          <span id="share-link" class="pr-1" >${shareUrl}</span>
           <i class="far fa-clone copy-icon" id="copy-link"></i>
         </div>
       `,

@@ -6,12 +6,11 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class UserService {
+  private baseUrl = 'https://localhost:44311/api/services/app/User/GetUserById';
 
-  private baseUrl = 'https://localhost:44311/api/services/app/User';
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getUserById(userId: number): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/Get?Id=${userId}`);
+    return this.http.get<any>(`${this.baseUrl}?Id=${userId}`);
   }
 }
