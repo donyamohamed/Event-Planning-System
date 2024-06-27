@@ -13,6 +13,7 @@ namespace Event_Planning_System.Email
             string backgroundImage = string.IsNullOrEmpty(eventImg)
                ? "https://cdn.pixabay.com/photo/2016/12/18/00/47/structure-1914730_960_720.jpg"
                : eventImg;
+            string invitationUrl = "https://localhost:44311/invitation.html";
             return $@"
             <!DOCTYPE html>
             <html>
@@ -139,6 +140,16 @@ namespace Event_Planning_System.Email
                         .poster .message {{
                             font-size: 1rem;
                         }}
+                     .download-btn {{
+                        display: inline-block;
+                        margin-top: 20px;
+                        padding: 8px 18px;
+                        font-size: 1rem;
+                        color: white;
+                        background-color: #fbaf1b;
+                        text-decoration: none;
+                        border-radius: 5px;
+                    }}
                     }}
                 </style>
             </head>
@@ -169,6 +180,7 @@ namespace Event_Planning_System.Email
                    <div class='footer'>
                        <p>&copy; {DateTime.Now.Year} Event Planning Team. All rights reserved.</p>
                    </div>
+           <a href='https://api.html2pdf.app/v1/generate?url={Uri.EscapeDataString(invitationUrl)}&apiKey=06W549nhMKj0lcyp13wBF8D7kooz2xFG63mxzq1QE0UAtm1hp2u6YyJiuxqqtTDF' class='download-btn'>Download</a>
                 </div>
             </body>
             </html>";

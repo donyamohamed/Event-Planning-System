@@ -21,6 +21,10 @@ export class NotificationsService {
   private EventUrl = "https://localhost:44311/api/services/app/Event/Get?Id=";
   private AcceptanceEmail = "https://localhost:44311/api/Invitation/SendAcceptanceEmail";
   private RejectingEmail = "https://localhost:44311/api/Invitation/SendRejectionEmail";
+  private UserProfileUrl = "https://localhost:44311/api/services/app/UserProfileAppServices/GetUserProfile";
+  private NotificationsUrl = "https://localhost:44311/api/services/app/Notification/GetAskForInvitationNotifications";
+  
+
   constructor(private http: HttpClient) { }
 
   GetUserNotifications(): Observable<ApiResponse<Notifications[]>> {
@@ -59,4 +63,12 @@ export class NotificationsService {
     return this.http.post(this.RejectingEmail, data);
 
   }
+  getUserProfile(): Observable<any> {
+    return this.http.get<any>(this.UserProfileUrl);
+  }
+
+  getAskForInvitationNotifications(guestId: number): Observable<ApiResponse<Notifications[]>> {
+    return this.http.get<ApiResponse<Notifications[]>>(`${this.NotificationsUrl}?guestId=${guestId}`);
+  }
+ 
 }
