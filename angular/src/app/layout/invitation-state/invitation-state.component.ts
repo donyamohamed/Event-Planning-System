@@ -40,7 +40,7 @@ export class InvitationStateComponent implements OnInit {
       this.notificationsService.GetEventNameandStartdateById(notification.eventId).pipe(
         map(eventResponse => {
           notification.eventName = eventResponse.result.name;
-          notification.startDate = new Date(eventResponse.result.startDate); // Process startDate correctly
+          notification.startDate = new Date(eventResponse.result.startDate); 
           return notification;
         }),
         catchError(error => {
@@ -51,7 +51,7 @@ export class InvitationStateComponent implements OnInit {
     );
 
     forkJoin(eventRequests).subscribe(() => {
-      // All event names and start dates have been fetched and set
+     
     });
   }
 

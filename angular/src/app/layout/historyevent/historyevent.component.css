@@ -100,13 +100,16 @@ h2 {
     margin-top: 50px;
     font-weight: bold;
     text-transform: uppercase;
-    animation: fadeIn 2s ease-in-out;
+   
 }
-.no-event  img {
+.no-event h4{
+    margin-bottom: 20px;
+}
+/* .no-event  img {
     width: 38px;
     animation: swing 2s ease-in-out infinite;
     background-color: white;
-  }
+  } */
 
 @keyframes fadeIn {
   from { opacity: 0; }
