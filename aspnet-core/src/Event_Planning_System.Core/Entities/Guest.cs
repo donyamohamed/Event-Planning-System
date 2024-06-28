@@ -1,6 +1,7 @@
 ﻿using Abp.Domain.Entities;
 using Abp.Domain.Entities.Auditing;
 using Event_Planning_System.Authorization.Users;
+using Event_Planning_System.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 
 namespace Event_Planning_System.Enitities
 {
@@ -34,6 +36,7 @@ namespace Event_Planning_System.Enitities
 		//[ForeignKey(nameof(EventId))]
 		public virtual ICollection<Event> Events { get; set; } = new List<Event>();
 		public virtual ICollection<User> Users { get; set; } = new List<User>();
+        public ICollection<GuestEvent> GuestEvents { get; set; }
 
         public bool IsTransient()
         {
