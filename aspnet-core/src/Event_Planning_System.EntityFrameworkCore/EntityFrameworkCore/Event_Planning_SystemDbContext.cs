@@ -43,10 +43,10 @@ namespace Event_Planning_System.EntityFrameworkCore
                 .OnDelete(DeleteBehavior.Restrict); // Changed to Restrict to prevent multiple cascade paths
 
             modelBuilder.Entity<ToDoCheckList>()
-                .HasOne(t => t.Event)
-                .WithMany(e => e.ToDoCheckLists)
-                .HasForeignKey(t => t.EventId)
-                .OnDelete(DeleteBehavior.Restrict);
+            .HasOne(t => t.Event)
+            .WithMany(e => e.ToDoCheckLists)
+            .HasForeignKey(t => t.EventId)
+            .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<ToDoCheckList>()
                 .HasOne(t => t.User)
@@ -56,10 +56,24 @@ namespace Event_Planning_System.EntityFrameworkCore
 
             // Add this to prevent multiple cascade paths
             modelBuilder.Entity<BudgetExpense>()
-                .HasOne(b => b.Event)
-                .WithMany(e => e.Budgets)
-                .HasForeignKey(b => b.EventId)
-                .OnDelete(DeleteBehavior.Restrict);
+          .HasOne(b => b.Event)
+          .WithMany(e => e.Budgets)
+          .HasForeignKey(b => b.EventId)
+          .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<GuestEvent>()
+                .HasKey(ge => new { ge.GuestId, ge.EventId });
+
+            modelBuilder.Entity<GuestEvent>()
+                .HasOne(ge => ge.Guest)
+                .WithMany(g => g.GuestEvents)
+                .HasForeignKey(ge => ge.GuestId)
+               .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<GuestEvent>()
+                .HasOne(ge => ge.Event)
+                .WithMany(e => e.GuestEvents)
+                .HasForeignKey(ge => ge.EventId)
+                .OnDelete(DeleteBehavior.Cascade);
 
 
             modelBuilder.Entity<User>(entity =>
