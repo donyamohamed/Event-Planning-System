@@ -20,7 +20,7 @@ namespace Event_Planning_System.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<GetAllNotificationsDTO>>> GetAskForInvitationNotifications(long guestId)
+        public async Task<ActionResult<List<NotificationDto>>> GetAskForInvitationNotifications(long guestId)
         {
             var notifications = await _notificationAppService.GetAskForInvitationNotifications(guestId);
             return notifications;

@@ -9,7 +9,8 @@ export class Notifications {
     public status: number | undefined,
     public guestId: number | undefined,
     public eventId: number | undefined, 
-    public eventName?: string 
+    public eventName?: string ,
+    public startDate?: Date 
   ) { }
 }
 export class UpdateNotificationStatusDto {
