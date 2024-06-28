@@ -8,11 +8,11 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-invitation-state',
   templateUrl: './invitation-state.component.html',
   styleUrls: ['./invitation-state.component.css'],
-  standalone:true,
-  imports:[CommonModule,FormsModule]
+  standalone: true,
+  imports: [CommonModule, FormsModule]
 })
 export class InvitationStateComponent implements OnInit {
-  notifications: Notifications[] = []; 
+  notifications: Notifications[] = [];
 
   constructor(private notificationsService: NotificationsService) { }
 
@@ -31,5 +31,12 @@ export class InvitationStateComponent implements OnInit {
 
   getStatusString(status: NotificationStatus): string {
     return NotificationStatus[status];
+  }
+
+  formatDate(date: string, part: 'month' | 'day'): string {
+    const options: Intl.DateTimeFormatOptions = part === 'month' 
+      ? { month: 'short' } 
+      : { day: '2-digit' };
+    return new Intl.DateTimeFormat('en-US', options).format(new Date(date));
   }
 }
