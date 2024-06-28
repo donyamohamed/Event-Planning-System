@@ -7,6 +7,11 @@ interface ApiResponse<T> {
   result: T;
 }
 
+interface Event {
+  name: string;
+  startDate: string; 
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -80,5 +85,8 @@ export class NotificationsService {
   }
   UpdateIsReviewTaken(updatedNotification: UpdateReviewStatus): Observable<any> {
     return this.http.put<any>(this.UpdateUrl, updatedNotification);
+  }
+  GetEventNameandStartdateById(id: number): Observable<ApiResponse<Event>> {
+    return this.http.get<ApiResponse<Event>>(this.EventUrl + id);
   }
 }
