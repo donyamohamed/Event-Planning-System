@@ -51,7 +51,6 @@ export class InvitationStateComponent implements OnInit {
     );
 
     forkJoin(eventRequests).subscribe(() => {
-     
     });
   }
 
