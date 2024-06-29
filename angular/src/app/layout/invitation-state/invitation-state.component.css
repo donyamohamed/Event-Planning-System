@@ -1,8 +1,6 @@
 .notification-item.past-event {
     background-color: gray;
   }
-  
-  /* Existing CSS */
   .notification-item {
     display: flex;
     flex-direction: row;
@@ -75,6 +73,17 @@
     border-top: 1px solid #ddd;
     margin: 10px 0;
   }
+
+  .Noinvitation{
+    text-align: center;
+  }
+  .Noinvitation h4{
+    margin-bottom: 20px;
+  }
+  .loading{
+    text-align: center;
+  }
+
   
   @keyframes swing {
     0% {

@@ -17,9 +17,10 @@
     <hr>
   </div>
 </div>
-<div *ngIf="notifications && notifications.length === 0">
-  <p>No notifications found.</p>
+<div *ngIf="notifications && notifications.length === 0" class="Noinvitation">
+  <img src="../../../assets/img/Questions.gif" alt=""/>
+  <h4>You are not asking to come to any event</h4>
 </div>
-<div *ngIf="!notifications">
-  <p>Loading notifications...</p>
+<div *ngIf="!notifications" class="loading">
+     <img src="../../../assets/img/Spin@1x-1.0s-200px-200px.gif" alt=""/>
 </div>
