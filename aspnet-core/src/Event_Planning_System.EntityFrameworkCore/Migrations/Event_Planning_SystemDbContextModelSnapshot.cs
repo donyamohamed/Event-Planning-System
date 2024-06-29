@@ -1848,7 +1848,7 @@ namespace Event_Planning_System.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ChatMessage");
+                    b.ToTable("ChatMessages");
                 });
 
             modelBuilder.Entity("Event_Planning_System.Entities.Feedback", b =>
