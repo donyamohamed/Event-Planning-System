@@ -1,10 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Notifications, UpdateNotificationStatusDto, UpdateReminderStatusDto } from '../Models/Notification';
+import { Notifications, UpdateNotificationStatusDto, UpdateReminderStatusDto, UpdateReviewStatus } from '../Models/Notification';
 
 interface ApiResponse<T> {
   result: T;
+}
+
+interface Event {
+  name: string;
+  startDate: string; 
 }
 
 @Injectable({
@@ -23,7 +28,9 @@ export class NotificationsService {
   private RejectingEmail = "https://localhost:44311/api/Invitation/SendRejectionEmail";
   private UserProfileUrl = "https://localhost:44311/api/services/app/UserProfileAppServices/GetUserProfile";
   private NotificationsUrl = "https://localhost:44311/api/services/app/Notification/GetAskForInvitationNotifications";
-  
+  private ReviewNotificationUrl="https://localhost:44311/api/services/app/Notification/GetNotificationOfEventReview";
+  private GetNotReviewedCountUrl='https://localhost:44311/api/services/app/Notification/GetCountOfNotReviewedUserEvents' ;
+  private UpdateIsReviewTakenUrl="https://localhost:44311/api/services/app/Notification/UpdateIsReviewdStatus";
 
   constructor(private http: HttpClient) { }
 
@@ -70,5 +77,16 @@ export class NotificationsService {
   getAskForInvitationNotifications(guestId: number): Observable<ApiResponse<Notifications[]>> {
     return this.http.get<ApiResponse<Notifications[]>>(`${this.NotificationsUrl}?guestId=${guestId}`);
   }
- 
+  GetREviewsNotification(){
+    return this.http.get(this.ReviewNotificationUrl);
+  }
+  GetNotReviewedCount(){
+    return this.http.get(this.GetNotReviewedCountUrl);
+  }
+  UpdateIsReviewTaken(updatedNotification: UpdateReviewStatus): Observable<any> {
+    return this.http.put<any>(this.UpdateUrl, updatedNotification);
+  }
+  GetEventNameandStartdateById(id: number): Observable<ApiResponse<Event>> {
+    return this.http.get<ApiResponse<Event>>(this.EventUrl + id);
+  }
 }

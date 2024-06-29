@@ -1,5 +1,5 @@
 
-﻿using Abp.Notifications;
+using Abp.Notifications;
 using Event_Planning_System.Enitities;
 using Event_Planning_System.Notification.Dto;
 using Microsoft.AspNetCore.Mvc;
@@ -19,13 +19,15 @@ namespace Event_Planning_System.Notification
 	public interface INotificationAppService
 	{
 		Task<List<notification>> GetAllUserNotifications();
-	Task<List<notification>> GetAllNotifications();
-
-        Task<int> CreateNotification(NotificationDto input);
+		Task<List<notification>> GetAllNotifications();
+		Task<List<notification>> GetNotificationOfEventReview();
+		Task UpdateIsReviewdStatus([FromBody] UpdateIsReviewd input);
+		Task<int> GetCountOfNotReviewedUserEvents();
+		Task<int> CreateNotification(NotificationDto input);
 		Task<int> GetNotificationCount();
 		Task UpdateNotificationStatus(UpdateNotificationStatusDTO input);
 		Task<bool> CheckExistingInvitation(long guestId, int eventId);
-        Task<List<GetAllNotificationsDTO>> GetAskForInvitationNotifications(long guestId);
+		Task<List<NotificationDto>> GetAskForInvitationNotifications(long guestId);
 
-    }
+	}
 }

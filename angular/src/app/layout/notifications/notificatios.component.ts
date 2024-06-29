@@ -8,14 +8,15 @@ import { combineLatest } from 'rxjs';
 import { CurrentUser } from '@shared/Models/current-user';
 import { SharedModule } from "../../../shared/shared.module";
 @Component({
-    selector: 'app-notifications',
-    standalone: true,
-    templateUrl: './notificatios.component.html',
-    styleUrl: './notificatios.component.css',
-    imports: [CommonModule, SharedModule]
+  selector: 'app-notifications',
+  standalone: true,
+  templateUrl: './notificatios.component.html',
+  styleUrl: './notificatios.component.css',
+  imports: [CommonModule, SharedModule]
 })
 export class NotificatiosComponent implements OnInit {
   EventData: Event | any;
+
   getEventData(arg0: any) {
     return this.Service.GetEventById(arg0).subscribe({
       next: e => {
@@ -37,7 +38,7 @@ export class NotificatiosComponent implements OnInit {
       eventName: this.EventData.result.name,
       date: this.EventData.result.startDate,
       eventAddress: this.EventData.result.location,
-      eventImage:this.EventData.result.eventImg
+      eventImage: this.EventData.result.eventImg
     };
     console.log(emailData.eventImage);
     this.oldObj.id = item.id;
@@ -67,31 +68,31 @@ export class NotificatiosComponent implements OnInit {
       if (result.isConfirmed) {
         this.Service.UpdateNotificationStatus(this.oldObj)
           .subscribe(() => {
-            this.Service.sendRejectingEmail(emailData).subscribe(()=>{
-            const Toast = Swal.mixin({
-              toast: true,
-              position: 'top-end',
-              showConfirmButton: false,
-              timer: 3000,
-              timerProgressBar: true,
-              didOpen: (toast) => {
-                toast.addEventListener('mouseenter', Swal.stopTimer);
-                toast.addEventListener('mouseleave', Swal.resumeTimer);
-              }
-            });
-            Toast.fire({
-              icon: 'success',
-              title: 'Invitation Updated Successfully'
+            this.Service.sendRejectingEmail(emailData).subscribe(() => {
+              const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.addEventListener('mouseenter', Swal.stopTimer);
+                  toast.addEventListener('mouseleave', Swal.resumeTimer);
+                }
+              });
+              Toast.fire({
+                icon: 'success',
+                title: 'Invitation Updated Successfully'
 
-            }).then(n => {
-              location.reload();
+              }).then(n => {
+                location.reload();
 
+              });
             });
+
           });
-      
+      }
     });
-  }
-  });
   }
   Accept(item: any) {
     this.getEventData(item.eventId);
@@ -103,7 +104,7 @@ export class NotificatiosComponent implements OnInit {
       eventName: this.EventData.result.name,
       date: this.EventData.result.startDate,
       eventAddress: this.EventData.result.location,
-      eventImage:this.EventData.result.eventImg
+      eventImage: this.EventData.result.eventImg
     };
     this.oldObj.id = item.id;
     this.oldObj.status = NotificationStatus.Accepted;
@@ -132,28 +133,28 @@ export class NotificatiosComponent implements OnInit {
       if (result.isConfirmed) {
         this.Service.UpdateNotificationStatus(this.oldObj)
           .subscribe(() => {
-            this.Service.sendAcceptanceEmail(emailData).subscribe(()=>{
-            const Toast = Swal.mixin({
-              toast: true,
-              position: 'top-end',
-              showConfirmButton: false,
-              timer: 3000,
-              timerProgressBar: true,
-              didOpen: (toast) => {
-                toast.addEventListener('mouseenter', Swal.stopTimer);
-                toast.addEventListener('mouseleave', Swal.resumeTimer);
-              }
-            });
-            Toast.fire({
-              icon: 'success',
-              title: 'Invitation Updated Successfully'
+            this.Service.sendAcceptanceEmail(emailData).subscribe(() => {
+              const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.addEventListener('mouseenter', Swal.stopTimer);
+                  toast.addEventListener('mouseleave', Swal.resumeTimer);
+                }
+              });
+              Toast.fire({
+                icon: 'success',
+                title: 'Invitation Updated Successfully'
 
-            }).then(n => {
-              location.reload();
+              }).then(n => {
+                location.reload();
 
+              });
             });
           });
-        });
       }
     });
   }
@@ -161,9 +162,18 @@ export class NotificatiosComponent implements OnInit {
   Upcomming: Event[] | any;
   count: number | any = 0;
   count2: number | any = 0;
+  count3: number | any = 0;
   AllCount: number | any = 0;
+  ReminderNotificationsList: Notifications[] | any;
   ngOnInit(): void {
+    this.Service.GetREviewsNotification().subscribe({
+      next: n => {
+        if (n) {
+          this.ReminderNotificationsList = n;
+        }
+      }
 
+    });
     this.Service.GetUserNotifications().subscribe({
       next: n => {
         if (n && n.result) {
@@ -185,14 +195,18 @@ export class NotificatiosComponent implements OnInit {
     });
     combineLatest([
       this.Service.GetNotificationsCount(),
-      this.Service.GetReminderCount()
+      this.Service.GetReminderCount(),
+      this.Service.GetNotReviewedCount()
     ]).subscribe({
-      next: ([c, r]) => {
+      next: ([c, r, n]) => {
         if (c) {
           this.count = c;
         }
         if (r) {
           this.count2 = r;
+        }
+        if (n) {
+          this.count3 = n
           this.calculateAllCount();
           this.cdr.markForCheck();
         }
@@ -204,7 +218,7 @@ export class NotificatiosComponent implements OnInit {
     });
   }
   calculateAllCount(): void {
-    this.AllCount = Number(this.count.result) + Number(this.count2.result);
+    this.AllCount = Number(this.count.result) + Number(this.count2.result) + Number(this.count3.result);
     console.log("allCount: ", this.AllCount);
   }
   //this.calculateAllCount();
@@ -244,7 +258,14 @@ export class NotificatiosComponent implements OnInit {
       this.isCollapsed = false;
     }
   }
-
+  //fun to give review
+  GiveReview(item: any) {
+    this.Service.UpdateIsReviewTaken(item).subscribe({
+      next: n => {
+        location.reload();
+      }
+    });
+  }
   constructor(public Service: NotificationsService, private elementRef: ElementRef, private cdr: ChangeDetectorRef) {
   }
 }

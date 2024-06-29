@@ -13,6 +13,7 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
 import bootstrap5Plugin from '@fullcalendar/bootstrap5';
 import { SharedModule } from "../../../../shared/shared.module";
+import { SidebarEventComponent } from '@app/layout/sidebar-event/sidebar-event.component';
 
 @Component({
     selector: 'app-upcoming-events',
@@ -23,7 +24,8 @@ import { SharedModule } from "../../../../shared/shared.module";
         FormsModule,
         CommonModule,
         FullCalendarModule,
-        SharedModule
+        SharedModule,
+        SidebarEventComponent
     ]
 })
 export class UpcomingEventsComponent implements OnInit {

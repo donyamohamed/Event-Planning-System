@@ -155,6 +155,9 @@ h2 {
     align-items: center;
     justify-content: space-between;
 }
+.header-container h2{
+  margin-left: 20px;
+}
 
 .btn {
     display: inline-block;
