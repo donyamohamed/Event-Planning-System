@@ -1,6 +1,7 @@
 ﻿using Abp.Domain.Entities;
 using Abp.Domain.Entities.Auditing;
 using Event_Planning_System.Authorization.Users;
+using Event_Planning_System.Entities;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
@@ -72,6 +73,8 @@ namespace Event_Planning_System.Enitities
         public virtual ICollection<BudgetExpense> Budgets { get; set; } = new List<BudgetExpense>();
 
         public virtual ICollection<ToDoCheckList> ToDoCheckLists { get; set; } = new List<ToDoCheckList>();
+        public virtual ICollection<Feedback> Feedbacks { get; set; } = new List<Feedback>();
+        public ICollection<GuestEvent> GuestEvents { get; set; }
 
         public bool IsTransient()
         {

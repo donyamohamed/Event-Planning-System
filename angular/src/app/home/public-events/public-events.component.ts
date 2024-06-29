@@ -67,7 +67,7 @@ export class PublicEventsComponent implements OnInit {
 
   details(event: Event): void {
     if (this.events.length > 0) {
-      this.router.navigateByUrl("app/eventHomeDetails/" + event.id, { state: { event } });
+      this.router.navigateByUrl("app/eventDetails/" + event.id, { state: { event } });
 
     }
   }
@@ -110,6 +110,7 @@ export class PublicEventsComponent implements OnInit {
     this.getUserData().subscribe(
       response => {
         if (response && response.result) {
+          console.log(response);
           this.username = response.result.name;
           this.guestId = response.result.id;
           this.guestEmail = response.result.email;
@@ -133,6 +134,7 @@ export class PublicEventsComponent implements OnInit {
         if (response && response.result) {
           this.username = response.result.name;
           this.guestId = response.result.id;
+         
           this.guestEmail = response.result.emailAddress;
           console.log(this.guestEmail);
           this.checkIfAlreadyRequested(event);
@@ -156,9 +158,14 @@ export class PublicEventsComponent implements OnInit {
     }
 
     this.askForInvitationServ.checkExistingInvitation(this.guestId, event.id).subscribe(
-      response => {
-        console.log(response);
-        if (response) {
+      (response: any) => {
+      console.log(this.guestId);
+      console.log(event.id);
+      
+      
+        console.log('Response received:', response); // Add this line for debugging
+    
+        if (response && response.result === true) {
           Swal.fire({
             icon: 'info',
             title: 'Invitation Request',
@@ -173,7 +180,7 @@ export class PublicEventsComponent implements OnInit {
         console.error('Error checking existing invitation', error);
       }
     );
-  }
+  }    
 
   createNotificationAndSendEmail(event: Event): void {
     const notificationData = {

@@ -1,23 +1,20 @@
-<!-- <></> -->
-
-<div class="card container m-3 p-3 tableDiv shadow-lg">
-
+<div class="card container p-3 tableDiv shadow-lg">
+  <div class="btnDiv">
+    <button class="btn" (click)="openModal(AddModal)"><i class="fa-solid fa-user-plus"></i> {{"Add Guest"|localize}}</button>
+  </div>
   <div class="text-center imageDiv">
     <img src="../../../assets/img/guests.svg" alt="">
   </div>
 
   <div class="d-flex justify-content-between m-1">
-    <div class="btnDiv">
-      <button class="btn" (click)="openModal(template)" [disabled]="guestCount >= maxCountOfGuest">{{"Add Guest"|localize}}</button>
-    </div>
     <div class="GuestCount text-center">
-      <p class="px-3 pt-1">{{"No. Guests:" | localize}} {{guestCount}}</p>
+      <p class="pt-1">{{"No. Guests:" | localize}} <span class="acutal-GuestCount">{{guestCount}}</span></p>
     </div>
   </div>
-  <div>
 
-    <div class="table-responsive text-center ">
-      <table id="guestTable" class="table table-hover table-borderless align-middle">
+  <div>
+    <div class="table-responsive">
+      <table id="guestTable" class="table table-hover table-borderless align-middle text-center">
         <thead class="table-light">
           <tr class="text-capitalize">
             <th>{{"ID" |localize}}</th>
@@ -30,7 +27,7 @@
           </tr>
         </thead>
         <tbody class="table-group-divider">
-          <tr class="table-secondary" *ngFor="let item of guests">
+          <tr class="" *ngFor="let item of guests">
             <td scope="row">{{item.id}}</td>
             <td>{{item.name}}</td>
             <td>{{item.email}}</td>
@@ -81,7 +78,7 @@
           required />
         <div *ngIf="guestForm.get('phone').invalid && guestForm.get('phone').touched" class="text-danger">
           <div *ngIf="guestForm.get('phone').errors.required">Phone is required.</div>
-          <div *ngIf="guestForm.get('phone').errors.pattern">{{{"Phone must be a 10-digit number |localize}}</div>
+          <div *ngIf="guestForm.get('phone').errors.pattern">{{"Phone must be a 10-digit number" |localize}}</div>
         </div>
       </div>
       <div>
@@ -93,20 +90,7 @@
           <div *ngIf="guestForm.get('email').errors.email">Invalid email address.</div>
         </div>
       </div>
-      <!-- <div>
-        <label for="invStatInput">{{"Invitation State"|localize}}</label>
-        <select formControlName="invitationState" id="invStatInput" class="form-control"
-          [(ngModel)]="guest.invitationState" required>
-          <option value="" aria-readonly="true">Select State</option>
-          <option value="Pending">Pending</option>
-          <option value="Confirmed">Confirmed</option>
-        </select>
-        <div *ngIf="guestForm.get('invitationState').invalid && guestForm.get('invitationState').touched"
-          class="text-danger">
-          <div *ngIf="guestForm.get('invitationState').errors.required">Invitation state is required.</div>
-        </div>
-      </div> -->
-      <input class="btn btn-success" value="Add" type="submit" />
+      <input class="btn btn-success m-2" value="Add" type="submit" />
     </form>
   </div>
 </ng-template>
@@ -147,21 +131,26 @@
           <div *ngIf="guestForm.get('email').errors.email">Invalid email address.</div>
         </div>
       </div>
-      <!-- <div>
-        <label for="invStatInput">Invitation State:</label>
-        <select formControlName="invitationState" [(ngModel)]="guestEdit.invitationState" id="invStatInput"
-          name="invStatInput" class="form-control" required>
-          <option value="" aria-readonly="true">Select State</option>
-          <option value="Pending">Pending</option>
-          <option value="Confirmed">Confirmed</option>
-        </select>
-        <div *ngIf="guestForm.get('invitationState').invalid && guestForm.get('invitationState').touched"
-          class="text-danger">
-          <div *ngIf="guestForm.get('invitationState').errors.required">Invitation state is required.</div>
-        </div>
-      </div> -->
-      <input class="btn btn-success m-1" value="Update" type="submit" />
+      <input class="btn btn-success m-2" value="Update" type="submit" />
     </form>
   </div>
 </ng-template>
 
+<ng-template #AddModal>
+  <div class="modal-header">
+    <h4 class="modal-title" style="color: #1D2027;">{{"Add New Guest" |localize}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body add-btns">
+    <div class=" m-2">
+      Add One by one: 
+      <button class="btn btn-secondary" (click)="openModal(template)" [disabled]="guestCount >= maxCountOfGuest"><i class="fa-solid fa-user-plus"></i> </button>
+    </div>
+    <div class=" m-2">
+      Add One or more from excel:
+      <button class="btn btn-success" (click)="openModal(template)" [disabled]="guestCount >= maxCountOfGuest"><i class="fa-solid fa-file-excel"></i></button>
+    </div>
+  </div>
+</ng-template>

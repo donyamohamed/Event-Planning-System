@@ -1,20 +1,26 @@
+
+<app-sidebar-event></app-sidebar-event>
 <div class="events">
   <div class="header-container">
     <h2>{{"Events" | localize}}</h2>
     <a routerLink="/app/create-event" class="btn">{{"Create Event" | localize}}</a>
   </div>
   <div class="card-container">
-    <div
-
-    *ngFor="let event of events"
-    class="card"
-    [ngStyle]="{
+    <div *ngFor="let event of events" class="card" [ngStyle]="{
       'background-image': 'url(' + (event.eventImg ? event.eventImg : '../../assets/img/Event.jpg') + ')'
-    }"
-  >
+    }">
 
       <div class="header">
-        <button id="delete" (click)="deleteEvent(event)" title="delete"> <i class="fas fa-trash"></i></button>
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+           <i class="fa-solid fa-ellipsis"></i>
+          </button>
+          <ul class="dropdown-menu">
+            <li><button class="dropdown-item" id="edit" (click)="openEditModal(Editetemplate,event.id)" title="edit"> <i
+              class="fa-solid fa-pen-to-square"></i> Edit</button></li>
+            <li><button class="dropdown-item" id="delete" (click)="deleteEvent(event)" title="delete"><i class="fas fa-trash"></i> Delete</button></li>
+          </ul>
+        </div>
         <div class="date">
           <div class="day">{{ event.startDate | date: 'dd' }}</div>
           <div class="month">{{ event.startDate | date: 'MMM' }}</div>
@@ -25,25 +31,125 @@
         <p>{{ event.location }}</p>
         <button id="details" (click)="details(event)">{{"View"|localize}}</button>
         <button id="invite" (click)="guestAppearing(event)">{{"Guest"|localize}}</button>
-        <!-- <div class="share-buttons">
-          <a href="https://www.facebook.com/sharer/sharer.php?u={{ getEventUrl(event.id) }}" target="_blank">
-            Share on Facebook
-          </a>
-          <br>
-          <a href="https://twitter.com/intent/tweet?url={{ getEventUrl(event.id) }}&text={{ event.name }}" target="_blank">
-            Share on Twitter
-          </a>
-          <br>
-          <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ getEventUrl(event.id) }}" target="_blank">
-            Share on LinkedIn
-          </a>
-          <br>
-          <a href="https://api.whatsapp.com/send?text={{ event.name }}%20{{ getEventUrl(event.id) }}" target="_blank">
-            Share on WhatsApp
-          </a>
-        </div> -->
-      
+
       </div>
     </div>
   </div>
 </div>
+<!---------------- edit Modal ---------------------->
+
+<ng-template #Editetemplate>
+  <div class="modal-header">
+    <h4 class="modal-title" style="color: #1D2027;">Update Event</h4>
+    <button type="button" class="close" aria-label="Close" (click)="bsModalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="eventEditForm" (ngSubmit)="editEvent()">
+      <div>
+        <label for="nameInput">Event Name:</label>
+        <input formControlName="name" class="form-control" type="text" id="nameInput" name="nameInput"
+          [(ngModel)]="eventEdit.name" required />
+        <div *ngIf="eventEditForm.get('name').invalid && eventEditForm.get('name').touched" class="text-danger">
+          <div *ngIf="eventEditForm.get('name').errors.required">Name is required.</div>
+          <div *ngIf="eventEditForm.get('name').errors.maxlength">Name cannot be longer than 100 characters.</div>
+        </div>
+      </div>
+      <div>
+        <label for="locationInput">Event Location:</label>
+        <input formControlName="location" class="form-control" type="text" id="locationInput" name="locationInput"
+          [(ngModel)]="eventEdit.location" required />
+        <div *ngIf="eventEditForm.get('location').invalid && eventEditForm.get('location').touched" class="text-danger">
+          <div *ngIf="eventEditForm.get('location').errors.required">loction is required.</div>
+          <div *ngIf="eventEditForm.get('location').errors.maxlength">location cannot be longer than 100 characters.
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <label for="startDateInput">Start Date:</label>
+        <input formControlName="startDate" class="form-control" type="datetime-local" id="startDateInput"
+          name="startDateInput" [(ngModel)]="eventEdit.startDate"  (change)="validateDates()" required />
+        <div *ngIf="eventEditForm.get('startDate').invalid && eventEditForm.get('startDate').touched"
+          class="text-danger">
+          <div *ngIf="eventEditForm.get('startDate').errors.required">Date is required.</div>
+        </div>
+        <div *ngIf="dateErrors.startDateError" class="text-danger">
+          {{ dateErrors.startDateError }}
+        </div>
+      </div>
+
+      <div>
+        <label for="endDateInput">End Date:</label>
+        <input formControlName="endDate" class="form-control" type="datetime-local" id="endDateInput" name="endDateInput"
+          [(ngModel)]="eventEdit.endDate"  (change)="validateDates()" required />
+        <div *ngIf="eventEditForm.get('endDate').invalid && eventEditForm.get('endDate').touched" class="text-danger">
+          <div *ngIf="eventEditForm.get('endDate').errors.required">end Date is required.</div>
+        </div>
+        <div *ngIf="dateErrors.endDateError" class="text-danger">
+          {{ dateErrors.endDateError }}
+        </div>
+      </div>
+
+      <div>
+
+        <!-- <label for="categoryInput">Category:</label>
+        <input formControlName="category" class="form-control" type="text" id="categoryInput" name="categoryInput"
+          [(ngModel)]="eventEdit.category" required />
+        <div *ngIf="eventEditForm.get('category').invalid && eventEditForm.get('category').touched" class="text-danger">
+          <div *ngIf="eventEditForm.get('category').errors.required">category is required.</div>
+        </div> -->
+        <div class="form-group">
+          <label>{{ "Event Category" | localize }}</label>
+          <select [(ngModel)]="eventEdit.category" formControlName="category" name="category" class="form-control" title="{{ 'Event Category' | localize }}" required>
+              <option *ngFor="let key of enumeratorKeys" [ngValue]="key">{{ key }}</option>
+          </select>
+      </div>
+      </div>
+      <div>
+        <label for="maxCountInput">Max Count:</label>
+        <input formControlName="maxCount" class="form-control" type="number" id="maxCountInput" name="maxCountInput"
+          [(ngModel)]="eventEdit.maxCount" required />
+        <div *ngIf="eventEditForm.get('maxCount').invalid && eventEditForm.get('maxCount').touched" class="text-danger">
+          <div *ngIf="eventEditForm.get('maxCount').errors.required">maxCount is required.</div>
+        </div>
+      </div>
+      <div>
+        <label>{{ "Choose Event Type" | localize }}</label>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input formControlName="isPublic"  type="radio" [(ngModel)]="eventEdit.isPublic" [value]="true" name="isPublic" class="form-check-input"
+              required>
+            {{ "Public" | localize }}
+          </label>
+        </div>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input formControlName="isPublic" type="radio" [(ngModel)]="eventEdit.isPublic" [value]="false" name="isPublic"
+              class="form-check-input">
+            {{ "Private" | localize }}
+          </label>
+        </div>
+        <div *ngIf="eventEditForm.get('isPublic').invalid && eventEditForm.get('isPublic').touched" class="text-danger">
+          <div *ngIf="eventEditForm.get('isPublic').errors.required">Event type is required.</div>
+        </div>
+      </div>
+  <!-- <div class="form-group">
+        <label>{{ "Event Image" | localize }}</label>
+        <input formControlName="eventImgFile" type="file" (change)="onFileSelected($event)" [(ngModel)]="eventEdit.eventImg" name="eventImg" class="form-control-file" accept="image/png, image/jpeg">
+    </div> -->
+  <div>
+    <label for="descriptionInput">Description:</label>
+    <textarea formControlName="description" class="form-control" name="description" id="description" cols="30" rows="10"
+      [(ngModel)]="eventEdit.description" pattern="^[a-zA-Z0-9 ]+$" required></textarea>
+    <div *ngIf="eventEditForm.get('description').invalid && eventEditForm.get('description').touched"
+      class="text-danger">
+      <div *ngIf="eventEditForm.get('description').errors.required">description is required.</div>
+      <div *ngIf="eventEditForm.get('description').errors.pattern">{{ "Description must be alphanumeric" | localize }}</div>
+    </div>
+  </div>
+  <input class="btn btn-success m-1" value="Update" type="submit" />
+  </form>
+  </div>
+</ng-template>

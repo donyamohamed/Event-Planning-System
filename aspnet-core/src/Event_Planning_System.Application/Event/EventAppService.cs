@@ -185,7 +185,7 @@ namespace Event_Planning_System.Event
                     foreach (var interest in interests)
                     {
                         var interestEvents = await _repository.GetAll()
-                            .Where(e => e.Category == interest.Type && e.IsPublic && e.UserId != userId)
+                            .Where(e => e.Category == interest.Type && e.IsPublic && e.UserId != userId && e.StartDate >= DateTime.Now)
                             .ToListAsync();
 
                         var mappedInterestEvents = _mapper.Map<List<EventDto>>(interestEvents);
@@ -202,7 +202,7 @@ namespace Event_Planning_System.Event
 				else
 				{
                     var publicEventsFromDb = await _repository.GetAll()
-                    .Where(e => e.IsPublic && e.UserId != userId)
+                    .Where(e => e.IsPublic && e.UserId != userId && e.StartDate >= DateTime.Now)
                     .ToListAsync();
 
                     var mappedPublicEvents = _mapper.Map<List<EventDto>>(publicEventsFromDb);
@@ -221,7 +221,7 @@ namespace Event_Planning_System.Event
 			{
 
 				var publicEventsFromDb = await _repository.GetAll()
-					.Where(e => e.IsPublic)
+					.Where(e => e.IsPublic && e.StartDate >= DateTime.Now)
 					.ToListAsync();
 
 				var mappedPublicEvents = _mapper.Map<List<EventDto>>(publicEventsFromDb);
@@ -239,29 +239,54 @@ namespace Event_Planning_System.Event
 			return orderedPublicEvents;
 		}
 
-		public async Task DeleteEventWithDetailsAsync(int eventId)
-		{
-			var eventEntity = await _repository.GetAsync(eventId);
-			if (eventEntity == null)
-			{
-				throw new Abp.UI.UserFriendlyException("Event not found");
-			}
+        public async Task DeleteEventWithDetailsAsync(int eventId)
+        {
+            try
+            {
+                var eventEntity = await _repository.FirstOrDefaultAsync(eventId);
+                if (eventEntity == null)
+                {
+                    throw new Abp.UI.UserFriendlyException("Event not found");
+                }
 
-			var today = DateTime.Today;
-			if (eventEntity.StartDate > today && eventEntity.EndDate > today)
-			{
-				var guests = await _guestRepository.GetAllListAsync(g => g.Events.Any(e => e.Id == eventId ) && g.InvitationState != "Pending");
-				foreach (var guest in guests)
-				{
-					var htmlBody = EmailCanceledTemple.GenerateEventCancellationEmail(eventEntity.Name, eventEntity.StartDate, guest.Name);
-					await _emailService.SendEmailAsync(guest.Email, "Event Cancellation", htmlBody);
-				}
-			}
-			await _budgetExpenseRepository.DeleteAsync(be => be.EventId == eventId);
-			await _toDoCheckListRepository.DeleteAsync(tc => tc.EventId == eventId);
-			await _guestRepository.DeleteAsync(g => g.Events.Any(e => e.Id == eventId));
-			await _repository.DeleteAsync(eventEntity);
-		}
+                var today = DateTime.Today;
+                if (eventEntity.StartDate > today && eventEntity.EndDate > today)
+                {
+                    var guests = await _guestRepository.GetAllListAsync(g => g.Events.Any(e => e.Id == eventId) && g.InvitationState != "Pending");
+                    foreach (var guest in guests)
+                    {
+                        var htmlBody = EmailCanceledTemple.GenerateEventCancellationEmail(eventEntity.Name, eventEntity.StartDate, guest.Name);
+                        await _emailService.SendEmailAsync(guest.Email, "Event Cancellation", htmlBody);
+                    }
+                }
+                var budgetExpenses = await _budgetExpenseRepository.GetAllListAsync(be => be.EventId == eventId);
+                foreach (var budgetExpense in budgetExpenses)
+                {
+                    await _budgetExpenseRepository.DeleteAsync(budgetExpense);
+                }
+                var toDoCheckLists = await _toDoCheckListRepository.GetAllListAsync(tc => tc.EventId == eventId);
+                foreach (var toDoCheckList in toDoCheckLists)
+                {
+                    await _toDoCheckListRepository.DeleteAsync(toDoCheckList);
+                }
+                var eventGuests = await _guestRepository.GetAllListAsync(g => g.Events.Any(e => e.Id == eventId));
+                foreach (var guest in eventGuests)
+                {
+                    guest.Events.Remove(eventEntity);
+                    await _guestRepository.UpdateAsync(guest);
+                }
+                await _guestRepository.DeleteAsync(g => g.Events.Any(e => e.Id == eventId));
+
+                await _repository.DeleteAsync(eventEntity);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error deleting event with ID {EventId}", eventId);
+                throw new Abp.UI.UserFriendlyException("An internal error occurred while trying to delete the event.");
+            }
+        }
+
+
         public async Task<EventDto> GetEventByIdAsync(int id)
         {
             var eventEntity = await _repository.GetAll()

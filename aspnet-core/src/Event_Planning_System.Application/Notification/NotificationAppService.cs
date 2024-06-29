@@ -76,11 +76,66 @@ namespace Event_Planning_System.Notification
 		}
         public async Task<bool> CheckExistingInvitation(long guestId, int eventId)
         {
-            var existingInvitation = await _notificationRepository.GetAll()
-                .AnyAsync(n => n.GuestId == guestId && n.EventId == eventId );
+            // Count the number of notifications matching guestId and eventId
+            var count = await _notificationRepository
+                .GetAll()
+                .CountAsync(n => n.GuestId == guestId && n.EventId == eventId);
 
-            return existingInvitation;
+            // Return true if count is greater than zero, false otherwise
+            return count > 0;
         }
+        public async Task<List<NotificationDto>> GetAskForInvitationNotifications(long guestId)
+        {
+            var notifications = await _notificationRepository.GetAll()
+                .Where(n => n.GuestId == guestId && n.NType == Notification_Type.AskForInvitation)
+                .Select(n => new NotificationDto
+                {
+                    Id = n.Id,
+                    Content = n.Content,
+                    Date = n.Date,
+                    NType = n.NType,
+                    isRead = n.isRead,
+                    status = n.status,
+                    EventId=n.EventId,
+					UserId=n.UserId,
+					GuestId=n.GuestId
 
-    }
+                })
+                .ToListAsync();
+
+            return notifications;
+        }
+		public async Task<List<notification>> GetNotificationOfEventReview()
+		{
+			var currentGuestId = AbpSession.UserId.Value;
+			var yesterday = DateTime.Today.AddDays(-1).Date; 
+			var guestNotifications = await _notificationRepository
+				.GetAll()
+				.Where(n => n.GuestId == currentGuestId &&
+							n.status == Notification_Status.Accepted &&
+							n.Event.EndDate.Date == yesterday)
+				.ToListAsync();
+
+			return guestNotifications;
+		}
+		public async Task UpdateIsReviewdStatus([FromBody] UpdateIsReviewd input)
+		{
+			var notifications = await GetAllUserNotifications();
+			var old = notifications.FirstOrDefault(n => n.Id == input.Id);
+			if (old == null)
+			{
+				throw new Abp.UI.UserFriendlyException("Notification not found");
+			}
+			old.IsReviewTaken = true;
+			await _notificationRepository.UpdateAsync(old);
+		}
+		public async Task<int> GetCountOfNotReviewedUserEvents()
+		{
+			var res = await GetNotificationOfEventReview();
+			return res.Where(n=>n.IsReviewTaken==false).Count();
+		}
+
+
+
+	}
 }

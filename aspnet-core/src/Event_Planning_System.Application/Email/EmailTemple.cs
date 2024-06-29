@@ -10,7 +10,11 @@ namespace Event_Planning_System.Email
             string backgroundImage = string.IsNullOrEmpty(eventImg)
                 ? "https://cdn.pixabay.com/photo/2016/12/18/00/47/structure-1914730_960_720.jpg"
                 : eventImg;
-            return $@"
+
+            // Use the publicly accessible invitation HTML URL
+            string invitationUrl = "https://localhost:44311/invitation.html";
+
+            string htmlContent = $@"
             <!DOCTYPE html>
             <html>
             <head>
@@ -114,6 +118,17 @@ namespace Event_Planning_System.Email
                             font-size: 1rem;
                         }}
                     }}
+
+                    .download-btn {{
+                        display: inline-block;
+                        margin-top: 20px;
+                        padding: 8px 18px;
+                        font-size: 1rem;
+                        color: white;
+                        background-color: #fbaf1b;
+                        text-decoration: none;
+                        border-radius: 5px;
+                    }}
                 </style>
             </head>
             <body>
@@ -132,9 +147,12 @@ namespace Event_Planning_System.Email
                         <p>{eventAddress}</p>
                         <p><small>www.eventlocation.com</small></p>
                     </div>
+                    <a href='https://api.html2pdf.app/v1/generate?url={Uri.EscapeDataString(invitationUrl)}&apiKey=06W549nhMKj0lcyp13wBF8D7kooz2xFG63mxzq1QE0UAtm1hp2u6YyJiuxqqtTDF' class='download-btn'>Download</a>
                 </div>
             </body>
             </html>";
+
+            return htmlContent;
         }
     }
 }

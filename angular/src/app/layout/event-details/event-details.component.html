@@ -1,46 +1,59 @@
 <div class="header-container">
-  <h2>{{"Event Details" |localize}}</h2>
-  <div class="buttons">
-    <a [routerLink]="'/app/todolist/' + event.id" class="btn">{{"TodoList" |localize}}</a>
-    <a (click)="navigateToSetExpenses(event.id)" class="btn btn-expense">{{"Set Expenses" |localize}}</a>
-  </div>
+  <div class="blur" [ngStyle]="{'background-image': 'url(' + (event.eventImg ? event.eventImg : '../../assets/img/Event.jpg') + ')'}"></div>
+  <img class="card-media-object" [src]="event.eventImg ? event.eventImg : ('../../assets/img/Event.jpg')" alt="Event Image">
 </div>
-<section class="container">
-  <div class="event-details">
-    <div class="card-media">
-      <div class="card-media-object-container">
-        <img class="card-media-object" [src]="event.eventImg ? event.eventImg : '../../assets/img/Event.jpg'" alt="Event Image">
+
+<div class="event-info">
+  <!-- fa fa-share -->
+  <div class="ticket-sales-info">
+    <div><span>Ticket sales end soon</span></div>
+    <div class="share-icon"> <i class="fa fa-share-alt" (click)="openShareAlert()"></i></div>
+  </div>
+  <div class="date-category">
+    <div class="date">
+      <div class="start-date"> {{ event.startDate | date: 'EEE, MMM dd, hh:mm a' }}</div>
+      <div class="end-date">{{"-" |localize}} {{ event.endDate | date: 'EEE, MMM dd, hh:mm a' }}</div>
+    </div>
+    <div class="category">
+      <p class="badge badge-warning">{{ event.category }}</p>
+    </div>
+  </div>
+ 
+  <div class="event-name">
+    <h1>{{ event.name }}</h1>
+  </div>
+  <div class="event-desc">
+    <p>{{ event.description }}</p>
+  </div>
+  <div class="user-data">
+    <div class="user-image">
+      <img [src]="getUserImage()" alt="User Image">
+    </div>
+    <div class="user-details">
+      <div class="user-info">
+        <div class="user-name">
+          <span>By </span><h6>{{ user?.name }}</h6>
+        </div>
+        <div class="guest-number">
+          <div><h6>{{ event.maxCount }} </h6> <span>attendees hosted 📈</span></div>
+        </div>
       </div>
-      <div class="card-media-body">
-        <div class="card-media-body-top">
-          <p class="subtle"><strong>{{"Name:" |localize}}</strong> {{ event.name }}</p> 
-          
-        </div>
-        <div class="card-media-body-supporting-bottom">
-
-          <p class="subtle"><strong>{{"Start Date:" |localize}}</strong> {{ event.startDate | date: 'EEE, MMM dd, hh:mm a' }}</p>
-          <p class="subtle"><strong> {{"End Date:" |localize}}</strong> {{ event.endDate | date: 'EEE, MMM dd, hh:mm a' }}</p>
-          <p class="subtle"><strong>{{"Location:" |localize}}</strong> {{ event.location }}</p>
-          <p class="subtle"><strong>{{"Type:" |localize}}</strong> {{ event.isPublic ? 'Public' : 'Private' }}</p>
-          <p><strong>{{"Description:" |localize}}</strong> {{ event.description }}</p>
-          <p><strong>{{"Category:" |localize}}</strong> {{ event.category }}</p>
-          <p><strong>{{"Max Count:" |localize}}</strong> {{ event.maxCount }}</p>
-
-        <p><strong>Share via :</strong>
-            <span class="social-account">
-              <button class="btn text-primary" (click)="shareOnFacebook()"><i class="fa-brands fa-facebook-f fa-x"></i></button> | 
-              <button class="btn text-primary" (click)="shareOnLinkedIn()"><i class="fa-brands fa-linkedin-in fa-x"></i></button> | 
-              <button class="btn text-dark" (click)="shareOnTwitter()"><i class="fa-brands fa-x-twitter fa-x"></i></button> | 
-              <button class="btn text-success" (click)="shareOnWhatsApp()"><i class="fa-brands fa-whatsapp fa-x"></i> </button>
-          </span>
-</p>
-
-
-        </div>
+      <div class="connect-button">
+        <button class="email" (click)="sendEmail(user?.emailAddress)">Connect</button>
       </div>
     </div>
   </div>
-  <div *ngIf="!event" class="loading-message">
-    <p>{{"Loading event details..." |localize}}</p>
+  <div class="location-info">
+    <div class="location-header">
+      <h1>Location</h1>
+    </div>
+    <div class="location-data"><i class="fas fa-map-marker-alt location-icon"></i>
+      
+      {{ event.location }}
+    </div>
   </div>
-</section>
+</div>
+<div class="buttons" *ngIf="isEventCreator">
+  <a [routerLink]="'/app/todolist/' + event?.id" class="btn btn-todolist">{{ "TodoList" | localize }}</a>
+  <a (click)="navigateToSetExpenses(event?.id)" class="btn btn-expense">{{ "Set Expenses" | localize }}</a>
+</div>

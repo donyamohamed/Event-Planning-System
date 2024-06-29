@@ -10,7 +10,7 @@
                         </div>
                         <div class="content" #con>
                                 <h6 class="alert alert-info mt-5 my-lg-5 text-center"
-                                        *ngIf="AllCount==0 && Upcomming.result.length===0">You
+                                        *ngIf="AllCount==0 && Upcomming.result.length===0 ">You
                                         Don't Have Any Notifications Yet!</h6>
                                 @for (item of AllNotifications; track $index) {
                                 <div style="display: flex; flex-direction: row; margin-bottom: 10px;"
@@ -71,12 +71,32 @@
                                         </div>
                                 </div>
                                 }
+                                <!--review-->
+                                @for(item of ReminderNotificationsList.result; track $index){
+                                        <div>
+                                                <div style="display: flex; flex-direction: row;">
+                                                        <div >
+                                                                <img src="../../../assets/img/review.svg"
+                                                                        style="width: 60px; height: auto; margin-right: 10px;" />
+                                                        </div>
+                                                        <div style="margin-top: 5px;">
+                                                                <p style="font-weight: bold; margin: 0;" #text>
+                                                                        Would you mind giving us your feedback about <i style="font-family: 'Times New Roman', Times, serif;">farah</i></p>
+                                                        </div>
+                                                </div>
+                                                        <span style="margin-left: 50%;" >
+                                                                <button class="btn btn-dark" (click)="GiveReview(item)">Sure!</button>
+                                                                <button class="btn btn-danger m-lg-2">Cancel</button>
+                                                        </span>
+                                        </div>
+        
+                                        }
+                                     
+                                        
                         </div>
                         <br>
                         <hr style="margin: 15px" />
-                        <button class="btn btn-outline-dark dropdown-footer w-100" style="text-align: center">
-                                See All Notifications
-                        </button>
+                       
                 </div>
         </div>
 </div>
