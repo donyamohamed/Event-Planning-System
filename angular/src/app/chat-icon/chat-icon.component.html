@@ -1,5 +1,8 @@
 <div class="dropdown">
-    <i class="fa-regular fa-message mt-3" style="cursor: pointer; font-size: 24px" (click)="toggleCollapse($event)"></i>
+
+  <span *ngIf="this.unreadMessageCount > 0" class="msgCount">{{this.unreadMessageCount}}</span>
+ 
+  <i class="fa-regular fa-envelope mt-3" style="cursor: pointer; font-size: 24px" (click)="toggleCollapse($event)"></i>
     <div class="dropdown-menu custom-dropdown-menu p-3" style="width: 200px" [ngClass]="{ show: isCollapsed }" aria-labelledby="dropdownMenuButton">
       <div class="mb-3">
         <h3 style="color: #050793">{{ 'Chats' | localize }} </h3>

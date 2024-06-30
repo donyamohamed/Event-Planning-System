@@ -29,6 +29,23 @@
     border-radius: 5px;
     font-family: Arial, sans-serif;
   }
+
+  .receiver-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #e7e7e7; /* Background color */
+    color: #050794; /* Text color */
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+    font-weight: bold;
+  }
+  
+  .receiver-info h1 {
+    margin: 0;
+  }
   .message-start{
     padding: 8px;
     border-radius: 8px;
@@ -77,13 +94,17 @@
     padding-top: 5px;
   }
   .message-content{
-    padding-bottom: 6px;
+    padding-bottom: 7px;
     display: block;
   }
-
+.username{
+  font-size: 14px;
+  color: #787f84;
+  margin-top: 2px;
+}
   .sender-message {
     align-self: flex-start;
-    background-color: #FBAF1B; 
+    background-color: #ffc553; 
     
   }
   
@@ -98,6 +119,7 @@
   /* Style for the message content */
   .message-content {
     margin-left: 10px;
+    margin-bottom:5px;
   }
   
   /* Style for the input field */

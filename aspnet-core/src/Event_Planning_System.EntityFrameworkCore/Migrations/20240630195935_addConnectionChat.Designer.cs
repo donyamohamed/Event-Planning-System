@@ -4,6 +4,7 @@ using Event_Planning_System.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Event_Planning_System.Migrations
 {
     [DbContext(typeof(Event_Planning_SystemDbContext))]
-    partial class Event_Planning_SystemDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240630195935_addConnectionChat")]
+    partial class addConnectionChat
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1709,7 +1712,7 @@ namespace Event_Planning_System.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("InvitationState")
                         .IsRequired()
@@ -1725,9 +1728,6 @@ namespace Event_Planning_System.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Email")
-                        .IsUnique();
 
                     b.ToTable("Guests");
                 });
@@ -1803,6 +1803,9 @@ namespace Event_Planning_System.Migrations
                     b.Property<long>("GuestId")
                         .HasColumnType("bigint");
 
+                    b.Property<bool>("IsReviewTaken")
+                        .HasColumnType("bit");
+
                     b.Property<int>("NType")
                         .HasColumnType("int");
 
@@ -1850,7 +1853,6 @@ namespace Event_Planning_System.Migrations
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
-
 
                     b.ToTable("ChatMessages");
                 });
@@ -1922,7 +1924,6 @@ namespace Event_Planning_System.Migrations
                     b.HasIndex("EventId");
 
                     b.ToTable("GuestEvent");
-
                 });
 
             modelBuilder.Entity("Event_Planning_System.MultiTenancy.Tenant", b =>
@@ -2328,7 +2329,6 @@ namespace Event_Planning_System.Migrations
                     b.Navigation("User");
                 });
 
-
             modelBuilder.Entity("Event_Planning_System.Entities.Feedback", b =>
                 {
                     b.HasOne("Event_Planning_System.Enitities.Event", "Event")
@@ -2366,7 +2366,6 @@ namespace Event_Planning_System.Migrations
 
                     b.Navigation("Guest");
                 });
-
 
             modelBuilder.Entity("Event_Planning_System.MultiTenancy.Tenant", b =>
                 {
@@ -2489,6 +2488,8 @@ namespace Event_Planning_System.Migrations
 
                     b.Navigation("Events");
 
+                    b.Navigation("Feedbacks");
+
                     b.Navigation("Logins");
 
                     b.Navigation("Notifications");
@@ -2508,9 +2509,18 @@ namespace Event_Planning_System.Migrations
                 {
                     b.Navigation("Budgets");
 
+                    b.Navigation("Feedbacks");
+
+                    b.Navigation("GuestEvents");
+
                     b.Navigation("Notifications");
 
                     b.Navigation("ToDoCheckLists");
+                });
+
+            modelBuilder.Entity("Event_Planning_System.Enitities.Guest", b =>
+                {
+                    b.Navigation("GuestEvents");
                 });
 #pragma warning restore 612, 618
         }

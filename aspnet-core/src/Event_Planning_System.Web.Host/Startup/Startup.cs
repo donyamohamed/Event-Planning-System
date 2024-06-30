@@ -19,7 +19,8 @@ using Microsoft.OpenApi.Models;
 using System.IO;
 using Event_Planning_System.Image;
 using Event_Planning_System.Chats;
-
+using Microsoft.AspNetCore.SignalR;
+using Abp.Domain.Uow;
 
 namespace Event_Planning_System.Web.Host.Startup
 {
@@ -48,7 +49,9 @@ namespace Event_Planning_System.Web.Host.Startup
 
             IdentityRegistrar.Register(services);
             AuthConfigurer.Configure(services, _appConfiguration);
-
+            services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
+            services.AddTransient<IChatUserConnectionRepository, ChatUserConnectionRepository>();
+            services.AddTransient<IChatMessageAppService, ChatMessageAppService>();
             services.AddSignalR();
 			
 			services.AddTransient<IChatMessageAppService, ChatMessageAppService>();
@@ -109,7 +112,7 @@ namespace Event_Planning_System.Web.Host.Startup
             {
 
                 endpoints.MapHub<AbpCommonHub>("/signalr");
-                endpoints.MapHub<Entities.ChatHub>("/chatHub");
+                endpoints.MapHub<ChatHub>("/chathub");
                 endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapControllerRoute("defaultWithArea", "{area}/{controller=Home}/{action=Index}/{id?}");
             });
