@@ -41,11 +41,13 @@
 
   <!-- No Events Message -->
   <div *ngIf="events.length === 0" class="no-events">
-    <div class="header-container">
+    <!-- <div class="header-container">
       <a routerLink="/app/create-event" class="btn">{{ "Create Event" | localize }}</a>
-    </div>
+    </div> -->
+    <div class="no-events1">
    <img src="../../../assets/img/NoEvent.gif" alt="">
    <h3>You have not created any event, please create the first event</h3>
+  </div>
   </div>
 </div>
 
