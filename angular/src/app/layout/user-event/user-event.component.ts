@@ -1,7 +1,9 @@
 import { EventResponse } from "./../../guest/event-response";
 import { Enumerator } from "./../../../shared/Models/Event";
 import { Event } from "./../../../shared/Models/Event";
+
 import { Component, OnInit, TemplateRef, ChangeDetectionStrategy} from "@angular/core";
+
 import { CommonModule } from "@angular/common";
 import { UserEventsService } from "../../../shared/Services/user-events.service";
 import { ActivatedRoute, Router, RouterLink } from "@angular/router";
@@ -16,7 +18,9 @@ import {
   Validators,
   FormBuilder,
 } from "@angular/forms";
+
 import { SidebarEventComponent } from "../sidebar-event/sidebar-event.component";
+
 
 @Component({
   selector: "app-user-event",
@@ -29,9 +33,9 @@ import { SidebarEventComponent } from "../sidebar-event/sidebar-event.component"
     SharedModule,
     FormsModule,
     ReactiveFormsModule,
-    SidebarEventComponent
-  ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    SidebarEventComponent,
+  ]
+
 })
 export class UserEventComponent implements OnInit {
   events: Event[] = [];

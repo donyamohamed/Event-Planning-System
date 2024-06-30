@@ -1,5 +1,8 @@
-<app-sidebar-event></app-sidebar-event>
-<div class="container mt-4">
+<div class="big-container"> 
+  <app-sidebar-event></app-sidebar-event>
+
+<div class="container mt-3">
+  <!-- <app-sidebar-event></app-sidebar-event> -->
   <h2>
     <img src="assets/img/next-date.png" alt="icon" />
     {{"Upcoming Events" |localize}} 
@@ -55,4 +58,5 @@
   <ng-template #noEvents>
     <div class="alert alert-warning" role="alert">{{"No upcoming events." |localize}} </div>
   </ng-template>
+</div>
 </div>
