@@ -1,3 +1,4 @@
+
 using Abp.Application.Services;
 using Abp.Application.Services.Dto;
 using Abp.Domain.Repositories;
@@ -30,6 +31,7 @@ namespace Event_Planning_System.Event
 		private readonly IRepository<Enitities.Guest, int> _guestRepository;
 		private readonly IRepository<Enitities.BudgetExpense, int> _budgetExpenseRepository;
 		private readonly IRepository<Enitities.ToDoCheckList, int> _toDoCheckListRepository;
+		private readonly IRepository<Enitities.notification, int> _notificationRepository;
         private readonly ICloudinaryService _cloudinaryService;
         private readonly IMapper _mapper;
 		private readonly IEmailService _emailService;
@@ -42,7 +44,7 @@ namespace Event_Planning_System.Event
 
 		public EventAppService(IRepository<Enitities.Event, int> repository, IRepository<Enitities.Guest, int> guestRepository, IRepository<Interest, int> interestRepository,
             IRepository<Enitities.BudgetExpense, int> budgetExpenseRepository,
-			IRepository<Enitities.ToDoCheckList, int> toDoCheckListRepository, IMapper mapper, IEmailService emailService, ICloudinaryService cloudinaryService, ILogger<EventAppService> logger) : base(repository)
+			IRepository<Enitities.ToDoCheckList, int> toDoCheckListRepository, IRepository<Enitities.notification,int> notificationRepository, IMapper mapper, IEmailService emailService, ICloudinaryService cloudinaryService, ILogger<EventAppService> logger) : base(repository)
 		{
 			_repository = repository;
 			_cloudinaryService = cloudinaryService;
@@ -50,7 +52,8 @@ namespace Event_Planning_System.Event
 			_guestRepository = guestRepository;
 			_budgetExpenseRepository = budgetExpenseRepository;
 			_toDoCheckListRepository = toDoCheckListRepository;
-			_logger=logger;
+            _notificationRepository = notificationRepository;
+            _logger =logger;
 			_mapper = mapper;
 			_emailService = emailService;
 			_imageFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images");
@@ -268,6 +271,11 @@ namespace Event_Planning_System.Event
                 foreach (var toDoCheckList in toDoCheckLists)
                 {
                     await _toDoCheckListRepository.DeleteAsync(toDoCheckList);
+                }
+                var notifications = await _notificationRepository.GetAllListAsync(nc => nc.EventId == eventId);
+                foreach (var notification in notifications)
+                {
+                    await _notificationRepository.DeleteAsync(notification);
                 }
                 var eventGuests = await _guestRepository.GetAllListAsync(g => g.Events.Any(e => e.Id == eventId));
                 foreach (var guest in eventGuests)

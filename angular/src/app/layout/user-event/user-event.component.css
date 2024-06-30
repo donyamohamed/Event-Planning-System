@@ -316,13 +316,17 @@ h2 {
     height: 100vh; 
   }
   .no-events1{
-    margin-top: 50px;
+    margin-top: 30px;
   }
   .no-events1 img{
     margin-left: 100px !important;
   }
   .no-events1 h3{
-    margin-top: 20px;
+    margin-top: 10px;
     margin-right: 200px !important;
     color: #050794;
+  }
+  .no-events .btn{
+    margin-top: 30px;
+    margin-left: 800px;
   }
