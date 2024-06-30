@@ -2,13 +2,10 @@
   <div class="container">
     <div class="left-side">
       <div>
-        <h1
-          class="text-center mb-3"
-          style="
+        <h1 class="text-center mb-3" style="
             color: #fbaf1b;
             font-family: 'MyCustomFont font-weight: bold; ';
-          "
-        >
+          ">
           {{ "Welcome to you again" | localize }}
         </h1>
         <br />
@@ -18,91 +15,48 @@
         <span class="orHr">Or</span>
         <!-- <h2 class="mb-3" style="font-family: 'MyCustomFont'; font-weight: bold;">{{ "LogIn" | localize }}</h2> -->
 
-        <form
-          novalidate
-          autocomplete="off"
-          #loginForm="ngForm"
-          (ngSubmit)="login()"
-        >
+        <form novalidate autocomplete="off" #loginForm="ngForm" (ngSubmit)="login()">
           <div>
             <div class="input-group">
-              <input
-                type="text"
-                class="form-control"
-                name="userNameOrEmailAddress"
-                [(ngModel)]="
+              <input type="text" class="form-control" name="userNameOrEmailAddress" [(ngModel)]="
                   authService.authenticateModel.userNameOrEmailAddress
-                "
-                [placeholder]="'UserNameOrEmail' | localize"
-                required
-                maxlength="256"
-                #userNameOrEmailAddressModel="ngModel"
-                #userNameOrEmailAddressEl
-              />
+                " [placeholder]="'UserNameOrEmail' | localize" required maxlength="256"
+                #userNameOrEmailAddressModel="ngModel" #userNameOrEmailAddressEl />
               <div class="input-group-append">
                 <div class="input-group-text">
                   <span class="fas fa-user"></span>
                 </div>
               </div>
             </div>
-            <abp-validation-summary
-              [control]="userNameOrEmailAddressModel"
-              [controlEl]="userNameOrEmailAddressEl"
-            ></abp-validation-summary>
+            <abp-validation-summary [control]="userNameOrEmailAddressModel"
+              [controlEl]="userNameOrEmailAddressEl"></abp-validation-summary>
           </div>
 
           <br />
           <div>
             <div class="input-group">
-              <input
-                type="password"
-                class="form-control"
-                name="password"
-                [(ngModel)]="authService.authenticateModel.password"
-                [placeholder]="'Password' | localize"
-                required
-                maxlength="32"
-                #passwordModel="ngModel"
-                #passwordEl
-                [type]="passwordFieldType"
-              />
+              <input type="password" class="form-control" name="password"
+                [(ngModel)]="authService.authenticateModel.password" [placeholder]="'Password' | localize" required
+                maxlength="32" #passwordModel="ngModel" #passwordEl [type]="passwordFieldType" />
               <div class="input-group-append">
-                <div
-                  class="input-group-text"
-                  (click)="togglePasswordVisibility()"
-                >
-                  <span
-                    class="fas"
-                    [ngClass]="{
+                <div class="input-group-text" (click)="togglePasswordVisibility()">
+                  <span class="fas" [ngClass]="{
                       'fa-lock': passwordFieldType === 'password',
                       'fa-unlock': passwordFieldType === 'text'
-                    }"
-                  ></span>
+                    }"></span>
                 </div>
               </div>
             </div>
-            <abp-validation-summary
-              [control]="passwordModel"
-              [controlEl]="passwordEl"
-            ></abp-validation-summary>
+            <abp-validation-summary [control]="passwordModel" [controlEl]="passwordEl"></abp-validation-summary>
           </div>
 
           <div class="rememberandforget">
             <div class="form-group">
               <div>
                 <div class="custom-control custom-checkbox">
-                  <input
-                    type="checkbox"
-                    class="custom-control-input"
-                    id="rememberMe"
-                    name="rememberMe"
-                    [(ngModel)]="authService.rememberMe"
-                  />
-                  <label
-                    for="rememberMe"
-                    class="custom-control-label"
-                    style="font-family: 'MyCustomFont'"
-                  >
+                  <input type="checkbox" class="custom-control-input" id="rememberMe" name="rememberMe"
+                    [(ngModel)]="authService.rememberMe" />
+                  <label for="rememberMe" class="custom-control-label" style="font-family: 'MyCustomFont'">
                     {{ "RememberMe" | localize }}
                   </label>
                 </div>
@@ -112,16 +66,11 @@
           </div>
 
           <div class="col-md-6">
-            <button
-              type="submit"
-              style="
+            <button type="submit" style="
                 background-color: #fbaf1b;
                 border-color: #fbaf1b;
                 font-family: 'MyCustomFont';
-              "
-              class="mt-2 btn btn-primary btn-block"
-              [disabled]="!loginForm.form.valid || submitting"
-            >
+              " class="mt-2 btn btn-primary btn-block" [disabled]="!loginForm.form.valid || submitting">
               {{ "LogIn" | localize }}
             </button>
           </div>
