@@ -31,6 +31,7 @@ import { EmailRequest } from "../../../shared/Models/EmailRequest";
 import { Event } from "../../../shared/Models/Event";
 import { SmsRequest } from "@shared/Models/Sms";
 import { SharedModule } from "../../../shared/shared.module";
+import { EventdetailsService } from "@shared/Services/eventdetails.service";
 
 
 @Component({
@@ -60,7 +61,7 @@ export class AllGuestComponent implements OnInit {
   bsModalRef: any;
   guestForm: FormGroup;
   idEvent: number;
-  event: Event = new Event();
+  event:any|Event = new Event();
   guestCount: number;
   maxCountOfGuest: number = 0;
   private emailObj: EmailRequest = new EmailRequest();
@@ -72,7 +73,8 @@ export class AllGuestComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private invitation: InvitationService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private eventService: EventdetailsService
   ) {
     this.guestForm = this.fb.group({
       name: ["", [Validators.required, Validators.maxLength(100)]],
@@ -84,11 +86,14 @@ export class AllGuestComponent implements OnInit {
   ngOnInit(): void {
     this.subscribe = this.activatedRoute.params.subscribe((params) => {
       this.idEvent = params["id"];
-      this.event = history.state.event;
+      this.event=this.eventService.getEventById(this.idEvent)
+      //this.event = history.state.event;
       this.maxCountOfGuest = this.event.maxCount;
       this.subGuest = this.guestSer.getGuestsPerEvent(params["id"]).subscribe({
         next: (res: GuestPerEventResponse) => {
           this.guests = res.result;
+          console.log(this.guests);
+          
           this.guestCount = res.result.length;
           if (this.guestCount === 0) {
             this.router.navigateByUrl("/app/NoGuests/" + this.idEvent);
@@ -120,6 +125,7 @@ export class AllGuestComponent implements OnInit {
 
   Save() {
     if (this.guestForm.valid) {
+      this.guest.invitationState="Pending"
       this.guestSer.createGuest(this.guest, this.idEvent).subscribe({
         next: (data) => {
           this.guest = data;
