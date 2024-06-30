@@ -1,43 +1,57 @@
-
-<app-sidebar-event></app-sidebar-event>
+<div class="container">
+<app-sidebar-event class="sidebar "></app-sidebar-event>
 <div class="events">
-  <div class="header-container">
-    <h2>{{"Events" | localize}}</h2>
-    <a routerLink="/app/create-event" class="btn">{{"Create Event" | localize}}</a>
-  </div>
-  <div class="card-container">
-    <div *ngFor="let event of events" class="card" [ngStyle]="{
-      'background-image': 'url(' + (event.eventImg ? event.eventImg : '../../assets/img/Event.jpg') + ')'
-    }">
-
-      <div class="header">
-        <div class="dropdown">
-          <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-           <i class="fa-solid fa-ellipsis"></i>
-          </button>
-          <ul class="dropdown-menu">
-            <li><button class="dropdown-item" id="edit" (click)="openEditModal(Editetemplate,event.id)" title="edit"> <i
-              class="fa-solid fa-pen-to-square"></i> Edit</button></li>
-            <li><button class="dropdown-item" id="delete" (click)="deleteEvent(event)" title="delete"><i class="fas fa-trash"></i> Delete</button></li>
-          </ul>
+  <!-- Conditional Header and Events List -->
+  <div *ngIf="events.length > 0">
+    <div class="header-container">
+      <h2>{{ "Your Events" | localize }}</h2>
+      <a routerLink="/app/create-event" class="btn">{{ "Create Event" | localize }}</a>
+    </div>
+    <div class="card-container">
+      <div *ngFor="let event of events" class="card" [ngStyle]="{
+        'background-image': 'url(' + (event.eventImg ? event.eventImg : '../../assets/img/Event.jpg') + ')'
+      }">
+        <div class="header">
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fa-solid fa-ellipsis"></i>
+            </button>
+            <ul class="dropdown-menu">
+              <li><button class="dropdown-item" id="edit" (click)="openEditModal(Editetemplate, event.id)" title="edit">
+                <i class="fa-solid fa-pen-to-square"></i> Edit</button></li>
+              <li><button class="dropdown-item" id="delete" (click)="deleteEvent(event)" title="delete">
+                <i class="fas fa-trash"></i> Delete</button></li>
+            </ul>
+          </div>
+          <div class="date">
+            <div class="day">{{ event.startDate | date: 'dd' }}</div>
+            <div class="month">{{ event.startDate | date: 'MMM' }}</div>
+          </div>
         </div>
-        <div class="date">
-          <div class="day">{{ event.startDate | date: 'dd' }}</div>
-          <div class="month">{{ event.startDate | date: 'MMM' }}</div>
+        <div class="card-content">
+          <h3>{{ event.name }}</h3>
+          <p>{{ event.location }}</p>
+          <button id="details" (click)="details(event)">{{ "View" | localize }}</button>
+          <button id="invite" (click)="guestAppearing(event)">{{ "Guest" | localize }}</button>
         </div>
-      </div>
-      <div class="card-content">
-        <h3>{{ event.name }}</h3>
-        <p>{{ event.location }}</p>
-        <button id="details" (click)="details(event)">{{"View"|localize}}</button>
-        <button id="invite" (click)="guestAppearing(event)">{{"Guest"|localize}}</button>
-
       </div>
     </div>
   </div>
 </div>
-<!---------------- edit Modal ---------------------->
 
+  <!-- No Events Message -->
+  <div *ngIf="events.length === 0" class="no-events">
+    <!-- <div class="header-container">
+      <a routerLink="/app/create-event" class="btn">{{ "Create Event" | localize }}</a>
+    </div> -->
+    <div class="no-events1">
+   <img src="../../../assets/img/NoEvent.gif" alt="">
+   <h3>You have not created any event, please create the first event</h3>
+  </div>
+  </div>
+</div>
+
+<!---------------- edit Modal ---------------------->
 <ng-template #Editetemplate>
   <div class="modal-header">
     <h4 class="modal-title" style="color: #1D2027;">Update Event</h4>
@@ -61,45 +75,33 @@
         <input formControlName="location" class="form-control" type="text" id="locationInput" name="locationInput"
           [(ngModel)]="eventEdit.location" required />
         <div *ngIf="eventEditForm.get('location').invalid && eventEditForm.get('location').touched" class="text-danger">
-          <div *ngIf="eventEditForm.get('location').errors.required">loction is required.</div>
-          <div *ngIf="eventEditForm.get('location').errors.maxlength">location cannot be longer than 100 characters.
-          </div>
+          <div *ngIf="eventEditForm.get('location').errors.required">Location is required.</div>
+          <div *ngIf="eventEditForm.get('location').errors.maxlength">Location cannot be longer than 100 characters.</div>
         </div>
       </div>
-
       <div>
         <label for="startDateInput">Start Date:</label>
         <input formControlName="startDate" class="form-control" type="datetime-local" id="startDateInput"
-          name="startDateInput" [(ngModel)]="eventEdit.startDate"  (change)="validateDates()" required />
-        <div *ngIf="eventEditForm.get('startDate').invalid && eventEditForm.get('startDate').touched"
-          class="text-danger">
+          name="startDateInput" [(ngModel)]="eventEdit.startDate" (change)="validateDates()" required />
+        <div *ngIf="eventEditForm.get('startDate').invalid && eventEditForm.get('startDate').touched" class="text-danger">
           <div *ngIf="eventEditForm.get('startDate').errors.required">Date is required.</div>
         </div>
         <div *ngIf="dateErrors.startDateError" class="text-danger">
           {{ dateErrors.startDateError }}
         </div>
       </div>
-
       <div>
         <label for="endDateInput">End Date:</label>
         <input formControlName="endDate" class="form-control" type="datetime-local" id="endDateInput" name="endDateInput"
-          [(ngModel)]="eventEdit.endDate"  (change)="validateDates()" required />
+          [(ngModel)]="eventEdit.endDate" (change)="validateDates()" required />
         <div *ngIf="eventEditForm.get('endDate').invalid && eventEditForm.get('endDate').touched" class="text-danger">
-          <div *ngIf="eventEditForm.get('endDate').errors.required">end Date is required.</div>
+          <div *ngIf="eventEditForm.get('endDate').errors.required">End Date is required.</div>
         </div>
         <div *ngIf="dateErrors.endDateError" class="text-danger">
           {{ dateErrors.endDateError }}
         </div>
       </div>
-
       <div>
-
-        <!-- <label for="categoryInput">Category:</label>
-        <input formControlName="category" class="form-control" type="text" id="categoryInput" name="categoryInput"
-          [(ngModel)]="eventEdit.category" required />
-        <div *ngIf="eventEditForm.get('category').invalid && eventEditForm.get('category').touched" class="text-danger">
-          <div *ngIf="eventEditForm.get('category').errors.required">category is required.</div>
-        </div> -->
         <div class="form-group">
           <label>{{ "Event Category" | localize }}</label>
           <select [(ngModel)]="eventEdit.category" formControlName="category" name="category" class="form-control" title="{{ 'Event Category' | localize }}" required>
@@ -112,14 +114,14 @@
         <input formControlName="maxCount" class="form-control" type="number" id="maxCountInput" name="maxCountInput"
           [(ngModel)]="eventEdit.maxCount" required />
         <div *ngIf="eventEditForm.get('maxCount').invalid && eventEditForm.get('maxCount').touched" class="text-danger">
-          <div *ngIf="eventEditForm.get('maxCount').errors.required">maxCount is required.</div>
+          <div *ngIf="eventEditForm.get('maxCount').errors.required">Max Count is required.</div>
         </div>
       </div>
       <div>
         <label>{{ "Choose Event Type" | localize }}</label>
         <div class="form-check">
           <label class="form-check-label">
-            <input formControlName="isPublic"  type="radio" [(ngModel)]="eventEdit.isPublic" [value]="true" name="isPublic" class="form-check-input"
+            <input formControlName="isPublic" type="radio" [(ngModel)]="eventEdit.isPublic" [value]="true" name="isPublic" class="form-check-input"
               required>
             {{ "Public" | localize }}
           </label>
@@ -135,21 +137,16 @@
           <div *ngIf="eventEditForm.get('isPublic').errors.required">Event type is required.</div>
         </div>
       </div>
-  <!-- <div class="form-group">
-        <label>{{ "Event Image" | localize }}</label>
-        <input formControlName="eventImgFile" type="file" (change)="onFileSelected($event)" [(ngModel)]="eventEdit.eventImg" name="eventImg" class="form-control-file" accept="image/png, image/jpeg">
-    </div> -->
-  <div>
-    <label for="descriptionInput">Description:</label>
-    <textarea formControlName="description" class="form-control" name="description" id="description" cols="30" rows="10"
-      [(ngModel)]="eventEdit.description" pattern="^[a-zA-Z0-9 ]+$" required></textarea>
-    <div *ngIf="eventEditForm.get('description').invalid && eventEditForm.get('description').touched"
-      class="text-danger">
-      <div *ngIf="eventEditForm.get('description').errors.required">description is required.</div>
-      <div *ngIf="eventEditForm.get('description').errors.pattern">{{ "Description must be alphanumeric" | localize }}</div>
-    </div>
-  </div>
-  <input class="btn btn-success m-1" value="Update" type="submit" />
-  </form>
+      <div>
+        <label for="descriptionInput">Description:</label>
+        <textarea formControlName="description" class="form-control" name="description" id="description" cols="30" rows="10"
+          [(ngModel)]="eventEdit.description" pattern="^[a-zA-Z0-9 ]+$" required></textarea>
+        <div *ngIf="eventEditForm.get('description').invalid && eventEditForm.get('description').touched" class="text-danger">
+          <div *ngIf="eventEditForm.get('description').errors.required">Description is required.</div>
+          <div *ngIf="eventEditForm.get('description').errors.pattern">{{ "Description must be alphanumeric" | localize }}</div>
+        </div>
+      </div>
+      <input class="btn btn-success m-1" value="Update" type="submit" />
+    </form>
   </div>
 </ng-template>

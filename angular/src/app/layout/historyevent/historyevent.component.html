@@ -1,4 +1,5 @@
-<app-sidebar-event></app-sidebar-event>
+<div class="container1">
+<app-sidebar-event class="sidebar"></app-sidebar-event>
 <div class="main-container" *ngIf="historyevent && historyevent.length > 0; else noEventTemplate">
     <h2>
         <img src="../../../assets/img/eventHistory.png" alt="icon" />
@@ -23,6 +24,7 @@
             </ul>
         </div>
     </div>
+</div>
 </div>
 <ng-template #noEventTemplate>
     <h1 class="no-event">
