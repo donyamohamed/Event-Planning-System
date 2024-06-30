@@ -36,7 +36,7 @@ import { SidebarEventComponent } from "../sidebar-event/sidebar-event.component"
 
     SidebarEventComponent,
 
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
 
   ],
 
