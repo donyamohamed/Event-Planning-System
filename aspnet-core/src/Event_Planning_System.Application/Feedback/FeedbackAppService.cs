@@ -31,30 +31,37 @@ namespace Event_Planning_System.Feedback
             return _mapper.Map<List<FeedbackDto>>(feedbacks);
         }
 
-        
-        public async Task<double> CalculateAverageRating(int eventId)
+
+        public async Task<(double averageRating, int numberOfRaters)> GetAverageRating(int eventId)
         {
             var feedbacks = await _repository.GetAllListAsync(f => f.EventId == eventId);
+
+            Console.WriteLine($"Feedback count for eventId {eventId}: {feedbacks.Count}");
 
             if (feedbacks.Any())
             {
                 var averageRating = feedbacks.Average(f => f.Rate);
+                var numberOfRaters = feedbacks.Count();
+
+                Console.WriteLine($"Average Rating: {averageRating}");
+                Console.WriteLine($"Number of Raters: {numberOfRaters}");
 
                 // Check if the decimal part of averageRating is exactly 0.5
                 if (Math.Abs(averageRating - Math.Floor(averageRating)) == 0.5)
                 {
-                    return averageRating; // Return as is if it's exactly 0.5
+                    return (averageRating, numberOfRaters); // Return as is if it's exactly 0.5
                 }
                 else
                 {
                     // Otherwise, round to the nearest whole number
                     var roundedRating = Math.Round(averageRating);
-                    return roundedRating;
+                    return (roundedRating, numberOfRaters);
                 }
             }
 
-            return 0.0; // Return 0.0 if no feedbacks are found for the event
+            return (0.0, 0); // Return 0.0 and 0 if no feedbacks are found for the event
         }
+
 
 
 
