@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { SharedModule } from "../../shared/shared.module";
 import swal from 'sweetalert2';
+import { result } from 'lodash-es';
 @Component({
     selector: 'app-reset-password',
     standalone: true,
@@ -23,10 +24,10 @@ export class ResetPasswordComponent {
   SendEmail() {
     this._resetPasswordService.SendEmailForPassword(this.email).subscribe({
       next: (response) => {  
-           
+           console.log(response);
         swal.fire({
           title: 'Success',
-          text: response,
+          text: "Email has been sent to you",
           icon: 'success',
           confirmButtonText: 'OK',
         }).then((result) => {
@@ -40,7 +41,7 @@ export class ResetPasswordComponent {
       },
       error: (error) => {
 
-        console.log(error);
+        // console.log(error);
 
         swal.fire({
           title: 'Error',

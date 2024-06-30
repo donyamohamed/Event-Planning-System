@@ -88,6 +88,7 @@ import { ChatIconComponent } from "./chat-icon/chat-icon.component";
         SidebarLogoComponent,
         SidebarUserPanelComponent,
         SidebarMenuComponent,
+        
     ],
     bootstrap: [AppComponent],
     providers: [provideHttpClient(withInterceptorsFromDi(), withJsonpSupport())], imports: [CommonModule,
