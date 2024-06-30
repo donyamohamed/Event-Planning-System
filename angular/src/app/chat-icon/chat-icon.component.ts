@@ -18,7 +18,7 @@ export class ChatIconComponent implements OnInit {
   LastMsgs: { [key: number]: any } = {};
   public userId = this.appSessionService.userId;
   isCollapsed = false;
-
+  public unreadMessageCount: number = 0;
   constructor(
     private chatService: ChatService,
     private elementRef: ElementRef,
@@ -27,9 +27,21 @@ export class ChatIconComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+      this.loadUnreadMessageCount();
     this.loadAllChats();
-  }
 
+  }
+  loadUnreadMessageCount(): void {
+    this.chatService.getUnreadMessageCount().subscribe(
+      (count: any) => {
+        console.log(count);
+        this.unreadMessageCount = count.result; // Ensure to use the correct property
+      },
+      error => {
+        console.error('Error fetching unread message count:', error);
+      }
+    );
+  }
   private loadAllChats() {
     this.chatService.GetAllUserChats().subscribe({
       next: chats => {

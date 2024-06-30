@@ -1,25 +1,32 @@
 <div class="chat-container">
-  <div class="messages">
+  <div class="messages" #messageContainer>
+
     <div *ngIf="messages.length === 0" class="message-start">
       <span class="centered">Start your conversation with the event creator or planner!</span>
     </div>
-  
+ 
     <ng-container *ngFor="let message of messages; let i = index">
+
       <ng-container *ngIf="i === 0 || (getMessageDate(message) !== getMessageDate(messages[i - 1]))">
         <div class="date-divider">
           {{ getMessageDate(message) }}
         </div>
       </ng-container>
-    
-      <div class="message" [ngClass]="{'sender-message': message.senderUserId === userId, 'receiver-message': message.receiverUserId === userId}">
-        <span class="message-content">{{ message.message }}</span>
+
+      <div class="message" [ngClass]="{
+        'sender-message': message.senderUserId === userId,
+        'receiver-message': message.receiverUserId === userId
+      }">
+        <span class="message-content">
+          <span class="username">{{ getUserName(message) }}</span> {{ message.message }}
+        </span>
         <span class="time">{{ getMessageTime(message) }}</span>
       </div>
     </ng-container>
   </div>
 
   <div class="input-section">
-    <input type="text" #messageInput />
+    <input type="text" #messageInput (keyup.enter)="sendMessage(messageInput)" placeholder="Type your message..." />
     <button (click)="sendMessage(messageInput)">
       <i class="fa-solid fa-paper-plane"></i>
     </button>
