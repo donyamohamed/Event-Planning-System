@@ -153,11 +153,11 @@ h2 {
 .header-container {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-end;
 }
-.header-container h2{
+/* .header-container h2{
   margin-left: 20px;
-}
+} */
 
 .btn {
     display: inline-block;
@@ -318,11 +318,15 @@ h2 {
   .no-events1{
     margin-top: 50px;
   }
-  .no-events1 img{
+
+  /* .no-events1 img{
     margin-left: 100px !important;
-  }
+  } */
+ 
   .no-events1 h3{
-    margin-top: 20px;
-    margin-right: 200px !important;
+    /* margin-top: 10px;
+    margin-right: 200px !important; */
     color: #050794;
   }
+  
+  
