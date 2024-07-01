@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FeedbackService } from '../../shared/Services/feedback.service';
 import { Feedback } from '../../shared/Models/feedback';
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-feedback',
   templateUrl: './feedback.component.html',
@@ -9,7 +11,7 @@ import { Feedback } from '../../shared/Models/feedback';
 })
 export class FeedbackComponent {
 
-  feedbackForm: FormGroup;
+  feedbackForm: FormGroup = new FormGroup({});
   numberOfStars: number = 0;
 
   constructor(private fb: FormBuilder, private service: FeedbackService) {
