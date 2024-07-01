@@ -23,7 +23,7 @@ display: none;
   position: absolute;
   left: 10px;
   width: 250px;
-  height: 70vh;
+  /* height: 70vh; */
   background-color: white;
   z-index: 100;
 }
@@ -122,9 +122,9 @@ display: none;
   width: 90vw;
 
 }
-.right-content{
-  margin-bottom:13vh;
-  margin-top:10vh;
+.container{
+  margin-bottom:4vh;
+
 }
 .grid-container {
   display: grid;

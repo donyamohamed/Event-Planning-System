@@ -9,6 +9,6 @@ namespace Event_Planning_System.Feedback
     public interface IFeedbackAppService : IAsyncCrudAppService<FeedbackDto, int>
     {
         Task<List<FeedbackDto>> GetFeedbackByEventId(int eventId);
-        Task<double> CalculateAverageRating(int eventId);
+        Task<(double averageRating, int numberOfRaters)> GetAverageRating(int eventId);
     }
 }

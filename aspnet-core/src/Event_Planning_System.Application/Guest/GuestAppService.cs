@@ -28,6 +28,8 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Abp.Runtime.Validation;
+using Abp.Collections.Extensions;
+using System.Text.RegularExpressions;
 
 namespace Event_Planning_System.Guest
 {
@@ -82,17 +84,18 @@ namespace Event_Planning_System.Guest
                 
                 var userId = AbpSession.UserId.Value;
                 var user = await _userRepository.GetAllIncluding(u => u.Guests).FirstOrDefaultAsync(u => u.Id == userId);
+                var gests = await _repository.GetAllListAsync();
 
                 if (user == null)
                 {
-                    throw new Exception("User not found.");
+                    throw new Exception("User is not found.");
                 }
 
                 var eventUser = await _repositoryEvent.GetAllIncluding(e => e.Guests).FirstOrDefaultAsync(e => e.Id == eventId && e.UserId == userId);
 
                 if (eventUser == null)
                 {
-                    throw new Exception("Event not found or does not belong to the user.");
+                    throw new Exception("Event does not found or does not belong to the user.");
                 }
 
                 System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
@@ -100,7 +103,14 @@ namespace Event_Planning_System.Guest
                 if (file == null || file.Length == 0)
                     return new BadRequestObjectResult("No file uploaded");
 
+
+                var namePattern = @"^[a-zA-Z\s]+$";
+                var phonePattern = @"^\+?[1-9]\d{1,14}$";
+                var emailPattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+
                 var guestList = new List<GuestDto>();
+                var validationRow = new List<string>();
+                int rowNumber = 2;
 
                 using (var stream = file.OpenReadStream())
                 {
@@ -110,19 +120,46 @@ namespace Event_Planning_System.Guest
 
                         while (reader.Read())
                         {
-                            var guest = new GuestDto
+                            var name = reader.GetValue(0)?.ToString();
+                            var phone = reader.GetValue(1)?.ToString();
+                            var email = reader.GetValue(2)?.ToString();
+
+                            if (string.IsNullOrWhiteSpace(name) || !Regex.IsMatch(name, namePattern)
+                                || string.IsNullOrWhiteSpace(phone) || !Regex.IsMatch(phone, phonePattern)
+                                || string.IsNullOrWhiteSpace(email) || !Regex.IsMatch(email, emailPattern))
                             {
-                                Name = reader.GetValue(0)?.ToString(),
-                                Phone = reader.GetValue(1)?.ToString(),
-                                Email = reader.GetValue(2)?.ToString(),
-                                InvitationState = "Pending",
-                                UserId = userId,
-                                EventId = eventId
-                            };
-                            
-                            guestList.Add(guest);
+                                validationRow.Add($"Row {rowNumber} : Invalid data - Name: {name}, Phone: {phone}, Email: {email} ");
+
+                            }
+                            else
+                            {
+
+                                var guest = new GuestDto
+                                {
+                                    //Name = reader.GetValue(0)?.ToString(),
+                                    //Phone = reader.GetValue(1)?.ToString(),
+                                    //Email = reader.GetValue(2)?.ToString(),
+                                    Name = name,
+                                    Phone = phone,
+                                    Email = email,
+                                    InvitationState = "Pending",
+                                    UserId = userId,
+                                    EventId = eventId
+                                };
+                                guestList.Add(guest);
+                            }
+                                rowNumber++;
                         }
-                        
+                        if (validationRow.Count > 0)
+                        {
+                            return new BadRequestObjectResult($"The file contains invalid data: {string.Join("; ", validationRow)}");
+                        }
+
+                        if (guestList.Count == 0)
+                        {
+                            return new BadRequestObjectResult($"The file is empty .");
+
+                        }
                     }
                 }
 
@@ -146,14 +183,18 @@ namespace Event_Planning_System.Guest
                 foreach (var guestDto in guestsToAdd)
                 {
                     var entity = _mapper.Map<Enitities.Guest>(guestDto);
-                    eventUser.Guests.Add(entity);
-                    user.Guests.Add(entity);
+                    var guest = gests.Where(g => g.Email== entity.Email).FirstOrDefault();
+                    var finalguest = guest ?? entity;
+
+                    eventUser.Guests.Add(finalguest);
+                    user.Guests.Add(finalguest);
                 }
 
                 await _repositoryEvent.UpdateAsync(eventUser);
                 await _userRepository.UpdateAsync(user);
 
                 return new OkObjectResult($"Successfully inserted {guestsToAdd.Count} guests. still {availablePlaces - guestsToAdd.Count} you can insert");
+            
             }
             catch (Exception ex)
             {

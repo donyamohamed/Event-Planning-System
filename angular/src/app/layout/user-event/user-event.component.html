@@ -40,9 +40,14 @@
 </div>
 
   <!-- No Events Message -->
-  <div *ngIf="events.length === 0" class="no-events">
+
+
+  <div *ngIf="events.length === 0" class="no-events col-8">
+    <div class="header-container">
       <a routerLink="/app/create-event" class="btn">{{ "Create Event" | localize }}</a>
-    <div class="no-events1">
+    </div>
+    <div class="no-events1 col-8">
+
    <img src="../../../assets/img/NoEvent.gif" alt="">
    <h3>You have not created any event, please create the first event</h3>
   </div>

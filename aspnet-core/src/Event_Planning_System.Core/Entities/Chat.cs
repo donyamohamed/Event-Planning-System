@@ -13,5 +13,7 @@ namespace Event_Planning_System.Entities
 		public long ReceiverUserId { get; set; }
 		public string Message { get; set; }
 		public DateTime CreationTime { get; set; }
+
+		public bool IsRead { get; set; }
 	}
 }

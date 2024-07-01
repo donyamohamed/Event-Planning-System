@@ -1,19 +1,14 @@
-﻿using Abp.Application.Services;
-using Event_Planning_System.Chats.DTO;
-using System;
+﻿using Event_Planning_System.Chats.DTO;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Event_Planning_System.Chats
 {
-	public interface IChatMessageAppService : IApplicationService
-	{
-		Task SendMessage(CreateChatMessageInput input);
-
-		Task<List<ChatMessageDto>> GetMessages(long userId, long receiverId);
-
-	}
-
+    public interface IChatMessageAppService
+    {
+        Task SendMessage(CreateChatMessageInput input);
+        Task<List<ChatMessageDto>> GetMessages(long userId, long receiverId);
+        Task<List<UserChatDTO>> GetAllUserChats();
+        Task<ChatMessageDto> GetTheLastMsg(int receiverId);
+    }
 }
