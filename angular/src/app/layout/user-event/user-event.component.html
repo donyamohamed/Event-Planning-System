@@ -4,8 +4,8 @@
   <!-- Conditional Header and Events List -->
   <div *ngIf="events.length > 0">
     <div class="header-container">
-      <h2>{{ "Your Events" | localize }}</h2>
-      <a routerLink="/app/create-event" class="btn">{{ "Create Event" | localize }}</a>
+      <h2>{{ "My Events" | localize }}</h2>
+      <a routerLink="/app/create-event" class="btncreate">{{ "Create Event" | localize }}</a>
     </div>
     <div class="card-container">
       <div *ngFor="let event of events" class="card" [ngStyle]="{
