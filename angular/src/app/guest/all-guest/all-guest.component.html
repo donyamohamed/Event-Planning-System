@@ -149,8 +149,24 @@
       <button class="btn btn-secondary" (click)="openModal(template)" [disabled]="guestCount >= maxCountOfGuest"><i class="fa-solid fa-user-plus"></i> </button>
     </div>
     <div class=" m-2">
-      Add One or more from excel:
-      <button class="btn btn-success" (click)="openModal(template)" [disabled]="guestCount >= maxCountOfGuest"><i class="fa-solid fa-file-excel"></i></button>
+      Add from excel:
+      <!-- <button class="btn btn-success" (click)="openModal(template)" [disabled]="guestCount >= maxCountOfGuest"><i class="fa-solid fa-file-excel"></i></button> -->
+      <label for="file-upload" class="custom-file-upload">
+        <i class="fas fa-file-excel"></i>
+        <span *ngIf="fileToUpload">{{ fileToUpload.name }}</span>
+        <span *ngIf="!fileToUpload">{{ "" | localize }}</span>
+    </label>
+  
+    <input id="file-upload" type="file" accept=".xls,.xlsx" (change)="handleFileInput($event)"
+        class="file-input" />
+    <button class="choose-file-btn" (click)="promptFileSelection()">
+        {{ "Choose Excel File" | localize }}
+    </button>
+    <button class="upload-btn" (click)="uploadFile()">
+        {{ "Upload" | localize }}
+    </button>
     </div>
   </div>
 </ng-template>
+
+
