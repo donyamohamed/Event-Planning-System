@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit , Renderer2 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -28,7 +28,7 @@ export class NewPasswordComponent implements OnInit {
   successMessage: Subject<string> = new Subject<string>();
 
 
-  constructor(public activateroute: ActivatedRoute, public newPasswordService: NewPasswordService , public router :Router) { }
+  constructor(public activateroute: ActivatedRoute, public newPasswordService: NewPasswordService , public router :Router,   private renderer: Renderer2,) { }
 
 
   ngOnInit() {
@@ -36,14 +36,16 @@ export class NewPasswordComponent implements OnInit {
       NewPassword: new FormControl(null, [Validators.required , Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)]),
       ConfirmPassword: new FormControl(null, [Validators.required]),
         // { validator: this.mustMatch('NewPassword', 'ConfirmPassword')}
-    });
 
-
-    this.activateroute.queryParams.subscribe(params => {
-      this.email = params['email'];
-      this.token = params['token'];
-    });
-
+      });
+      
+      
+      this.activateroute.queryParams.subscribe(params => {
+        this.email = params['email'];
+        this.token = params['token'];
+      });
+      
+      this.renderer.removeClass(document.body, 'login-page');
   }
 
   toggleNewPassword() {

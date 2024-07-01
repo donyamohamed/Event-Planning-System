@@ -12,7 +12,7 @@ export class FeedbackService {
   private createUrl = 'https://localhost:44311/api/services/app/Feedback/Create';
 
 
- public createFeedback(feedbackFormData: Feedback): Observable<any> {
+ public createFeedback(feedbackFormData: any): Observable<any> {
     return this.http.post<any>(this.createUrl, feedbackFormData)
   }
 }
