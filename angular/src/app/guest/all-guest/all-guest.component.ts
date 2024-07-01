@@ -169,6 +169,7 @@ export class AllGuestComponent implements OnInit {
       },
       error: (err) => console.log(err),
     });
+    location.reload();
   }
 
   SendSMS(phone: string) {
