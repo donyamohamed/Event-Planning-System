@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Event_Planning_System.Migrations
 {
     [DbContext(typeof(Event_Planning_SystemDbContext))]
-    [Migration("20240628175150_Add")]
-    partial class Add
+    [Migration("20240630195935_addConnectionChat")]
+    partial class addConnectionChat
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1840,6 +1840,9 @@ namespace Event_Planning_System.Migrations
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Message")
                         .HasColumnType("nvarchar(max)");
 
@@ -1852,6 +1855,25 @@ namespace Event_Planning_System.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ChatMessages");
+                });
+
+            modelBuilder.Entity("Event_Planning_System.Entities.ChatUserConnection", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("ConnectionId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ChatUserConnections");
                 });
 
             modelBuilder.Entity("Event_Planning_System.Entities.Feedback", b =>
@@ -2236,7 +2258,7 @@ namespace Event_Planning_System.Migrations
                     b.HasOne("Event_Planning_System.Enitities.Event", "Event")
                         .WithMany("Budgets")
                         .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Event_Planning_System.Authorization.Users.User", "User")
@@ -2266,7 +2288,7 @@ namespace Event_Planning_System.Migrations
                     b.HasOne("Event_Planning_System.Enitities.Event", "Event")
                         .WithMany("ToDoCheckLists")
                         .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Event_Planning_System.Authorization.Users.User", "User")
@@ -2331,13 +2353,13 @@ namespace Event_Planning_System.Migrations
                     b.HasOne("Event_Planning_System.Enitities.Event", "Event")
                         .WithMany("GuestEvents")
                         .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Event_Planning_System.Enitities.Guest", "Guest")
                         .WithMany("GuestEvents")
                         .HasForeignKey("GuestId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Event");

@@ -32,3 +32,18 @@
         right: 0;
         bottom: 0;
 }
+.msgCount{
+        display: inline-block;
+        position: absolute;
+        top: 0px;
+        font-size: 10px;
+        font-weight: bold;
+        right: 0px;
+        background-color: #dc3545;
+        padding: 1px 6px;
+        border-radius: 50%;
+        color: white;
+}
+.dropdown{
+        position: relative;
+}

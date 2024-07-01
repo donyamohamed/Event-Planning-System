@@ -2,34 +2,34 @@
     <div>
         <div class="container text-center p-2">
             <div class="imgDiv p-2">
-                <img src="../../../assets/img/looov.jpg" alt="" srcset="">
+                <img src="../../../assets/img/looov.jpg" alt="" srcset="" />
             </div>
-            <h3>{{"No Guests added yet!"| localize}}</h3>
+            <h3>{{ "No Guests added yet!" | localize }}</h3>
             <div class="d-flex justify-content-evenly m-5 p-5">
-                <div class="oneByOne " (click)="openModal(template)">
-                  
-                    <h2>{{"Add one by one" | localize}}</h2>
+                <div class="oneByOne" (click)="openModal(template)">
+                    <h2>{{ "Add one by one" | localize }}</h2>
                     <i class="fa-regular fa-address-book mt-2 fa-2x" aria-hidden="true"></i>
-             
                 </div>
 
                 <div class="excel">
                     <h2>{{ "Upload Guest List" | localize }}</h2>
-                    
-                    <label for="file-upload" class="custom-file-upload">
-                      <i class="fas fa-file-excel"></i> 
-                      <span *ngIf="fileToUpload">{{ fileToUpload.name }}</span>
-                      <span *ngIf="!fileToUpload">{{ "" | localize }}</span>
-                    </label>
-                    
-                    <input id="file-upload" type="file" accept=".xls,.xlsx" (change)="handleFileInput($event)" class="file-input" />
-                    <button class="choose-file-btn" (click)="promptFileSelection()">{{ "Choose Excel File" | localize }}</button>
-                    <button class="upload-btn" (click)="uploadFile()">{{ "Upload" | localize }}</button>
-                    <p>{{ uploadResponse }}</p>
-                  </div>
-                  
- 
 
+                    <label for="file-upload" class="custom-file-upload">
+                        <i class="fas fa-file-excel"></i>
+                        <span *ngIf="fileToUpload">{{ fileToUpload.name }}</span>
+                        <span *ngIf="!fileToUpload">{{ "" | localize }}</span>
+                    </label>
+
+                    <input id="file-upload" type="file" accept=".xls,.xlsx" (change)="handleFileInput($event)"
+                        class="file-input" />
+                    <button class="choose-file-btn" (click)="promptFileSelection()">
+                        {{ "Choose Excel File" | localize }}
+                    </button>
+                    <button class="upload-btn" (click)="uploadFile()">
+                        {{ "Upload" | localize }}
+                    </button>
+                    <!-- <p>{{ uploadResponse }}</p> -->
+                </div>
             </div>
         </div>
     </div>
@@ -38,7 +38,7 @@
 <!-- add guest -->
 <ng-template #template>
     <div class="modal-header">
-        <h4 class="modal-title" style="color: #1D2027;">Add New Guest</h4>
+        <h4 class="modal-title" style="color: #1d2027">Add New Guest</h4>
         <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -47,26 +47,45 @@
         <form [formGroup]="guestForm" (ngSubmit)="AddGeust()">
             <div>
                 <label for="nameInput">Name:</label>
-                <input class="form-control" type="text" id="nameInput" formControlName="name" [(ngModel)]="guest.name"/>
+                <input class="form-control" type="text" id="nameInput" formControlName="name"
+                    [(ngModel)]="guest.name" />
                 <div *ngIf="guestForm.get('name').invalid && guestForm.get('name').touched" class="text-danger">
-                    <div *ngIf="guestForm.get('name').errors.required">Name is required.</div>
-                    <div *ngIf="guestForm.get('name').errors.maxlength">Name cannot be longer than 100 characters.</div>
+                    <div *ngIf="guestForm.get('name').errors.required">
+                        Name is required.
+                    </div>
+                    <div *ngIf="guestForm.get('name').errors.maxlength">
+                        Name cannot be longer than 100 characters.
+                    </div>
                 </div>
             </div>
             <div>
                 <label for="phoneInput">Phone:</label>
-                <input class="form-control" type="text" id="phoneInput" formControlName="phone" [(ngModel)]="guest.phone" required/>
-                <div *ngIf="guestForm.get('phone').invalid && guestForm.get('phone').touched" class="text-danger">
-                    <div *ngIf="guestForm.get('phone').errors.required">Phone is required.</div>
-                    <div *ngIf="guestForm.get('phone').errors.pattern">Phone must be a 10-digit number.</div>
+                <input class="form-control" type="text" id="phoneInput" formControlName="phone"
+                    [(ngModel)]="guest.phone" required />
+                <div *ngIf="
+            guestForm.get('phone').invalid && guestForm.get('phone').touched
+          " class="text-danger">
+                    <div *ngIf="guestForm.get('phone').errors.required">
+                        Phone is required.
+                    </div>
+                    <div *ngIf="guestForm.get('phone').errors.pattern">
+                        Phone must be a 10-digit number.
+                    </div>
                 </div>
             </div>
             <div>
                 <label for="emailInput">Email:</label>
-                <input class="form-control" type="email" id="emailInput" formControlName="email" [(ngModel)]="guest.email" required/>
-                <div *ngIf="guestForm.get('email').invalid && guestForm.get('email').touched" class="text-danger">
-                    <div *ngIf="guestForm.get('email').errors.required">Email is required.</div>
-                    <div *ngIf="guestForm.get('email').errors.email">Invalid email address.</div>
+                <input class="form-control" type="email" id="emailInput" formControlName="email"
+                    [(ngModel)]="guest.email" required />
+                <div *ngIf="
+            guestForm.get('email').invalid && guestForm.get('email').touched
+          " class="text-danger">
+                    <div *ngIf="guestForm.get('email').errors.required">
+                        Email is required.
+                    </div>
+                    <div *ngIf="guestForm.get('email').errors.email">
+                        Invalid email address.
+                    </div>
                 </div>
             </div>
             <!-- <div>
@@ -80,7 +99,7 @@
                     <div *ngIf="guestForm.get('invitationState').errors.required">Invitation state is required.</div>
                 </div>
             </div> -->
-            <input class="btn btn-success" value="Add" type="submit"/>
+            <input class="btn btn-success" value="Add" type="submit" />
         </form>
     </div>
 </ng-template>

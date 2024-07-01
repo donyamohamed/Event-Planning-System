@@ -4,6 +4,7 @@ using Event_Planning_System.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Event_Planning_System.Migrations
 {
     [DbContext(typeof(Event_Planning_SystemDbContext))]
-    partial class Event_Planning_SystemDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240625001314_uniqueGuestEmail")]
+    partial class uniqueGuestEmail
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1565,9 +1568,7 @@ namespace Event_Planning_System.Migrations
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)")
-                        .HasAnnotation("MinLength", 8)
-                        .HasAnnotation("RegularExpression", "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$");
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("PasswordResetCode")
                         .HasMaxLength(328)
@@ -1599,10 +1600,6 @@ namespace Event_Planning_System.Migrations
                     b.HasIndex("CreatorUserId");
 
                     b.HasIndex("DeleterUserId");
-
-                    b.HasIndex("EmailAddress")
-                        .IsUnique()
-                        .HasAnnotation("RegularExpression", "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$");
 
                     b.HasIndex("LastModifierUserId");
 
@@ -1709,7 +1706,7 @@ namespace Event_Planning_System.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("InvitationState")
                         .IsRequired()
@@ -1725,6 +1722,9 @@ namespace Event_Planning_System.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
 
                     b.ToTable("Guests");
                 });
@@ -1800,9 +1800,6 @@ namespace Event_Planning_System.Migrations
                     b.Property<long>("GuestId")
                         .HasColumnType("bigint");
 
-                    b.Property<bool>("IsReviewTaken")
-                        .HasColumnType("bit");
-
                     b.Property<int>("NType")
                         .HasColumnType("int");
 
@@ -1837,9 +1834,6 @@ namespace Event_Planning_System.Migrations
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsRead")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Message")
                         .HasColumnType("nvarchar(max)");
 
@@ -1851,76 +1845,7 @@ namespace Event_Planning_System.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ChatMessages");
-                });
-
-            modelBuilder.Entity("Event_Planning_System.Entities.ChatUserConnection", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("ConnectionId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ChatUserConnections");
-                });
-
-            modelBuilder.Entity("Event_Planning_System.Entities.Feedback", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Body")
-                        .IsRequired()
-                        .HasMaxLength(300)
-                        .HasColumnType("nvarchar(300)");
-
-                    b.Property<DateTime>("DateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("EventId")
-                        .HasColumnType("int");
-
-                    b.Property<float>("Rate")
-                        .HasColumnType("real");
-
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.HasIndex("EventId", "UserId")
-                        .IsUnique();
-
-                    b.ToTable("Feedbacks");
-                });
-
-            modelBuilder.Entity("Event_Planning_System.Entities.GuestEvent", b =>
-                {
-                    b.Property<int>("GuestId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("EventId")
-                        .HasColumnType("int");
-
-                    b.HasKey("GuestId", "EventId");
-
-                    b.HasIndex("EventId");
-
-                    b.ToTable("GuestEvent");
+                    b.ToTable("ChatMessage");
                 });
 
             modelBuilder.Entity("Event_Planning_System.MultiTenancy.Tenant", b =>
@@ -2326,44 +2251,6 @@ namespace Event_Planning_System.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Event_Planning_System.Entities.Feedback", b =>
-                {
-                    b.HasOne("Event_Planning_System.Enitities.Event", "Event")
-                        .WithMany("Feedbacks")
-                        .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Event_Planning_System.Authorization.Users.User", "User")
-                        .WithMany("Feedbacks")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Event");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Event_Planning_System.Entities.GuestEvent", b =>
-                {
-                    b.HasOne("Event_Planning_System.Enitities.Event", "Event")
-                        .WithMany("GuestEvents")
-                        .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Event_Planning_System.Enitities.Guest", "Guest")
-                        .WithMany("GuestEvents")
-                        .HasForeignKey("GuestId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Event");
-
-                    b.Navigation("Guest");
-                });
-
             modelBuilder.Entity("Event_Planning_System.MultiTenancy.Tenant", b =>
                 {
                     b.HasOne("Event_Planning_System.Authorization.Users.User", "CreatorUser")
@@ -2485,8 +2372,6 @@ namespace Event_Planning_System.Migrations
 
                     b.Navigation("Events");
 
-                    b.Navigation("Feedbacks");
-
                     b.Navigation("Logins");
 
                     b.Navigation("Notifications");
@@ -2506,18 +2391,9 @@ namespace Event_Planning_System.Migrations
                 {
                     b.Navigation("Budgets");
 
-                    b.Navigation("Feedbacks");
-
-                    b.Navigation("GuestEvents");
-
                     b.Navigation("Notifications");
 
                     b.Navigation("ToDoCheckLists");
-                });
-
-            modelBuilder.Entity("Event_Planning_System.Enitities.Guest", b =>
-                {
-                    b.Navigation("GuestEvents");
                 });
 #pragma warning restore 612, 618
         }

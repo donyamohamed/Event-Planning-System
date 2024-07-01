@@ -33,12 +33,8 @@ import { SidebarEventComponent } from "../sidebar-event/sidebar-event.component"
     SharedModule,
     FormsModule,
     ReactiveFormsModule,
-
     SidebarEventComponent,
-
-  // changeDetection: ChangeDetectionStrategy.OnPush,
-
-  ],
+  ]
 
 })
 export class UserEventComponent implements OnInit {

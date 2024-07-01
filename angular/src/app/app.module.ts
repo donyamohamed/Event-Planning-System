@@ -15,6 +15,7 @@ import { SharedModule } from '@shared/shared.module';
 import { HomeComponent } from '@app/home/home.component';
 import { AboutComponent } from '@app/about/about.component';
 import { InterstsComponent } from '@app/intersts/intersts.component';
+import { ChatComponentComponent } from '@app/chat-component/chat-component.component';
 import { FeedbackComponent} from './feedback/feedback.component'
 // tenants
 import { TenantsComponent } from '@app/tenants/tenants.component';
@@ -64,6 +65,7 @@ import { ChatIconComponent } from "./chat-icon/chat-icon.component";
         AboutComponent,
         InterstsComponent,
         FeedbackComponent,
+        ChatComponentComponent,
         // CreateGuestModelComponent,
         // tenants
         TenantsComponent,

@@ -120,35 +120,36 @@ export class NoGuestsComponent {
 
   uploadFile(): void {
     if (this.fileToUpload) {
-      this.guestSer.uploadFile(this.fileToUpload, this.idEvent).subscribe(
-        (response: any) => {
-          swal.fire({
-            title: 'Success',
-            text: response.result,
-            icon: 'success',
-            confirmButtonText: 'OK',
-          }).then((result) => {
-            this.router.navigateByUrl(`app/allGuests/${this.idEvent}`);
-          });
-    
-          this.uploadResponse = 'File uploaded successfully';
-        },
-        (error: any) => {
-          console.log(error); 
-          swal.fire({
-            title: 'Error',
-            text: error.error.result,
-            icon: 'error',
-            confirmButtonText: 'OK'
-          });
-          
-          this.uploadResponse = `Error: ${error}`;
-        }
-      );
+        this.guestSer.uploadFile(this.fileToUpload, this.idEvent).subscribe({
+            next: (response: any) => {
+                swal.fire({
+                    title: 'Success',
+                    text: response.result,
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                }).then((result) => {
+                    this.router.navigateByUrl(`app/allGuests/${this.idEvent}`);
+                });
+
+                this.uploadResponse = 'File uploaded successfully';
+            },
+            error: (error: any) => {
+                console.log(error);
+                swal.fire({
+                    title: 'Error',
+                    text: error.error.result,
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+
+                this.uploadResponse = `Error: ${error}`;
+            }
+        });
     } else {
-      this.uploadResponse = 'Please select a valid Excel file first.';
+        this.uploadResponse = 'Please select a valid Excel file first.';
     }
-  }
+}
+
   
   
 }
