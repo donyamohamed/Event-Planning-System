@@ -7,7 +7,9 @@ html {
   font-weight: 500;
 }
 
-*, *:before, *:after {
+*,
+*:before,
+*:after {
   box-sizing: inherit;
 }
 
@@ -80,10 +82,12 @@ html {
   color: #373737;
   font-size: 18px;
 }
-.date-category{
+
+.date-category {
   display: flex;
   justify-content: space-between;
 }
+
 /* User data section styles */
 .user-data {
   display: flex;
@@ -91,7 +95,7 @@ html {
   background-color: #f8f7fa;
   border-radius: 10px;
   padding: 10px;
-  gap: 30px; 
+  gap: 30px;
 }
 
 .user-image {
@@ -108,9 +112,11 @@ html {
 
 .user-details {
   display: flex;
-  justify-content: space-between; /* Distribute space between user info and button */
+  justify-content: space-between;
+  /* Distribute space between user info and button */
   align-items: center;
-  width: 100%; /* Ensure it takes up the full width */
+  width: 100%;
+  /* Ensure it takes up the full width */
 }
 
 .user-info {
@@ -128,8 +134,9 @@ html {
 .user-name span {
   color: rgb(149, 146, 146);
 }
-.location-icon{
-  color:#050794;
+
+.location-icon {
+  color: #050794;
 }
 
 .guest-number {
@@ -165,50 +172,56 @@ html {
 .location-info .location-header {
   font-size: 1.5rem;
   line-height: 1.75rem;
-  color:#050794;
+  color: #050794;
   font-weight: 700;
 }
-.ticket-sales-info{
+
+.ticket-sales-info {
   display: flex;
   justify-content: space-between;
 
 }
-.share-icon{
-  color:#050794;
+
+.share-icon {
+  color: #050794;
 }
 
 
-.link-forcopy span{
-  display:contents !important;
+.link-forcopy span {
+  display: contents !important;
 }
-#swal2-html-container .link-forcopy{
+
+#swal2-html-container .link-forcopy {
   border-radius: 2px;
   background-color: #c4c3c3;
 }
+
 .buttons {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
   margin-bottom: 10px;
-  
+
 }
 
- .btn:hover {
+.btn:hover {
   background-color: #1e90ff;
 }
 
- .btn-expense {
+.btn-expense {
   background-color: #F7931E;
   color: white;
 }
 
- .btn-expense:hover {
+.btn-expense:hover {
   background-color: #ff8c00;
 }
-.btn-todolist{
+
+.btn-todolist {
   color: white;
   background-color: #050794;
 }
+
 /* SweetAlert custom styles */
 .swal2-custom-popup .btn {
   margin: 5px;
@@ -219,7 +232,7 @@ html {
   margin-right: 5px;
 }
 
-.swal2-custom-popup  {
+.swal2-custom-popup {
   width: 100%;
 }
 
@@ -251,4 +264,48 @@ html {
 
 
 
+/* star rating */
 
+.rating {
+  border: none;
+  float: left;
+}
+
+.rating > i {
+  font-size: 1.5em;
+  margin: 5px;
+  color: #ddd;
+  position: relative;
+  display: inline-block;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.rating > i.text-warning {
+  color: #FFD700;
+}
+
+.rating > i.full,
+.rating > i.half,
+.rating > i.empty {
+  animation: fadeIn 0.5s ease-in-out, glow 0.5s infinite alternate;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes glow {
+  0% {
+    text-shadow: 0 0 5px #FFD700, 0 0 10px #FFD700, 0 0 15px #FFD700, 0 0 20px #FFD700;
+  }
+  100% {
+    text-shadow: 0 0 10px #FFD700, 0 0 20px #FFD700, 0 0 30px #FFD700, 0 0 40px #FFD700;
+  }
+}
