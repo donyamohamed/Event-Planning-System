@@ -14,7 +14,7 @@ export class FeedbackComponent {
   feedbackForm: FormGroup = new FormGroup({});
   numberOfStars: number = 0;
 
-  constructor(private fb: FormBuilder, private service: FeedbackService ,  public activatedRouter: ActivatedRoute,) {
+  constructor(private fb: FormBuilder, private service: FeedbackService) {
     this.feedbackForm = this.fb.group({
       rate: [0, Validators.required],
       body: ['']

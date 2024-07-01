@@ -65,6 +65,7 @@ import { ChatIconComponent } from "./chat-icon/chat-icon.component";
         AboutComponent,
         InterstsComponent,
         FeedbackComponent,
+        ChatComponentComponent,
         // CreateGuestModelComponent,
         // tenants
         TenantsComponent,
