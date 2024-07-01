@@ -276,7 +276,11 @@ h2 img {
   max-width: 500px;
   height: auto;
 }
-
+.no-events1{
+  width: 80%;
+  margin: 50px auto;
+  text-align: center;
+}
 /* Responsive design */
 @media (max-width: 991px) {
   .date-container {
@@ -329,6 +333,7 @@ h2 img {
   }
   .no-events1{
     margin-top: 30px;
+  
   }
 
   /* .no-events1 img{
@@ -337,11 +342,12 @@ h2 img {
  
   .no-events1 h3{
     margin-top: 10px;
-    margin-right: 200px !important;
+
     color: #050794;
   }
   .no-events .btn{
     margin-top: 30px;
-    margin-left: 800px;
+  
   }
 
+}
