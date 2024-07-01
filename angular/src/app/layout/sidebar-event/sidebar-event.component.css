@@ -18,6 +18,7 @@ body {
   z-index: 1000;
   transform-style: preserve-3d;
   perspective: 1000px;
+ 
 }
 
 .icon {
@@ -45,10 +46,12 @@ body {
   text-shadow: 0 1px 0 hsla(0, 0%, 0%, 1);
   transition: all .5s ease-out;
 }
-
+/* .icon li i{
+  color:#fbaf1b;
+} */
 .icon a:hover {
   color: hsla(255, 255%, 255%, 1);
-  transform: translateX(10px) scale(1.2);
+  transform: translateX(6px) scale(1.2);
 }
 
 .nav:hover .text {
@@ -80,6 +83,7 @@ body {
   line-height: 64px;
   text-indent: 1em;
   font-size: 1.4em;
+  text-align: left;
   text-decoration: none;
   color: white;
   text-shadow: 0 1px 0 hsla(0, 0%, 0%, 1);

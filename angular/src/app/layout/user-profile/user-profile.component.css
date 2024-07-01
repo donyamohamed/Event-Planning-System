@@ -23,7 +23,7 @@ display: none;
   position: absolute;
   left: 10px;
   width: 250px;
-  height: 70vh;
+  /* height: 70vh; */
   background-color: white;
   z-index: 100;
 }

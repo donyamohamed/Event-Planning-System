@@ -11,7 +11,7 @@
   </div>
   <div class="date-category">
     <div class="date">
-      <div class="start-date"> {{ event.startDate | date: 'EEE, MMM dd, hh:mm a' }}</div>
+      <div class="start-date"><i class="fa-regular fa-calendar mr-2"></i> {{ event.startDate | date: 'EEE, MMM dd, hh:mm a' }}</div>
       <div class="end-date">{{"-" |localize}} {{ event.endDate | date: 'EEE, MMM dd, hh:mm a' }}</div>
     </div>
     <div class="category">
@@ -19,10 +19,26 @@
     </div>
   </div>
  
+  <div class="location-info">
+    <!-- <div class="location-header">
+      <h1>Location</h1>
+    </div> -->
+    <div class="location-data"><i class="fas fa-map-marker-alt location-icon mr-2"></i>
+      
+      {{ event.location }}
+    </div>
+  </div>
+
+
   <div class="event-name">
     <h1>{{ event.name }}</h1>
   </div>
+
+
+
+
   <div class="event-desc">
+    <h3 >About</h3>
     <p>{{ event.description }}</p>
   </div>
   <div class="user-data">
@@ -34,8 +50,8 @@
         <div class="user-name">
           <span>By </span><h6>{{ user?.name }}</h6>
         </div>
-        <div class="guest-number">
-          <div><h6>{{ event.maxCount }} </h6> <span>attendees hosted 📈</span></div>
+        <div class="guest-number my-2">
+          <div><h6><i class="fa-solid fa-user-group mr-2"></i>{{ event.maxCount }} </h6> <span>attendees hosted </span></div>
         </div>
       </div>
       <div class="connect-button">
@@ -43,15 +59,7 @@
       </div>
     </div>
   </div>
-  <div class="location-info">
-    <div class="location-header">
-      <h1>Location</h1>
-    </div>
-    <div class="location-data"><i class="fas fa-map-marker-alt location-icon"></i>
-      
-      {{ event.location }}
-    </div>
-  </div>
+ 
 </div>
 <div class="buttons" *ngIf="isEventCreator">
   <a [routerLink]="'/app/todolist/' + event?.id" class="btn btn-todolist">{{ "TodoList" | localize }}</a>
