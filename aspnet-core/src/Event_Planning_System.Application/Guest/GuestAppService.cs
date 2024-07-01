@@ -137,6 +137,11 @@ namespace Event_Planning_System.Guest
                             guestList.Add(guest);
                         }
                         
+                        if(guestList.Count == 0)
+                        {
+                            return new BadRequestObjectResult($"The file is emppty .");
+
+                        }
                     }
                 }
 
