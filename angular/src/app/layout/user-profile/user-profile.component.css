@@ -122,9 +122,9 @@ display: none;
   width: 90vw;
 
 }
-.right-content{
-  margin-bottom:13vh;
-  margin-top:10vh;
+.container{
+  margin-bottom:4vh;
+
 }
 .grid-container {
   display: grid;

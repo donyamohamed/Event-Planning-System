@@ -16,6 +16,7 @@ import { HomeComponent } from '@app/home/home.component';
 import { AboutComponent } from '@app/about/about.component';
 import { InterstsComponent } from '@app/intersts/intersts.component';
 import { ChatComponentComponent } from '@app/chat-component/chat-component.component';
+import { FeedbackComponent} from './feedback/feedback.component'
 // tenants
 import { TenantsComponent } from '@app/tenants/tenants.component';
 import { CreateTenantDialogComponent } from './tenants/create-tenant/create-tenant-dialog.component';
@@ -63,6 +64,7 @@ import { ChatIconComponent } from "./chat-icon/chat-icon.component";
         HomeComponent,
         AboutComponent,
         InterstsComponent,
+        FeedbackComponent,
         ChatComponentComponent,
         // CreateGuestModelComponent,
         // tenants

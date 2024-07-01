@@ -35,7 +35,7 @@ import { DeleteGuestComponent } from './guest/delete-guest/delete-guest.componen
 import { UpdateGuestComponent } from './guest/update-guest/update-guest.component';
 import { AllGuestComponent } from './guest/all-guest/all-guest.component';
 import { UpcomingEventsComponent } from './layout/user-profile/upcoming-events/upcoming-events.component';
-
+import { FeedbackComponent} from './feedback/feedback.component'
 const routes: Routes = [
     {
         path: '',
@@ -56,6 +56,8 @@ const routes: Routes = [
             { path: 'invitation-state', component: InvitationStateComponent, canActivate: [AppRouteGuard] },
             { path: 'Profile', component: UserProfileComponent, canActivate: [AppRouteGuard] },
             { path: 'Notifications', component: NotificatiosComponent, canActivate: [AppRouteGuard] },
+            { path: 'feedback', component: FeedbackComponent, canActivate: [AppRouteGuard] },
+
             { path: 'eventDetails/:id', component: EventDetailsComponent },
 
             { path: 'shareDetails/:id', component: ShareDetailesComponent, canActivate: [AppRouteGuard] },

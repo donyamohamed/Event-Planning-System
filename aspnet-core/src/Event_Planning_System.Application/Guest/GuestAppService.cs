@@ -29,6 +29,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Abp.Runtime.Validation;
 using Abp.Collections.Extensions;
+using System.Text.RegularExpressions;
 
 namespace Event_Planning_System.Guest
 {
@@ -87,14 +88,14 @@ namespace Event_Planning_System.Guest
 
                 if (user == null)
                 {
-                    throw new Exception("User not found.");
+                    throw new Exception("User is not found.");
                 }
 
                 var eventUser = await _repositoryEvent.GetAllIncluding(e => e.Guests).FirstOrDefaultAsync(e => e.Id == eventId && e.UserId == userId);
 
                 if (eventUser == null)
                 {
-                    throw new Exception("Event not found or does not belong to the user.");
+                    throw new Exception("Event does not found or does not belong to the user.");
                 }
 
                 System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
@@ -102,7 +103,14 @@ namespace Event_Planning_System.Guest
                 if (file == null || file.Length == 0)
                     return new BadRequestObjectResult("No file uploaded");
 
+
+                var namePattern = @"^[a-zA-Z\s]+$";
+                var phonePattern = @"^\+?[1-9]\d{1,14}$";
+                var emailPattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+
                 var guestList = new List<GuestDto>();
+                var validationRow = new List<string>();
+                int rowNumber = 2;
 
                 using (var stream = file.OpenReadStream())
                 {
@@ -116,27 +124,42 @@ namespace Event_Planning_System.Guest
                             var phone = reader.GetValue(1)?.ToString();
                             var email = reader.GetValue(2)?.ToString();
 
-                            if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(phone) || string.IsNullOrWhiteSpace(email))
+                            if (string.IsNullOrWhiteSpace(name) || !Regex.IsMatch(name, namePattern)
+                                || string.IsNullOrWhiteSpace(phone) || !Regex.IsMatch(phone, phonePattern)
+                                || string.IsNullOrWhiteSpace(email) || !Regex.IsMatch(email, emailPattern))
                             {
-                                continue; // Skip invalid entries
-                            }
+                                validationRow.Add($"Row {rowNumber} : Invalid data - Name: {name}, Phone: {phone}, Email: {email} ");
 
-                            var guest = new GuestDto
+                            }
+                            else
                             {
-                                //Name = reader.GetValue(0)?.ToString(),
-                                //Phone = reader.GetValue(1)?.ToString(),
-                                //Email = reader.GetValue(2)?.ToString(),
-                                Name = name,
-                                Phone = phone,
-                                Email = email,
-                                InvitationState = "Pending",
-                                UserId = userId,
-                                EventId = eventId
-                            };
-                            
-                            guestList.Add(guest);
+
+                                var guest = new GuestDto
+                                {
+                                    //Name = reader.GetValue(0)?.ToString(),
+                                    //Phone = reader.GetValue(1)?.ToString(),
+                                    //Email = reader.GetValue(2)?.ToString(),
+                                    Name = name,
+                                    Phone = phone,
+                                    Email = email,
+                                    InvitationState = "Pending",
+                                    UserId = userId,
+                                    EventId = eventId
+                                };
+                                guestList.Add(guest);
+                            }
+                                rowNumber++;
                         }
-                        
+                        if (validationRow.Count > 0)
+                        {
+                            return new BadRequestObjectResult($"The file contains invalid data: {string.Join("; ", validationRow)}");
+                        }
+
+                        if (guestList.Count == 0)
+                        {
+                            return new BadRequestObjectResult($"The file is empty .");
+
+                        }
                     }
                 }
 
