@@ -328,7 +328,7 @@ h2 img {
     height: 100vh; 
   }
   .no-events1{
-    margin-top: 50px;
+    margin-top: 30px;
   }
 
   /* .no-events1 img{
@@ -336,10 +336,12 @@ h2 img {
   } */
  
   .no-events1 h3{
-    /* margin-top: 10px;
-    margin-right: 200px !important; */
+    margin-top: 10px;
+    margin-right: 200px !important;
     color: #050794;
   }
-  
-  
-}
+  .no-events .btn{
+    margin-top: 30px;
+    margin-left: 800px;
+  }
+
