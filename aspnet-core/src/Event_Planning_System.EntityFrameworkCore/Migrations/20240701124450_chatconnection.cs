@@ -6,15 +6,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Event_Planning_System.Migrations
 {
     /// <inheritdoc />
-    public partial class addConnectionChat : Migration
+    public partial class chatconnection : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropIndex(
-                name: "IX_Guests_Email",
-                table: "Guests");
-
             migrationBuilder.DropPrimaryKey(
                 name: "PK_ChatMessage",
                 table: "ChatMessage");
@@ -29,14 +25,6 @@ namespace Event_Planning_System.Migrations
                 type: "bit",
                 nullable: false,
                 defaultValue: false);
-
-            migrationBuilder.AlterColumn<string>(
-                name: "Email",
-                table: "Guests",
-                type: "nvarchar(max)",
-                nullable: false,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(450)");
 
             migrationBuilder.AddColumn<bool>(
                 name: "IsRead",
@@ -118,6 +106,12 @@ namespace Event_Planning_System.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_AbpUsers_EmailAddress",
+                table: "AbpUsers",
+                column: "EmailAddress",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Feedbacks_EventId_UserId",
                 table: "Feedbacks",
                 columns: new[] { "EventId", "UserId" },
@@ -146,6 +140,10 @@ namespace Event_Planning_System.Migrations
             migrationBuilder.DropTable(
                 name: "GuestEvent");
 
+            migrationBuilder.DropIndex(
+                name: "IX_AbpUsers_EmailAddress",
+                table: "AbpUsers");
+
             migrationBuilder.DropPrimaryKey(
                 name: "PK_ChatMessages",
                 table: "ChatMessages");
@@ -162,24 +160,10 @@ namespace Event_Planning_System.Migrations
                 name: "ChatMessages",
                 newName: "ChatMessage");
 
-            migrationBuilder.AlterColumn<string>(
-                name: "Email",
-                table: "Guests",
-                type: "nvarchar(450)",
-                nullable: false,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(max)");
-
             migrationBuilder.AddPrimaryKey(
                 name: "PK_ChatMessage",
                 table: "ChatMessage",
                 column: "Id");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Guests_Email",
-                table: "Guests",
-                column: "Email",
-                unique: true);
         }
     }
 }

@@ -46,7 +46,13 @@ export class NewPasswordComponent implements OnInit {
 
   }
 
+  toggleNewPassword() {
+    this.showNewPassword = !this.showNewPassword;
+  }
 
+  toggleConfirmPassword() {
+    this.showConfirmPassword = !this.showConfirmPassword;
+  }
 
   onSubmit() {
     this.dataForPassword=new NewPassword(this.newPasswordForm.value.NewPassword,this.newPasswordForm.value.ConfirmPassword);
@@ -57,7 +63,7 @@ export class NewPasswordComponent implements OnInit {
         this.errorMessage.next(null);
 
         setTimeout(() => {
-          this.router.navigateByUrl('account/login');
+          window.close();
         }, 5000);
       },
       error: (error) => {

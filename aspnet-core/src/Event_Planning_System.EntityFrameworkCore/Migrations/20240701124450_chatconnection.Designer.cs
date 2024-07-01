@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Event_Planning_System.Migrations
 {
     [DbContext(typeof(Event_Planning_SystemDbContext))]
-    [Migration("20240630195935_addConnectionChat")]
-    partial class addConnectionChat
+    [Migration("20240701124450_chatconnection")]
+    partial class chatconnection
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

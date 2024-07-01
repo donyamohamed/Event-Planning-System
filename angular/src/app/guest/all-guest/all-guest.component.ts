@@ -237,4 +237,71 @@ export class AllGuestComponent implements OnInit {
       }
     });
   }
+
+
+  fileToUpload: File | null = null;
+  uploadResponse: string = '';
+
+  promptFileSelection(): void {
+    swal.fire({
+      title: 'Enter the Name, Phone number, and Email. Each one in a column',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, got it!',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const fileInput = document.getElementById('file-upload') as HTMLInputElement;
+        fileInput.click();
+      }
+    });
+  }
+
+  handleFileInput(event: any): void {
+    const file: File = event.target.files[0];
+    const allowedExtensions = ['xls', 'xlsx'];
+    const fileExtension = file.name.split('.').pop()?.toLowerCase();
+
+    if (file && allowedExtensions.includes(fileExtension || '')) {
+      this.fileToUpload = file;
+      this.uploadResponse = '';
+    } else {
+      this.fileToUpload = null;
+      this.uploadResponse = 'Invalid file type. Please upload an Excel file.';
+    }
+  }
+
+  uploadFile(): void {
+    if (this.fileToUpload) {
+        this.guestSer.uploadFile(this.fileToUpload, this.idEvent).subscribe({
+            next: (response: any) => {
+                swal.fire({
+                    title: 'Success',
+                    text: response.result,
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                }).then((result) => {
+                    this.router.navigateByUrl(`app/allGuests/${this.idEvent}`);
+                });
+
+                this.uploadResponse = 'File uploaded successfully';
+            },
+            error: (error: any) => {
+                console.log(error);
+                swal.fire({
+                    title: 'Error',
+                    text: error.error.result,
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+
+                this.uploadResponse = `Error: ${error}`;
+            }
+        });
+    } else {
+        this.uploadResponse = 'Please select a valid Excel file first.';
+    }
+}
+
+
 }

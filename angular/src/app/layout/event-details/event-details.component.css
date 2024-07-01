@@ -58,7 +58,7 @@ html {
   display: flex;
   gap: 2px;
   align-items: center;
-  border-left: 2px solid #2d8000;
+  border-left: 2px solid #050794;
   width: fit-content;
   margin: 4px;
   padding: 2px 7px;
@@ -73,7 +73,7 @@ html {
 .event-info .event-name h1 {
   text-transform: capitalize;
   font-size: 50px;
-  padding-left: 5px;
+
   color: #050794;
 }
 
@@ -118,6 +118,9 @@ html {
   width: 100%;
   /* Ensure it takes up the full width */
 }
+.event-desc h3{
+  font-size: 18px;
+}
 
 .user-info {
   display: flex;
@@ -134,10 +137,9 @@ html {
 .user-name span {
   color: rgb(149, 146, 146);
 }
-
-.location-icon {
-  color: #050794;
-}
+/* .location-icon{
+  color:#050794;
+} */
 
 .guest-number {
   text-align: left;
@@ -168,12 +170,18 @@ html {
 .connect-button .email:hover {
   background-color: #0345a7;
 }
-
+.location-info{
+  border-left: 2px solid #050794;
+  width: fit-content;
+  margin: 4px;
+  padding: 2px 7px;
+}
 .location-info .location-header {
   font-size: 1.5rem;
   line-height: 1.75rem;
   color: #050794;
   font-weight: 700;
+  
 }
 
 .ticket-sales-info {

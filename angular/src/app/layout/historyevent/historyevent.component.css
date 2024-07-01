@@ -5,8 +5,8 @@ body {
     padding: 0;
 }
 .main-container{
-    width:calc(100% - 270px);
-    margin-left:140px;
+    /* width:calc(100% - 270px);
+    margin-left:140px; */
     padding: 10px 30px;
     margin-bottom: 40px;
 }
@@ -117,9 +117,11 @@ h2 {
 .no-event {
     color: #050794;
     text-align: center;
-    margin-left: 400px;
+    /* margin-left: 400px; */
+    width: 80%;
+    margin: 50px auto;
     font-size: 36px;
-    margin-top: 50px;
+
     font-weight: bold;
     text-transform: uppercase;
    
