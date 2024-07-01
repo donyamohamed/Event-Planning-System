@@ -15,7 +15,7 @@ body {
 }
 
 h2 {
-  padding: 30px 60px;
+  /* padding: 30px 60px; */
   display: block;
 }
 
@@ -149,7 +149,8 @@ h2 {
 }
 
 .header-container {
-    display: flex;
+    /* display: flex; */
+    /* position: relative; */
     align-items: center;
     justify-content: flex-end;
 }
@@ -171,8 +172,26 @@ h2 {
   transition: background-color 0.3s;
   margin-right: 10px;
   position: absolute;
+  /* right: 80px; */
+  top:-20px;
+}
+.btncreate{
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  color: #fff;
+  background-color: #050794;
+  border: none;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+  margin-right: 10px;
+  position: absolute;
   right: 40px;
-  top: 80px;
+  top:80px;
+
 }
 
 .btn:hover {
