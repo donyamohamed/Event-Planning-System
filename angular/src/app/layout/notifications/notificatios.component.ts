@@ -7,6 +7,8 @@ import Swal from 'sweetalert2';
 import { combineLatest } from 'rxjs';
 import { CurrentUser } from '@shared/Models/current-user';
 import { SharedModule } from "../../../shared/shared.module";
+import { FeedbackComponent } from '@app/feedback/feedback.component';
+import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-notifications',
   standalone: true,
@@ -259,13 +261,38 @@ export class NotificatiosComponent implements OnInit {
     }
   }
   //fun to give review
-  GiveReview(item: any) {
-    this.Service.UpdateIsReviewTaken(item).subscribe({
-      next: n => {
-        location.reload();
-      }
+  // GiveReview(item: any) {
+  //   this.Service.UpdateIsReviewTaken(item).subscribe({
+  //     next: n => {
+  //       location.reload();
+  //     }
+  //   });
+  // }
+  GiveReview(item: any): void {
+    console.log('Opening dialog for eventId:', item.eventId);
+  
+    const dialogRef = this.dialog.open(FeedbackComponent, {
+      width: '400px',
+      data: { eventId: item.eventId },
+      panelClass: 'custom-dialog-container'
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('Dialog closed with result:', result);
+      this.Service.UpdateIsReviewTaken(item).subscribe({
+        next: n => {
+          console.log('Review status updated:', n);
+          location.reload();
+        },
+        error: err => {
+          console.error('Error updating review status:', err);
+        }
+      });
+    }, error => {
+      console.error('Dialog error:', error);
     });
   }
-  constructor(public Service: NotificationsService, private elementRef: ElementRef, private cdr: ChangeDetectorRef) {
+
+  constructor(public Service: NotificationsService, private elementRef: ElementRef, private cdr: ChangeDetectorRef,public dialog: MatDialog) {
   }
 }
