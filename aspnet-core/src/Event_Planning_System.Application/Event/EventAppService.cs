@@ -22,6 +22,9 @@ using System.Linq;
 
 using System.Linq;
 using System.Threading.Tasks;
+using Event_Planning_System.Entities;
+using Vonage.Voice.EventWebhooks;
+using Event_Planning_System.Feedback;
 
 namespace Event_Planning_System.Event
 {
@@ -39,12 +42,13 @@ namespace Event_Planning_System.Event
         private readonly ILogger<EventAppService> _logger;
 
         private readonly IRepository<Interest, int> _interestRepository;
-
-
+        private readonly IRepository<Entities.Feedback, int> _feedbackRepository;
+        private readonly IFeedbackAppService _feedbackService;
 
 		public EventAppService(IRepository<Enitities.Event, int> repository, IRepository<Enitities.Guest, int> guestRepository, IRepository<Interest, int> interestRepository,
             IRepository<Enitities.BudgetExpense, int> budgetExpenseRepository,
-			IRepository<Enitities.ToDoCheckList, int> toDoCheckListRepository, IRepository<Enitities.notification,int> notificationRepository, IMapper mapper, IEmailService emailService, ICloudinaryService cloudinaryService, ILogger<EventAppService> logger) : base(repository)
+			IRepository<Enitities.ToDoCheckList, int> toDoCheckListRepository, IRepository<Enitities.notification,int> notificationRepository, IMapper mapper, IEmailService emailService, ICloudinaryService cloudinaryService, ILogger<EventAppService> logger,
+            IRepository<Entities.Feedback, int> feedbackRepository,IFeedbackAppService feedbackService) : base(repository)
 		{
 			_repository = repository;
 			_cloudinaryService = cloudinaryService;
@@ -57,6 +61,8 @@ namespace Event_Planning_System.Event
 			_mapper = mapper;
 			_emailService = emailService;
 			_imageFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images");
+            _feedbackRepository=feedbackRepository;
+            _feedbackService=feedbackService;
 			if (!Directory.Exists(_imageFolderPath))
 			{
 				Directory.CreateDirectory(_imageFolderPath);
@@ -134,6 +140,23 @@ namespace Event_Planning_System.Event
 			var events = await _repository.GetAllListAsync(e => e.UserId == userId && e.EndDate < today);
 			return _mapper.Map<List<EventDto>>(events);
 		}
+        public async Task<EventNameAndRatingDto> GetNamesAndRatingForeachEventAsync(long userId)
+        {
+            var today = DateTime.Today;
+            var events = await _repository.GetAllListAsync(e => e.UserId == userId && e.EndDate < today);
+            string[] eventNames = new string[events.Count()];
+            double[] eventRatings = new double[events.Count()];
+            int i = 0;
+            foreach (var e in events)
+            {
+                eventNames[i] = e.Name;
+                var result = await _feedbackService.GetAverageRating(e.Id);
+                eventRatings[i] = result.averageRating;
+                i++;
+            }
+            return new EventNameAndRatingDto { EventNames = eventNames, EventRatings = eventRatings };
+
+        }
 
         public override async Task<EventDto> CreateAsync([FromForm] CreateEventDto input)
         {

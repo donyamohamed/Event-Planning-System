@@ -1,6 +1,9 @@
 <div class="header-container">
-  <div class="blur" [ngStyle]="{'background-image': 'url(' + (event.eventImg ? event.eventImg : '../../assets/img/Event.jpg') + ')'}"></div>
-  <img class="card-media-object" [src]="event.eventImg ? event.eventImg : ('../../assets/img/Event.jpg')" alt="Event Image">
+  <div class="blur"
+    [ngStyle]="{'background-image': 'url(' + (event.eventImg ? event.eventImg : '../../assets/img/Event.jpg') + ')'}">
+  </div>
+  <img class="card-media-object" [src]="event.eventImg ? event.eventImg : ('../../assets/img/Event.jpg')"
+    alt="Event Image">
 </div>
 
 <div class="event-info">
@@ -48,10 +51,22 @@
     <div class="user-details">
       <div class="user-info">
         <div class="user-name">
-          <span>By </span><h6>{{ user?.name }}</h6>
+          <span>By </span>
+          <h6>{{ user?.name }}</h6>
         </div>
-        <div class="guest-number my-2">
-          <div><h6><i class="fa-solid fa-user-group mr-2"></i>{{ event.maxCount }} </h6> <span>attendees hosted </span></div>
+        <div class="guest-number">
+          <div>
+            <h6>{{ event.maxCount }} </h6> <span>attendees hosted 📈</span>
+          </div>
+          <div class="star-feedback">
+            <div class="rating">
+              <ng-container *ngFor="let star of stars">
+                <i *ngIf="star.type === 'full'" class="fa-solid fa-star text-warning" title="{{ star.title }}"></i>
+                <i *ngIf="star.type === 'half'" class="fa-regular fa-star-half-stroke text-warning" title="{{ star.title }}"></i>
+                <i *ngIf="star.type === 'empty'" class="fa-regular fa-star" title="{{ star.title }}"></i>
+              </ng-container>
+            </div>          
+          </div> <!-- star-feedback -->
         </div>
       </div>
       <div class="connect-button">
