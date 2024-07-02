@@ -65,7 +65,7 @@ export class NoGuestsComponent {
     //   })
     // });
     if (this.guestForm.valid) {
-
+      this.guest.invitationState="Pending";
       this.sub = this.activatedRouter.params.subscribe(param => {
         this.guestSer.createGuest(this.guest, this.idEvent).subscribe({
           next: (result) => {

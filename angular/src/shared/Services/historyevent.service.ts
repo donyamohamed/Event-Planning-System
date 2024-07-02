@@ -9,7 +9,7 @@ import { switchMap } from 'rxjs/operators';
 export class HistoryeventService {
   private userProfileUrl = "https://localhost:44311/api/services/app/UserProfileAppServices/GetUserProfile";
   private apiHistoryUrl = "https://localhost:44311/api/services/app/Event/GetHistoryEvent";
-
+  private  getEventNamesAndEventRatingApi="https://localhost:44311/api/services/app/Event/GetNamesAndRatingForeachEvent"
   constructor(private http: HttpClient) { }
 
   getUserProfile(): Observable<any> {
@@ -21,6 +21,14 @@ export class HistoryeventService {
       switchMap(profile => {
         const userId = profile.result.id; 
         return this.http.get<any>(`${this.apiHistoryUrl}?userId=${userId}`);
+      })
+    );
+  }
+  getEventNamesAndEventRating(){
+    return this.getUserProfile().pipe(
+      switchMap(profile => {
+        const userId = profile.result.id; 
+        return this.http.get<any>(`${this.getEventNamesAndEventRatingApi}?userId=${userId}`);
       })
     );
   }

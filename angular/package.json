@@ -39,6 +39,7 @@
     "bad-words": "^3.0.4",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
+    "chart.js": "^4.4.3",
     "core-js": "^3.33.3",
     "famfamfam-flags": "^1.0.0",
     "gapi-script": "^1.2.0",

@@ -27,8 +27,8 @@
           </tr>
         </thead>
         <tbody class="table-group-divider">
-          <tr class="" *ngFor="let item of guests">
-            <td scope="row">{{item.id}}</td>
+          <tr class="" *ngFor="let item of guests; let i=index">
+            <td scope="row"> {{i+1}}</td>
             <td>{{item.name}}</td>
             <td>{{item.email}}</td>
             <td>{{item.invitationState}}</td>

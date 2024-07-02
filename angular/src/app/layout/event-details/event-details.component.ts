@@ -1,3 +1,4 @@
+import { FeedbackService } from './../../../shared/Services/feedback.service';
  import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { EventdetailsService } from '../../../shared/Services/eventdetails.service';
@@ -24,6 +25,9 @@ export class EventDetailsComponent implements OnInit {
   user: any;
   loggedInUserId: number | undefined;
   isEventCreator: boolean = false; // Add this property
+  rating: any; 
+  stars: { type: string, title: string }[] = [];
+  numberOfRaters: number | undefined;
 
   constructor(
     private route: ActivatedRoute,
@@ -31,7 +35,8 @@ export class EventDetailsComponent implements OnInit {
     private eventDetailsService: EventdetailsService,
     private eventBudgetService: EventBudgetService, 
     private userService: UserService,
-    private currentUserData: CurrentUserDataService
+    private currentUserData: CurrentUserDataService,
+    private feedbackServ:FeedbackService
   ) { }
 
   ngOnInit(): void {
@@ -62,6 +67,21 @@ export class EventDetailsComponent implements OnInit {
         (data) => {
           this.event = data.result;
           console.log("Event Details:", data.result);
+
+          this.rating = this.feedbackServ.getRating(this.event.id).subscribe(
+            (res) => {
+              //this.rating = res.result.averageRating;
+              console.log("Rating:", res.result.numberOfRaters);
+              this.numberOfRaters = res.result.numberOfRaters;
+              console.log(res.result.averageRating);
+              this.setStars(res.result.averageRating); // Set stars based on rating
+            },
+              (error) => {
+                console.error('Error fetching user data:', error);
+              }
+          ); // Set rating from event data
+
+
           this.userService.getUserById(this.event.userId).subscribe(
             (userData) => {
               this.user = userData.result;
@@ -77,6 +97,8 @@ export class EventDetailsComponent implements OnInit {
           console.error('Error fetching event details:', error);
         }
       );
+    
+
     }
   }
 
@@ -178,6 +200,18 @@ export class EventDetailsComponent implements OnInit {
       window.location.href = `mailto:${email}`;
     } else {
       console.error('Email address is not defined');
+    }
+  }
+  setStars(rating: number): void {
+    this.stars = [];
+    for (let i = 1; i <= 5; i++) {
+      if (rating >= i) {
+        this.stars.push({ type: 'full', title: `${i} stars` });
+      } else if (rating > i - 1) {
+        this.stars.push({ type: 'half', title: `${i - 0.5} stars` });
+      } else {
+        this.stars.push({ type: 'empty', title: `${i} stars` });
+      }
     }
   }
 }
