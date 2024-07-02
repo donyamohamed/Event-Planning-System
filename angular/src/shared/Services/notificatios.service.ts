@@ -84,7 +84,7 @@ export class NotificationsService {
     return this.http.get(this.GetNotReviewedCountUrl);
   }
   UpdateIsReviewTaken(updatedNotification: UpdateReviewStatus): Observable<any> {
-    return this.http.put<any>(this.UpdateUrl, updatedNotification);
+    return this.http.put<any>(this.UpdateIsReviewTakenUrl, updatedNotification);
   }
   GetEventNameandStartdateById(id: number): Observable<ApiResponse<Event>> {
     return this.http.get<ApiResponse<Event>>(this.EventUrl + id);
