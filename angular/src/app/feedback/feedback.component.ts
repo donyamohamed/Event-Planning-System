@@ -4,7 +4,6 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FeedbackService } from '../../shared/Services/feedback.service';
 import { Feedback } from '../../shared/Models/feedback';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AbpSessionService } from 'abp-ng2-module';
 import {CurrentUserDataService} from'../../shared/Services/current-user-data.service'
 @Component({
   selector: 'app-feedback',
