@@ -4,21 +4,35 @@ import * as signalR from '@microsoft/signalr';
 @Injectable({
   providedIn: 'root'
 })
-export class SignalRServiceService {
+export class SignalRServiceService  {
   public hubConnection: signalR.HubConnection;
+  private connectionEstablished: boolean = false;
+  private pendingInvocations: Array<{ method: string, args: any[] }> = [];
 
   public startConnection(): Promise<void> {
     this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl('https://localhost:44311/chatHub')
+      .withUrl('https://localhost:44311/chatbothub')
       .build();
 
     return this.hubConnection
       .start()
-      .then(() => console.log('Connection started'))
+      .then(() => {
+        console.log('Connection started');
+        this.connectionEstablished = true;
+        this.processPendingInvocations();
+      })
       .catch(err => {
         console.log('Error while starting connection: ' + err);
-        throw err; // Ensure the error is propagated
+        throw err; 
       });
+  }
+
+  private processPendingInvocations() {
+    this.pendingInvocations.forEach(invocation => {
+      this.hubConnection.invoke(invocation.method, ...invocation.args)
+        .catch(err => console.error(err));
+    });
+    this.pendingInvocations = [];
   }
 
   public addReceiveAnswerListener() {
@@ -28,11 +42,12 @@ export class SignalRServiceService {
   }
 
   public askQuestion(question: string) {
-    if (this.hubConnection.state === signalR.HubConnectionState.Connected) {
+    if (this.connectionEstablished) {
       this.hubConnection.invoke('AskQuestion', question)
         .catch(err => console.error(err));
     } else {
-      console.error('Cannot send data if the connection is not in the Connected state.');
+      console.error('Connection is not established. Please try again later.');
+      this.pendingInvocations.push({ method: 'AskQuestion', args: [question] });
     }
   }
 }

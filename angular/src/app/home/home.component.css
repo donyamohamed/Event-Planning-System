@@ -264,7 +264,13 @@ p {
 .hidden {
   display: none;
 }
-
+.chatbot-title{
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+.chatbot-q,.chatbot-a{
+  margin: 5px 0px;
+}
 /* body {
   background: #f5f6f8;
 }

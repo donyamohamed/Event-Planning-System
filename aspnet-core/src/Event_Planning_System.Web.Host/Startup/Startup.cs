@@ -21,6 +21,7 @@ using Event_Planning_System.Image;
 using Event_Planning_System.Chats;
 using Microsoft.AspNetCore.SignalR;
 using Abp.Domain.Uow;
+using Event_Planning_System.Entities;
 
 namespace Event_Planning_System.Web.Host.Startup
 {
@@ -113,6 +114,8 @@ namespace Event_Planning_System.Web.Host.Startup
 
                 endpoints.MapHub<AbpCommonHub>("/signalr");
                 endpoints.MapHub<ChatHub>("/chathub");
+                endpoints.MapHub<ChatbotHub>("/chatbothub");
+
                 endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapControllerRoute("defaultWithArea", "{area}/{controller=Home}/{action=Index}/{id?}");
             });

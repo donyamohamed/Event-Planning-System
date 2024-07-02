@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace Event_Planning_System.Entities
 {
-    public class ChatHub : Hub
+    public class ChatbotHub : Hub
     {
         public async Task AskQuestion(string question)
         {
