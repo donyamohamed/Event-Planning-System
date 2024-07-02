@@ -21,6 +21,8 @@ namespace Event_Planning_System.Event
         Task DeleteEventWithDetailsAsync(int eventId);
         Task<IEnumerable<EventDto>> GetEventsByIds(IEnumerable<int> eventIds);
         Task<EventDto> GetEventByIdAsync(int id);
+        Task<EventNameAndRatingDto> GetNamesAndRatingForeachEventAsync(long userId);
+
     }
 
 }

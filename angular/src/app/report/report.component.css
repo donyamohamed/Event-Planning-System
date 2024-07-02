@@ -1,0 +1,14 @@
+/* .chart{
+
+} */
+ .imgChart img{
+    width: 50%;
+ }
+ .report-links .link{
+    background-color: #050794;
+    /* border-radius: 12.5%; */
+ }
+ .report-links .link:hover{
+    cursor: pointer;
+ }
+ 
