@@ -113,6 +113,7 @@ namespace Event_Planning_System.Notification
 				.GetAll()
 				.Where(n => n.GuestId == currentGuestId &&
 							n.status == Notification_Status.Accepted &&
+							n.IsReviewTaken==false&&
 							n.Event.EndDate.Date == yesterday)
 				.ToListAsync();
 
@@ -120,7 +121,7 @@ namespace Event_Planning_System.Notification
 		}
 		public async Task UpdateIsReviewdStatus([FromBody] UpdateIsReviewd input)
 		{
-			var notifications = await GetAllUserNotifications();
+			var notifications = await GetNotificationOfEventReview();
 			var old = notifications.FirstOrDefault(n => n.Id == input.Id);
 			if (old == null)
 			{

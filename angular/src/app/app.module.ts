@@ -50,6 +50,7 @@ import { NotificatiosComponent } from "./layout/notifications/notificatios.compo
 
 import { PublicEventsComponent } from "./home/public-events/public-events.component";
 import { ChatIconComponent } from "./chat-icon/chat-icon.component";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 
@@ -107,7 +108,9 @@ import { ChatIconComponent } from "./chat-icon/chat-icon.component";
         SharedModule,
         NgxPaginationModule,
         NgbModule,
-        FullCalendarModule
+        FullCalendarModule,
+        BrowserAnimationsModule,
+        ModalModule
         // FullCalendarModule.forRoot({
         //     plugins: [dayGridPlugin]
         //   })
