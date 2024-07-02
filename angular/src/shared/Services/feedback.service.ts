@@ -14,7 +14,7 @@ export class FeedbackService {
   private getRatingUrl = 'https://localhost:44311/api/Feedback/CalculateAverageRating';
 
 
- public createFeedback(feedbackFormData: Feedback): Observable<any> {
+ public createFeedback(feedbackFormData: any): Observable<any> {
     return this.http.post<any>(this.createUrl, feedbackFormData)
   }
   public getRating(eventId:number):Observable<ApiResponse>{

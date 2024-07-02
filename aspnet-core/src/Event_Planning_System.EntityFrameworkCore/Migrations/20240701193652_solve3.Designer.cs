@@ -12,13 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Event_Planning_System.Migrations
 {
     [DbContext(typeof(Event_Planning_SystemDbContext))]
-<<<<<<<< HEAD:aspnet-core/src/Event_Planning_System.EntityFrameworkCore/Migrations/20240701124450_chatconnection.Designer.cs
     [Migration("20240701124450_chatconnection")]
-    partial class chatconnection
-========
-    [Migration("20240701193652_solve3")]
-    partial class solve3
->>>>>>>> Rating2_nada:aspnet-core/src/Event_Planning_System.EntityFrameworkCore/Migrations/20240701193652_solve3.Designer.cs
+    partial class chatconnection.Designer.cs
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
