@@ -137,3 +137,15 @@
   display: inline-block;
   animation: swingWithPause 7s ease-in-out infinite;
 }
+
+@media only screen and (max-width: 767px) {
+.navbar-nav{
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+}
+li{
+  list-style: none;
+}

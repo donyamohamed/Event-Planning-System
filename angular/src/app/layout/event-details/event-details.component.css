@@ -16,6 +16,7 @@ html {
 /* Header container styles */
 .header-container {
   width: 80%;
+height: 560px;
   margin: 20px auto;
   border-radius: 25px;
   text-align: center;
@@ -38,6 +39,7 @@ html {
   width: 90%;
   margin: 0 auto;
   z-index: 1;
+  height:100%;
   border-radius: 5px;
 }
 
@@ -116,6 +118,7 @@ html {
   /* Distribute space between user info and button */
   align-items: center;
   width: 100%;
+  flex-wrap: wrap;
   /* Ensure it takes up the full width */
 }
 .event-desc h3{
@@ -276,7 +279,12 @@ html {
   /* gap: 10px !important; */
 }
 
-
+.buttons{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:10px;
+}
 
 /* star rating */
 

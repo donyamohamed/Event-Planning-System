@@ -4,37 +4,38 @@
       Eventa
     </h3>
   </li>
-  <li class="nav-item d-none d-sm-inline-block">
+  <ul class="d-flex align-items-center">
+  <li class="nav-item  d-sm-inline-block">
     <a class="nav-link" [routerLink]="['/app/home']">
-      {{ "HomePage" | localize }}
+      {{ "Home" | localize }}
     </a>
   </li>
-  <li class="nav-item d-none d-sm-inline-block">
+  <!-- <li class="nav-item  d-sm-inline-block">
     <a class="nav-link" [routerLink]="['/app/about']">
       {{ "About" | localize }}
     </a>
-  </li>
-  <li class="nav-item d-none d-sm-inline-block" *ngIf="!isLoggedIn">
+  </li> -->
+  <li class="nav-item  d-sm-inline-block" *ngIf="!isLoggedIn">
     <a class="nav-link animated-login login-swing" [routerLink]="['/account/login']">
       <div class="loader">
         <span>{{ "Login" | localize }}</span>
       </div>
     </a>
   </li>
-  <li class="nav-item d-none d-sm-inline-block" *ngIf="isLoggedIn">
+  <li class="nav-item  d-sm-inline-block" *ngIf="isLoggedIn">
     <a class="nav-link" [routerLink]="['/app/user-event']">
       {{ "My Events" | localize }}
     </a>
   </li>
-  <li class="nav-item d-none d-sm-inline-block" *ngIf="isLoggedIn">
+  <li class="nav-item  d-sm-inline-block" *ngIf="isLoggedIn">
     <a class="nav-link" [routerLink]="['/app/invitation-state']">
-      {{" Invitation_State" | localize}}
+      {{" Invitation State" | localize}}
     </a>
   </li>
-  <li class="nav-item d-none d-sm-inline-block" *ngIf="isLoggedIn">
+  <li class="nav-item  d-sm-inline-block" *ngIf="isLoggedIn">
     <a class="nav-link" [routerLink]="['/app/Profile']">
       {{ "Profile" | localize }}
     </a>
   </li>
- 
+</ul>
 </ul>

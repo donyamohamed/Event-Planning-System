@@ -11,4 +11,8 @@
  .report-links .link:hover{
     cursor: pointer;
  }
- 
+ @media only screen and (max-width: 767px) {
+ .main-container {
+   margin: 10px 82px;
+}
+ }
