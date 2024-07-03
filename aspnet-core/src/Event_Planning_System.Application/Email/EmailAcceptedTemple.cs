@@ -1,19 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Event_Planning_System.Email
 {
     public class EmailAcceptedTemple
     {
-        public static string YourInvitationRequestAccepted(string eventName, DateTime date, string eventAddress,string guestName, string eventImg)
+        public static string YourInvitationRequestAccepted(string eventName, DateTime date, string eventAddress, string guestName, string eventImg)
         {
             string backgroundImage = string.IsNullOrEmpty(eventImg)
-               ? "https://cdn.pixabay.com/photo/2016/12/18/00/47/structure-1914730_960_720.jpg"
-               : eventImg;
-            string invitationUrl = "https://localhost:44311/invitation.html";
+                ? "https://cdn.pixabay.com/photo/2016/12/18/00/47/structure-1914730_960_720.jpg"
+                : eventImg;
+
             return $@"
             <!DOCTYPE html>
             <html>
@@ -34,7 +30,7 @@ namespace Event_Planning_System.Email
                         display: grid;
                         place-items: center;
                         background-color: lavender;
-                        background-image: url('https://cdn.pixabay.com/photo/2016/12/18/00/47/structure-1914730_960_720.jpg');
+                        background-image: url('{backgroundImage}');
                         background-size: cover;
                         background-position: center;
                         font-family: 'PT Sans Narrow', sans-serif;
@@ -112,6 +108,18 @@ namespace Event_Planning_System.Email
                         color: #cccccc;
                     }}
 
+                    .download-btn {{
+                        display: inline-block;
+                        margin-top: 20px;
+                        padding: 8px 18px;
+                        font-size: 1rem;
+                        color: white;
+                        background-color: #fbaf1b;
+                        text-decoration: none;
+                        border-radius: 5px;
+                        cursor: pointer;
+                    }}
+
                     @media screen and (max-width: 600px) {{
                         .poster {{
                             padding: 10px;
@@ -140,21 +148,11 @@ namespace Event_Planning_System.Email
                         .poster .message {{
                             font-size: 1rem;
                         }}
-                     .download-btn {{
-                        display: inline-block;
-                        margin-top: 20px;
-                        padding: 8px 18px;
-                        font-size: 1rem;
-                        color: white;
-                        background-color: #fbaf1b;
-                        text-decoration: none;
-                        border-radius: 5px;
-                    }}
                     }}
                 </style>
             </head>
             <body>
-                <div class='poster'>
+                <div class='poster' id='poster'>
                     <img class='header-img' src='{backgroundImage}' alt='Header Image'>
                     <h1>Invitation Request</h1>
                     <h2>{eventName}</h2>
@@ -169,22 +167,31 @@ namespace Event_Planning_System.Email
                         <p>{eventAddress}</p>
                         <p><small>www.eventlocation.com</small></p>
                     </div>
-                   <div class='message'>
-                    <p>Dear {guestName},</p>
-                    <p>We are pleased to inform you that your request for an invitation to {eventName} has been accepted.</p>
-                    <p>We look forward to welcoming you to the event.</p>
-                    <p>Best regards,</p>
-                    <p>The Event Planning Team</p>
-                   </div>
-
-                   <div class='footer'>
-                       <p>&copy; {DateTime.Now.Year} Event Planning Team. All rights reserved.</p>
-                   </div>
-           <a href='https://api.html2pdf.app/v1/generate?url={Uri.EscapeDataString(invitationUrl)}&apiKey=06W549nhMKj0lcyp13wBF8D7kooz2xFG63mxzq1QE0UAtm1hp2u6YyJiuxqqtTDF' class='download-btn'>Download</a>
+                    <div class='message'>
+                        <p>Dear {guestName},</p>
+                        <p>We are pleased to inform you that your request for an invitation to {eventName} has been accepted.</p>
+                        <p>We look forward to welcoming you to the event.</p>
+                        <p>Best regards,</p>
+                        <p>The Event Planning Team</p>
+                    </div>
+                    <div class='footer'>
+                        <p>&copy; {DateTime.Now.Year} Event Planning Team. All rights reserved.</p>
+                    </div>
+                    <a id='printpdf' class='download-btn'>Print</a>
                 </div>
+                <script src='https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js'></script>
+                <script>
+                    document.getElementById('printpdf').addEventListener('click', function() {{
+                        var element = document.getElementById('poster');
+                        html2pdf().from(element).set({{
+                            margin: [30, 10, 5, 10],
+                            pagebreak: {{ avoid: 'tr' }},
+                            jsPDF: {{ orientation: 'landscape', unit: 'pt', format: 'letter', compressPDF: true }}
+                        }}).save();
+                    }});
+                </script>
             </body>
             </html>";
         }
-
     }
 }
