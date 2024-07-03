@@ -81,13 +81,10 @@ export class RegisterComponent extends AppComponentBase implements OnInit {
   }
 
   
-
   save(): void {
     this.saving = true;
 
     const formData = new FormData();
-  
-
     formData.append('name', this.model.name);
     formData.append('surname', this.model.surname);
     formData.append('emailAddress', this.model.emailAddress);
@@ -95,39 +92,56 @@ export class RegisterComponent extends AppComponentBase implements OnInit {
     formData.append('password', this.model.password);
     formData.append('age', this.model.age.toString());
     formData.append('gender', this.model.gender.toString());
-  
-  
-    // if (this.fileToUpload) {
-    //   formData.append('imageFile', this.fileToUpload, this.fileToUpload.name);
-    // }
-    if (this.model.imageFile) {
-      formData.append('imageFile', this.model.imageFile); 
-  }
-    this._accountService
-      .registerFromForm(formData) 
-      .pipe(
-        finalize(() => {
-          this.saving = false;
-        })
-      )
-      .subscribe((result: RegisterOutput) => {
-        console.log(result);
-        this._router.navigate(['/login']);
-        if (!result.canLogin) {
-          this.notify.success('Registration successful! Please check your email for further instructions.');
 
-          this._router.navigate(['/login']);
-          return;
+    if (this.model.imageFile) {
+      formData.append('imageFile', this.model.imageFile);
+    }
+
+    this._accountService.registerFromForm(formData).pipe(
+      finalize(() => { this.saving = false; })
+    ).subscribe(
+      (result: RegisterOutput) => {
+        if (!result.canLogin) {
+      
+          setTimeout(() => {
+              this.notify.success('Registration successful! Please check your email for further instructions.');
+          }, 4000);
+          this._router.navigate(['/account/login']);
+        } else {
+            this._router.navigate(['/account/login']);
         }
-  
-        // Authenticate
-        this.saving = true;
-        this.authService.authenticateModel.userNameOrEmailAddress = this.model.userName;
-        this.authService.authenticateModel.password = this.model.password;
-        this.authService.authenticate(() => {
-          this.saving = false;
-        });
-      });
+      },
+      (error: any) => {
+        console.error('An error occurred during registration', error);
+        this.notify.error(error.message || 'Registration failed. Please try again.');
+      }
+    );
+    // this._accountService
+    //   .registerFromForm(formData)
+    //   .pipe(
+    //     finalize(() => {
+    //       this.saving = false;
+    //     })
+    //   )
+    //   .subscribe(
+    //     (result: RegisterOutput) => {
+    //       console.log(result);
+    //       this.notify.success('Registration successful! Please check your email for further instructions.');
+    //       this._router.navigate(['/login']);
+    //       if (result.canLogin) {
+    //         this.saving = true;
+    //         this.authService.authenticateModel.userNameOrEmailAddress = this.model.userName;
+    //         this.authService.authenticateModel.password = this.model.password;
+    //         this.authService.authenticate(() => {
+    //           this.saving = false;
+    //           this._router.navigate(['/home']);
+    //         });
+    //       }
+    //     },
+    //     (error) => {
+    //       this.notify.error(error.message || 'Registration failed. Please try again.');
+    //     }
+    //   );
   }
   
 }

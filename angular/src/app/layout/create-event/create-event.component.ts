@@ -12,6 +12,8 @@ import * as Filter from 'bad-words';
 import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js';
 
 
+
+
 @Component({
     selector: 'app-create-event',
     templateUrl: './create-event.component.html',
