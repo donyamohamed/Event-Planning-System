@@ -33,7 +33,7 @@
                         <div class="form-group date-container">
                             <div>
                                 <label>{{ "Start Date" | localize }}</label>
-                                <input type="datetime-local" [(ngModel)]="eventData.startDate" name="startDate" [min]="today" class="form-control" (change)="validateDates()" required>
+                                <input type="datetime-local" [(ngModel)]="eventData.startDate" name="startDate" class="form-control" [min]="today" (change)="validateDates()" required>
                                 <div *ngIf="eventForm.controls['startDate'].invalid && (eventForm.controls['startDate'].dirty || eventForm.controls['startDate'].touched)" class="error-message">
                                     <div *ngIf="eventForm.controls['startDate'].errors.required">{{ "Start Date is required" | localize }}</div>
                                 </div>

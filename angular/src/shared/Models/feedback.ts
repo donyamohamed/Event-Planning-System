@@ -1,11 +1,9 @@
 export class Feedback{
     constructor(
+        public id:number=0,
         public body:string| undefined = undefined,
         public rate:number| undefined = 0.0,
-        public dateTime: Date | undefined = undefined,
-        public eventId:number,
-        public userId:number
-    )
+        public date: Date | undefined = undefined,)
         
         {
    

@@ -1,4 +1,4 @@
-import { Component, OnInit ,Renderer2  } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ResetpasswordService } from '../../shared/Services/resetpassword.service';
 import { Router} from '@angular/router';
@@ -14,16 +14,12 @@ import { result } from 'lodash-es';
     styleUrl: './reset-password.component.css',
     imports: [CommonModule, FormsModule, SharedModule]
 })
-export class ResetPasswordComponent implements OnInit {
+export class ResetPasswordComponent {
   errorMessage: Subject<string> = new Subject<string>();
   successMessage: Subject<string> = new Subject<string>();
-    constructor(public _resetPasswordService :ResetpasswordService , public router:Router ,  private renderer: Renderer2,){}
+    constructor(public _resetPasswordService :ResetpasswordService , public router:Router){}
 
   email : string;
-
- ngOnInit(): void {
-  this.renderer.removeClass(document.body, 'login-page');
- } 
  
   SendEmail() {
     this._resetPasswordService.SendEmailForPassword(this.email).subscribe({
