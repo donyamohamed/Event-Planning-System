@@ -12,13 +12,18 @@ body {
 
 .nav {
   height: 100%;
-  position: absolute;
+  position: fixed;
   left: -2em;
   top: 60px;
   z-index: 1000;
   transform-style: preserve-3d;
   perspective: 1000px;
  
+}
+@media only screen and (max-width: 767px) {
+  .nav{
+    top:0px;
+  }
 }
 
 .icon {

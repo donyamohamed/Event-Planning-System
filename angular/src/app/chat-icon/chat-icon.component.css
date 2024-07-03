@@ -47,3 +47,13 @@
 .dropdown{
         position: relative;
 }
+
+@media only screen and (max-width: 767px) {
+        .custom-dropdown-menu {
+                width: 328px !important;
+                position: absolute;
+                top: 50px;
+                left: -85px;
+                z-index: 1000;
+        }  
+}

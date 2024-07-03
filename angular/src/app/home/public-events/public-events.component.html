@@ -18,8 +18,10 @@
           <div class="card-content">
               <h3>{{ event.name }}</h3>
               <p>{{ event.location }}</p>
+              <div class="d-flex align-items-center justify-content-center">
               <button class="btn btn-primary" (click)="askForInvitation(event)">{{"Ask for invitation" | localize}}</button>
               <button id="details" (click)="details(event)">{{"View"|localize}}</button>
+            </div>
           </div>
           <div class="Chat-icon" (click)="navigateToComponent(event.userId)" *ngIf="isLoggedIn">
          
