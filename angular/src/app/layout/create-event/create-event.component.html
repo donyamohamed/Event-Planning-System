@@ -58,10 +58,11 @@
                                 </div>
                             </div>
                             <label>{{ "Attendees" | localize }}</label>
-                            <input type="number" [(ngModel)]="eventData.maxCount" name="maxCount" class="form-control" placeholder="{{ 'Max Attendees' | localize }}" required>
+                            <input type="number" [(ngModel)]="eventData.maxCount" name="maxCount" class="form-control" placeholder="{{ 'Max Attendees' | localize }}" required min="1">
                             <div *ngIf="eventForm.controls['maxCount'].invalid && (eventForm.controls['maxCount'].dirty || eventForm.controls['maxCount'].touched)" class="error-message">
                                 <div *ngIf="eventForm.controls['maxCount'].errors.required">{{ "Max Attendees is required" | localize }}</div>
-                            </div>
+                                <div *ngIf="eventForm.controls['maxCount'].value < 1">{{ "Max Attendees must be at least 1" | localize }}</div>
+                            </div>                            
                         </div>
                         <!-- Right side form fields -->
                         <div class="form-group">
