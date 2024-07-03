@@ -133,9 +133,9 @@ export class EventDetailsComponent implements OnInit {
         <button class="btn text-primary" id="share-linkedin"><i class="fa-brands fa-linkedin-in fa-x"></i></button> | 
         <button class="btn text-dark" id="share-twitter"><i class="fa-brands fa-x-twitter fa-x"></i></button> | 
         <button class="btn text-success" id="share-whatsapp"><i class="fa-brands fa-whatsapp fa-x"></i></button>
-        <div class="mt-3 link-forcopy">
+        <div class="mt-3 link-forcopy d-flex align-items-center justify-content-center">
           <span id="share-link" class="pr-1" >${shareUrl}</span>
-          <i class="far fa-clone copy-icon" id="copy-link"></i>
+          <button class="btn text-dark"><i class="far fa-clone" id="copy-link"></i></button>
         </div>
       `,
       showCloseButton: true,

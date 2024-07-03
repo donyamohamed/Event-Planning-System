@@ -5,7 +5,8 @@ import { LayoutStoreService } from '@shared/layout/layout-store.service';
 import {LocalStorageServiceService} from './../shared/Services/local-storage-service.service';
 
 @Component({
-  templateUrl: './app.component.html'
+  templateUrl: './app.component.html',
+  styleUrls: ["./app.component.css"],
 })
 export class AppComponent extends AppComponentBase implements OnInit {
   sidebarExpanded: boolean;

@@ -49,14 +49,15 @@
       <img [src]="getUserImage()" alt="User Image">
     </div>
     <div class="user-details">
-      <div class="user-info">
-        <div class="user-name">
+      <div class="user-info ">
+        <div class="user-name mb-2">
           <span>By </span>
           <h6>{{ user?.name }}</h6>
         </div>
         <div class="guest-number">
           <div>
-            <h6>{{ event.maxCount }} </h6> <span>attendees hosted 📈</span>
+
+            <h6><span class="mr-2"><i class="fa-solid fa-user-group"></i></span>{{ event.maxCount }} </h6> <span>attendees hosted </span>
           </div>
           <div class="star-feedback">
             <div class="rating">

@@ -5,8 +5,11 @@
 body {
   background-color: white !important;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  padding-bottom: 150px;
 }
-
+/* .flex-container{
+  display: flex;;
+} */
 .card {
   border: none;
   border-radius: 1px 0 0 1rem;
@@ -207,4 +210,22 @@ display: none;
 
 .f-right {
   float: right;
+}
+
+@media only screen and (max-width: 767px) {
+  .user-card-full {
+ 
+    position: static;
+   
+    width: 80%;
+    margin:25px auto;
+    /* height: 70vh; */
+    background-color: white;
+    z-index: 100;
+  }
+  .right-content {
+    margin-left: 0px;
+    width: 80%;
+    margin:25px auto;
+  }
 }
