@@ -1,24 +1,23 @@
 <div class="cont">
-    <div class="title">
-      <h1>How was the Event</h1>
+  <div class="title">
+    <h1>How was the Event</h1>
+  </div>
+  <div class="stars">
+  <form  [formGroup]="feedbackForm"  (ngSubmit)="onSubmit()">
+    <input class="star star-5" id="star-5-2" type="radio" name="star"(click)="selectedStars(5.0)"/>
+    <label class="star star-5" for="star-5-2"></label>
+    <input class="star star-4" id="star-4-2" type="radio" name="star" (click)="selectedStars(4.0)"/>
+    <label class="star star-4" for="star-4-2"></label>
+    <input class="star star-3" id="star-3-2" type="radio" name="star" (click)="selectedStars(3.0)"/>
+    <label class="star star-3" for="star-3-2"></label>
+    <input class="star star-2" id="star-2-2" type="radio" name="star" (click)="selectedStars(2.0)"/>
+    <label class="star star-2" for="star-2-2"></label>
+    <input class="star star-1" id="star-1-2" type="radio" name="star" (click)="selectedStars(1.0)"/>
+    <label class="star star-1" for="star-1-2"></label>
+    <div class="rev-box">
+      <textarea class="review" col="30" name="body" formControlName="body" placeholder="Write Your Commenttt"></textarea>
+      <button class="btn" type="submit" style="background-color: #050794;color: white;margin-top: 10px;">Send Review</button>
     </div>
-    <div class="stars">
-    <form  [formGroup]="feedbackForm"  (ngSubmit)="onSubmit()">
-      <input class="star star-5" id="star-5-2" type="radio" name="star"(click)="selectedStars(5.0)"/>
-      <label class="star star-5" for="star-5-2"></label>
-      <input class="star star-4" id="star-4-2" type="radio" name="star" (click)="selectedStars(4.0)"/>
-      <label class="star star-4" for="star-4-2"></label>
-      <input class="star star-3" id="star-3-2" type="radio" name="star" (click)="selectedStars(3.0)"/>
-      <label class="star star-3" for="star-3-2"></label>
-      <input class="star star-2" id="star-2-2" type="radio" name="star" (click)="selectedStars(2.0)"/>
-      <label class="star star-2" for="star-2-2"></label>
-      <input class="star star-1" id="star-1-2" type="radio" name="star" (click)="selectedStars(1.0)"/>
-      <label class="star star-1" for="star-1-2"></label>
-      <div class="rev-box">
-        <textarea class="review" col="30" name="body" formControlName="body"></textarea>
-        <label class="review" for="review">Breif Review</label>
-        <button class="btn btn-success" type="submit" >Send Review</button>
-      </div>
-    </form>
-    </div>
+  </form>
+  </div>
 </div>
