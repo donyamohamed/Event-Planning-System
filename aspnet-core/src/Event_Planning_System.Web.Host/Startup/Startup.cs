@@ -22,6 +22,8 @@ using Event_Planning_System.Chats;
 using Microsoft.AspNetCore.SignalR;
 using Abp.Domain.Uow;
 using Event_Planning_System.Entities;
+using Microsoft.AspNetCore.RateLimiting;
+using Microsoft.AspNetCore.Http;
 
 namespace Event_Planning_System.Web.Host.Startup
 {
@@ -74,7 +76,18 @@ namespace Event_Planning_System.Web.Host.Startup
                         .AllowCredentials()
                 )
             );
-           
+
+            //testing 
+            services.AddRateLimiter(reteLimiterOption =>
+            {
+                reteLimiterOption.AddFixedWindowLimiter("fixed", option =>
+                {
+                    option.PermitLimit = 1;
+                    option.Window=TimeSpan.FromSeconds(5);
+                    option.QueueLimit = 0;
+                });
+                reteLimiterOption.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+            });
 
             // Swagger - Enable this line and the related lines in Configure method to enable swagger UI
             ConfigureSwagger(services);
@@ -100,14 +113,19 @@ namespace Event_Planning_System.Web.Host.Startup
             app.UseCors(_defaultCorsPolicyName); // Enable CORS!
 
 
+
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            
 
             app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseAbpRequestLocalization();
+
+            app.UseRateLimiter();
 
             app.UseEndpoints(endpoints =>
             {
@@ -132,6 +150,8 @@ namespace Event_Planning_System.Web.Host.Startup
                     .GetManifestResourceStream("Event_Planning_System.Web.Host.wwwroot.swagger.ui.index.html");
                 options.DisplayRequestDuration(); // Controls the display of the request duration (in milliseconds) for "Try it out" requests.
             }); // URL: /swagger
+
+          
         }
 
         private void ConfigureSwagger(IServiceCollection services)
