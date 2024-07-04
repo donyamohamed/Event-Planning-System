@@ -10,6 +10,8 @@ import { Observable } from 'rxjs';
 import { SharedModule } from "../../../shared/shared.module";
 import { Router, RouterLink } from '@angular/router';
 import { GuestService } from '../../../shared/Services/guest.service';
+import { InterestsService } from '../../../shared/Services/interests.service';
+import { Enumerator } from "../../../shared/Models/Event";
 import Swal from 'sweetalert2';
 
 @Component({
@@ -21,11 +23,13 @@ import Swal from 'sweetalert2';
 })
 export class PublicEventsComponent implements OnInit {
   public events: Event[] = [];
+  eventData: Event = new Event();
   public isLoading: boolean = true;
   public isLoggedIn: boolean = false;
   username: string;
   guestEmail: string;
   guestId: number;
+  enumeratorKeys = Object.values(Enumerator);
 
   constructor(
     private PublicEventServ: HomeService,
@@ -39,6 +43,7 @@ export class PublicEventsComponent implements OnInit {
   ngOnInit(): void {
     this.checkIfLoggedIn();
     this.fetchUserEvents();
+    this.setDefaultValues();
 
     // Check if there's a saved event after login
     const savedEvent = sessionStorage.getItem('selectedEvent');
@@ -48,6 +53,8 @@ export class PublicEventsComponent implements OnInit {
       sessionStorage.removeItem('selectedEvent');
     }
   }
+
+
 
   checkIfLoggedIn(): void {
     this.getUserData().subscribe(
@@ -247,4 +254,17 @@ export class PublicEventsComponent implements OnInit {
   getUserData(): Observable<any> {
     return this.http.get<any>('https://localhost:44311/api/services/app/UserProfileAppServices/GetUserProfile');
   }
+
+  setDefaultValues(): void {
+    this.eventData.isPublic = true;
+    if (this.enumeratorKeys.length > 0) {
+        this.eventData.category = this.enumeratorKeys[0];
+    }
+}
+
+selectCategory(category: string): void {
+  this.eventData.category = category;
+  console.log('Selected category:', category);
+}
+
 }

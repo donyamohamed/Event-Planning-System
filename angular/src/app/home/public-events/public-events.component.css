@@ -122,7 +122,7 @@ h2 {
 }
 .header-container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: start; 
     justify-content: space-between; 
   }

@@ -249,7 +249,7 @@ namespace Event_Planning_System.Event
 				var publicEventsFromDb = await _repository.GetAll()
 					.Where(e => e.IsPublic && e.StartDate >= DateTime.Now)
 					.ToListAsync();
-
+                
 				var mappedPublicEvents = _mapper.Map<List<EventDto>>(publicEventsFromDb);
 
 				foreach (var eventDto in mappedPublicEvents)
