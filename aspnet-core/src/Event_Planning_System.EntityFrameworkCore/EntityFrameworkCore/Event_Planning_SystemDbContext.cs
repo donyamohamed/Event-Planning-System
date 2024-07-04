@@ -20,8 +20,8 @@ namespace Event_Planning_System.EntityFrameworkCore
         public DbSet<ChatUserConnection> ChatUserConnections { get; set; }
         public DbSet<Feedback> Feedbacks { get; set; }
 		public DbSet<Interest> interests { get; set; }
-
-		public Event_Planning_SystemDbContext(DbContextOptions<Event_Planning_SystemDbContext> options)
+        public DbSet<FavoriteEvent> FavoriteEvents { get; set; }
+        public Event_Planning_SystemDbContext(DbContextOptions<Event_Planning_SystemDbContext> options)
 			: base(options)
 		{
 		}
@@ -103,6 +103,20 @@ namespace Event_Planning_System.EntityFrameworkCore
             modelBuilder.Entity<Feedback>()
                 .HasIndex(f => new { f.EventId, f.UserId })
                 .IsUnique();
+            modelBuilder.Entity<FavoriteEvent>()
+                .HasKey(fe => fe.Id);
+
+            modelBuilder.Entity<FavoriteEvent>()
+                .HasOne(fe => fe.User)
+                .WithMany(u => u.FavoriteEvents)
+                .HasForeignKey(fe => fe.UserId)
+                .OnDelete(DeleteBehavior.Restrict); // Change to Restrict
+
+            modelBuilder.Entity<FavoriteEvent>()
+                .HasOne(fe => fe.Event)
+                .WithMany(e => e.FavoriteEvents)
+                .HasForeignKey(fe => fe.EventId)
+                .OnDelete(DeleteBehavior.Restrict); // Change to Restrict
         }
 
 

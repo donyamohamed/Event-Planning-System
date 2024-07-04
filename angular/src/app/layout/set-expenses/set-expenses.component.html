@@ -5,24 +5,31 @@
   <div class="right-content">
     <div class="expense-form">
       <div>
+        <label for="expense-name">Expense Name</label>
         <input
+          id="expense-name"
           type="text"
           placeholder="Expense Name"
           [(ngModel)]="newExpense.name"
         />
-        <span *ngIf="showError && !newExpense.name" class="error-message"
-          >Expense name is required</span
-        >
+        <span *ngIf="showError && !newExpense.name" class="error-message">
+          Expense name is required
+        </span>
       </div>
       <div>
+        <label for="expense-amount">Amount</label>
         <input
+          id="expense-amount"
           type="number"
           placeholder="Amount"
           [(ngModel)]="newExpense.amount"
         />
-        <span *ngIf="showError && !newExpense.amount" class="error-message"
-          >Amount is required</span
-        >
+        <span *ngIf="showError && !newExpense.amount" class="error-message">
+          Amount is required
+        </span>
+        <span *ngIf="showError && newExpense.amount < 0" class="error-message">
+          Amount cannot be negative
+        </span>
       </div>
       <button
         class="add-btn"

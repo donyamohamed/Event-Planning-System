@@ -9,6 +9,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from "../../../shared/shared.module";
 import * as Filter from 'bad-words';
+import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js';
+
+
+
 
 @Component({
     selector: 'app-create-event',
@@ -22,6 +26,7 @@ export class CreateEventComponent implements OnInit {
 
     eventData: Event = new Event();
     enumeratorKeys = Object.values(Enumerator);
+    map: mapboxgl.Map;
     username: string;
     today: string = new Date().toISOString().slice(0, 16); // Today's date and time in 'YYYY-MM-DDTHH:MM' format
     filter = new Filter();
@@ -31,6 +36,7 @@ export class CreateEventComponent implements OnInit {
     ngOnInit(): void {
         this.getUserData();
         this.setDefaultValues();
+        this.initializeMap();
     }
 
     getUserData(): void {
@@ -41,6 +47,30 @@ export class CreateEventComponent implements OnInit {
                     this.eventData.userId = response.result.id;
                 }
             });
+    }
+    initializeMap(): void {
+        mapboxgl.accessToken = 'pk.eyJ1IjoibWFiZG9naCIsImEiOiJjbGp1em54c24xaTd4M2NsbDBiOWZuMXk4In0.n4ILS2Jtk5tZ9onHBcL8Cw';
+        this.map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v12',
+            center: [30.8025, 26.8206], // Default center (Egypt)
+            zoom: 5, // Default zoom level
+            attributionControl: false 
+        });
+
+        // Add map click event to update location input
+        this.map.on('click', (e) => {
+            const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${e.lngLat.lng},${e.lngLat.lat}.json?access_token=${mapboxgl.accessToken}`;
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    const placeName = data.features[0]?.place_name || 'Unknown location';
+                    this.eventData.location = placeName;
+                })
+                .catch(err => {
+                    console.error('Error fetching location name:', err);
+                });
+        });
     }
 
     createEvent(): void {

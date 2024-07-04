@@ -75,6 +75,7 @@ namespace Event_Planning_System.Enitities
         public virtual ICollection<ToDoCheckList> ToDoCheckLists { get; set; } = new List<ToDoCheckList>();
         public virtual ICollection<Feedback> Feedbacks { get; set; } = new List<Feedback>();
         public ICollection<GuestEvent> GuestEvents { get; set; }
+        public ICollection<FavoriteEvent> FavoriteEvents { get; set; } = new List<FavoriteEvent>();
 
         public bool IsTransient()
         {

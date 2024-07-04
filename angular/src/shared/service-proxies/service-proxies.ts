@@ -90,6 +90,7 @@ export class AccountServiceProxy {
      */
     register(body: RegisterInput | undefined): Observable<RegisterOutput> {
         let url_ = this.baseUrl + "/api/services/app/Account/Register";
+        
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -118,33 +119,74 @@ export class AccountServiceProxy {
         }));
     }
 
+
+
+
+
+
+
+
+
     registerFromForm(formData: FormData): Observable<RegisterOutput> {
-        let url_ = this.baseUrl + "/api/services/app/Account/Register";
-        url_ = url_.replace(/[?&]$/, "");
        
-        let options_: any = {
-          body: formData,
-          observe: "response",
-          headers: new HttpHeaders({
-            // 'Content-Type': 'multipart/form-data',
-            "Accept": "application/json"
-          })
-        };
+        const url = this.baseUrl + "/api/services/app/Account/Register";
+        const headers = new HttpHeaders({
+          // 'Content-Type': 'multipart/form-data', // Do not set this header explicitly
+          'Accept': 'application/json'
+        });
+    
+        return this.http.post<RegisterOutput>(url, formData, { headers }).pipe(
+          _observableCatch(this.handleError)
+        );
+      }
+    
+      private handleError(error: HttpResponseBase) {
+        if (error instanceof HttpResponseBase) {
+          // Server-side error
+          const errorMessage = `Error: ${error.status}, ${error.statusText}`;
+          return _observableThrow(errorMessage);
+        } else {
+          // Client-side error
+          return _observableThrow(error || 'Something went wrong');
+        }
+      }
+    
+    
+    
+
+
+
+
+
+
+
+    // registerFromForm(formData: FormData): Observable<RegisterOutput> {
+    //     let url_ = this.baseUrl + "/api/services/app/Account/Register";
+    //     url_ = url_.replace(/[?&]$/, "");
+       
+    //     let options_: any = {
+    //       body: formData,
+    //       observe: "response",
+    //       headers: new HttpHeaders({
+    //         // 'Content-Type': 'multipart/form-data',
+    //         "Accept": "application/json"
+    //       })
+    //     };
         
     
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processRegister(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processRegister(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<RegisterOutput>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<RegisterOutput>;
-        }));
-      }
+    //     return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+    //         return this.processRegister(response_);
+    //     })).pipe(_observableCatch((response_: any) => {
+    //         if (response_ instanceof HttpResponseBase) {
+    //             try {
+    //                 return this.processRegister(response_ as any);
+    //             } catch (e) {
+    //                 return _observableThrow(e) as any as Observable<RegisterOutput>;
+    //             }
+    //         } else
+    //             return _observableThrow(response_) as any as Observable<RegisterOutput>;
+    //     }));
+    //   }
     
       
     protected processRegister(response: HttpResponseBase): Observable<RegisterOutput> {
@@ -3590,6 +3632,7 @@ function throwException(message: string, status: number, response: string, heade
 }
 
 function blobToText(blob: any): Observable<string> {
+console.log("hi bloob",blob);
     return new Observable<string>((observer: any) => {
         if (!blob) {
             observer.next("");
