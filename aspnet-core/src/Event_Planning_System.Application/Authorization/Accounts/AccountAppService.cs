@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Abp.Authorization;
 using Abp.Configuration;
+using Abp.UI;
 using Abp.Zero.Configuration;
 using Event_Planning_System.Authorization.Accounts.Dto;
 using Event_Planning_System.Authorization.Users;
@@ -43,55 +44,51 @@ namespace Event_Planning_System.Authorization.Accounts
         {
             string emailPattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
 
-           
             if (string.IsNullOrWhiteSpace(emailAddress) || emailAddress == "undefined")
             {
-               return new  BadRequestObjectResult($"This emil can not be null or undefined");
+                return new BadRequestObjectResult("Email cannot be null or undefined");
             }
-            var user = await _userManager.FindByNameOrEmailAsync(emailAddress);
-            
-            if(! Regex.IsMatch(emailAddress , emailPattern) )
+            if (!Regex.IsMatch(emailAddress, emailPattern))
             {
-                return new BadRequestObjectResult($"Invalid Email Formate");
+                return new BadRequestObjectResult("Invalid Email Format");
             }
 
+            var user = await _userManager.FindByNameOrEmailAsync(emailAddress);
             if (user == null)
-               return new BadRequestObjectResult($"This user can not be found");
-            else
+            {
+                return new BadRequestObjectResult("User not found");
+            }
             if (user.IsDeleted || !user.IsActive)
+            {
                 return new BadRequestObjectResult("The user is either deleted or inactive");
+            }
 
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
             var encodedToken = Uri.EscapeDataString(token);
 
             var callbackUrl = $"http://localhost:4200/account/newPassword?token={encodedToken}&email={user.EmailAddress}";
-            var emailBodyTemplate = $"Please reset your password by clicking here: <a href='{callbackUrl}'>here</a>";
+            var emailBodyTemplate = $"Please reset your password by clicking <a href='{callbackUrl}'>here</a>";
 
             await _emailService.SendEmailAsync(emailAddress, "Reset Password", emailBodyTemplate);
 
-            return new OkObjectResult($"The Email sended successfully");
+            return new OkObjectResult("The email was sent successfully");
         }
-
 
         [AbpAllowAnonymous]
         public async Task<IdentityResult> ResetPassword(string token, string email, ResetPasswordDto model)
         {
-
             var user = await _userManager.FindByNameOrEmailAsync(email);
-
             if (user == null)
             {
                 return IdentityResult.Failed(new IdentityError
                 {
-                    Code="Unvalid user",
-                    Description="This is no current user "
+                    Code = "InvalidUser",
+                    Description = "No user found with the provided email"
                 });
             }
-                
 
-            var PasswordPattern = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$";
-
-            if(!Regex.IsMatch( model.NewPassword , PasswordPattern))
+            var passwordPattern = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$";
+            if (!Regex.IsMatch(model.NewPassword, passwordPattern))
             {
                 return IdentityResult.Failed(new IdentityError
                 {
@@ -104,16 +101,13 @@ namespace Event_Planning_System.Authorization.Accounts
             {
                 return IdentityResult.Failed(new IdentityError
                 {
-                    Code = "NoyMathed",
-                    Description = "Password does not matched with confirm password"
+                    Code = "PasswordsDoNotMatch",
+                    Description = "New password and confirm password do not match"
                 });
             }
-               
-
 
             return await _userManager.ResetPasswordAsync(user, token, model.NewPassword);
         }
-
 
         public async Task<IsTenantAvailableOutput> IsTenantAvailable(IsTenantAvailableInput input)
         {
@@ -138,8 +132,6 @@ namespace Event_Planning_System.Authorization.Accounts
 
             try
             {
-             
-
                 if (input.ImageFile != null && input.ImageFile.Length > 0)
                 {
                     // Upload image to Cloudinary
@@ -151,12 +143,10 @@ namespace Event_Planning_System.Authorization.Accounts
                         string fileName = Guid.NewGuid().ToString() + "_" + input.ImageFile.FileName;
 
                         var uploadResult = await _cloudinaryService.UploadImageAsync(memoryStream, fileName);
-
                         if (uploadResult.StatusCode == System.Net.HttpStatusCode.OK)
                         {
                             imagePath = uploadResult.SecureUrl.ToString(); // Cloudinary URL of uploaded image
                         }
-
                         else
                         {
                             throw new Exception($"Failed to upload image to Cloudinary: {uploadResult.Error.Message}");
@@ -164,20 +154,18 @@ namespace Event_Planning_System.Authorization.Accounts
                     }
                 }
 
-                var PasswordPattern = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$";
+                var passwordPattern = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$";
                 string emailPattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
-
 
                 if (!Regex.IsMatch(input.EmailAddress, emailPattern))
                 {
-                    throw new Exception("Invalid Email Format");
+                    throw new UserFriendlyException("Invalid Email Format");
                 }
 
-                if (!Regex.IsMatch(input.Password, PasswordPattern))
+                if (!Regex.IsMatch(input.Password, passwordPattern))
                 {
-                    throw new Exception("Password must be at least 8 characters long, contain at least one lowercase letter, one uppercase letter, one number, and one special character.");
+                    throw new UserFriendlyException("Password must be at least 8 characters long, contain at least one lowercase letter, one uppercase letter, one number, and one special character.");
                 }
-
 
                 var user = await _userRegistrationManager.RegisterAsync(
                     input.Name,
@@ -202,31 +190,22 @@ namespace Event_Planning_System.Authorization.Accounts
 
                 return output;
             }
+            catch (UserFriendlyException ex)
+            {
+                throw new UserFriendlyException(ex.Message);
+            }
             catch (Exception ex)
             {
-                throw ex;
+                throw new UserFriendlyException("An unexpected error occurred during registration. Please try again.");
             }
         }
-    
 
-    //public Task<RegisterOutput> Register(RegisterInput input)
-    //{
-    //    throw new NotImplementedException();
-    //}
-
-    private async Task SendRegistrationConfirmationEmail(User user)
+        private async Task SendRegistrationConfirmationEmail(User user)
         {
             var activationLink = $"http://localhost:4200/account/activate/{user.Id}";
             var emailBodyTemplate = $"Thank you for registering! Click <a href='{activationLink}'>here</a> to activate your account.";
 
             await _emailService.SendEmailAsync(user.EmailAddress, "Registration Confirmation", emailBodyTemplate);
         }
-
-
-      
-
-      
-
     }
 }
-

@@ -1873,6 +1873,29 @@ namespace Event_Planning_System.Migrations
                     b.ToTable("ChatUserConnections");
                 });
 
+            modelBuilder.Entity("Event_Planning_System.Entities.FavoriteEvent", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("EventId")
+                        .HasColumnType("int");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EventId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("FavoriteEvents");
+                });
+
             modelBuilder.Entity("Event_Planning_System.Entities.Feedback", b =>
                 {
                     b.Property<int>("Id")
@@ -2326,6 +2349,25 @@ namespace Event_Planning_System.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Event_Planning_System.Entities.FavoriteEvent", b =>
+                {
+                    b.HasOne("Event_Planning_System.Enitities.Event", "Event")
+                        .WithMany("FavoriteEvents")
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Event_Planning_System.Authorization.Users.User", "User")
+                        .WithMany("FavoriteEvents")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Event");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Event_Planning_System.Entities.Feedback", b =>
                 {
                     b.HasOne("Event_Planning_System.Enitities.Event", "Event")
@@ -2485,6 +2527,8 @@ namespace Event_Planning_System.Migrations
 
                     b.Navigation("Events");
 
+                    b.Navigation("FavoriteEvents");
+
                     b.Navigation("Feedbacks");
 
                     b.Navigation("Logins");
@@ -2505,6 +2549,8 @@ namespace Event_Planning_System.Migrations
             modelBuilder.Entity("Event_Planning_System.Enitities.Event", b =>
                 {
                     b.Navigation("Budgets");
+
+                    b.Navigation("FavoriteEvents");
 
                     b.Navigation("Feedbacks");
 
