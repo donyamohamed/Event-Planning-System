@@ -5,8 +5,7 @@ import { LayoutStoreService } from '@shared/layout/layout-store.service';
 import {LocalStorageServiceService} from './../shared/Services/local-storage-service.service';
 
 @Component({
-  templateUrl: './app.component.html',
-  styleUrls: ["./app.component.css"],
+  templateUrl: './app.component.html'
 })
 export class AppComponent extends AppComponentBase implements OnInit {
   sidebarExpanded: boolean;
@@ -24,6 +23,7 @@ export class AppComponent extends AppComponentBase implements OnInit {
   }
 
   ngOnInit(): void {
+   
     this.currentLanguage = this.localStorageService.getCurrentLanguage();
     console.log("Current Language from AppComponent:", this.currentLanguage);
     this.renderer.addClass(document.body, 'sidebar-mini');
@@ -50,6 +50,8 @@ export class AppComponent extends AppComponentBase implements OnInit {
     });
    
   }
+  
+
   
   toggleSidebar(): void {
     this._layoutStore.setSidebarExpanded(!this.sidebarExpanded);

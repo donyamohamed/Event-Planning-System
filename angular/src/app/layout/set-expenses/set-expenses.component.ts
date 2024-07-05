@@ -1,18 +1,16 @@
 import { Component } from '@angular/core';
-import { Expenses } from '../../../shared/Models/expenses';
 import { ExpensesService } from '../../../shared/Services/expenses.service';
-import {AppSessionService} from '@shared/session/app-session.service'
-
+import { AppSessionService } from '@shared/session/app-session.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-set-expenses',
-  standalone:true,
-  imports:[FormsModule,CommonModule],
+  standalone: true,
+  imports: [FormsModule, CommonModule],
   templateUrl: './set-expenses.component.html',
-  styleUrl: './set-expenses.component.css'
+  styleUrls: ['./set-expenses.component.css']
 })
 export class SetExpensesComponent {
   newExpense: any = {};
@@ -22,11 +20,15 @@ export class SetExpensesComponent {
   eventId: number;
   userID: number;
   showError: boolean = false;
-  constructor(private route:ActivatedRoute,private budgetExpenseService: ExpensesService,private appSessionService:AppSessionService) {}
+
+  constructor(
+    private route: ActivatedRoute,
+    private budgetExpenseService: ExpensesService,
+    private appSessionService: AppSessionService
+  ) {}
 
   ngOnInit(): void {
-  
-   this.userID=this.appSessionService.userId;
+    this.userID = this.appSessionService.userId;
     this.route.queryParams.subscribe(params => {
       this.eventId = +params['eventId'];
       if (this.eventId) {
@@ -50,7 +52,7 @@ export class SetExpensesComponent {
   checkAndAddExpense(): void {
     this.showError = true;
 
-    if (!this.newExpense.name || !this.newExpense.amount) {
+    if (!this.newExpense.name || !this.newExpense.amount || this.newExpense.amount < 0) {
       return;
     }
 
@@ -68,10 +70,8 @@ export class SetExpensesComponent {
       (response: any) => {
         console.log('Budget expense added successfully:', response);
 
-        // Ensure response is as expected
         if (response && response.result) {
-         
-console.log(this.expenses)
+          console.log(this.expenses);
           this.expenses.push(response.result);
         } else {
           console.error('Unexpected response format:', response);
@@ -93,21 +93,22 @@ console.log(this.expenses)
 
   confirmUpdate(): void {
     if (this.selectedExpenseId !== null) {
+      if (this.newExpense.amount < 0) {
+        this.showError = true;
+        return;
+      }
+
       this.budgetExpenseService.updateBudgetExpense(this.newExpense).subscribe(
         (response: any) => {
           console.log('Budget expense updated successfully:', response);
-  
-          // Find the index of the updated expense in the expenses array
+
           const index = this.expenses.findIndex(expense => expense.id === this.selectedExpenseId);
-  
-          // Replace the existing expense with the updated one
+
           if (index !== -1) {
             this.expenses[index] = this.newExpense;
           }
-  
-          // Reset form and selected expense
+
           this.resetForm();
-       
         },
         (error) => {
           console.error('Error updating budget expense:', error);
@@ -115,7 +116,6 @@ console.log(this.expenses)
       );
     }
   }
-  
 
   deleteExpense(id: number): void {
     this.budgetExpenseService.deleteExpense(id).subscribe(
