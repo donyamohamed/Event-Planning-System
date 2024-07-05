@@ -92,12 +92,20 @@
                         </div>
                         <div class="form-group">
                             <label>{{ "Event Description" | localize }}</label>
-                            <textarea [(ngModel)]="eventData.description" name="description" class="form-control" placeholder="{{ 'Event Description' | localize }}" required pattern="^[a-zA-Z0-9 ,_\-@#]+$"></textarea>
+                            <textarea 
+                              [(ngModel)]="eventData.description" 
+                              name="description" 
+                              class="form-control" 
+                              placeholder="{{ 'Event Description' | localize }}" 
+                              required 
+                              pattern="^[a-zA-Z0-9 ,_\-@#'!.]+$">
+                            </textarea>
                             <div *ngIf="eventForm.controls['description'].invalid && (eventForm.controls['description'].dirty || eventForm.controls['description'].touched)" class="error-message">
-                                <div *ngIf="eventForm.controls['description'].errors.required">{{ "Description is required" | localize }}</div>
-                                <div *ngIf="eventForm.controls['description'].errors.pattern">{{ "Description must contain only letters, numbers, spaces, and the following special characters: , _ - @ #" | localize }}</div>
+                              <div *ngIf="eventForm.controls['description'].errors.required">{{ "Description is required" | localize }}</div>
+                              <div *ngIf="eventForm.controls['description'].errors.pattern">{{ "Description must contain only letters, numbers, spaces, and the following special characters: , _ - @ # ' ! ." | localize }}</div>
                             </div>
-                        </div>
+                          </div>
+                          
                         
                         <button type="submit" [disabled]="!eventForm.form.valid" class="submit-button">{{ "Create" | localize }}</button>
                     </div>
