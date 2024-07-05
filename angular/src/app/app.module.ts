@@ -50,6 +50,9 @@ import { NotificatiosComponent } from "./layout/notifications/notificatios.compo
 
 import { PublicEventsComponent } from "./home/public-events/public-events.component";
 import { ChatIconComponent } from "./chat-icon/chat-icon.component";
+import { GuestsFeedbackComponent} from './guests-feedback/guests-feedback.component'
+
+
 
 
 
@@ -91,6 +94,7 @@ import { ChatIconComponent } from "./chat-icon/chat-icon.component";
         SidebarLogoComponent,
         SidebarUserPanelComponent,
         SidebarMenuComponent,
+        GuestsFeedbackComponent
         
     ],
     bootstrap: [AppComponent],

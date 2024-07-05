@@ -37,8 +37,9 @@ namespace Event_Planning_System.Enitities
 		public virtual ICollection<Event> Events { get; set; } = new List<Event>();
 		public virtual ICollection<User> Users { get; set; } = new List<User>();
         public ICollection<GuestEvent> GuestEvents { get; set; }
+		public virtual ICollection<GuestsFeedback> GuestsFeedback { get; set; } = new List<GuestsFeedback>();
 
-        public bool IsTransient()
+		public bool IsTransient()
         {
             throw new NotImplementedException();
         }

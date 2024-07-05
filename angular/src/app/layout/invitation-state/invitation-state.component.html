@@ -1,26 +1,30 @@
-<div *ngIf="notifications && notifications.length > 0">
-  <h2>
-    <img src="../../../assets/img/invitation (1).png" alt="icon" />
-    Invitation I Asked
-  </h2>
-  <div *ngFor="let notification of notifications" [ngClass]="{'past-event': isPastEvent(notification.startDate)}" class="notification-item">
-    <div class="notification-content">
-      <div class="notification-date">
-        <span class="date-month">{{ formatDate(notification.startDate, 'month') }}</span>
-        <span class="date-day">{{ formatDate(notification.startDate, 'day') }}</span>
+<div class="wrapper">
+  <div *ngIf="notifications && notifications.length > 0">
+    <h2>
+      <img src="../../../assets/img/invitation (1).png" alt="icon" />
+      Invitation I Asked
+    </h2>
+    <div *ngFor="let notification of notifications" [ngClass]="{'past-event': isPastEvent(notification.startDate)}" class="notification-item">
+      <div class="notification-content">
+        <div class="notification-date">
+          <span class="date-month">{{ formatDate(notification.startDate, 'month') }}</span>
+          <span class="date-day">{{ formatDate(notification.startDate, 'day') }}</span>
+        </div>
+        <div class="notification-text">Invitation Request For: {{ notification.eventName }}</div>
       </div>
-      <div class="notification-text">Invitation Request For: {{ notification.eventName }}</div>
+      <div class="notification-status">
+        Status: {{ getStatusString(notification.status) }}
+      </div>
+      <hr>
     </div>
-    <div class="notification-status">
-      Status: {{ getStatusString(notification.status) }}
-    </div>
-    <hr>
   </div>
-</div>
-<div *ngIf="notifications && notifications.length === 0" class="Noinvitation">
-  <img src="../../../assets/img/Questions.gif" alt=""/>
-  <h4>You are not asking to come to any event</h4>
-</div>
-<div *ngIf="!notifications" class="loading">
-     <img src="../../../assets/img/Spin@1x-1.0s-200px-200px.gif" alt=""/>
+  <div *ngIf="notifications && notifications.length === 0" class="Noinvitation">
+    <img src="../../../assets/img/Questions.gif" alt=""/>
+    <h4>You are not asking to come to any event</h4>
+  </div>
+  <div *ngIf="!notifications" class="loading">
+       <img src="../../../assets/img/Spin@1x-1.0s-200px-200px.gif" alt=""/>
+  </div>
+  
+
 </div>

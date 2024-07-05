@@ -1,0 +1,124 @@
+body {
+  background: white;
+  font-family: Arial, sans-serif;
+}
+
+.cont {
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  margin: auto;
+  padding: 20px;
+  color: #333;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background: #f9f9f9;
+}
+
+.title {
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+
+h1 {
+  color: #050794;
+  margin: 0;
+}
+
+.stars {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+input.star {
+  display: none;
+}
+
+label.star {
+  font-size: 30px;
+  color: #ccc;
+  cursor: pointer;
+  transition: transform 0.2s, color 0.25s;
+  display: inline-block;
+  text-align: center;
+  width: 40px;
+}
+
+input.star:checked ~ label.star {
+  color: #FD4;
+}
+
+input.star:checked ~ label.star ~ label.star {
+  color: #ccc;
+}
+
+input.star:checked + label.star {
+  color: #FE7;
+  text-shadow: 0 0 20px #952;
+}
+
+input.star-1:checked ~ label.star {
+  color: #F62;
+}
+
+label.star:hover,
+label.star:hover ~ label.star {
+  transform: scale(1.2);
+}
+
+label.star:before {
+  content: '\f005';
+  font-family: FontAwesome;
+}
+
+.rev-box {
+  display: none;
+  transition: height 0.25s;
+}
+
+input.star:checked ~ .rev-box {
+  display: block;
+  height: auto;
+  overflow: visible;
+  margin-top: 10px;
+}
+
+textarea.review {
+  width: 100%;
+  height: 100px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  resize: none;
+}
+
+button.btn {
+  background-color: #050794;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button.btn:hover {
+  background-color: #333;
+}
+
+@media (max-width: 768px) {
+  .cont {
+    padding: 15px;
+  }
+
+  label.star {
+    font-size: 24px;
+  }
+
+  .title {
+    font-size: 1.5em;
+  }
+}
