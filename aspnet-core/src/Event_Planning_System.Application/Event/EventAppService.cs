@@ -74,70 +74,70 @@ namespace Event_Planning_System.Event
 			}
 		}
 
-		public async Task<IEnumerable<EventDto>> GetEventsByIds(IEnumerable<int> eventIds)
-		{
-			if (eventIds == null || !eventIds.Any())
-			{
-				return new List<EventDto>();
-			}
+        public async Task<IEnumerable<EventDto>> GetEventsByIds(IEnumerable<int> eventIds)
+        {
+            if (eventIds == null || !eventIds.Any())
+            {
+                return new List<EventDto>();
+            }
 
-			var events = await _repository.GetAll()
-										  .Where(e => eventIds.Contains(e.Id))
-										  .ToListAsync();
+            var events = await _repository.GetAll()
+                                          .Where(e => eventIds.Contains(e.Id))
+                                          .ToListAsync();
 
-			return _mapper.Map<List<EventDto>>(events);
-		}
-		public async Task<List<EventDto>> GetUserEventsAsync(long userId)
-		{
-			var events = await _repository.GetAllListAsync(e => e.UserId == userId);
-			return _mapper.Map<List<EventDto>>(events);
-		}
+            return _mapper.Map<List<EventDto>>(events);
+        }
+        public async Task<List<EventDto>> GetUserEventsAsync(long userId)
+        {
+            var events = await _repository.GetAllListAsync(e => e.UserId == userId);
+            return _mapper.Map<List<EventDto>>(events);
+        }
 
-		public async Task<List<EventDto>> GetUpcomingEventsForCurrentUserAsync(long userId)
-		{
-			var today = DateTime.Today;
-			var upcomingEvents = await _repository.GetAllListAsync(e => e.UserId == userId && e.StartDate >= today);
-			return _mapper.Map<List<EventDto>>(upcomingEvents);
-		}
-
-
-		public async Task<List<EventDto>> GetReminderOfUpcomming()
-		{
-			var userId = AbpSession.UserId.Value;
-			var today = DateTime.Today;
-			var upcomingEvents = await _repository.GetAllListAsync(e => e.UserId == userId && e.StartDate <= today.AddDays(5) && e.StartDate > today);
-
-			return _mapper.Map<List<EventDto>>(upcomingEvents);
-		}
-		public async Task<int> GetReminderCount()
-		{
-			var userId = AbpSession.UserId.Value;
-			var notifications = await GetReminderOfUpcomming();
-			var NewNotification = notifications.Where(n => n.isRead == false).Count();
-			return NewNotification;
-		}
-		public async Task UpdateReminderStatus(UpdateEventStatusDto input)
-		{
-
-			var reminderEntity = await _repository.GetAsync(input.Id);
-			reminderEntity.isRead = true;
-			await _repository.UpdateAsync(reminderEntity);
-			await CurrentUnitOfWork.SaveChangesAsync();
+        public async Task<List<EventDto>> GetUpcomingEventsForCurrentUserAsync(long userId)
+        {
+            var today = DateTime.Today;
+            var upcomingEvents = await _repository.GetAllListAsync(e => e.UserId == userId && e.StartDate >= today);
+            return _mapper.Map<List<EventDto>>(upcomingEvents);
+        }
 
 
-		}
+        public async Task<List<EventDto>> GetReminderOfUpcomming()
+        {
+            var userId = AbpSession.UserId.Value;
+            var today = DateTime.Today;
+            var upcomingEvents = await _repository.GetAllListAsync(e => e.UserId == userId && e.StartDate <= today.AddDays(5) && e.StartDate > today);
 
-		//public async Task UpdateReminderStatus([FromBody] UpdateEventStatusDto input)
-		//{
-		//          var old =await  GetReminderOfUpcomming();
-		//          var res=  old.FirstOrDefault(r=>r.Id==input.Id);
-		//	if (res == null)
-		//	{
-		//		throw new Abp.UI.UserFriendlyException("Reminder not found");
-		//	}
-		//          res.isRead = true;
-		//          await CurrentUnitOfWork.SaveChangesAsync();
-		//}
+            return _mapper.Map<List<EventDto>>(upcomingEvents);
+        }
+        public async Task<int> GetReminderCount()
+        {
+            var userId = AbpSession.UserId.Value;
+            var notifications = await GetReminderOfUpcomming();
+            var NewNotification = notifications.Where(n => n.isRead == false).Count();
+            return NewNotification;
+        }
+        public async Task UpdateReminderStatus(UpdateEventStatusDto input)
+        {
+
+            var reminderEntity = await _repository.GetAsync(input.Id);
+            reminderEntity.isRead = true;
+            await _repository.UpdateAsync(reminderEntity);
+            await CurrentUnitOfWork.SaveChangesAsync();
+
+
+        }
+
+        //public async Task UpdateReminderStatus([FromBody] UpdateEventStatusDto input)
+        //{
+        //          var old =await  GetReminderOfUpcomming();
+        //          var res=  old.FirstOrDefault(r=>r.Id==input.Id);
+        //	if (res == null)
+        //	{
+        //		throw new Abp.UI.UserFriendlyException("Reminder not found");
+        //	}
+        //          res.isRead = true;
+        //          await CurrentUnitOfWork.SaveChangesAsync();
+        //}
 
 		public async Task<List<EventDto>> GetHistoryEventAsync(long userId)
 		{
@@ -248,24 +248,24 @@ namespace Event_Planning_System.Event
 			else
 			{
 
-				var publicEventsFromDb = await _repository.GetAll()
-					.Where(e => e.IsPublic && e.StartDate >= DateTime.Now)
-					.ToListAsync();
-                
-				var mappedPublicEvents = _mapper.Map<List<EventDto>>(publicEventsFromDb);
+                var publicEventsFromDb = await _repository.GetAll()
+                    .Where(e => e.IsPublic && e.StartDate >= DateTime.Now)
+                    .ToListAsync();
 
-				foreach (var eventDto in mappedPublicEvents)
-				{
-					if (publicEvents.Add(eventDto))
-					{
-						orderedPublicEvents.Add(eventDto);
-					}
-				}
-			}
+                var mappedPublicEvents = _mapper.Map<List<EventDto>>(publicEventsFromDb);
 
-			// Return the ordered list of events with interest-based events first
-			return orderedPublicEvents;
-		}
+                foreach (var eventDto in mappedPublicEvents)
+                {
+                    if (publicEvents.Add(eventDto))
+                    {
+                        orderedPublicEvents.Add(eventDto);
+                    }
+                }
+            }
+
+            // Return the ordered list of events with interest-based events first
+            return orderedPublicEvents;
+        }
 
 		public async Task DeleteEventWithDetailsAsync(int eventId)
 		{
@@ -332,6 +332,46 @@ namespace Event_Planning_System.Event
 			var eventDto = _mapper.Map<EventDto>(eventEntity);
 			return eventDto;
 		}
+
+
+
+        public async Task<List<EventDto>> GetPublicEventsByCategory(EventCategory _category)
+        {
+            var publicEvents = new HashSet<EventDto>();
+            var targetPublicEvents = new List<EventDto>();
+            var userId = AbpSession.UserId;
+            List<Enitities.Event> publicEventsFromDb;
+            if (userId.HasValue && userId > 0)
+            {
+                 publicEventsFromDb = await _repository.GetAll()
+                .Where(e => e.IsPublic && e.UserId != userId && e.StartDate >= DateTime.Now && e.Category == _category)
+                .ToListAsync();       
+            }
+            else
+            {
+
+                 publicEventsFromDb = await _repository.GetAll()
+                    .Where(e => e.IsPublic && e.StartDate >= DateTime.Now && e.Category == _category)
+                    .ToListAsync();
+
+            }
+
+            var mappedPublicEvents = _mapper.Map<List<EventDto>>(publicEventsFromDb);
+
+            foreach (var eventDto in mappedPublicEvents)
+            {
+                if (publicEvents.Add(eventDto))
+                {
+                    targetPublicEvents.Add(eventDto);
+                }
+            }
+            return targetPublicEvents;
+
+        }
+
+
+
+
 
 		public async Task<Enitities.Event> Execute(int eventId)
 		{
