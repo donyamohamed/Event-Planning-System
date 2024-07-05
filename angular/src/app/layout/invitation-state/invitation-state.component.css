@@ -1,12 +1,16 @@
+.wrapper{
+  min-height: 80vh;
+}
+
 .notification-item.past-event {
-    background-color: gray;
+    background-color: #f7f7f7;
   }
   .notification-item {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    max-width: 1200px;
+    max-width: 95%;
     margin: 20px auto;
     padding: 20px;
     background-color: #fff;

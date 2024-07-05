@@ -5,7 +5,11 @@
 body {
   background-color: white !important;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  padding-bottom: 150px;
+
+}
+
+div#page-content {
+  height: 100vh;
 }
 /* .flex-container{
   display: flex;;
@@ -214,11 +218,16 @@ display: none;
 }
 
 @media only screen and (max-width: 767px) {
+  .padding {
+    text-align: center;
+    width: 90%;
+    margin: 10px auto;
+}
   .user-card-full {
  
     position: static;
    
-    width: 80%;
+    width: 95%;
     margin:25px auto;
     /* height: 70vh; */
     background-color: white;
@@ -226,7 +235,15 @@ display: none;
   }
   .right-content {
     margin-left: 0px;
-    width: 80%;
+    width: 97%;
     margin:25px auto;
   }
+  .no-gutters {
+    display: flex;
+    justify-content:center;
+    width: 95%;
+}
+.card-body {
+  text-align:left;
+}
 }

@@ -4,7 +4,9 @@ body {
   margin: 0;
   padding: 20px;
 }
-
+.wrapper{
+  min-height: 80vh;
+}
 .events .card-container {
   max-width: 90%;
   margin: auto;
@@ -59,7 +61,10 @@ h2 {
   text-align: center;
   padding: 5px;
 }
-
+.header-container{
+  width: 90%;
+  margin: 20px auto;
+}
 .date .day {
   color: black;
   font-size: 1.2em;
