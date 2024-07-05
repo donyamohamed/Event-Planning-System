@@ -28,118 +28,118 @@ using Event_Planning_System.Feedback;
 
 namespace Event_Planning_System.Event
 {
-	public class EventAppService : AsyncCrudAppService<Enitities.Event, EventDto, int, PagedAndSortedResultRequestDto, CreateEventDto, EventDto>, IEventAppService
-	{
-		private readonly IRepository<Enitities.Event, int> _repository;
-		private readonly IRepository<Enitities.Guest, int> _guestRepository;
-		private readonly IRepository<Enitities.BudgetExpense, int> _budgetExpenseRepository;
-		private readonly IRepository<Enitities.ToDoCheckList, int> _toDoCheckListRepository;
-		private readonly IRepository<Enitities.notification, int> _notificationRepository;
+    public class EventAppService : AsyncCrudAppService<Enitities.Event, EventDto, int, PagedAndSortedResultRequestDto, CreateEventDto, EventDto>, IEventAppService
+    {
+        private readonly IRepository<Enitities.Event, int> _repository;
+        private readonly IRepository<Enitities.Guest, int> _guestRepository;
+        private readonly IRepository<Enitities.BudgetExpense, int> _budgetExpenseRepository;
+        private readonly IRepository<Enitities.ToDoCheckList, int> _toDoCheckListRepository;
+        private readonly IRepository<Enitities.notification, int> _notificationRepository;
         private readonly ICloudinaryService _cloudinaryService;
         private readonly IMapper _mapper;
-		private readonly IEmailService _emailService;
-		private readonly string _imageFolderPath;
+        private readonly IEmailService _emailService;
+        private readonly string _imageFolderPath;
         private readonly ILogger<EventAppService> _logger;
 
         private readonly IRepository<Interest, int> _interestRepository;
         private readonly IRepository<Entities.Feedback, int> _feedbackRepository;
         private readonly IFeedbackAppService _feedbackService;
 
-		public EventAppService(IRepository<Enitities.Event, int> repository, IRepository<Enitities.Guest, int> guestRepository, IRepository<Interest, int> interestRepository,
+        public EventAppService(IRepository<Enitities.Event, int> repository, IRepository<Enitities.Guest, int> guestRepository, IRepository<Interest, int> interestRepository,
             IRepository<Enitities.BudgetExpense, int> budgetExpenseRepository,
-			IRepository<Enitities.ToDoCheckList, int> toDoCheckListRepository, IRepository<Enitities.notification,int> notificationRepository, IMapper mapper, IEmailService emailService, ICloudinaryService cloudinaryService, ILogger<EventAppService> logger,
-            IRepository<Entities.Feedback, int> feedbackRepository,IFeedbackAppService feedbackService) : base(repository)
-		{
-			_repository = repository;
-			_cloudinaryService = cloudinaryService;
-			_interestRepository = interestRepository;
-			_guestRepository = guestRepository;
-			_budgetExpenseRepository = budgetExpenseRepository;
-			_toDoCheckListRepository = toDoCheckListRepository;
+            IRepository<Enitities.ToDoCheckList, int> toDoCheckListRepository, IRepository<Enitities.notification, int> notificationRepository, IMapper mapper, IEmailService emailService, ICloudinaryService cloudinaryService, ILogger<EventAppService> logger,
+            IRepository<Entities.Feedback, int> feedbackRepository, IFeedbackAppService feedbackService) : base(repository)
+        {
+            _repository = repository;
+            _cloudinaryService = cloudinaryService;
+            _interestRepository = interestRepository;
+            _guestRepository = guestRepository;
+            _budgetExpenseRepository = budgetExpenseRepository;
+            _toDoCheckListRepository = toDoCheckListRepository;
             _notificationRepository = notificationRepository;
-            _logger =logger;
-			_mapper = mapper;
-			_emailService = emailService;
-			_imageFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images");
-            _feedbackRepository=feedbackRepository;
-            _feedbackService=feedbackService;
-			if (!Directory.Exists(_imageFolderPath))
-			{
-				Directory.CreateDirectory(_imageFolderPath);
-			}
-		}
+            _logger = logger;
+            _mapper = mapper;
+            _emailService = emailService;
+            _imageFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images");
+            _feedbackRepository = feedbackRepository;
+            _feedbackService = feedbackService;
+            if (!Directory.Exists(_imageFolderPath))
+            {
+                Directory.CreateDirectory(_imageFolderPath);
+            }
+        }
 
-		public async Task<IEnumerable<EventDto>> GetEventsByIds(IEnumerable<int> eventIds)
-		{
-			if (eventIds == null || !eventIds.Any())
-			{
-				return new List<EventDto>();
-			}
+        public async Task<IEnumerable<EventDto>> GetEventsByIds(IEnumerable<int> eventIds)
+        {
+            if (eventIds == null || !eventIds.Any())
+            {
+                return new List<EventDto>();
+            }
 
-			var events = await _repository.GetAll()
-										  .Where(e => eventIds.Contains(e.Id))
-										  .ToListAsync();
+            var events = await _repository.GetAll()
+                                          .Where(e => eventIds.Contains(e.Id))
+                                          .ToListAsync();
 
-			return _mapper.Map<List<EventDto>>(events);
-		}
-		public async Task<List<EventDto>> GetUserEventsAsync(long userId)
-		{
-			var events = await _repository.GetAllListAsync(e => e.UserId == userId);
-			return _mapper.Map<List<EventDto>>(events);
-		}
+            return _mapper.Map<List<EventDto>>(events);
+        }
+        public async Task<List<EventDto>> GetUserEventsAsync(long userId)
+        {
+            var events = await _repository.GetAllListAsync(e => e.UserId == userId);
+            return _mapper.Map<List<EventDto>>(events);
+        }
 
-		public async Task<List<EventDto>> GetUpcomingEventsForCurrentUserAsync(long userId)
-		{
-			var today = DateTime.Today;
-			var upcomingEvents = await _repository.GetAllListAsync(e => e.UserId == userId && e.StartDate >= today);
-			return _mapper.Map<List<EventDto>>(upcomingEvents);
-		}
-
-
-		public async Task<List<EventDto>> GetReminderOfUpcomming()
-		{
-			var userId = AbpSession.UserId.Value;
-			var today = DateTime.Today;
-			var upcomingEvents = await _repository.GetAllListAsync(e => e.UserId == userId && e.StartDate <= today.AddDays(5) && e.StartDate > today);
-
-			return _mapper.Map<List<EventDto>>(upcomingEvents);
-		}
-		public async Task<int> GetReminderCount()
-		{
-			var userId = AbpSession.UserId.Value;
-			var notifications = await GetReminderOfUpcomming();
-			var NewNotification = notifications.Where(n => n.isRead == false).Count();
-			return NewNotification;
-		}
-		public async Task UpdateReminderStatus(UpdateEventStatusDto input)
-		{
-
-			var reminderEntity = await _repository.GetAsync(input.Id);
-			reminderEntity.isRead = true;
-			await _repository.UpdateAsync(reminderEntity);
-			await CurrentUnitOfWork.SaveChangesAsync();
+        public async Task<List<EventDto>> GetUpcomingEventsForCurrentUserAsync(long userId)
+        {
+            var today = DateTime.Today;
+            var upcomingEvents = await _repository.GetAllListAsync(e => e.UserId == userId && e.StartDate >= today);
+            return _mapper.Map<List<EventDto>>(upcomingEvents);
+        }
 
 
-		}
+        public async Task<List<EventDto>> GetReminderOfUpcomming()
+        {
+            var userId = AbpSession.UserId.Value;
+            var today = DateTime.Today;
+            var upcomingEvents = await _repository.GetAllListAsync(e => e.UserId == userId && e.StartDate <= today.AddDays(5) && e.StartDate > today);
 
-		//public async Task UpdateReminderStatus([FromBody] UpdateEventStatusDto input)
-		//{
-		//          var old =await  GetReminderOfUpcomming();
-		//          var res=  old.FirstOrDefault(r=>r.Id==input.Id);
-		//	if (res == null)
-		//	{
-		//		throw new Abp.UI.UserFriendlyException("Reminder not found");
-		//	}
-		//          res.isRead = true;
-		//          await CurrentUnitOfWork.SaveChangesAsync();
-		//}
+            return _mapper.Map<List<EventDto>>(upcomingEvents);
+        }
+        public async Task<int> GetReminderCount()
+        {
+            var userId = AbpSession.UserId.Value;
+            var notifications = await GetReminderOfUpcomming();
+            var NewNotification = notifications.Where(n => n.isRead == false).Count();
+            return NewNotification;
+        }
+        public async Task UpdateReminderStatus(UpdateEventStatusDto input)
+        {
 
-		public async Task<List<EventDto>> GetHistoryEventAsync(long userId)
-		{
-			var today = DateTime.Today;
-			var events = await _repository.GetAllListAsync(e => e.UserId == userId && e.EndDate < today);
-			return _mapper.Map<List<EventDto>>(events);
-		}
+            var reminderEntity = await _repository.GetAsync(input.Id);
+            reminderEntity.isRead = true;
+            await _repository.UpdateAsync(reminderEntity);
+            await CurrentUnitOfWork.SaveChangesAsync();
+
+
+        }
+
+        //public async Task UpdateReminderStatus([FromBody] UpdateEventStatusDto input)
+        //{
+        //          var old =await  GetReminderOfUpcomming();
+        //          var res=  old.FirstOrDefault(r=>r.Id==input.Id);
+        //	if (res == null)
+        //	{
+        //		throw new Abp.UI.UserFriendlyException("Reminder not found");
+        //	}
+        //          res.isRead = true;
+        //          await CurrentUnitOfWork.SaveChangesAsync();
+        //}
+
+        public async Task<List<EventDto>> GetHistoryEventAsync(long userId)
+        {
+            var today = DateTime.Today;
+            var events = await _repository.GetAllListAsync(e => e.UserId == userId && e.EndDate < today);
+            return _mapper.Map<List<EventDto>>(events);
+        }
         public async Task<EventNameAndRatingDto> GetNamesAndRatingForeachEventAsync(long userId)
         {
             var today = DateTime.Today;
@@ -195,19 +195,19 @@ namespace Event_Planning_System.Event
 
 
         public async Task<List<EventDto>> GetPublicEventsByInterest()
-		{
-			var publicEvents = new HashSet<EventDto>();
-			var orderedPublicEvents = new List<EventDto>();
-			var userId = AbpSession.UserId;
+        {
+            var publicEvents = new HashSet<EventDto>();
+            var orderedPublicEvents = new List<EventDto>();
+            var userId = AbpSession.UserId;
 
-			if (userId.HasValue && userId > 0)
-			{
-				var interests = await _interestRepository.GetAll()
-					.Include(i => i.Users)
-					.Where(i => i.Users.Any(u => u.Id == userId))
-					.ToListAsync();
-				if (interests.Count > 0)
-				{
+            if (userId.HasValue && userId > 0)
+            {
+                var interests = await _interestRepository.GetAll()
+                    .Include(i => i.Users)
+                    .Where(i => i.Users.Any(u => u.Id == userId))
+                    .ToListAsync();
+                if (interests.Count > 0)
+                {
                     foreach (var interest in interests)
                     {
                         var interestEvents = await _repository.GetAll()
@@ -224,9 +224,9 @@ namespace Event_Planning_System.Event
                             }
                         }
                     }
-				}
-				else
-				{
+                }
+                else
+                {
                     var publicEventsFromDb = await _repository.GetAll()
                     .Where(e => e.IsPublic && e.UserId != userId && e.StartDate >= DateTime.Now)
                     .ToListAsync();
@@ -241,29 +241,29 @@ namespace Event_Planning_System.Event
                         }
                     }
                 }
-				
-			}
-			else
-			{
 
-				var publicEventsFromDb = await _repository.GetAll()
-					.Where(e => e.IsPublic && e.StartDate >= DateTime.Now)
-					.ToListAsync();
-                
-				var mappedPublicEvents = _mapper.Map<List<EventDto>>(publicEventsFromDb);
+            }
+            else
+            {
 
-				foreach (var eventDto in mappedPublicEvents)
-				{
-					if (publicEvents.Add(eventDto))
-					{
-						orderedPublicEvents.Add(eventDto);
-					}
-				}
-			}
+                var publicEventsFromDb = await _repository.GetAll()
+                    .Where(e => e.IsPublic && e.StartDate >= DateTime.Now)
+                    .ToListAsync();
 
-			// Return the ordered list of events with interest-based events first
-			return orderedPublicEvents;
-		}
+                var mappedPublicEvents = _mapper.Map<List<EventDto>>(publicEventsFromDb);
+
+                foreach (var eventDto in mappedPublicEvents)
+                {
+                    if (publicEvents.Add(eventDto))
+                    {
+                        orderedPublicEvents.Add(eventDto);
+                    }
+                }
+            }
+
+            // Return the ordered list of events with interest-based events first
+            return orderedPublicEvents;
+        }
 
         public async Task DeleteEventWithDetailsAsync(int eventId)
         {
@@ -330,6 +330,46 @@ namespace Event_Planning_System.Event
             var eventDto = _mapper.Map<EventDto>(eventEntity);
             return eventDto;
         }
+
+
+
+        public async Task<List<EventDto>> GetPublicEventsByCategory(EventCategory _category)
+        {
+            var publicEvents = new HashSet<EventDto>();
+            var targetPublicEvents = new List<EventDto>();
+            var userId = AbpSession.UserId;
+            List<Enitities.Event> publicEventsFromDb;
+            if (userId.HasValue && userId > 0)
+            {
+                 publicEventsFromDb = await _repository.GetAll()
+                .Where(e => e.IsPublic && e.UserId != userId && e.StartDate >= DateTime.Now && e.Category == _category)
+                .ToListAsync();       
+            }
+            else
+            {
+
+                 publicEventsFromDb = await _repository.GetAll()
+                    .Where(e => e.IsPublic && e.StartDate >= DateTime.Now && e.Category == _category)
+                    .ToListAsync();
+
+            }
+
+            var mappedPublicEvents = _mapper.Map<List<EventDto>>(publicEventsFromDb);
+
+            foreach (var eventDto in mappedPublicEvents)
+            {
+                if (publicEvents.Add(eventDto))
+                {
+                    targetPublicEvents.Add(eventDto);
+                }
+            }
+            return targetPublicEvents;
+
+        }
+
+
+
+
 
     }
 
