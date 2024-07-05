@@ -22,7 +22,7 @@ import { EventDetailsComponent } from './layout/event-details/event-details.comp
 import { EventHOmeDetailsComponent } from './layout/event-home-details/event-home-details.component';
 
 import { InvitationStateComponent } from './layout/invitation-state/invitation-state.component';
-
+import {GuestsFeedbackComponent} from './guests-feedback/guests-feedback.component'
 import { NotificatiosComponent } from './layout/notifications/notificatios.component';
 import { ChatComponentComponent } from './chat-component/chat-component.component';
 import { ChatIconComponent } from './chat-icon/chat-icon.component';
@@ -42,6 +42,7 @@ const routes: Routes = [
         path: '',
         component: AppComponent,
         children: [
+            {path:'GuestFeedBack',component:GuestsFeedbackComponent},
             { path: 'Chat/:plannerId', component: ChatComponentComponent },
             { path: 'home', component: HomeComponent },
             { path: 'users', component: UsersComponent, data: { permission: 'Pages.Users' }, canActivate: [AppRouteGuard] },
