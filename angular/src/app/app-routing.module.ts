@@ -36,7 +36,8 @@ import { DeleteGuestComponent } from './guest/delete-guest/delete-guest.componen
 import { UpdateGuestComponent } from './guest/update-guest/update-guest.component';
 import { AllGuestComponent } from './guest/all-guest/all-guest.component';
 import { UpcomingEventsComponent } from './layout/user-profile/upcoming-events/upcoming-events.component';
-import { FeedbackComponent} from './feedback/feedback.component'
+import { FeedbackComponent} from './feedback/feedback.component';
+import {SavedeventsComponent} from './savedevents/savedevents.component';
 const routes: Routes = [
     {
         path: '',
@@ -72,6 +73,7 @@ const routes: Routes = [
             { path: 'ChatIcon', component: ChatIconComponent },
             { path: 'NoGuests/:id', component: NoGuestsComponent, canActivate: [AppRouteGuard] },
             {path:'upcomming-events',component:UpcomingEventsComponent, canActivate: [AppRouteGuard]},
+            {path:'savedevents',component:SavedeventsComponent, canActivate: [AppRouteGuard]},
             {
                 path: 'allGuests/:id',
                 component: AllGuestComponent,

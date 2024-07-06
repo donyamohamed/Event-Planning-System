@@ -10,7 +10,9 @@
         </button>
         <ul class="dropdown-menu">
           <li *ngFor="let key of enumeratorKeys">
+
             <a class="dropdown-item"  (click)="fetchEventsByCategory(key)">{{key}}</a>
+
           </li>
         </ul>
       </div>
