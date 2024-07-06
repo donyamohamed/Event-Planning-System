@@ -43,6 +43,7 @@ export class PublicEventsComponent implements OnInit {
     this.checkIfLoggedIn();
     this.fetchUserEvents();
 
+    
 
 
     // Check if there's a saved event after login
