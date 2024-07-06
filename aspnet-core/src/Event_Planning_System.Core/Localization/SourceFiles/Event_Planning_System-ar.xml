@@ -248,7 +248,7 @@
 		<text name="No Guests added yet!" value="!لا يوجد ضيوف بعد"/>
 		<text name="Phone" value="التليفون"/>
 		<text name="Email" value="البريد الإلكتروني"/>
-		<text name="Invitation State" value="حالة الدعوة"/>
+		<text name="Invitation State" value="حالة الدعوات"/>
 		<text name="Pending" value="قيد الانتظار"/>
 		<text name="Confirmed" value="مؤكد"/>
 		<text name="No. Guests:" value="العدد"/>
@@ -256,9 +256,34 @@
 		
 		<text name="Add Guest" value="ضيف جديد"/>
 		<text name="Add New Guest" value="إضافة ضيف جديد "/>
+
+		<text name="My Events" value="مناسباتي"/>
+		<text name="Category" value="الفئة"/>
+		<text name="Eventa System" value="نظام إيفنتا"/>
+		<text name="UNIQUE,CREATIVE AND EXTRAORDINARY" value="فريد، مبدع واستثنائي"/>
+		<text name="Support" value="الدعم"/>
+		<text name="What are you inquiring about?" value="ما الذي تستفسر عنه؟"/>
+		<text name="Ask another question" value="إسأل سؤال آخر"/>
+		<text name="Created Events" value="الأحداث التي تم إنشاؤها"/>
+		<text name="Upcomming Events" value="المناسبات القادمة"/>
+		<text name="Event History" value="المناسبات السابقة"/>
+		<text name="Reports" value="التقارير"/>
+		<text name="Saved Events" value="المناسبات المحفوظة"/>
+		<text name="You are not asking to come to any event yet" value="لم تطلب الحضور لأي مناسبة بعد"/>
+		<text name="Invitation Request For:" value="طلب لحضور"/>
+		<text name="Contact us" value="تواصل معنا"/>
+		<text name="Follow us" value="تابعنا"/>
+		<text name="Your best place to manage, create, and track your events. Eventa makes event planning unique, creative, and extraordinary." value="أفضل مكان لإدارة الأحداث الخاصة بك وإنشائها وتتبعها. تجعل Eventa التخطيط للحدث فريدًا ومبدعًا وغير عادي.
+
+
+
+"/>
 		
 		
 		
-	
+        
+
+
+
 	</texts>
 </localizationDictionary>
