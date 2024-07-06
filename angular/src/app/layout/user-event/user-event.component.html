@@ -1,3 +1,4 @@
+
 <div class="wrapper">
   <div class="container mx-auto">
     <app-sidebar-event class="sidebar "></app-sidebar-event>
@@ -7,6 +8,7 @@
         <div class="header-container d-flex justify-content-between align-items-center">
           <h2>{{ "My Events" | localize }}</h2>
           <a routerLink="/app/create-event" class="btncreate">{{ "Create Event" | localize }}</a>
+
         </div>
         <div class="card-container">
           <div *ngFor="let event of events" class="card" [ngStyle]="{

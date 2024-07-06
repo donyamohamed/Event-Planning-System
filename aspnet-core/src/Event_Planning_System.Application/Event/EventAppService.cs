@@ -248,6 +248,7 @@ namespace Event_Planning_System.Event
 			else
 			{
 
+
                 var publicEventsFromDb = await _repository.GetAll()
                     .Where(e => e.IsPublic && e.StartDate >= DateTime.Now)
                     .ToListAsync();
@@ -276,6 +277,7 @@ namespace Event_Planning_System.Event
 				{
 					throw new Abp.UI.UserFriendlyException("Event not found");
 				}
+
 
 				var today = DateTime.Today;
 				if (eventEntity.StartDate > today && eventEntity.EndDate > today)
@@ -332,6 +334,7 @@ namespace Event_Planning_System.Event
 			var eventDto = _mapper.Map<EventDto>(eventEntity);
 			return eventDto;
 		}
+
 
 
 
@@ -403,6 +406,7 @@ namespace Event_Planning_System.Event
 				return eventDetails;
 			}
 		}
+
 
 
 		public async Task ScheduleEventFeedbackJob(int eventId)

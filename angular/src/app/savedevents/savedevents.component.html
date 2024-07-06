@@ -1,0 +1,29 @@
+<div class="events m-2 p-2 container">
+    <app-sidebar-event class="sidebar "></app-sidebar-event>
+    <div class="card-container">
+  
+      <div *ngFor="let event of events" class="card" [ngStyle]="{'background-image': 'url(' + (event.eventImg ? event.eventImg : '../../assets/img/Event.jpg') + ')'}">
+        <div class="date">
+          <div class="day">{{ event.result.startDate | date:'dd' }}</div>
+          <div class="month">{{ event.result.startDate | date:'MMM' }}</div>
+        </div>
+        <div class="card-content">
+          <h3>{{ event.result.name }}</h3>
+          <p>{{ event.result.location }}</p>
+          <div class="d-flex align-items-center justify-content-center">
+            <button class="btn btn-primary" (click)="askForInvitation(event)">Ask for invitation</button>
+            <button id="details" (click)="details(event.result)">View</button>
+          </div>
+        </div>
+        <div class="Chat-icon" (click)="navigateToComponent(event.userId)" *ngIf="isLoggedIn">
+          <i class="fa-regular fa-comment-dots"></i>
+        </div>
+      </div>
+    </div>
+  
+    <div *ngIf="events.length === 0" class="noPublic-events text-center">
+      <img src="../../../assets/img/People search.gif" alt="">
+      <h4>No events saved yet. Explore and choose your favorites to save!<span>❤😢</span></h4>
+    </div>
+  </div>
+  

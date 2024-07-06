@@ -10,6 +10,9 @@ import { Observable } from 'rxjs';
 import { SharedModule } from "../../../shared/shared.module";
 import { Router, RouterLink } from '@angular/router';
 import { GuestService } from '../../../shared/Services/guest.service';
+
+import { InterestsService } from '../../../shared/Services/interests.service';
+
 import { Enumerator } from "../../../shared/Models/Event";
 import Swal from 'sweetalert2';
 import { preventDefault } from '@fullcalendar/core/internal';
@@ -23,6 +26,7 @@ import { preventDefault } from '@fullcalendar/core/internal';
 })
 export class PublicEventsComponent implements OnInit {
   public events: Event[] = [];
+  eventData: Event = new Event();
   public isLoading: boolean = true;
   public isLoggedIn: boolean = false;
   username: string;
@@ -42,6 +46,7 @@ export class PublicEventsComponent implements OnInit {
   ngOnInit(): void {
     this.checkIfLoggedIn();
     this.fetchUserEvents();
+    this.setDefaultValues();
 
 
     // Check if there's a saved event after login
@@ -276,11 +281,13 @@ export class PublicEventsComponent implements OnInit {
   }
 
 
+
 // selectCategory(_category: string): void {
 //   this.events.find(a=>a.category==_category)
 //   console.log('Selected category:', _category);
   
 // }
+
 
 
 
