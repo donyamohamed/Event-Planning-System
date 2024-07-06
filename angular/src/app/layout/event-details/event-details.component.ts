@@ -1,8 +1,8 @@
 import { FeedbackService } from './../../../shared/Services/feedback.service';
- import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { EventdetailsService } from '../../../shared/Services/eventdetails.service';
-import { EventBudgetService } from '../../../shared/Services/event-budget.service'; 
+import { EventBudgetService } from '../../../shared/Services/event-budget.service';
 import { Event } from '../../../shared/Models/Event';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -10,6 +10,8 @@ import { SharedModule } from "../../../shared/shared.module";
 import { UserService } from '../../../shared/Services/user-service.service';
 import { CurrentUserDataService } from '@shared/Services/current-user-data.service';
 import Swal from 'sweetalert2';
+import { Feedback } from '@shared/Models/feedback';
+import { forkJoin, map } from 'rxjs';
 
 @Component({
   selector: 'app-event-details',
@@ -21,28 +23,30 @@ import Swal from 'sweetalert2';
 export class EventDetailsComponent implements OnInit {
   event: Event | undefined;
   eventId: number | undefined;
-  budgetAmount: number | undefined; 
+  budgetAmount: number | undefined;
   user: any;
   loggedInUserId: number | undefined;
   isEventCreator: boolean = false; // Add this property
-  rating: any; 
+  rating: any;
   stars: { type: string, title: string }[] = [];
   numberOfRaters: number | undefined;
+  feedbackList: Feedback[] = [];
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private eventDetailsService: EventdetailsService,
-    private eventBudgetService: EventBudgetService, 
+    private eventBudgetService: EventBudgetService,
     private userService: UserService,
     private currentUserData: CurrentUserDataService,
-    private feedbackServ:FeedbackService
+    private feedbackServ: FeedbackService
   ) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       this.eventId = Number(params.get('id'));
       this.loadEventDetails();
+      this.showFeedbackForEvent();
     });
 
     this.loadCurrentUser();
@@ -70,15 +74,14 @@ export class EventDetailsComponent implements OnInit {
 
           this.rating = this.feedbackServ.getRating(this.event.id).subscribe(
             (res) => {
-              //this.rating = res.result.averageRating;
               console.log("Rating:", res.result.numberOfRaters);
               this.numberOfRaters = res.result.numberOfRaters;
               console.log(res.result.averageRating);
               this.setStars(res.result.averageRating); // Set stars based on rating
             },
-              (error) => {
-                console.error('Error fetching user data:', error);
-              }
+            (error) => {
+              console.error('Error fetching user data:', error);
+            }
           ); // Set rating from event data
 
 
@@ -97,8 +100,6 @@ export class EventDetailsComponent implements OnInit {
           console.error('Error fetching event details:', error);
         }
       );
-    
-
     }
   }
 
@@ -106,7 +107,7 @@ export class EventDetailsComponent implements OnInit {
     if (this.event && this.loggedInUserId !== undefined) {
       this.isEventCreator = (this.event.userId === this.loggedInUserId);
       if (this.isEventCreator) {
-        console.log("The logged-in user is the creator of the event.");        
+        console.log("The logged-in user is the creator of the event.");
       } else {
         console.log("The logged-in user is not the creator of the event.");
       }
@@ -120,7 +121,7 @@ export class EventDetailsComponent implements OnInit {
   getUserImage(): string {
     return this.user?.image
       ? this.user.image
-      : "https://static.vecteezy.com/system/resources/thumbnails/005/129/844/small/profile-user-icon-isolated-on-white-background-eps10-free-/  CCXX  ZXSD SCDSKMSMKMNSWE 4CV215541 1   Q .jpg";
+      : "https://static.vecteezy.com/system/resources/thumbnails/005/129/844/small/profile-user-icon-isolated-on-white-background-eps10-free-vector.jpg";
   }
 
   openShareAlert(): void {
@@ -202,6 +203,7 @@ export class EventDetailsComponent implements OnInit {
       console.error('Email address is not defined');
     }
   }
+
   setStars(rating: number): void {
     this.stars = [];
     for (let i = 1; i <= 5; i++) {
@@ -212,6 +214,37 @@ export class EventDetailsComponent implements OnInit {
       } else {
         this.stars.push({ type: 'empty', title: `${i} stars` });
       }
+    }
+  }
+
+  // this.feedbackServ.getAllFeedback(this.eventId).subscribe(
+  //   data => {
+  //     const userRequests = data.map(feedback =>
+  //       this.userService.getUserById(feedback.userId)
+  //         .pipe(
+  //           map(user => ({ ...feedback, user: user.result }))
+  //         )
+  //     );
+
+  showFeedbackForEvent(): void {
+    if (this.eventId) {
+      console.log('Fetching feedback for event ID:', this.eventId);
+
+      this.feedbackServ.getAllFeedback(this.eventId).subscribe(
+        (data) => {
+          console.log('Feedback data:', data);
+           data.map(feedback =>
+            this.userService.getUserById2(feedback.userId)
+              .pipe(
+                map(user => ({ ...feedback, user: user }))
+              ).subscribe(data =>
+                this.feedbackList.push(data)
+              ))
+        },
+        (error) => {
+          console.error('Error fetching feedback:', error);
+        }
+      );
     }
   }
 }

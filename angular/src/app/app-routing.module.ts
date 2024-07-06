@@ -22,7 +22,7 @@ import { EventDetailsComponent } from './layout/event-details/event-details.comp
 import { EventHOmeDetailsComponent } from './layout/event-home-details/event-home-details.component';
 
 import { InvitationStateComponent } from './layout/invitation-state/invitation-state.component';
-
+import {GuestsFeedbackComponent} from './guests-feedback/guests-feedback.component'
 import { NotificatiosComponent } from './layout/notifications/notificatios.component';
 import { ChatComponentComponent } from './chat-component/chat-component.component';
 import { ChatIconComponent } from './chat-icon/chat-icon.component';
@@ -36,12 +36,14 @@ import { DeleteGuestComponent } from './guest/delete-guest/delete-guest.componen
 import { UpdateGuestComponent } from './guest/update-guest/update-guest.component';
 import { AllGuestComponent } from './guest/all-guest/all-guest.component';
 import { UpcomingEventsComponent } from './layout/user-profile/upcoming-events/upcoming-events.component';
-import { FeedbackComponent} from './feedback/feedback.component'
+import { FeedbackComponent} from './feedback/feedback.component';
+import {SavedeventsComponent} from './savedevents/savedevents.component';
 const routes: Routes = [
     {
         path: '',
         component: AppComponent,
         children: [
+            {path:'GuestFeedBack',component:GuestsFeedbackComponent},
             { path: 'Chat/:plannerId', component: ChatComponentComponent },
             { path: 'home', component: HomeComponent },
             { path: 'users', component: UsersComponent, data: { permission: 'Pages.Users' }, canActivate: [AppRouteGuard] },
@@ -71,6 +73,7 @@ const routes: Routes = [
             { path: 'ChatIcon', component: ChatIconComponent },
             { path: 'NoGuests/:id', component: NoGuestsComponent, canActivate: [AppRouteGuard] },
             {path:'upcomming-events',component:UpcomingEventsComponent, canActivate: [AppRouteGuard]},
+            {path:'savedevents',component:SavedeventsComponent, canActivate: [AppRouteGuard]},
             {
                 path: 'allGuests/:id',
                 component: AllGuestComponent,

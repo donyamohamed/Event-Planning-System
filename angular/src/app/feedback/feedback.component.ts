@@ -49,7 +49,7 @@ export class FeedbackComponent implements OnInit {
         rate: this.numberOfStars,
         dateTime: new Date(),
         userId: this.userId,
-        eventId: this.data.eventId // Ensure eventId is taken from data
+        eventId: this.data.eventId
       };
       console.log("Feedback Data:", feedbackData);
 
@@ -57,7 +57,7 @@ export class FeedbackComponent implements OnInit {
         response => {
           console.log('Feedback submitted successfully!', response);
           this.feedbackForm.reset();
-          this.dialogRef.close(); // Close the dialog on successful submission
+          this.dialogRef.close(); 
         },
         error => {
           console.error('Error submitting feedback:', error);
