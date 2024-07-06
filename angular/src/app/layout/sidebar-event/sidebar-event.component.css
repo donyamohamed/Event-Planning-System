@@ -11,10 +11,10 @@ body {
 
 
 .nav {
-  height: 100%;
-  position: fixed;
+  height: 100% !important;
+  position: absolute;
   left: -2em;
-  top: 60px;
+  /* top: 60px; */
   z-index: 1000;
   transform-style: preserve-3d;
   perspective: 1000px;

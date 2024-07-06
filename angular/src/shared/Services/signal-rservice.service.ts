@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as signalR from '@microsoft/signalr';
-
+import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
@@ -11,7 +11,7 @@ export class SignalRServiceService  {
 
   public startConnection(): Promise<void> {
     this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl('https://localhost:44311/chatbothub')
+      .withUrl(`${environment.API_URL_BASE_PART}/chatbothub`)
       .build();
 
     return this.hubConnection

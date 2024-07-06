@@ -22,12 +22,15 @@
 
 
 .chat-container {
+ 
     width: 100%;
     max-width: 85%;
+    min-height: 70vh;
     margin: 20px auto;
     padding: 20px;
     border-radius: 5px;
-    font-family: Arial, sans-serif;
+    font-family:Tahoma, Arial, sans-serif;
+    position: relative;
   }
 
   .receiver-info {
@@ -129,6 +132,9 @@
     align-items: center;
     margin-top: 20px;
     gap:1%;
+    position: absolute;
+    bottom: 0px;
+    width: 94%;
   }
   
   .input-section input {

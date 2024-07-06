@@ -10,6 +10,7 @@ import { AppConsts } from '@shared/AppConsts';
 import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { ApplicationRef } from '@angular/core';
+import { environment } from '../../environments/environment';
 declare const gapi: any;
 
 @Injectable({
@@ -19,7 +20,7 @@ export class GoogleAuthService {
   submitting = false;
   private _auth2: any; 
   public user: BehaviorSubject<any> = new BehaviorSubject(null);
-  private baseUrl = 'https://localhost:44311/api/SignByGoogle/googleSign'; 
+  private baseUrl = `${environment.API_URL_BASE_PART}/api/SignByGoogle/googleSign`; 
 
   constructor(    private appRef: ApplicationRef ,private notify:NotifyService,private router:Router,private http: HttpClient, private _authService: AppAuthService,     private _utilsService: UtilsService,
     private _tokenService: TokenService,) {
@@ -29,7 +30,7 @@ export class GoogleAuthService {
         cookiepolicy: 'single_host_origin',
         scope: 'profile email',
         ux_mode: 'redirect',
-        redirect_uri: 'http://localhost:4200/account/auth-callback' 
+        redirect_uri: `${environment.Angular_URL}/account/auth-callback`
       });
 
       this._auth2.isSignedIn.listen(this.updateSigninStatus.bind(this));
@@ -45,7 +46,7 @@ export class GoogleAuthService {
     this.auth2.signIn({
       prompt: 'select_account',
       ux_mode: 'redirect',
-      redirect_uri: 'http://localhost:4200/account/auth-callback' 
+      redirect_uri: `${environment.Angular_URL}/account/auth-callback`
     }).catch((error: any) => {
       console.error('Google sign-in failed', error);
       this.handleError(error)

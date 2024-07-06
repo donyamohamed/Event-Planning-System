@@ -27,9 +27,11 @@ body {
   overflow: hidden;
   z-index: 20px;
   position: fixed;
-  top: 20px;
-  left: 40%;
-   background-color: #eee;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+   background-color: #fcfcfc;
+   padding: 30px 15px;
 }
 
 hr {
@@ -43,7 +45,8 @@ div.title {
 }
 
 h1 {
-  color: #FFC107;
+ 
+  color: #050794;
 }
 
 div.stars {

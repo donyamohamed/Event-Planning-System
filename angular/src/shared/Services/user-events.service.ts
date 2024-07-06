@@ -4,13 +4,13 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Event } from '../Models/Event'; // Adjust the import path as necessary
-
+import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
 export class UserEventsService {
-  private apiUrl = 'https://localhost:44311/api/services/app/Event';
-private apiGuestUrl='https://localhost:44311/api/UpcomingEventUserAttended'
+  private apiUrl = `${environment.API_URL_BASE_PART}/api/services/app/Event`;
+private apiGuestUrl=`${environment.API_URL_BASE_PART}/api/UpcomingEventUserAttended`;
   constructor(private http: HttpClient) {}
 
   getUserEvents(userId: number): Observable<Event[]> {

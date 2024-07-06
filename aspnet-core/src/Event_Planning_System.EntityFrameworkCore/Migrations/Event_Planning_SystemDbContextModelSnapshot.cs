@@ -1946,6 +1946,40 @@ namespace Event_Planning_System.Migrations
                     b.ToTable("GuestEvent");
                 });
 
+            modelBuilder.Entity("Event_Planning_System.Entities.GuestsFeedback", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Body")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("EventId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GuestId")
+                        .HasColumnType("int");
+
+                    b.Property<float>("Rate")
+                        .HasColumnType("real");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EventId");
+
+                    b.HasIndex("GuestId");
+
+                    b.ToTable("GuestsFeedback");
+                });
+
             modelBuilder.Entity("Event_Planning_System.MultiTenancy.Tenant", b =>
                 {
                     b.Property<int>("Id")
@@ -2406,6 +2440,25 @@ namespace Event_Planning_System.Migrations
                     b.Navigation("Guest");
                 });
 
+            modelBuilder.Entity("Event_Planning_System.Entities.GuestsFeedback", b =>
+                {
+                    b.HasOne("Event_Planning_System.Enitities.Event", "Event")
+                        .WithMany("GuestsFeedback")
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Event_Planning_System.Enitities.Guest", "Guest")
+                        .WithMany("GuestsFeedback")
+                        .HasForeignKey("GuestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Event");
+
+                    b.Navigation("Guest");
+                });
+
             modelBuilder.Entity("Event_Planning_System.MultiTenancy.Tenant", b =>
                 {
                     b.HasOne("Event_Planning_System.Authorization.Users.User", "CreatorUser")
@@ -2556,6 +2609,8 @@ namespace Event_Planning_System.Migrations
 
                     b.Navigation("GuestEvents");
 
+                    b.Navigation("GuestsFeedback");
+
                     b.Navigation("Notifications");
 
                     b.Navigation("ToDoCheckLists");
@@ -2564,6 +2619,8 @@ namespace Event_Planning_System.Migrations
             modelBuilder.Entity("Event_Planning_System.Enitities.Guest", b =>
                 {
                     b.Navigation("GuestEvents");
+
+                    b.Navigation("GuestsFeedback");
                 });
 #pragma warning restore 612, 618
         }

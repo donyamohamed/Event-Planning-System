@@ -1,6 +1,10 @@
 /* .chart{
 
 } */
+
+.container{
+   min-height: 80vh;
+}
  .imgChart img{
     width: 50%;
  }

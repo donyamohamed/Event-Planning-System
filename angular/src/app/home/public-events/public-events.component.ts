@@ -10,9 +10,12 @@ import { Observable } from 'rxjs';
 import { SharedModule } from "../../../shared/shared.module";
 import { Router, RouterLink } from '@angular/router';
 import { GuestService } from '../../../shared/Services/guest.service';
+
 import { InterestsService } from '../../../shared/Services/interests.service';
+
 import { Enumerator } from "../../../shared/Models/Event";
 import Swal from 'sweetalert2';
+import { preventDefault } from '@fullcalendar/core/internal';
 
 @Component({
   selector: 'app-public-events',
@@ -44,6 +47,7 @@ export class PublicEventsComponent implements OnInit {
     this.checkIfLoggedIn();
     this.fetchUserEvents();
     this.setDefaultValues();
+
 
     // Check if there's a saved event after login
     const savedEvent = sessionStorage.getItem('selectedEvent');
@@ -94,6 +98,27 @@ export class PublicEventsComponent implements OnInit {
       }
     );
   }
+
+  fetchEventsByCategory(category: Enumerator): void {
+    this.isLoading = true;
+    this.PublicEventServ.getEventsByCategory(category).subscribe(
+      (data:EventsResponse) => {
+        this.events = data.result;
+        console.log(this.events);
+        this.isLoading = false;
+        this.cdr.detectChanges();  
+        this.checkMaxCountAndGuests();
+      },
+      (error) => {
+        console.error('Error fetching events by category', error);
+        this.isLoading = false; 
+      }
+    );
+  }
+  
+
+
+
 
   checkMaxCountAndGuests(): void {
     this.events.forEach(event => {
@@ -255,16 +280,16 @@ export class PublicEventsComponent implements OnInit {
     return this.http.get<any>('https://localhost:44311/api/services/app/UserProfileAppServices/GetUserProfile');
   }
 
-  setDefaultValues(): void {
-    this.eventData.isPublic = true;
-    if (this.enumeratorKeys.length > 0) {
-        this.eventData.category = this.enumeratorKeys[0];
-    }
-}
 
-selectCategory(category: string): void {
-  this.eventData.category = category;
-  console.log('Selected category:', category);
-}
+
+// selectCategory(_category: string): void {
+//   this.events.find(a=>a.category==_category)
+//   console.log('Selected category:', _category);
+  
+// }
+
+
+
+
 
 }

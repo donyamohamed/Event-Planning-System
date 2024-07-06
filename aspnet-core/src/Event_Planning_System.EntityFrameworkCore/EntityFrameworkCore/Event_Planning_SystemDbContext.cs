@@ -21,7 +21,9 @@ namespace Event_Planning_System.EntityFrameworkCore
         public DbSet<Feedback> Feedbacks { get; set; }
 		public DbSet<Interest> interests { get; set; }
         public DbSet<FavoriteEvent> FavoriteEvents { get; set; }
-        public Event_Planning_SystemDbContext(DbContextOptions<Event_Planning_SystemDbContext> options)
+        public DbSet<GuestsFeedback> GuestsFeedback { get; set; }
+
+		public Event_Planning_SystemDbContext(DbContextOptions<Event_Planning_SystemDbContext> options)
 			: base(options)
 		{
 		}

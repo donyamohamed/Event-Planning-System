@@ -22,6 +22,12 @@ using Event_Planning_System.Chats;
 using Microsoft.AspNetCore.SignalR;
 using Abp.Domain.Uow;
 using Event_Planning_System.Entities;
+using Hangfire;
+using Event_Planning_System.Email;
+using Hangfire.SqlServer;
+using Event_Planning_System.GuestsFeed;
+using Microsoft.AspNetCore.RateLimiting;
+using Microsoft.AspNetCore.Http;
 
 namespace Event_Planning_System.Web.Host.Startup
 {
@@ -42,8 +48,23 @@ namespace Event_Planning_System.Web.Host.Startup
 
         public void ConfigureServices(IServiceCollection services)
         {
-            //MVC
-            services.AddControllersWithViews(options =>
+			//services.AddHangfire(x => x.UseSqlServerStorage("Server=tcp:examinationdb.database.windows.net,1433;Initial Catalog=Event_Planning_SystemDb;Persist Security Info=False;User ID=examDb;Password=esraa_2000;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
+			services.AddHangfire(configuration =>
+		configuration.SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+					 .UseSimpleAssemblyNameTypeSerializer()
+					 .UseRecommendedSerializerSettings()
+					 .UseSqlServerStorage("Server=tcp:examinationdb.database.windows.net,1433;Initial Catalog=Event_Planning_SystemDb;Persist Security Info=False;User ID=examDb;Password=esraa_2000;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;", new SqlServerStorageOptions
+					 {
+						 CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
+						 SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+						 QueuePollInterval = TimeSpan.Zero,
+						 UseRecommendedIsolationLevel = true,
+						 UsePageLocksOnDequeue = true,
+						 DisableGlobalLocks = true
+					 }));
+			services.AddHangfireServer();
+			//MVC
+			services.AddControllersWithViews(options =>
             {
                 options.Filters.Add(new AbpAutoValidateAntiforgeryTokenAttribute());
             });
@@ -53,9 +74,13 @@ namespace Event_Planning_System.Web.Host.Startup
             services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
             services.AddTransient<IChatUserConnectionRepository, ChatUserConnectionRepository>();
             services.AddTransient<IChatMessageAppService, ChatMessageAppService>();
-            services.AddSignalR();
-			
-			services.AddTransient<IChatMessageAppService, ChatMessageAppService>();
+			services.AddTransient<IEmailService, EmailService>();
+			services.AddTransient<IGuestsFeedbackAppService, GuestsFeedbackAppService>();
+			//services.AddScoped<IUnitOfWorkManager, UnitOfWorkManager>();
+
+			services.AddSignalR();
+
+		   //services.AddTransient<IChatMessageAppService, ChatMessageAppService>();
 
 			// Configure CORS for angular2 UI
 			services.AddCors(
@@ -74,7 +99,18 @@ namespace Event_Planning_System.Web.Host.Startup
                         .AllowCredentials()
                 )
             );
-           
+
+            //testing 
+            services.AddRateLimiter(reteLimiterOption =>
+            {
+                reteLimiterOption.AddFixedWindowLimiter("fixed", option =>
+                {
+                    option.PermitLimit = 1;
+                    option.Window=TimeSpan.FromSeconds(5);
+                    option.QueueLimit = 0;
+                });
+                reteLimiterOption.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+            });
 
             // Swagger - Enable this line and the related lines in Configure method to enable swagger UI
             ConfigureSwagger(services);
@@ -100,14 +136,20 @@ namespace Event_Planning_System.Web.Host.Startup
             app.UseCors(_defaultCorsPolicyName); // Enable CORS!
 
 
+
             app.UseStaticFiles();
 
             app.UseRouting();
 
+            
+
             app.UseAuthentication();
             app.UseAuthorization();
+			app.UseHangfireDashboard();
 
-            app.UseAbpRequestLocalization();
+			app.UseAbpRequestLocalization();
+
+            app.UseRateLimiter();
 
             app.UseEndpoints(endpoints =>
             {
@@ -132,6 +174,8 @@ namespace Event_Planning_System.Web.Host.Startup
                     .GetManifestResourceStream("Event_Planning_System.Web.Host.wwwroot.swagger.ui.index.html");
                 options.DisplayRequestDuration(); // Controls the display of the request duration (in milliseconds) for "Try it out" requests.
             }); // URL: /swagger
+
+          
         }
 
         private void ConfigureSwagger(IServiceCollection services)

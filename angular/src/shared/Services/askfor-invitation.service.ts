@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
+import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
 export class AskforInvitationService {
-  private askforInvitationApi = "https://localhost:44311/api/services/app/Notification/CreateNotification";
-  private pendingEmailApi = "https://localhost:44311/api/Invitation/SendPendingEmail";
-  private baseUrl = 'https://localhost:44311/api/services/app/Notification/CheckExistingInvitation';
+  
+
+  private askforInvitationApi = `${environment.API_URL_BASE_PART}/api/services/app/Notification/CreateNotification`;
+private baseUrl = `${environment.API_URL_BASE_PART}/api/services/app/Notification/CheckExistingInvitation`;
+  private pendingEmailApi = `${environment.API_URL_BASE_PART}/api/Invitation/SendPendingEmail`;
+
 
   constructor(private http: HttpClient) {}
 

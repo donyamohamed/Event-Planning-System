@@ -5,26 +5,29 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { GuestGetResponse } from "@app/guest/guest-get-response";
 import { Observable } from "rxjs";
-
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: "root",
 })
 export class GuestService {
-  private baseUrl= 'https://localhost:44311/api/services/app/Guest/'
-  private baseUrlForGetAll =`${this.baseUrl}GetAll`;
-  private baseUrlForGet = `${this.baseUrl}Get`;
-  // private baseUrlForCreate = `${this.baseUrl}Create`;
-  private baseUrlForCreate =`${this.baseUrl}Add`;
-  private baseUrlForDelete =`${this.baseUrl}Delete`;
+  private baseUrlForGetAll =
+    `${environment.API_URL_BASE_PART}/api/services/app/Guest/GetAll`;
+  private baseUrlForGet = `${environment.API_URL_BASE_PART}/api/services/app/Guest/Get`;
+
+  private baseUrlForCreate =
+    `${environment.API_URL_BASE_PART}/api/services/app/Guest/Add`;
+  private baseUrlForDelete =
+    `${environment.API_URL_BASE_PART}/api/services/app/Guest/Delete`;
   private baseUrlForUpdate =
-    `${this.baseUrl}Update`;
+    `${environment.API_URL_BASE_PART}/api/services/app/Guest/Update`;
   private baseUrlForGetAllPerEvent =
-    `${this.baseUrl}GetEventGuests`;
+    `${environment.API_URL_BASE_PART}/api/services/app/Guest/GetEventGuests`;
 
   private baseUrlforExcel = 
-    `${this.baseUrl}AddGuestsThroughExcelFile`;
-    private baseUrlDeleteAll=`${this.baseUrl}DeleteAllGuests` //?eventId=15&ids=21&ids=20
+    `${environment.API_URL_BASE_PART}/api/services/app/Guest/AddGuestsThroughExcelFile`;
+    private baseUrlDeleteAll=`${environment.API_URL_BASE_PART}/api/services/app/Guest/DeleteAllGuests` //?eventId=15&ids=21&ids=20
+
 
   constructor(private httpClient: HttpClient) { }
 

@@ -8,7 +8,9 @@ body {
     margin: 0;
     padding: 20px;
 }
-
+.events{
+  min-height: 70vh;
+}
 .events .card-container {
     max-width: 90%;
     margin: auto;
@@ -21,6 +23,7 @@ body {
 
 h2 {
     display: block;
+    color: #050794;
 }
 
 .card {
