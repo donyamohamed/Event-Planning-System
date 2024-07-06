@@ -59,8 +59,10 @@ footer .cpyright a {
     align-items: center;
 }
 
-footer .cpyright p {
-    color: var(--lightGray);
+footer .Copyright {
+    color: #e2e2e2;
+    font-size: 15px;
+    margin-top: 7px;
 }
 .footer-img img{
     width: 150px;

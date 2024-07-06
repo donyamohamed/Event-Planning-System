@@ -1,57 +1,62 @@
-<app-sidebar-event class="sidebar "></app-sidebar-event>
-<div class="container mx-auto">
-<div class="events">
-  <!-- Conditional Header and Events List -->
-  <div *ngIf="events.length > 0">
-    <div class="header-container d-flex justify-content-between align-items-center">
-      <h2>{{ "My Events" | localize }}</h2>
-      <a routerLink="/app/create-event" class="btncreate">{{ "Create Event" | localize }}</a>
-    </div>
-    <div class="card-container">
-      <div *ngFor="let event of events" class="card" [ngStyle]="{
-        'background-image': 'url(' + (event.eventImg ? event.eventImg : '../../assets/img/Event.jpg') + ')'
-      }">
-        <div class="header">
-          <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="fa-solid fa-ellipsis"></i>
-            </button>
-            <ul class="dropdown-menu">
-              <li><button class="dropdown-item" id="edit" (click)="openEditModal(Editetemplate, event.id)" title="edit">
-                <i class="fa-solid fa-pen-to-square"></i> Edit</button></li>
-              <li><button class="dropdown-item" id="delete" (click)="deleteEvent(event)" title="delete">
-                <i class="fas fa-trash"></i> Delete</button></li>
-            </ul>
-          </div>
-          <div class="date">
-            <div class="day">{{ event.startDate | date: 'dd' }}</div>
-            <div class="month">{{ event.startDate | date: 'MMM' }}</div>
-          </div>
+
+<div class="wrapper">
+  <div class="container mx-auto">
+    <app-sidebar-event class="sidebar "></app-sidebar-event>
+    <div class="events">
+      <!-- Conditional Header and Events List -->
+      <div *ngIf="events.length > 0">
+        <div class="header-container d-flex justify-content-between align-items-center">
+          <h2>{{ "My Events" | localize }}</h2>
+          <a routerLink="/app/create-event" class="btncreate">{{ "Create Event" | localize }}</a>
+
         </div>
-        <div class="card-content">
-          <h3>{{ event.name }}</h3>
-          <p>{{ event.location }}</p>
-          <button id="details" (click)="details(event)">{{ "View" | localize }}</button>
-          <button id="invite" (click)="guestAppearing(event)">{{ "Invite" | localize }}</button>
+        <div class="card-container">
+          <div *ngFor="let event of events" class="card" [ngStyle]="{
+            'background-image': 'url(' + (event.eventImg ? event.eventImg : '../../assets/img/Event.jpg') + ')'
+          }">
+            <div class="header">
+              <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="fa-solid fa-ellipsis"></i>
+                </button>
+                <ul class="dropdown-menu">
+                  <li><button class="dropdown-item" id="edit" (click)="openEditModal(Editetemplate, event.id)" title="edit">
+                    <i class="fa-solid fa-pen-to-square"></i> Edit</button></li>
+                  <li><button class="dropdown-item" id="delete" (click)="deleteEvent(event)" title="delete">
+                    <i class="fas fa-trash"></i> Delete</button></li>
+                </ul>
+              </div>
+              <div class="date">
+                <div class="day">{{ event.startDate | date: 'dd' }}</div>
+                <div class="month">{{ event.startDate | date: 'MMM' }}</div>
+              </div>
+            </div>
+            <div class="card-content">
+              <h3>{{ event.name }}</h3>
+              <p>{{ event.location }}</p>
+              <button id="details" (click)="details(event)">{{ "View" | localize }}</button>
+              <button id="invite" (click)="guestAppearing(event)">{{ "Invite" | localize }}</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
-
-  <!-- No Events Message -->
-
-
-  <div *ngIf="events.length === 0" class="no-events ">
-    <div class="header-container">
-      <a routerLink="/app/create-event" class="btncreate">{{ "Create Event" | localize }}</a>
+    
+      <!-- No Events Message -->
+    
+    
+      <div *ngIf="events.length === 0" class="no-events ">
+        <div class="header-container">
+          <a routerLink="/app/create-event" class="btncreate">{{ "Create Event" | localize }}</a>
+        </div>
+        <div class="no-events1 ">
+    
+       <img src="../../../assets/img/NoEvent.gif" alt="">
+       <h3>You have not created any event, please create the first event</h3>
+      </div>
+      </div>
     </div>
-    <div class="no-events1 ">
 
-   <img src="../../../assets/img/NoEvent.gif" alt="">
-   <h3>You have not created any event, please create the first event</h3>
-  </div>
-  </div>
 </div>
 
 <!---------------- edit Modal ---------------------->
@@ -149,7 +154,7 @@
           <div *ngIf="eventEditForm.get('description').errors.pattern">{{ "Description must be alphanumeric" | localize }}</div>
         </div>
       </div>
-      <input class="btn btn-success m-1" value="Update" type="submit" />
+      <input class="btnupdate btn-success m-1" value="Update" type="submit" />
     </form>
   </div>
 </ng-template>

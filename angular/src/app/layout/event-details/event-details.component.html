@@ -1,3 +1,5 @@
+
+
 <div class="header-container">
   <div class="blur"
     [ngStyle]="{'background-image': 'url(' + (event?.eventImg ? event.eventImg : '../../assets/img/Event.jpg') + ')'}">
@@ -5,6 +7,13 @@
   <img class="card-media-object" [src]="event?.eventImg ? event.eventImg : ('../../assets/img/Event.jpg')"
     alt="Event Image">
 </div>
+
+
+<div class="buttons" *ngIf="isEventCreator">
+  <a [routerLink]="'/app/todolist/' + event?.id" class="btn btn-todolist">{{ "TodoList" | localize }}</a>
+  <a (click)="navigateToSetExpenses(event?.id)" class="btn btn-expense">{{ "Set Expenses" | localize }}</a>
+</div>
+
 
 <div class="event-info">
   <div class="ticket-sales-info">
@@ -98,7 +107,4 @@
 
 </div>
 
-<div class="buttons" *ngIf="isEventCreator">
-  <a [routerLink]="'/app/todolist/' + event?.id" class="btn btn-todolist">{{ "TodoList" | localize }}</a>
-  <a (click)="navigateToSetExpenses(event?.id)" class="btn btn-expense">{{ "Set Expenses" | localize }}</a>
-</div>
+

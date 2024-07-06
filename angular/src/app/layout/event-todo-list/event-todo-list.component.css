@@ -2,7 +2,9 @@ body {
     color: #fff;
     position: relative;
 }
-
+.wrapper{
+    min-height: 80vh;
+}
 .big-circle {
     width: 100px; /* Adjust the width as needed */
     height: 100px; /* Adjust the height as needed */
