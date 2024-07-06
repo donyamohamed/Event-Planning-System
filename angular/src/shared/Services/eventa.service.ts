@@ -9,7 +9,7 @@ import { Event } from '../Models/Event';
 export class EventService {
   private baseUrl = "https://localhost:44311/api/services/app/Event/Create";
   private budgetUrl = "https://localhost:44311/api/services/app/BudgetExpenseAppServices/GetAll";
-
+ 
   constructor(private http: HttpClient) { }
   
 
@@ -20,4 +20,5 @@ export class EventService {
   // public getBudgetAmounts(): Observable<any> {
   //   return this.http.get<any>(this.budgetUrl);
   // }
+
 }
