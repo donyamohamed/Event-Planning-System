@@ -65,7 +65,7 @@
       </div>
   
       
-      <div class="connect-button">
+      <div class="connect-button" *ngIf="!isEventCreator">
         <button class="email" (click)="sendEmail(user?.emailAddress)">Connect</button>
       </div>
     </div>
