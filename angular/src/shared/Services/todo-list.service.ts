@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ToDoList } from '../Models/ToDoList';
-
+import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
 export class TodoListService {
-  private apiUrl = 'https://localhost:44311/api/services/app/ToDoCheckList';
+  private apiUrl = `${environment.API_URL_BASE_PART}/api/services/app/ToDoCheckList`;
 
   constructor(private http: HttpClient) { }
 

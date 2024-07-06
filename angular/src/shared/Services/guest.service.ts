@@ -5,28 +5,27 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { GuestGetResponse } from "@app/guest/guest-get-response";
 import { Observable } from "rxjs";
-
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: "root",
 })
 export class GuestService {
   private baseUrlForGetAll =
-    "https://localhost:44311/api/services/app/Guest/GetAll";
-  private baseUrlForGet = "https://localhost:44311/api/services/app/Guest/Get";
-  // private baseUrlForCreate =
-  //   "https://localhost:44311/api/services/app/Guest/Create";
+    `${environment.API_URL_BASE_PART}/api/services/app/Guest/GetAll`;
+  private baseUrlForGet = `${environment.API_URL_BASE_PART}/api/services/app/Guest/Get`;
+
   private baseUrlForCreate =
-    "https://localhost:44311/api/services/app/Guest/Add";
+    `${environment.API_URL_BASE_PART}/api/services/app/Guest/Add`;
   private baseUrlForDelete =
-    "https://localhost:44311/api/services/app/Guest/Delete";
+    `${environment.API_URL_BASE_PART}/api/services/app/Guest/Delete`;
   private baseUrlForUpdate =
-    "https://localhost:44311/api/services/app/Guest/Update";
+    `${environment.API_URL_BASE_PART}/api/services/app/Guest/Update`;
   private baseUrlForGetAllPerEvent =
-    "https://localhost:44311/api/services/app/Guest/GetEventGuests";
+    `${environment.API_URL_BASE_PART}/api/services/app/Guest/GetEventGuests`;
 
   private baseUrlforExcel = 
-    'https://localhost:44311/api/services/app/Guest/AddGuestsThroughExcelFile';
+    `${environment.API_URL_BASE_PART}/api/services/app/Guest/AddGuestsThroughExcelFile`;
 
   constructor(private httpClient: HttpClient) { }
 

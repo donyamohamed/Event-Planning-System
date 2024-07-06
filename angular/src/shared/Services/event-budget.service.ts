@@ -3,13 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
-
+import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
 export class EventBudgetService {
 
-  private apiUrl = 'https://localhost:44311/api/services/app/BudgetExpenseAppServices/Get';
+  private apiUrl = `${environment.API_URL_BASE_PART}/api/services/app/BudgetExpenseAppServices/Get`;
 
   constructor(private http: HttpClient) { }
 

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Interests } from '@shared/Models/interests';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -10,11 +11,11 @@ import { Interests } from '@shared/Models/interests';
 export class InterestsService {
 
   constructor(public http:HttpClient) { }
-  getUrl="https://localhost:44311/api/services/app/Interests/GetUserIntersts";
+  getUrl=`${environment.API_URL_BASE_PART}/api/services/app/Interests/GetUserIntersts`;
 
-  deleteUrl="https://localhost:44311/api/services/app/Interests/Delete";
-  GetAll="https://localhost:44311/api/services/app/Interests/GetAllInterests";
-  addUrl="https://localhost:44311/api/services/app/Interests/Add";
+  deleteUrl=`${environment.API_URL_BASE_PART}/api/services/app/Interests/Delete`;
+  GetAll=`${environment.API_URL_BASE_PART}/api/services/app/Interests/GetAllInterests`;
+  addUrl=`${environment.API_URL_BASE_PART}/api/services/app/Interests/Add`;
 
   public GetUserInterests(){
     return this.http.get<Interests>(this.getUrl);

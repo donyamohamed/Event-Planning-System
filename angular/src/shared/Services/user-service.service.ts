@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { CurrentUser } from '@shared/Models/current-user';
-
+import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private baseUrl = 'https://localhost:44311/api/services/app/User/GetUserById';
+  private baseUrl = `${environment.API_URL_BASE_PART}/api/services/app/User/GetUserById`;
 
   constructor(private http: HttpClient) {}
 

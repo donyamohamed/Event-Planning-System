@@ -3,19 +3,20 @@ import * as signalR from '@aspnet/signalr';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { TokenService } from 'abp-ng2-module';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChatService {
   private hubConnection: signalR.HubConnection;
-  private apiUrl = 'https://localhost:44311/api/services/app/ChatMessage'; // Update with your actual API URL
+  private apiUrl = `${environment.API_URL_BASE_PART}/api/services/app/ChatMessage`; // Update with your actual API URL
 
   constructor(private http: HttpClient, private _tokenService: TokenService) {}
 
   startConnection(): void {
     this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl('https://localhost:44311/chathub', {
+      .withUrl(`${environment.API_URL_BASE_PART}/chathub`, {
         accessTokenFactory: () => {
           return this._tokenService.getToken() || '';
         }

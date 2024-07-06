@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Event } from '../Models/Event';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EventService {
-  private baseUrl = "https://localhost:44311/api/services/app/Event/Create";
-  private budgetUrl = "https://localhost:44311/api/services/app/BudgetExpenseAppServices/GetAll";
+  private baseUrl = `${environment.API_URL_BASE_PART}/api/services/app/Event/Create`;
+
  
   constructor(private http: HttpClient) { }
   
@@ -17,8 +17,6 @@ export class EventService {
     return this.http.post<any>(this.baseUrl, eventData);
   }
 
-  // public getBudgetAmounts(): Observable<any> {
-  //   return this.http.get<any>(this.budgetUrl);
-  // }
+
 
 }

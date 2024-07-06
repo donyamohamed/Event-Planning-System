@@ -42,6 +42,18 @@ height: 560px;
   height:100%;
   border-radius: 5px;
 }
+.star-feedback {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #fff;
+  filter: blur(.5px);
+
+  padding: 2px 10px;
+}
+
+
 
 /* Event info container styles */
 .event-info {
@@ -144,13 +156,11 @@ height: 560px;
 .user-name span {
   color: rgb(149, 146, 146);
 }
-/* .location-icon{
-  color:#050794;
-} */
+
 
 .guest-number {
   text-align: left;
-  background-color: #fcc6bc;
+  background-color: #e2d2ff;
   padding: 8px !important;
   border-radius: 4px;
   font-size: 14px;
@@ -196,11 +206,7 @@ height: 560px;
   justify-content: space-between;
 
 }
-/* .copy-icon {
-  cursor: pointer;
-  border: none;
-  background: none;
-} */
+
 
 .share-icon {
   color: #050794;
@@ -208,14 +214,7 @@ height: 560px;
 }
 
 
-/* .link-forcopy span {
-  display: contents !important;
-} */
 
-/* #swal2-html-container .link-forcopy {
-  border-radius: 2px;
-  background-color: #c4c3c3;
-} */
 
 .buttons {
   display: flex;
@@ -226,21 +225,21 @@ height: 560px;
 }
 
 .btn:hover {
-  background-color: #1e90ff;
+  background-color: #f8b42c;
 }
 
 .btn-expense {
-  background-color: #F7931E;
+  background-color: #050794;
   color: white;
 }
 
 .btn-expense:hover {
-  background-color: #ff8c00;
+  background-color: #1e90ff;
 }
 
 .btn-todolist {
   color: white;
-  background-color: #050794;
+  background-color: #fbaf1b;
 }
 
 /* SweetAlert custom styles */
@@ -265,18 +264,9 @@ height: 560px;
   padding-right: 3rem;
 }
 
-/* .swal2-custom-popup .copy-icon {
-  right: 0.75rem;
-  top: 50%;
-  transform: translateY(-50%);
-  cursor: pointer;
-  color: #050794;
-} */
 
 .link-forcopy {
-  /* border: 1px solid rgb(161, 161, 161);
-  border-radius: 2px; */
-  /* background-color: rgb(149, 146, 146); */
+
   padding: 5px;
   display: flex;
   align-items: center;
@@ -316,6 +306,16 @@ height: 560px;
 .rating > i.half,
 .rating > i.empty {
   animation: fadeIn 0.5s ease-in-out, glow 0.5s infinite alternate;
+}
+
+.rating > i {
+  font-size: 1.5em;
+  margin: 5px;
+  color:#ffc107;
+  position: relative;
+  display: inline-block;
+  transition: color 0.3s ease, transform 0.3s ease;
+  animation: rotate 3s ease-in-out 1s infinite;
 }
 
 @keyframes fadeIn {
@@ -385,5 +385,17 @@ h3 .reviews{
   gap: 5px; /* Adjust the gap between stars */
 }
 
-.rating i {
-  color: #ffc107; /* Star color */}
+
+
+
+  @keyframes rotate {
+    0% {
+      transform: rotate(0deg);
+    }
+    50% {
+      transform: rotate(180deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Notifications, UpdateNotificationStatusDto, UpdateReminderStatusDto, UpdateReviewStatus } from '../Models/Notification';
-
+import { environment } from '../../environments/environment';
 interface ApiResponse<T> {
   result: T;
 }
@@ -16,21 +16,21 @@ interface Event {
   providedIn: 'root'
 })
 export class NotificationsService {
-  private URL = "https://localhost:44311/api/services/app/Notification/GetAllUserNotifications";
-  private UpcommingURL = "https://localhost:44311/api/services/app/Event/GetReminderOfUpcomming";
-  private UnreadCountURL = "https://localhost:44311/api/services/app/Notification/GetNotificationCount";
-  private UpdateUrl = 'https://localhost:44311/api/services/app/Notification/UpdateNotificationStatus';
-  private ReminderUnreadCount = "https://localhost:44311/api/services/app/Event/GetReminderCount";
-  private UpdateReminderStatusUrl = "https://localhost:44311/api/services/app/Event/UpdateReminderStatus";
-  private GetUserURL = "https://localhost:44311/api/services/app/User/Get?Id=";
-  private EventUrl = "https://localhost:44311/api/services/app/Event/Get?Id=";
-  private AcceptanceEmail = "https://localhost:44311/api/Invitation/SendAcceptanceEmail";
-  private RejectingEmail = "https://localhost:44311/api/Invitation/SendRejectionEmail";
-  private UserProfileUrl = "https://localhost:44311/api/services/app/UserProfileAppServices/GetUserProfile";
-  private NotificationsUrl = "https://localhost:44311/api/services/app/Notification/GetAskForInvitationNotifications";
-  private ReviewNotificationUrl="https://localhost:44311/api/services/app/Notification/GetNotificationOfEventReview";
-  private GetNotReviewedCountUrl='https://localhost:44311/api/services/app/Notification/GetCountOfNotReviewedUserEvents' ;
-  private UpdateIsReviewTakenUrl="https://localhost:44311/api/services/app/Notification/UpdateIsReviewdStatus";
+  private URL = `${environment.API_URL_BASE_PART}/api/services/app/Notification/GetAllUserNotifications`;
+  private UpcommingURL = `${environment.API_URL_BASE_PART}/api/services/app/Event/GetReminderOfUpcomming`;
+  private UnreadCountURL = `${environment.API_URL_BASE_PART}/api/services/app/Notification/GetNotificationCount`;
+  private UpdateUrl = `${environment.API_URL_BASE_PART}/api/services/app/Notification/UpdateNotificationStatus`;
+  private ReminderUnreadCount = `${environment.API_URL_BASE_PART}/api/services/app/Event/GetReminderCount`;
+  private UpdateReminderStatusUrl = `${environment.API_URL_BASE_PART}/api/services/app/Event/UpdateReminderStatus`;
+  private GetUserURL = `${environment.API_URL_BASE_PART}/api/services/app/User/Get?Id=`;
+  private EventUrl = `${environment.API_URL_BASE_PART}/api/services/app/Event/Get?Id=`;
+  private AcceptanceEmail = `${environment.API_URL_BASE_PART}/api/Invitation/SendAcceptanceEmail`;
+  private RejectingEmail = `${environment.API_URL_BASE_PART}/api/Invitation/SendRejectionEmail`;
+  private UserProfileUrl = `${environment.API_URL_BASE_PART}/api/services/app/UserProfileAppServices/GetUserProfile`;
+  private NotificationsUrl = `${environment.API_URL_BASE_PART}/api/services/app/Notification/GetAskForInvitationNotifications`;
+  private ReviewNotificationUrl=`${environment.API_URL_BASE_PART}/api/services/app/Notification/GetNotificationOfEventReview`;
+  private GetNotReviewedCountUrl=`${environment.API_URL_BASE_PART}/api/services/app/Notification/GetCountOfNotReviewedUserEvents` ;
+  private UpdateIsReviewTakenUrl=`${environment.API_URL_BASE_PART}/api/services/app/Notification/UpdateIsReviewdStatus`;
 
   constructor(private http: HttpClient) { }
 

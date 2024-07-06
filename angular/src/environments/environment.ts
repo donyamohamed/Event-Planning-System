@@ -6,5 +6,10 @@
 export const environment = {
     production: false,
     hmr: false,
-    appConfig: 'appconfig.json'
+    appConfig: 'appconfig.json',
+    Angular_URL: 'http://localhost:4200',
+    API_URL_BASE_PART: 'https://localhost:44311'
 };
+
+//azure : https://events.azurewebsites.net
+//local : https://localhost:44311
