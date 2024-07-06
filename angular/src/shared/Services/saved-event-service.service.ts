@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
+import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
 export class SavedEventServiceService {
 
-  private baseUrl = 'https://localhost:44311/api/services/app/FavouriteEvent';
+  private baseUrl = `${environment.API_URL_BASE_PART}/api/services/app/FavouriteEvent`;
 
   constructor(private http: HttpClient) { }
 
