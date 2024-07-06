@@ -2,42 +2,62 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SavedEventServiceService } from './../../shared/Services/saved-event-service.service';
 import { EventdetailsService } from './../../shared/Services/eventdetails.service';
+import { CurrentUserDataService } from './../../shared/Services/current-user-data.service'; // Import the service
 import { Observable, forkJoin } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { SidebarEventComponent } from "../layout/sidebar-event/sidebar-event.component";
 import { GuestService } from './../../shared/Services/guest.service';
 import { Router, RouterLink } from '@angular/router';
+
 @Component({
   selector: 'app-savedevents',
   standalone: true,
-  imports: [CommonModule,SidebarEventComponent,RouterLink],
+  imports: [CommonModule, SidebarEventComponent, RouterLink],
   templateUrl: './savedevents.component.html',
   styleUrls: ['./savedevents.component.css']
 })
 export class SavedeventsComponent implements OnInit {
 
   savedEvents$: Observable<any>;
-  eventDetails$: Observable<any>; // Declared as a property
+  eventDetails$: Observable<any>;
   isLoading: boolean = true;
-  events: any[] = []; // Placeholder for event data
-  isLoggedIn: boolean = true; // Placeholder for login status
-  enumeratorKeys: string[] = ['Music', 'Sports', 'Arts']; // Placeholder for categories
+  events: any[] = [];
+  isLoggedIn: boolean = true;
+  enumeratorKeys: string[] = ['Music', 'Sports', 'Arts'];
+  userId: number; // Add a property to store the userId
 
   constructor(
     private savedEventService: SavedEventServiceService,
     private eventService: EventdetailsService,
-    private router:Router,
-    private guestService:GuestService,
+    private currentUserDataService: CurrentUserDataService, // Inject the service
+    private router: Router,
+    private guestService: GuestService,
     private cdr: ChangeDetectorRef,
   ) { }
 
   ngOnInit(): void {
-    this.loadSavedEvents();
+    this.getCurrentUserId(); // Call the method to get the current user's ID
+  }
+
+  getCurrentUserId(): void {
+    this.currentUserDataService.GetCurrentUserData().subscribe(
+      response => {
+        if (response) {
+          this.userId = response.id;
+          console.log('User ID:', this.userId);
+          this.loadSavedEvents(); // Call loadSavedEvents after getting userId
+        } else {
+          console.error('No user data found');
+        }
+      },
+      error => {
+        console.error('Error fetching user data', error);
+      }
+    );
   }
 
   loadSavedEvents(): void {
-    const userId = 1;  // Replace this with the actual logic to get the logged-in user's ID
-    this.savedEvents$ = this.savedEventService.getSavedEvents(userId);
+    this.savedEvents$ = this.savedEventService.getSavedEvents(this.userId);
     this.savedEvents$.pipe(
       switchMap(response => {
         const eventIds = response.result.map((savedEvent: { eventId: any; }) => savedEvent.eventId);
@@ -59,17 +79,15 @@ export class SavedeventsComponent implements OnInit {
   getEventDetails(eventId: number): void {
     this.eventDetails$ = this.eventService.getEventById(eventId);
     console.log(this.eventDetails$);
-    
   }
+
   checkMaxCountAndGuests(): void {
     this.events.forEach(event => {
       this.guestService.getGuestsPerEvent(event.id).subscribe(
         (response) => {
           const guests = response.result;
           const guestCount = guests.length;
-          // Dynamically add isButtonDisabled property
           (event as any).isButtonDisabled = event.maxCount === guestCount;
-          // Trigger change detection manually
           this.cdr.detectChanges();
         },
         (error) => {
@@ -78,14 +96,15 @@ export class SavedeventsComponent implements OnInit {
       );
     });
   }
+
   askForInvitation(event: Event): void {
-    // this.getUserData().subscribe(
+    // this.currentUserDataService.GetCurrentUserData().subscribe(
     //   response => {
-    //     if (response && response.result) {
+    //     if (response) {
     //       console.log(response);
-    //       this.username = response.result.name;
-    //       this.guestId = response.result.id;
-    //       this.guestEmail = response.result.email;
+    //       this.username = response.name;
+    //       this.guestId = response.id;
+    //       this.guestEmail = response.email;
     //       this.checkIfAlreadyRequested(event);
     //     } else {
     //       this.saveEventDataToSession(event);
@@ -99,9 +118,9 @@ export class SavedeventsComponent implements OnInit {
     //   }
     // );
   }
- 
+
   details(event: any): void {
-    console.log('Event object:', event); // Log the event object to verify its structure
+    console.log('Event object:', event);
     if (event && event.id) {
       this.router.navigateByUrl("app/eventDetails/" + event.id, { state: { event } });
     } else {
@@ -109,8 +128,7 @@ export class SavedeventsComponent implements OnInit {
     }
   }
 
-  navigateToComponent(userId: number): void {
-    // Implement navigation logic here
-    console.log('Navigate to user:', userId);
+  navigateToComponent(id: number): void {
+    this.router.navigateByUrl(`/app/Chat/${id}`);
   }
 }
