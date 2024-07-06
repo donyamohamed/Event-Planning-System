@@ -44,6 +44,7 @@ export class PublicEventsComponent implements OnInit {
     this.fetchUserEvents();
 
 
+
     // Check if there's a saved event after login
     const savedEvent = sessionStorage.getItem('selectedEvent');
     if (savedEvent) {
