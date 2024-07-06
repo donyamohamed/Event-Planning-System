@@ -1,5 +1,5 @@
 
-import { Component, OnInit, TemplateRef, ChangeDetectionStrategy } from "@angular/core";
+import { Component, OnInit, TemplateRef, ChangeDetectionStrategy,Renderer2 } from "@angular/core";
 
 import { CurrentUserDataService } from "@shared/Services/current-user-data.service";
 import { InterestsService } from "@shared/Services/interests.service";
@@ -110,12 +110,20 @@ export class UserProfileComponent implements OnInit {
   constructor(
     private _userService: CurrentUserDataService,
     private modalService: BsModalService,
-    private interestsService: InterestsService
+    private interestsService: InterestsService,
+    private renderer: Renderer2
 
   ) { }
   AllExistingInterests: any;
 
   ngOnInit(): void {
+    this.setBodyStyles();
+
+   
+    window.addEventListener('resize', () => {
+      this.setBodyStyles();
+    });
+
     this._userService.GetCurrentUserData().subscribe({
       next: (u: CurrentUser) => {
         console.log("User data loaded:", u);
@@ -159,7 +167,18 @@ export class UserProfileComponent implements OnInit {
   Wedding,
   Gathering,
   Other */
+  setBodyStyles(): void {
+    if (window.innerWidth < 768) {
+      this.renderer.setStyle(document.body, 'min-height', '200vh');
+     
 
+    } else {
+      this.renderer.setStyle(document.body, 'min-height', '130vh');
+    
+
+    }
+    this.renderer.setStyle(document.body, 'position', 'relative');
+  }  
   getStatusLabel(status: number): string {
     switch (status) {
       case 0:

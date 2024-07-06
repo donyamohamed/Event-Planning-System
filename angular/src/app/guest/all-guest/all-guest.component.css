@@ -132,3 +132,15 @@
   background-color: #a8a8a8;
   cursor: not-allowed;
 }
+
+.form-check-input {
+   position: relative !important;
+  margin-top: .0 !important;
+   margin-left: 0 !important;
+  }
+/* .sendAll{
+
+} */
+.form-check-inputt:checked[type=checkbox] tr{
+  background-color: #eee !important;
+}

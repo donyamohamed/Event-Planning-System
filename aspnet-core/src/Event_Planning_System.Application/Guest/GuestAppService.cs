@@ -30,6 +30,7 @@ using System.Threading.Tasks;
 using Abp.Runtime.Validation;
 using Abp.Collections.Extensions;
 using System.Text.RegularExpressions;
+using Castle.Core.Internal;
 
 namespace Event_Planning_System.Guest
 {
@@ -359,6 +360,33 @@ namespace Event_Planning_System.Guest
             if (existingGuest != null)
             {
                 throw new AbpValidationException("Email address already exists.");
+            }
+        }
+        public async Task DeleteAllGuests(int eventId, int?[] ids)
+        {
+            var guests = await GetEventGuestsAsync(eventId);
+
+            if (guests != null)
+            {
+                if (ids == null || ids.Length == 0)
+                {
+                    foreach (var guest in guests)
+                    {
+                        await _repository.DeleteAsync(guest.Id);
+                    }
+                }
+                else
+                {
+                    // Delete guests with specific IDs
+                    foreach (var id in ids)
+                    {
+                        var guestToDelete = guests.FirstOrDefault(g => g.Id == id);
+                        if (guestToDelete != null)
+                        {
+                            await _repository.DeleteAsync(guestToDelete.Id);
+                        }
+                    }
+                }
             }
         }
     }

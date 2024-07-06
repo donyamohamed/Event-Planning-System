@@ -2,6 +2,8 @@ footer {
     background-color: #050794;
     color: white;
     font-family: Tahoma;
+    /* position: absolute;
+    bottom: 0px; */
 }
 
 footer ul {

@@ -11,22 +11,20 @@ import { Observable } from "rxjs";
   providedIn: "root",
 })
 export class GuestService {
-  private baseUrlForGetAll =
-    "https://localhost:44311/api/services/app/Guest/GetAll";
-  private baseUrlForGet = "https://localhost:44311/api/services/app/Guest/Get";
-  // private baseUrlForCreate =
-  //   "https://localhost:44311/api/services/app/Guest/Create";
-  private baseUrlForCreate =
-    "https://localhost:44311/api/services/app/Guest/Add";
-  private baseUrlForDelete =
-    "https://localhost:44311/api/services/app/Guest/Delete";
+  private baseUrl= 'https://localhost:44311/api/services/app/Guest/'
+  private baseUrlForGetAll =`${this.baseUrl}GetAll`;
+  private baseUrlForGet = `${this.baseUrl}Get`;
+  // private baseUrlForCreate = `${this.baseUrl}Create`;
+  private baseUrlForCreate =`${this.baseUrl}Add`;
+  private baseUrlForDelete =`${this.baseUrl}Delete`;
   private baseUrlForUpdate =
-    "https://localhost:44311/api/services/app/Guest/Update";
+    `${this.baseUrl}Update`;
   private baseUrlForGetAllPerEvent =
-    "https://localhost:44311/api/services/app/Guest/GetEventGuests";
+    `${this.baseUrl}GetEventGuests`;
 
   private baseUrlforExcel = 
-    'https://localhost:44311/api/services/app/Guest/AddGuestsThroughExcelFile';
+    `${this.baseUrl}AddGuestsThroughExcelFile`;
+    private baseUrlDeleteAll=`${this.baseUrl}DeleteAllGuests` //?eventId=15&ids=21&ids=20
 
   constructor(private httpClient: HttpClient) { }
 
@@ -68,5 +66,14 @@ export class GuestService {
     return this.httpClient.delete(
       url
     );
+  }
+  public deleteAllGuest(eventId: number, ids:number[] | null=null) {
+    var url;
+    if (ids?.length === 0 || ids === null) {
+      url = `${this.baseUrlDeleteAll}?eventId=${eventId}`;
+    } else {
+      url = `${this.baseUrlDeleteAll}?eventId=${eventId}&ids=${ids.join('&ids=')}`;
+    }
+    return this.httpClient.delete(url);
   }
 }
