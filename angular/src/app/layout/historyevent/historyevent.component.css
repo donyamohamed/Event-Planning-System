@@ -4,6 +4,9 @@ body {
     margin: 0;
     padding: 0;
 }
+.container1{
+    min-height: 80vh;
+}
 .main-container{
     /* width:calc(100% - 270px);
     margin-left:140px; */

@@ -285,7 +285,9 @@ height: 560px;
 
 .buttons{
   display:flex;
-  justify-content:center;
+  justify-content:space-between;
+  width: 80%;
+  margin: 10px auto;
   align-items:center;
   gap:10px;
 }
