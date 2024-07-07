@@ -12,6 +12,8 @@ import { CurrentUserDataService } from '@shared/Services/current-user-data.servi
 import Swal from 'sweetalert2';
 import { Feedback } from '@shared/Models/feedback';
 import { forkJoin, map } from 'rxjs';
+import { SavedEventServiceService } from '../../../shared/Services/saved-event-service.service'; 
+import { SavedEventData } from '../../../shared/Models/SavedEventData';
 
 @Component({
   selector: 'app-event-details',
@@ -20,6 +22,8 @@ import { forkJoin, map } from 'rxjs';
   standalone: true,
   imports: [CommonModule, RouterLink, FormsModule, SharedModule]
 })
+
+
 export class EventDetailsComponent implements OnInit {
   event: Event | undefined;
   eventId: number | undefined;
@@ -31,6 +35,8 @@ export class EventDetailsComponent implements OnInit {
   stars: { type: string, title: string }[] = [];
   numberOfRaters: number | undefined;
   feedbackList: Feedback[] = [];
+  isEventSaved: boolean = false; 
+ 
 
   constructor(
     private route: ActivatedRoute,
@@ -39,7 +45,8 @@ export class EventDetailsComponent implements OnInit {
     private eventBudgetService: EventBudgetService,
     private userService: UserService,
     private currentUserData: CurrentUserDataService,
-    private feedbackServ: FeedbackService
+    private feedbackServ: FeedbackService,
+    private savedEventService: SavedEventServiceService 
   ) { }
 
   ngOnInit(): void {
@@ -246,5 +253,35 @@ export class EventDetailsComponent implements OnInit {
         }
       );
     }
+  }
+  toggleSavedEvent(): void {
+    this.isEventSaved = !this.isEventSaved;
+    if (this.isEventSaved) {
+      this.saveEvent();
+    } else {
+      this.removeEventFromSaved();
+    }
+  }
+
+  saveEvent(): void {
+    if (this.event && this.loggedInUserId) {
+      const savedEventData: SavedEventData = {
+        eventId: this.event.id,
+        userId: this.loggedInUserId
+      };
+
+      this.savedEventService.createSavedEvent(savedEventData).subscribe(
+        response => {
+          console.log('Event saved successfully:', response);
+        },
+        error => {
+          console.error('Error saving event:', error);
+        }
+      );
+    }
+  }
+  removeEventFromSaved(): void {
+    console.log("Event removed from saved list.");
+    // Implement your logic to remove the event from the saved list
   }
 }
