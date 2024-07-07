@@ -2,7 +2,7 @@ import { Component, Injector, OnInit, Renderer2 } from '@angular/core';
 import { AppComponentBase } from '@shared/app-component-base';
 import { SignalRAspNetCoreHelper } from '@shared/helpers/SignalRAspNetCoreHelper';
 import { LayoutStoreService } from '@shared/layout/layout-store.service';
-import {LocalStorageServiceService} from './../shared/Services/local-storage-service.service';
+import {LocalStorageServiceService} from '../shared/Services/local-storage-service.service';
 
 @Component({
   templateUrl: './app.component.html'

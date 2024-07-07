@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { EventsResponse } from '@app/home/eventInterface';
 import { map, Observable } from 'rxjs';
-import { Enumerator } from "../../shared/Models/Event";
+import { Enumerator } from "../Models/Event";
 import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root'

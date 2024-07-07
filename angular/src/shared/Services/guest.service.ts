@@ -1,6 +1,6 @@
-import { GuestResponse } from "./../../app/guest/guest-response.model";
-import { GuestPerEventResponse } from "./../../app/guest/guest-per-event-response";
-import { Guest } from "./../Models/guest";
+import { GuestResponse } from "../../app/guest/guest-response.model";
+import { GuestPerEventResponse } from "../../app/guest/guest-per-event-response";
+import { Guest } from "../Models/guest";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { GuestGetResponse } from "@app/guest/guest-get-response";

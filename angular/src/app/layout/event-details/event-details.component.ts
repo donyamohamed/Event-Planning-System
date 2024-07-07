@@ -1,4 +1,4 @@
-import { FeedbackService } from './../../../shared/Services/feedback.service';
+import { FeedbackService } from '../../../shared/Services/feedback.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { EventdetailsService } from '../../../shared/Services/eventdetails.service';
