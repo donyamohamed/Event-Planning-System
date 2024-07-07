@@ -1,5 +1,6 @@
+<app-sidebar-event class="sidebar "></app-sidebar-event>
 <div class="events m-2 p-2 container">
-    <app-sidebar-event class="sidebar "></app-sidebar-event>
+    
     <div class="card-container">
   
       <div *ngFor="let event of events" class="card" [ngStyle]="{'background-image': 'url(' + (event.result.eventImg ? event.result.eventImg : '../../assets/img/Event.jpg') + ')'}">
