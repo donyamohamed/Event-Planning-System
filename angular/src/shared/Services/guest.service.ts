@@ -26,6 +26,8 @@ export class GuestService {
 
   private baseUrlforExcel = 
     `${environment.API_URL_BASE_PART}/api/services/app/Guest/AddGuestsThroughExcelFile`;
+    private baseUrlDeleteAll=`${environment.API_URL_BASE_PART}/api/services/app/Guest/DeleteAllGuests` //?eventId=15&ids=21&ids=20
+
 
   constructor(private httpClient: HttpClient) { }
 
@@ -67,5 +69,14 @@ export class GuestService {
     return this.httpClient.delete(
       url
     );
+  }
+  public deleteAllGuest(eventId: number, ids:number[] | null=null) {
+    var url;
+    if (ids?.length === 0 || ids === null) {
+      url = `${this.baseUrlDeleteAll}?eventId=${eventId}`;
+    } else {
+      url = `${this.baseUrlDeleteAll}?eventId=${eventId}&ids=${ids.join('&ids=')}`;
+    }
+    return this.httpClient.delete(url);
   }
 }

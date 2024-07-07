@@ -30,6 +30,8 @@ using System.Threading.Tasks;
 using Abp.Runtime.Validation;
 using Abp.Collections.Extensions;
 using System.Text.RegularExpressions;
+using Castle.Core.Internal;
+using Event_Planning_System.Email;
 
 namespace Event_Planning_System.Guest
 {
@@ -41,9 +43,10 @@ namespace Event_Planning_System.Guest
         private readonly IMapper _mapper;
         private readonly IRepository<User, long> _userRepository;
         private readonly IRepository<Enitities.Event, int> repositoryEvent;
+        private readonly EmailService _emailService;
 
 
-        public GuestAppService(IRepository<Enitities.Guest, int> repository, IRepository<User, long> userRepository, IRepository<Enitities.Event, int> repositoryEvent, IMapper mapper) : base(repository)
+        public GuestAppService(IRepository<Enitities.Guest, int> repository, IRepository<User, long> userRepository, IRepository<Enitities.Event, int> repositoryEvent, IMapper mapper, EmailService emailService) : base(repository)
 
         {
             _repository = repository;
@@ -52,6 +55,7 @@ namespace Event_Planning_System.Guest
             _mapper = mapper;
             _userRepository = userRepository;
             _userRepository = userRepository;
+            _emailService = emailService;
         }
 
         public async Task<List<GuestDto>> GetEventGuestsAsync(int eventId)
@@ -361,5 +365,57 @@ namespace Event_Planning_System.Guest
                 throw new AbpValidationException("Email address already exists.");
             }
         }
+        public async Task DeleteAllGuests(int eventId, int?[] ids)
+        {
+            var guests = await GetEventGuestsAsync(eventId);
+
+            if (guests != null)
+            {
+                if (ids == null || ids.Length == 0)
+                {
+                    foreach (var guest in guests)
+                    {
+                        await _repository.DeleteAsync(guest.Id);
+                    }
+                }
+                else
+                {
+                    // Delete guests with specific IDs
+                    foreach (var id in ids)
+                    {
+                        var guestToDelete = guests.FirstOrDefault(g => g.Id == id);
+                        if (guestToDelete != null)
+                        {
+                            await _repository.DeleteAsync(guestToDelete.Id);
+                        }
+                    }
+                }
+            }
+        }
+        public async Task<int> SendToAllGuests(int eventId, int?[] ids)
+        {
+            var guests = await GetEventGuestsAsync(eventId);
+            int invitationCount = 0;
+
+            if (guests.Any())
+            {
+                var guestsToSend = ids == null || ids.Length == 0 ? guests : guests.Where(g => ids.Contains(g.Id));
+
+                foreach (var guest in guestsToSend)
+                {
+                    if (guest.InvitationState == "Sent")
+                    {
+                        continue;
+                    }
+                   // var htmlBody = EmailTemplate.GetInvitationEmail(emailRequest.E//ventName, emailRequest.Date, emailRequest.EventAddress, emailRequest.EventImage);
+                    await _emailService.SendEmailAsync(guest.Email, "Invitation to the event", "Dear Guest, you are invited to the event");
+                    guest.InvitationState = "Sent";
+                    await _repository.InsertOrUpdateAsync(MapToEntity(guest));
+                    invitationCount++;
+                }
+            }
+
+            return invitationCount;
+        }
     }
-}
+    }

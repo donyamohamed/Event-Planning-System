@@ -400,6 +400,8 @@ h3 .reviews{
   gap: 5px; /* Adjust the gap between stars */
 }
 
+.rating i {
+  color: #ffc107; /* Star color */}
 
 
 
