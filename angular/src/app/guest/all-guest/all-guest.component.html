@@ -1,9 +1,7 @@
-<div>
-  <h3>{{eventname}} Event</h3>
-</div>
 <div class="card container p-3 tableDiv shadow-lg">
-  <div class="btnDiv">
+  <div class="btnDiv d-flex justify-content-between">
     <button class="btn" [disabled]="guestCount >= maxCountOfGuest" (click)="openModal(AddModal)"><i class="fa-solid fa-user-plus"></i> {{"Add Guest"|localize}}</button>
+    <h5 class="eventName">Event name: {{eventname}}</h5>
   </div>
   <div class="text-center imageDiv">
     <img src="../../../assets/img/guests.svg" alt="">
@@ -16,9 +14,7 @@
     <div class="buttons">
       <div class="d-flex">
         <div class=" sendInvitation text-dark">
-          Send Invitation By:
-          <button class="btn" [disabled]="isCheckedAllDisabled"><i class="fa-solid fa-comment-sms"></i> SMS</button> |
-          <button class="btn" [disabled]="isCheckedAllDisabled"><i class="fa-solid fa-envelope"></i> Email</button>
+          <button class="btn" [disabled]="isCheckedAllDisabled" (click)="sendAll()"><i class="fa-solid fa-envelope"></i> Email</button>
         </div>
         <button class="btn btn-danger" id="deleteAll"  [disabled]="isCheckedAllDisabled" (click)="deleteAll()"><i class="fa-regular fa-trash-can text-light" aria-hidden="true"></i></button>
       </div>

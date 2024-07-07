@@ -9,7 +9,7 @@ import {
 } from '@shared/service-proxies/service-proxies';
 import { accountModuleAnimation } from '@shared/animations/routerTransition';
 import { AppAuthService } from '@shared/auth/app-auth.service';
-import { GoogleAuthService } from '../../shared/services/google-auth.service';
+import { GoogleAuthService } from '../../shared/Services/google-auth.service';
 
 
 declare var gapi: any;  

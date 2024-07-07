@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { GoogleAuthService } from '../../shared/services/google-auth.service';
+import { GoogleAuthService } from '../../shared/Services/google-auth.service';
 import { NotifyService } from 'abp-ng2-module';
 
 @Component({

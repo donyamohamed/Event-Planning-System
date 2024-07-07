@@ -144,3 +144,6 @@
 .form-check-inputt:checked[type=checkbox] tr{
   background-color: #eee !important;
 }
+.eventName{
+  color: #050794;
+}

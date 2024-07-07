@@ -27,6 +27,12 @@ export class ExpensesService {
   deleteExpense(id: number): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/Delete?id=${id}`);
   }
+  // reportExpense(): Observable<any> {
+  //   return this.http.get<any>(`${this.apiUrl}/GetExpenseForAllEvent`);
+  // }
+  reportExpense(): Observable<{[key: string]: Expenses[]}> {
+    return this.http.get<{[key: string]: Expenses[]}>(`${this.apiUrl}/GetExpenseForAllEvent`);
+  }
 
 
 }
