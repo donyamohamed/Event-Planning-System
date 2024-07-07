@@ -5,13 +5,14 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { forkJoin, of } from 'rxjs';
 import { switchMap, map, catchError } from 'rxjs/operators';
+import { SharedModule } from "../../../shared/shared.module";
 
 @Component({
-  selector: 'app-invitation-state',
-  templateUrl: './invitation-state.component.html',
-  styleUrls: ['./invitation-state.component.css'],
-  standalone: true,
-  imports: [CommonModule, FormsModule]
+    selector: 'app-invitation-state',
+    templateUrl: './invitation-state.component.html',
+    styleUrls: ['./invitation-state.component.css'],
+    standalone: true,
+    imports: [CommonModule, FormsModule, SharedModule]
 })
 export class InvitationStateComponent implements OnInit {
   notifications: Notifications[] = [];
