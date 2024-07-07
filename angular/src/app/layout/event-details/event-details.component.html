@@ -28,8 +28,17 @@
 <div class="event-info">
   <div class="ticket-sales-info">
     <div><span>Ticket sales end soon</span></div>
-    <div class="share-icon"> <i class="fa-solid fa-arrow-up-from-bracket" (click)="openShareAlert()"></i></div>
+    <div class="icons">
+      <!-- <i class="fa" [ngClass]="isEventSaved ? 'fa-bookmark' : 'fa-bookmark-o'" (click)="toggleSavedEvent()"></i> -->
+     <!-- event-details.component.html -->
+     <i class="fa-bookmark bookmark-icon"
+     [ngClass]="{'fa-regular': !isEventSaved, 'fa-solid f1': isEventSaved, }"
+     (click)="toggleSavedEvent()">
+  </i>  
+      <i class="fa-solid fa-arrow-up-from-bracket" (click)="openShareAlert()" style="margin-left:10px;"></i>
+    </div>
   </div>
+  
   
   <div class="date-category">
     <div class="date">
@@ -70,6 +79,15 @@
           <div>
             <h6><span class="mr-2"><i class="fa-solid fa-user-group"></i></span>{{ event?.maxCount }} </h6> 
             <span>attendees hosted</span>
+          </div>
+          <div class="star-feedback">
+            <div class="rating">
+              <ng-container *ngFor="let star of stars">
+                <i *ngIf="star.type === 'full'" class="fa-solid fa-star text-warning" title="{{ star.title }}"></i>
+                <i *ngIf="star.type === 'half'" class="fa-regular fa-star-half-stroke text-warning" title="{{ star.title }}"></i>
+                <i *ngIf="star.type === 'empty'" class="fa-regular fa-star" title="{{ star.title }}"></i>
+              </ng-container>
+            </div>          
           </div>
         
         </div>

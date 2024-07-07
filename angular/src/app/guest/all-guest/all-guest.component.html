@@ -1,6 +1,9 @@
+<div>
+  <h3>{{eventname}} Event</h3>
+</div>
 <div class="card container p-3 tableDiv shadow-lg">
   <div class="btnDiv">
-    <button class="btn" (click)="openModal(AddModal)"><i class="fa-solid fa-user-plus"></i> {{"Add Guest"|localize}}</button>
+    <button class="btn" [disabled]="guestCount >= maxCountOfGuest" (click)="openModal(AddModal)"><i class="fa-solid fa-user-plus"></i> {{"Add Guest"|localize}}</button>
   </div>
   <div class="text-center imageDiv">
     <img src="../../../assets/img/guests.svg" alt="">
@@ -10,6 +13,16 @@
     <div class="GuestCount text-center">
       <p class="pt-1">{{"No. Guests:" | localize}} <span class="acutal-GuestCount">{{guestCount}}</span></p>
     </div>
+    <div class="buttons">
+      <div class="d-flex">
+        <div class=" sendInvitation text-dark">
+          Send Invitation By:
+          <button class="btn" [disabled]="isCheckedAllDisabled"><i class="fa-solid fa-comment-sms"></i> SMS</button> |
+          <button class="btn" [disabled]="isCheckedAllDisabled"><i class="fa-solid fa-envelope"></i> Email</button>
+        </div>
+        <button class="btn btn-danger" id="deleteAll"  [disabled]="isCheckedAllDisabled" (click)="deleteAll()"><i class="fa-regular fa-trash-can text-light" aria-hidden="true"></i></button>
+      </div>
+    </div>
   </div>
 
   <div>
@@ -17,6 +30,7 @@
       <table id="guestTable" class="table table-hover table-borderless align-middle text-center">
         <thead class="table-light">
           <tr class="text-capitalize">
+            <th><input type="checkbox" class="form-check-input" id="checkAll" name="checkAll" /></th>
             <th>{{"ID" |localize}}</th>
             <th>{{"Name"|localize}}</th>
             <th>{{"Email"|localize}}</th>
@@ -28,6 +42,7 @@
         </thead>
         <tbody class="table-group-divider">
           <tr class="" *ngFor="let item of guests; let i=index">
+            <td><input type="checkbox" class="form-check-input" name="send" [value]="item.id"/></td>
             <td scope="row"> {{i+1}}</td>
             <td>{{item.name}}</td>
             <td>{{item.email}}</td>
@@ -146,7 +161,7 @@
   <div class="modal-body add-btns">
     <div class=" m-2">
       Add One by one: 
-      <button class="btn btn-secondary" (click)="openModal(template)" [disabled]="guestCount >= maxCountOfGuest"><i class="fa-solid fa-user-plus"></i> </button>
+      <button class="btn btn-secondary" [disabled]="guestCount >= maxCountOfGuest" (click)="openModal(template)" ><i class="fa-solid fa-user-plus"></i> </button>
     </div>
     <div class=" m-2">
       Add from excel:
