@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewChecked, ViewChild, ElementRef } from '@angular/core';
-import { ChatService } from '@shared/Services/chat.service';
+import { ChatService } from '@shared/services/chat.service';
 import { ActivatedRoute } from '@angular/router';
 import { AppSessionService } from '@shared/session/app-session.service';
 

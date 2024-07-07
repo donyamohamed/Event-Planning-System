@@ -1,7 +1,7 @@
 import { Subscription } from 'rxjs';
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { GuestService } from '@shared/Services/guest.service';
+import { GuestService } from '@shared/services/guest.service';
 import { Guest } from '@shared/Models/guest';
 import { ActivatedRoute, Router } from '@angular/router';
 import { template } from 'lodash-es';

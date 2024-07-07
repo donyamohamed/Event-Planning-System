@@ -1,6 +1,6 @@
 // src/app/upcoming-events/upcoming-events.component.ts
 import { Component, OnInit } from '@angular/core';
-import { UserEventsService } from '@shared/Services/user-events.service';
+import { UserEventsService } from '@shared/services/user-events.service';
 import { AppSessionService } from '@shared/session/app-session.service';
 import { Event } from '../../../../shared/Models/Event';
 import { CommonModule } from '@angular/common';

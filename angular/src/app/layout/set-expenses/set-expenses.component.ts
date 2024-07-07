@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ExpensesService } from '../../../shared/Services/expenses.service';
+import { ExpensesService } from '../../../shared/services/expenses.service';
 import { AppSessionService } from '@shared/session/app-session.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';

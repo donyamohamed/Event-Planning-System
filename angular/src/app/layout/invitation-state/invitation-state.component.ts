@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NotificationsService } from '../../../shared/Services/notificatios.service';
+import { NotificationsService } from '../../../shared/services/notificatios.service';
 import { Notifications, NotificationStatus } from '../../../shared/Models/Notification';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';

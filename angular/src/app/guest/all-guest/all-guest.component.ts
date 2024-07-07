@@ -1,12 +1,14 @@
 import { result } from 'lodash-es';
 import { GuestResponse } from "./../guest-response.model";
-import { InvitationService } from "../../../shared/Services/invitation.service";
+
+import { InvitationService } from "../../../shared/services/invitation.service";
+
 import { Component, OnDestroy, OnInit, TemplateRef } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import swal from "sweetalert2";
 
 import { Subscription } from "rxjs";
-import { GuestService } from "../../../shared/Services/guest.service";
+import { GuestService } from "../../../shared/services/guest.service";
 import { Guest } from "../../../shared/Models/guest";
 import {
   ActivatedRoute,
@@ -31,7 +33,7 @@ import { EmailRequest } from "../../../shared/Models/EmailRequest";
 import { Event } from "../../../shared/Models/Event";
 import { SmsRequest } from "@shared/Models/Sms";
 import { SharedModule } from "../../../shared/shared.module";
-import { EventdetailsService } from "@shared/Services/eventdetails.service";
+import { EventdetailsService } from "@shared/services/eventdetails.service";
 import { EventResponse } from "../event-response";
 import { L } from "@fullcalendar/list/internal-common";
 
