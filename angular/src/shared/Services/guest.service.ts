@@ -27,6 +27,7 @@ export class GuestService {
   private baseUrlforExcel = 
     `${environment.API_URL_BASE_PART}/api/services/app/Guest/AddGuestsThroughExcelFile`;
     private baseUrlDeleteAll=`${environment.API_URL_BASE_PART}/api/services/app/Guest/DeleteAllGuests` //?eventId=15&ids=21&ids=20
+    private baseUrlSendAll=`${environment.API_URL_BASE_PART}/api/services/app/Guest/SendEmailsToEventGuests`//?eventId=21 //?eventId=15&ids=21&ids=20
 
 
   constructor(private httpClient: HttpClient) { }
@@ -78,5 +79,9 @@ export class GuestService {
       url = `${this.baseUrlDeleteAll}?eventId=${eventId}&ids=${ids.join('&ids=')}`;
     }
     return this.httpClient.delete(url);
+  }
+  public sendAllGuest(eventId: number) {
+    const url= `${this.baseUrlSendAll}?eventId=${eventId}`;
+    return this.httpClient.post<number>(url,eventId);
   }
 }
