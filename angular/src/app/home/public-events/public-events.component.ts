@@ -46,7 +46,7 @@ export class PublicEventsComponent implements OnInit {
   ngOnInit(): void {
     this.checkIfLoggedIn();
     this.fetchUserEvents();
-    //this.setDefaultValues();
+   // this.setDefaultValues();
 
 
     // Check if there's a saved event after login
