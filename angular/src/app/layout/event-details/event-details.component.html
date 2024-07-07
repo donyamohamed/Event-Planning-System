@@ -28,8 +28,17 @@
 <div class="event-info">
   <div class="ticket-sales-info">
     <div><span>Ticket sales end soon</span></div>
-    <div class="share-icon"> <i class="fa-solid fa-arrow-up-from-bracket" (click)="openShareAlert()"></i></div>
+    <div class="icons">
+      <!-- <i class="fa" [ngClass]="isEventSaved ? 'fa-bookmark' : 'fa-bookmark-o'" (click)="toggleSavedEvent()"></i> -->
+     <!-- event-details.component.html -->
+     <i class="fa-bookmark bookmark-icon"
+     [ngClass]="{'fa-regular': !isEventSaved, 'fa-solid f1': isEventSaved, }"
+     (click)="toggleSavedEvent()">
+  </i>  
+      <i class="fa-solid fa-arrow-up-from-bracket" (click)="openShareAlert()" style="margin-left:10px;"></i>
+    </div>
   </div>
+  
   
   <div class="date-category">
     <div class="date">

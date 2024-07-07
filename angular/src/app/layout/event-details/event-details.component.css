@@ -23,6 +23,13 @@ height: 560px;
   padding: 3px 20px;
   position: relative;
 }
+.icons .fa-bookmark.saved {
+  color: gold;
+}
+.icons .fa-bookmark{
+  color:black !important;
+}
+
 
 .header-container .blur {
   filter: blur(3px);
@@ -52,6 +59,14 @@ height: 560px;
 
   padding: 2px 10px;
 }
+/* event-details.component.css */
+.bookmark-icon {
+  cursor: pointer;
+}
+
+
+
+
 
 
 
@@ -73,7 +88,7 @@ height: 560px;
   gap: 2px;
   align-items: center;
   border-left: 2px solid #050794;
-  width: fit-content;
+  /* width: fit-content; */
   margin: 4px;
   padding: 2px 7px;
 }
@@ -189,7 +204,7 @@ height: 560px;
 }
 .location-info{
   border-left: 2px solid #050794;
-  width: fit-content;
+  /* width: fit-content; */
   margin: 4px;
   padding: 2px 7px;
 }
