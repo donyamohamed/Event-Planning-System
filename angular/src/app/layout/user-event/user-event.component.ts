@@ -12,6 +12,7 @@ import swal from "sweetalert2";
 import { SharedModule } from "../../../shared/shared.module";
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
 import { CurrentUserDataService } from '../../../shared/Services/current-user-data.service';
+import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js';
 import {
   FormsModule,
   ReactiveFormsModule,
@@ -41,6 +42,7 @@ export class UserEventComponent implements OnInit {
   userId: number | null = null;
   modalRef: BsModalRef;
   bsModalRef: any;
+  map: mapboxgl.Map;
   eventEditForm: FormGroup;
   eventEdit: Event = new Event();
   enumeratorKeys = Object.values(Enumerator);
@@ -65,7 +67,6 @@ export class UserEventComponent implements OnInit {
   ) {
     this.eventEditForm = this.fb.group({
       name: ["", [Validators.required, Validators.pattern("^[a-zA-Z0-9 ]+$")]],
-      location: ["", [Validators.required, Validators.pattern("^[a-zA-Z0-9 ]+$")]],
       startDate: ["", Validators.required],
       endDate: ["", Validators.required],
       maxCount: ["", Validators.required],
@@ -95,11 +96,35 @@ export class UserEventComponent implements OnInit {
       }
     );
   }
+  initializeMap(): void {
+    mapboxgl.accessToken = 'pk.eyJ1IjoibWFiZG9naCIsImEiOiJjbGp1em54c24xaTd4M2NsbDBiOWZuMXk4In0.n4ILS2Jtk5tZ9onHBcL8Cw';
+    this.map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v12',
+        center: [30.8025, 26.8206], // Default center (Egypt)
+        zoom: 5, // Default zoom level
+        attributionControl: false 
+    });
 
+    // Add map click event to update location input
+    this.map.on('click', (e) => {
+        const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${e.lngLat.lng},${e.lngLat.lat}.json?access_token=${mapboxgl.accessToken}`;
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                const placeName = data.features[0]?.place_name || 'Unknown location';
+                this.eventEdit.location = placeName;
+            })
+            .catch(err => {
+                console.error('Error fetching location name:', err);
+            });
+    });
+}
   openEditModal(template: TemplateRef<any>, id: number): void {
     this.userEventsService.getEventById(id).subscribe({
       next: (data: EventResponse) => {
         this.eventEdit = data.result;
+        this.initializeMap();
         this.lastStartDate = this.eventEdit.startDate;
         this.lastEndDate = this.eventEdit.endDate;
         console.log(this.eventEdit);
