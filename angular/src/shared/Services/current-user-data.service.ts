@@ -9,7 +9,7 @@ import { environment } from '../../environments/environment';
 })
 export class CurrentUserDataService {
   private baseUrl = `${environment.API_URL_BASE_PART}/api/services/app/UserProfileAppServices/GetUserProfile`;
-  private UpdateUrl=`${environment.API_URL_BASE_PART}/UserProfileAppServices/UpdateUserProfileData`;
+  private UpdateUrl=`${environment.API_URL_BASE_PART}/api/services/app/UserProfileAppServices/UpdateUserProfileData`;
 
   constructor(private http: HttpClient) {}
 

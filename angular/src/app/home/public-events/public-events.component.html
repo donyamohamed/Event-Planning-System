@@ -1,49 +1,42 @@
 <div class="events m-2 p-2 container">
-
   <div class="header-container">
     <h2>{{"Recommended Events" | localize}}</h2>
-    <!-- <h4 class="text-muted">{{"Based on your Interests" | localize}}</h4> -->
-
     <div class="btn-group dropstart">
       <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
         Category
       </button>
       <ul class="dropdown-menu">
         <li *ngFor="let key of enumeratorKeys">
-
-          <a class="dropdown-item"  (click)="fetchEventsByCategory(key)">{{key}}</a>
-
+          <a class="dropdown-item" (click)="fetchEventsByCategory(key)">{{key}}</a>
         </li>
       </ul>
     </div>
   </div>
 
-
   <div class="card-container">
     <div id="loading" *ngIf="isLoading" class="text-center">
       <img src="../../../assets/img/Spin@1x-1.0s-200px-200px.gif" alt="" class="p-5 m-5">
-    </div> <!-- Show loading div if isLoading is true -->
+    </div>
 
     <div *ngFor="let event of events" class="card" [ngStyle]="{'background-image': 'url(' + (event.eventImg ? event.eventImg : '../../assets/img/Event.jpg') + ')'}">
-        <div class="date">
-            <div class="day">{{ event.startDate | date:'dd' }}</div>
-            <div class="month">{{ event.startDate | date:'MMM' }}</div>
+      <div class="date">
+        <div class="day">{{ event.startDate | date:'dd' }}</div>
+        <div class="month">{{ event.startDate | date:'MMM' }}</div>
+      </div>
+      <div class="card-content">
+        <h3>{{ event.name }}</h3>
+        <p>{{ event.location }}</p>
+        <div class="d-flex align-items-center justify-content-center">
+          <button class="btn btn-primary" (click)="askForInvitation(event)" [disabled]="isButtonDisabledMap[event.id]">{{"Ask for invitation" | localize}}</button>
+          <button id="details" (click)="details(event)">{{"View"|localize}}</button>
         </div>
-        <div class="card-content">
-            <h3>{{ event.name }}</h3>
-            <p>{{ event.location }}</p>
-            <div class="d-flex align-items-center justify-content-center">
-            <button class="btn btn-primary" (click)="askForInvitation(event)">{{"Ask for invitation" | localize}}</button>
-            <button id="details" (click)="details(event)">{{"View"|localize}}</button>
-          </div>
-        </div>
-        <div class="Chat-icon" (click)="navigateToComponent(event.userId)" *ngIf="isLoggedIn">
-       
-          <i class="fa-regular fa-comment-dots " ></i>
-        </div>
-
+      </div>
+      <div class="Chat-icon" (click)="navigateToComponent(event.userId)" *ngIf="isLoggedIn">
+        <i class="fa-regular fa-comment-dots"></i>
+      </div>
     </div>
   </div>
+  
   <div *ngIf="events.length == 0" class="noPublic-events text-center">
     <img src="../../../assets/img/Waiting.gif" alt="">
     <h4>{{"There are no events at this time, check back another day" | localize}}... <span>&#x23F3;</span></h4>

@@ -32,9 +32,11 @@ using Abp.Collections.Extensions;
 using System.Text.RegularExpressions;
 using Castle.Core.Internal;
 using Event_Planning_System.Email;
+
 using Event_Planning_System.Enitities;
 using Event_Planning_System.Event;
 using Microsoft.Extensions.Logging;
+
 namespace Event_Planning_System.Guest
 {
     public class GuestAppService : AsyncCrudAppService<Enitities.Guest, GuestDto, int>, IGuestAppService
@@ -46,11 +48,13 @@ namespace Event_Planning_System.Guest
         private readonly IRepository<User, long> _userRepository;
         private readonly IRepository<Enitities.Event, int> repositoryEvent;
         private readonly EmailService _emailService;
+
         private readonly ILogger<GuestAppService> _logger;
         
 
 
         public GuestAppService(IRepository<Enitities.Guest, int> repository, IRepository<User, long> userRepository, IRepository<Enitities.Event, int> repositoryEvent, IMapper mapper, EmailService emailService, ILogger<GuestAppService> logger) : base(repository)
+
 
         {
             _repository = repository;
@@ -60,7 +64,9 @@ namespace Event_Planning_System.Guest
             _userRepository = userRepository;
             _userRepository = userRepository;
             _emailService = emailService;
+
             _logger = logger;
+
         }
 
         public async Task<List<GuestDto>> GetEventGuestsAsync(int eventId)
@@ -397,6 +403,7 @@ namespace Event_Planning_System.Guest
                 }
             }
         }
+
         public async Task<int> SendEmailsToEventGuestsAsync(int eventId)
         {
             int successfulInvitations = 0;
@@ -447,5 +454,6 @@ namespace Event_Planning_System.Guest
 
 
 
+
     }
-}
+    }
