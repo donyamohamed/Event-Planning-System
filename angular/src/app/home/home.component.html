@@ -6,6 +6,10 @@
   </div>
 </header>
 <div [@routerTransition]>
+  <div>
+     
+    <app-intersts *ngIf="!hasInterests && isLoggedIn"></app-intersts>
+  </div>
   <section>
     <div class="container m-2 p-2">
       <div class="row">

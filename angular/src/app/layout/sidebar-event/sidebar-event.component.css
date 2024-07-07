@@ -11,7 +11,7 @@ body {
 
 
 .nav {
-  height: 100% !important;
+height: calc(100% - 60px) !important;
   position: absolute;
   left: -2em;
   /* top: 60px; */
@@ -31,7 +31,7 @@ body {
   left: 0;
   top: 0;
   z-index: 990;
-  height: 100%;
+  height: inherit;
   background: #050794;
 }
 
@@ -68,7 +68,7 @@ body {
   left: 63px;
   top: 0;
   z-index: 980;
-  height: 100%;
+  height: inherit;
   background: #050794;
   border-right: 1px solid hsla(0, 0%, 0%, .3);
   transition: transform .24s linear;
