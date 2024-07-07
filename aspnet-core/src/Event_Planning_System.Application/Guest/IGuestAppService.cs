@@ -20,5 +20,6 @@ namespace Event_Planning_System.Guest
         Task UpdateInvitationState(int guestId, string newState);
         Task<GuestDto> GetGuestByEmailAsync(string email);
         Task DeleteAllGuests(int eventId, int?[] ids);
+        Task<int> SendToAllGuests(int eventId, int?[] ids);
     }
 }

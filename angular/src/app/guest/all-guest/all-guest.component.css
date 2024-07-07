@@ -47,18 +47,18 @@
   }
 
   
-  .btn:disabled,.btnDiv button:disabled:hover{
+  .btnDiv button:disabled:hover{
     background-color: #050794 !important;
     color: white !important;
     cursor: not-allowed !important;
     pointer-events: visible !important;
   }
 
-  .sendInvitation a{
+  .sendInvitation a,.sendInvitation button{
     background-color: #FBAF1B;
     color: white;
   }
-  .sendInvitation a:hover{
+  .sendInvitation a:hover,.sendInvitation button:hover{
     color: #FBAF1B;
     background-color: white;
   }

@@ -14,11 +14,13 @@
       <p class="pt-1">{{"No. Guests:" | localize}} <span class="acutal-GuestCount">{{guestCount}}</span></p>
     </div>
     <div class="buttons">
-      <div class="">
-        <button class="btn btn-danger" id="sendAll"  disabled><i class="fa-regular fa-trash-can text-light" aria-hidden="true"></i></button>
-      </div>
-      <div class="">
-        <button class="btn btn-danger" id="deleteAll"  [disabled]="isDeleteAllDisabled" (click)="deleteAll()"><i class="fa-regular fa-trash-can text-light" aria-hidden="true"></i></button>
+      <div class="d-flex">
+        <div class=" sendInvitation text-dark">
+          Send Invitation By:
+          <button class="btn" [disabled]="isCheckedAllDisabled"><i class="fa-solid fa-comment-sms"></i> SMS</button> |
+          <button class="btn" [disabled]="isCheckedAllDisabled"><i class="fa-solid fa-envelope"></i> Email</button>
+        </div>
+        <button class="btn btn-danger" id="deleteAll"  [disabled]="isCheckedAllDisabled" (click)="deleteAll()"><i class="fa-regular fa-trash-can text-light" aria-hidden="true"></i></button>
       </div>
     </div>
   </div>

@@ -65,7 +65,7 @@ export class AllGuestComponent implements OnInit {
   private emailObj: EmailRequest = new EmailRequest();
   private smsObj: SmsRequest = new SmsRequest();
   eventname: string;
-  isDeleteAllDisabled: boolean = true;
+  isCheckedAllDisabled: boolean = true;
   selectedGuestIds: number[] = [];
 
   constructor(
@@ -151,7 +151,7 @@ export class AllGuestComponent implements OnInit {
       )
     );
     const anyChecked = allCheckboxes.some((checkbox) => checkbox.checked);
-    this.isDeleteAllDisabled = !anyChecked;
+    this.isCheckedAllDisabled = !anyChecked;
     console.log(anyChecked);
     
     this.selectedGuestIds = allCheckboxes
@@ -173,17 +173,6 @@ export class AllGuestComponent implements OnInit {
     })
     .then((result) => {
       if (result.isConfirmed) {
-        // if (this.selectedGuestIds.length === 0) {
-        //   this.subGuest = this.guestSer.deleteAllGuest(this.idEvent).subscribe({
-        //     next: (data) => {
-        //       location.reload();
-        //     },
-        //     error: (err) => {
-        //       console.log(err);
-        //     },
-        //   });
-        //   swal.fire("Deleted!", "Your guest has been deleted.", "success");
-        // } else {
           console.log("Selected Guest IDs: ", this.selectedGuestIds);
           this.subGuest = this.guestSer.deleteAllGuest(this.idEvent,this.selectedGuestIds).subscribe({
             next: (data) => {
