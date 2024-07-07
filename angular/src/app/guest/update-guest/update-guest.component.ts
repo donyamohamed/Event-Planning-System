@@ -2,7 +2,7 @@ import { GuestGetResponse } from './../guest-get-response';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
-import { GuestService } from '@shared/Services/guest.service';
+import { GuestService } from '@shared/services/guest.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Guest } from '@shared/Models/guest';
 import { FormsModule } from '@angular/forms';

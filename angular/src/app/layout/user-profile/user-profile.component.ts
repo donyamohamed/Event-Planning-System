@@ -1,8 +1,8 @@
 
 import { Component, OnInit, TemplateRef, ChangeDetectionStrategy,Renderer2 } from "@angular/core";
 
-import { CurrentUserDataService } from "@shared/Services/current-user-data.service";
-import { InterestsService } from "@shared/Services/interests.service";
+import { CurrentUserDataService } from "@shared/services/current-user-data.service";
+import { InterestsService } from "@shared/services/interests.service";
 import { CurrentUser } from "@shared/Models/current-user";
 import { Interests } from "@shared/Models/interests";
 import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";

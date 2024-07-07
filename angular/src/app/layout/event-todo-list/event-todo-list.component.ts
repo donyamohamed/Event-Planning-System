@@ -2,37 +2,35 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ToDoList } from '../../../shared/Models/ToDoList';
 import { TodoListService } from '../../../shared/Services/todo-list.service';
-
-import { RouterLink, ActivatedRoute } from '@angular/router'; // Import ActivatedRoute
-
+import { ActivatedRoute } from '@angular/router'; // Import ActivatedRoute
 import { FormsModule } from '@angular/forms';
-
 import { HttpClient } from '@angular/common/http';
-
-
+import Swal from 'sweetalert2'; // Import SweetAlert
+import { EventdetailsService } from '../../../shared/services/eventdetails.service';
+import { CurrentUserDataService } from '../../../shared/services/current-user-data.service';
 @Component({
   selector: 'app-event-todo-list',
   templateUrl: './event-todo-list.component.html',
   styleUrls: ['./event-todo-list.component.css'],
   standalone: true,
-  imports: [CommonModule, RouterLink, FormsModule]
+  imports: [CommonModule, FormsModule]
 })
 export class TodoListComponent implements OnInit {
   todoItems: ToDoList[] = [];
   newTask: { description: string; date: string } = { description: '', date: '' };
   showStatusOptions: boolean = false;
-  taskDescription: string = ''; // Initialize with empty string
-  taskDate: string = '';
   selectedTask: ToDoList | null = null;
 
   userId: number | null = null; // Store the user ID
-
   eventId: number | null = null; // Store the event ID
+  eventEndDate: Date | null = null; // Store the end date of the event
 
   constructor(
     private todoListService: TodoListService, 
     private http: HttpClient, 
-    private route: ActivatedRoute // Inject ActivatedRoute
+    private route: ActivatedRoute,
+    private eventDetailsService: EventdetailsService, // Inject EventdetailsService
+    private currentUserDataService: CurrentUserDataService
   ) { }
 
   ngOnInit(): void {
@@ -42,58 +40,75 @@ export class TodoListComponent implements OnInit {
       if (id) {
         this.eventId = +id; // Convert string to number
         this.getToDoList(this.eventId);
+        this.getEventDetails(this.eventId); // Fetch event details including end date
       } else {
         console.error('Event ID not found in the URL');
       }
     });
-
   }
 
   getUserData(): void {
-    this.http.get<any>('https://localhost:44311/api/services/app/UserProfileAppServices/GetUserProfile')
-      .subscribe(response => {
-        if (response && response.result) {
-          this.userId = response.result.id;
+    this.currentUserDataService.GetCurrentUserData().subscribe(
+      (response) => {
+        if (response) {
+          this.userId = response.id;
           console.log('User ID fetched:', this.userId); // Debug log
         }
-      });
+      },
+      (error) => {
+        console.error('Error fetching user data', error);
+      }
+    );
   }
+  
 
+  getEventDetails(eventId: number): void {
+    this.eventDetailsService.getEventById(eventId).subscribe(
+      (data: any) => {
+        this.eventEndDate = new Date(data.result.endDate); // Convert end date string to Date object
+        console.log("Event Details:", data.result);
+      },
+      (error) => {
+        console.error('Error fetching event details:', error);
+      }
+    );
+  }
 
   createToDoItem(): void {
     if (!this.newTask.description) {
-      alert('Please enter a task description.');
+      Swal.fire('Error', 'Please enter a task description.', 'error');
       return;
     }
 
     if (!this.newTask.date) {
-      alert('Please select a date and time.');
+      Swal.fire('Error', 'Please select a date and time.', 'error');
       return;
     }
-
 
     if (this.userId === null) {
-      alert('User ID not available.');
+      Swal.fire('Error', 'User ID not available.', 'error');
       return;
     }
-
 
     if (this.eventId === null) {
-      alert('Event ID not available.');
+      Swal.fire('Error', 'Event ID not available.', 'error');
       return;
     }
-
 
     const newItem: ToDoList = {
       id: 0, // Id should be set by the backend
       status: 'Todo',
       date: new Date(this.newTask.date),
       description: this.newTask.description,
-
       userId: this.userId, // Use the fetched userId
       eventId: this.eventId // Use the fetched eventId
-
     };
+
+    // Check if the date of the to-do item is after the event end date
+    if (this.eventEndDate && newItem.date > this.eventEndDate) {
+      Swal.fire('Error', 'To-do list date cannot be after the event end date.', 'error');
+      return;
+    }
 
     console.log('Creating new task:', newItem); // Debug log
 
@@ -103,15 +118,12 @@ export class TodoListComponent implements OnInit {
         this.todoItems.push(data);
         this.newTask = { description: '', date: '' }; // Reset the form
         window.location.reload();
-
       },
       (error) => {
         console.error('Error creating ToDo item', error);
       }
-
     );
   }
-
 
   getToDoList(eventId: number): void {
     this.todoListService.getToDoCheckList(eventId).subscribe(
@@ -134,7 +146,6 @@ export class TodoListComponent implements OnInit {
       return 'bg-secondary'; 
     }
 
-
     switch (status.toLowerCase()) {
       case 'todo':
         return 'bg-todo';
@@ -146,7 +157,6 @@ export class TodoListComponent implements OnInit {
         return 'bg-secondary'; 
     }
   }
-
 
   isTaskOverdue(task: ToDoList): boolean {
     const taskDate: Date = new Date(task.date);
@@ -160,12 +170,10 @@ export class TodoListComponent implements OnInit {
     this.todoListService.updateToDoList(taskToUpdate).subscribe(
       (updatedTask: ToDoList) => {
         console.log('Task status updated successfully:', updatedTask);
-
         this.selectedTask = null; // Reset the selected task after updating status
       },
       (error) => {
         console.error('Error updating task status:', error);
-
       }
     );
   }
@@ -192,5 +200,4 @@ export class TodoListComponent implements OnInit {
       }
     );
   }
-
 }

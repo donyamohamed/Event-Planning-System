@@ -1,7 +1,7 @@
 import { Component, HostListener, OnInit, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NotificationStatus, Notifications, UpdateNotificationStatusDto } from "@shared/Models/Notification";
-import { NotificationsService } from "@shared/Services/notificatios.service";
+import { NotificationsService } from "@shared/services/notificatios.service";
 import { Event } from '@shared/Models/Event';
 import Swal from 'sweetalert2';
 import { combineLatest } from 'rxjs';

@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Event } from '../../../shared/Models/Event';
-import { EventService } from '../../../shared/Services/eventa.service';
+import { EventService } from '../../../shared/services/eventa.service';
 import { Enumerator } from "../../../shared/Models/Event";
 import { HttpClient } from '@angular/common/http';
 import swal from 'sweetalert2';

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ShowInterestsService } from '../../shared/Services/show-interests.service';
+import { ShowInterestsService } from '../../shared/services/show-interests.service';
 import { Interest } from '../../shared/Models/interestss';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { publicDecrypt } from 'crypto';

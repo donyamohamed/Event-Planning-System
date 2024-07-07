@@ -1,12 +1,12 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SavedEventServiceService } from './../../shared/Services/saved-event-service.service';
-import { EventdetailsService } from './../../shared/Services/eventdetails.service';
-import { CurrentUserDataService } from './../../shared/Services/current-user-data.service'; // Import the service
+import { SavedEventServiceService } from '../../shared/services/saved-event-service.service';
+import { EventdetailsService } from '../../shared/services/eventdetails.service';
+import { CurrentUserDataService } from '../../shared/services/current-user-data.service'; // Import the service
 import { Observable, forkJoin } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { SidebarEventComponent } from "../layout/sidebar-event/sidebar-event.component";
-import { GuestService } from './../../shared/Services/guest.service';
+import { GuestService } from '../../shared/services/guest.service';
 import { Router, RouterLink } from '@angular/router';
 
 @Component({
