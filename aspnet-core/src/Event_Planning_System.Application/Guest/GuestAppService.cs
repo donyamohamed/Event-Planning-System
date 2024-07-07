@@ -33,6 +33,10 @@ using System.Text.RegularExpressions;
 using Castle.Core.Internal;
 using Event_Planning_System.Email;
 
+using Event_Planning_System.Enitities;
+using Event_Planning_System.Event;
+using Microsoft.Extensions.Logging;
+
 namespace Event_Planning_System.Guest
 {
     public class GuestAppService : AsyncCrudAppService<Enitities.Guest, GuestDto, int>, IGuestAppService
@@ -45,8 +49,12 @@ namespace Event_Planning_System.Guest
         private readonly IRepository<Enitities.Event, int> repositoryEvent;
         private readonly EmailService _emailService;
 
+        private readonly ILogger<GuestAppService> _logger;
+        
 
-        public GuestAppService(IRepository<Enitities.Guest, int> repository, IRepository<User, long> userRepository, IRepository<Enitities.Event, int> repositoryEvent, IMapper mapper, EmailService emailService) : base(repository)
+
+        public GuestAppService(IRepository<Enitities.Guest, int> repository, IRepository<User, long> userRepository, IRepository<Enitities.Event, int> repositoryEvent, IMapper mapper, EmailService emailService, ILogger<GuestAppService> logger) : base(repository)
+
 
         {
             _repository = repository;
@@ -56,6 +64,9 @@ namespace Event_Planning_System.Guest
             _userRepository = userRepository;
             _userRepository = userRepository;
             _emailService = emailService;
+
+            _logger = logger;
+
         }
 
         public async Task<List<GuestDto>> GetEventGuestsAsync(int eventId)
@@ -392,30 +403,57 @@ namespace Event_Planning_System.Guest
                 }
             }
         }
-        public async Task<int> SendToAllGuests(int eventId, int?[] ids)
+
+        public async Task<int> SendEmailsToEventGuestsAsync(int eventId)
         {
-            var guests = await GetEventGuestsAsync(eventId);
-            int invitationCount = 0;
+            int successfulInvitations = 0;
 
-            if (guests.Any())
+            // Retrieve the event and guests from the database
+            var eventWithGuests = await _repositoryEvent
+                .GetAllIncluding(e => e.Guests)
+                .FirstOrDefaultAsync(e => e.Id == eventId);
+
+            if (eventWithGuests == null)
             {
-                var guestsToSend = ids == null || ids.Length == 0 ? guests : guests.Where(g => ids.Contains(g.Id));
+                throw new EntityNotFoundException(typeof(Enitities.Event), eventId);
+            }
 
-                foreach (var guest in guestsToSend)
+            // Filter out guests whose email state is already "sent"
+            var guestsToEmail = eventWithGuests.Guests.Where(g => g.InvitationState != "sent").ToList();
+
+            if (!guestsToEmail.Any())
+            {
+                _logger.LogInformation("No guests to email.");
+                return successfulInvitations;
+            }
+
+            foreach (var guest in guestsToEmail)
+            {
+                var subject = $"Invitation to {eventWithGuests.Name}";
+                var message = $"Dear {guest.Name},\n\nYou are invited to {eventWithGuests.Name}.\n\nBest regards,\nEvent Organizer";
+
+                try
                 {
-                    if (guest.InvitationState == "Sent")
-                    {
-                        continue;
-                    }
-                   // var htmlBody = EmailTemplate.GetInvitationEmail(emailRequest.E//ventName, emailRequest.Date, emailRequest.EventAddress, emailRequest.EventImage);
-                    await _emailService.SendEmailAsync(guest.Email, "Invitation to the event", "Dear Guest, you are invited to the event");
-                    guest.InvitationState = "Sent";
-                    await _repository.InsertOrUpdateAsync(MapToEntity(guest));
-                    invitationCount++;
+                    await _emailService.SendEmailAsync(guest.Email, subject, message);
+                    // Update guest email state to "sent"
+                    guest.InvitationState = "sent";
+                    successfulInvitations++;
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError($"Failed to send email to {guest.Email}: {ex.Message}");
                 }
             }
 
-            return invitationCount;
+            // Save changes to the database
+            await _repositoryEvent.UpdateAsync(eventWithGuests);
+
+            return successfulInvitations;
         }
+
+
+
+
+
     }
     }

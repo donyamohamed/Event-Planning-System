@@ -1,6 +1,6 @@
 import { result } from "lodash-es";
 import { Component, OnInit, AfterViewInit } from "@angular/core";
-import { HistoryeventService } from "./../../shared/Services/historyevent.service";
+import { HistoryeventService } from "../../shared/Services/historyevent.service";
 import { SidebarEventComponent } from "../layout/sidebar-event/sidebar-event.component";
 import { Chart, registerables, ChartType } from "chart.js";
 import { Event } from "../../shared/Models/Event";

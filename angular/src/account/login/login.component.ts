@@ -4,7 +4,7 @@ import { AppComponentBase } from '@shared/app-component-base';
 import { accountModuleAnimation } from '@shared/animations/routerTransition';
 import { AppAuthService } from '@shared/auth/app-auth.service';
 import { Router } from '@angular/router';
-import { GoogleAuthService } from '../../shared/services/google-auth.service';
+import { GoogleAuthService } from '../../shared/Services/google-auth.service';
 @Component({
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],

@@ -132,6 +132,13 @@ namespace Event_Planning_System.Authorization.Accounts
 
             try
             {
+               
+                var existingUser = await _userManager.FindByEmailAsync(input.EmailAddress);
+                if (existingUser != null)
+                {
+                    throw new UserFriendlyException("The email already exists.");
+                }
+
                 if (input.ImageFile != null && input.ImageFile.Length > 0)
                 {
                     // Upload image to Cloudinary
@@ -199,6 +206,7 @@ namespace Event_Planning_System.Authorization.Accounts
                 throw new UserFriendlyException("An unexpected error occurred during registration. Please try again.");
             }
         }
+
 
         private async Task SendRegistrationConfirmationEmail(User user)
         {

@@ -1,5 +1,5 @@
 import { GuestResponse } from "./../guest-response.model";
-import { InvitationService } from "./../../../shared/Services/invitation.service";
+import { InvitationService } from "../../../shared/Services/invitation.service";
 import { Component, OnDestroy, OnInit, TemplateRef } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import swal from "sweetalert2";

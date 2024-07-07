@@ -1,4 +1,4 @@
-import { ApiResponse } from './../../app/layout/event-details/rating-interface';
+import { ApiResponse } from '../../app/layout/event-details/rating-interface';
 import { Injectable } from '@angular/core';
 import { Feedback } from '../Models/feedback';
 import { GuestFeedback } from '../Models/GuestFeed';
