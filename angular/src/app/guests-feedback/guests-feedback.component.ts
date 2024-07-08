@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { GuestFeedback } from '@shared/Models/GuestFeed';
-import { FeedbackService } from '@shared/Services/feedback.service';
+import { FeedbackService } from '@shared/services/feedback.service';
 
 @Component({
   selector: 'app-guests-feedback',

@@ -4,7 +4,7 @@ import { Subject } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NewPassword } from '@shared/Models/NewPassword';
-import { NewPasswordService } from '@shared/Services/new-password.service';
+import { NewPasswordService } from '@shared/services/new-password.service';
 import { SharedModule } from "../../shared/shared.module";
 import swal from 'sweetalert2';
 

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HistoryeventService } from '../../../shared/Services/historyevent.service';
+import { HistoryeventService } from '../../../shared/services/historyevent.service';
 import { Event } from '../../../shared/Models/Event'; 
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';

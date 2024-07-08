@@ -1,18 +1,20 @@
-import { FeedbackService } from '../../../shared/Services/feedback.service';
+
+import { FeedbackService } from '../../../shared/services/feedback.service';
+
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { EventdetailsService } from '../../../shared/Services/eventdetails.service';
-import { EventBudgetService } from '../../../shared/Services/event-budget.service';
+import { EventdetailsService } from '../../../shared/services/eventdetails.service';
+import { EventBudgetService } from '../../../shared/services/event-budget.service';
 import { Event } from '../../../shared/Models/Event';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from "../../../shared/shared.module";
-import { UserService } from '../../../shared/Services/user-service.service';
-import { CurrentUserDataService } from '@shared/Services/current-user-data.service';
+import { UserService } from '../../../shared/services/user-service.service';
+import { CurrentUserDataService } from '@shared/services/current-user-data.service';
 import Swal from 'sweetalert2';
 import { Feedback } from '@shared/Models/feedback';
 import { forkJoin, map } from 'rxjs';
-import { SavedEventServiceService } from '../../../shared/Services/saved-event-service.service'; 
+import { SavedEventServiceService } from '../../../shared/services/saved-event-service.service'; 
 import { SavedEventData } from '../../../shared/Models/SavedEventData';
 
 @Component({
@@ -36,6 +38,7 @@ export class EventDetailsComponent implements OnInit {
   numberOfRaters: number | undefined;
   feedbackList: Feedback[] = [];
   isEventSaved: boolean = false; 
+  isLogin:boolean = false;
  
 
   constructor(
@@ -64,6 +67,7 @@ export class EventDetailsComponent implements OnInit {
       response => {
         console.log(response);
         this.loggedInUserId = response.id;
+        this.isLogin=true;
         this.checkIfEventCreator(); // Check if the event creator is the logged-in user
       },
       error => {

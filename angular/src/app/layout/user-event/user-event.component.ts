@@ -5,14 +5,17 @@ import { Event } from "./../../../shared/Models/Event";
 import { Component, OnInit, TemplateRef, ChangeDetectionStrategy } from "@angular/core";
 
 import { CommonModule } from "@angular/common";
-import { UserEventsService } from "../../../shared/Services/user-events.service";
+import { UserEventsService } from "../../../shared/services/user-events.service";
 import { ActivatedRoute, Router, RouterLink } from "@angular/router";
 import { HttpClient } from "@angular/common/http"; // Updated import
 import swal from "sweetalert2";
 import { SharedModule } from "../../../shared/shared.module";
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
-import { CurrentUserDataService } from '../../../shared/Services/current-user-data.service';
+
+import { CurrentUserDataService } from '../../../shared/services/current-user-data.service';
+
 import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js';
+
 import {
   FormsModule,
   ReactiveFormsModule,

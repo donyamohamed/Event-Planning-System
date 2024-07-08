@@ -1,16 +1,17 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Event } from '../../../shared/Models/Event';
-import { HomeService } from '../../../shared/Services/home.service';
-import { AskforInvitationService } from '../../../shared/Services/askfor-invitation.service';
+import { HomeService } from '../../../shared/services/home.service';
+import { AskforInvitationService } from '../../../shared/services/askfor-invitation.service';
 import { EventsResponse } from '../../../app/home/eventInterface';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Router, RouterLink } from '@angular/router';
-import { GuestService } from '../../../shared/Services/guest.service';
+import { GuestService } from '../../../shared/services/guest.service';
 import { Enumerator } from "../../../shared/Models/Event";
 import Swal from 'sweetalert2';
 import { SharedModule } from "../../../shared/shared.module";
 import { CommonModule } from '@angular/common';
+import { CurrentUserDataService } from '../../../shared/services/current-user-data.service';
 
 @Component({
     selector: 'app-public-events',
@@ -35,7 +36,8 @@ export class PublicEventsComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private http: HttpClient,
     private router: Router,
-    private guestService: GuestService
+    private guestService: GuestService,
+    private currentUserDataService: CurrentUserDataService
   ) {}
 
   ngOnInit(): void {
@@ -43,13 +45,13 @@ export class PublicEventsComponent implements OnInit {
   }
 
   checkIfLoggedIn(): void {
-    this.getUserData().subscribe(
+    this.currentUserDataService.GetCurrentUserData().subscribe(
       response => {
-        if (response && response.result) {
+        if (response ) {
           this.isLoggedIn = true;
-          this.username = response.result.name;
-          this.guestId = response.result.id;
-          this.guestEmail = response.result.email;
+          this.username = response.name;
+          this.guestId = response.id;
+          this.guestEmail = response.emailAddress;
           this.fetchUserEvents(); // Fetch events after login status is known
         }
       },
@@ -82,12 +84,12 @@ export class PublicEventsComponent implements OnInit {
   }
 
   askForInvitation(event: Event, isInitialization: boolean = false): void {
-    this.getUserData().subscribe(
+    this.currentUserDataService.GetCurrentUserData().subscribe(
       response => {
-        if (response && response.result) {
-          this.username = response.result.name;
-          this.guestId = response.result.id;
-          this.guestEmail = response.result.email;
+        if (response ) {
+          this.username = response.name;
+          this.guestId = response.id;
+          this.guestEmail = response.emailAddress;
           this.checkIfAlreadyRequested(event, isInitialization);
         } else if (!isInitialization) {
           this.saveEventDataToSession(event);
@@ -106,12 +108,12 @@ export class PublicEventsComponent implements OnInit {
   checkIfAlreadyRequested(event: Event, isInitialization: boolean): void {
     if (event.userId === this.guestId) {
       if (!isInitialization) {
-        Swal.fire({
-          icon: 'warning',
-          title: 'Event Owner',
-          text: 'You cannot request an invitation to your own event.',
-          confirmButtonText: 'OK'
-        });
+        // Swal.fire({
+        //   icon: 'warning',
+        //   title: 'Event Owner',
+        //   text: 'You cannot request an invitation to your own event.',
+        //   confirmButtonText: 'OK'
+        // });
       }
       this.isButtonDisabledMap[event.id] = true;
       this.cdr.detectChanges();

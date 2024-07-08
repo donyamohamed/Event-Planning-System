@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-import { GuestService } from '@shared/Services/guest.service';
+import { GuestService } from '@shared/services/guest.service';
 import { Guest } from '@shared/Models/guest';
 import { Subscription } from 'rxjs';
 import { GuestGetResponse } from '../guest-get-response';

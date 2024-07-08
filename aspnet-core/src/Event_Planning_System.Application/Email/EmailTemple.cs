@@ -145,7 +145,7 @@ namespace Event_Planning_System.Email
                     <div class='venue'>
                         <h3>Event Location</h3>
                         <p>{eventAddress}</p>
-                        <p><small>www.eventlocation.com</small></p>
+                        //<p><small>www.eventlocation.com</small></p>
                     </div>
                     <a href='https://api.html2pdf.app/v1/generate?url={Uri.EscapeDataString(invitationUrl)}&apiKey=06W549nhMKj0lcyp13wBF8D7kooz2xFG63mxzq1QE0UAtm1hp2u6YyJiuxqqtTDF' class='download-btn'>Download</a>
                 </div>

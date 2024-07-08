@@ -1,11 +1,14 @@
+import { result } from 'lodash-es';
 import { GuestResponse } from "./../guest-response.model";
-import { InvitationService } from "../../../shared/Services/invitation.service";
+
+import { InvitationService } from "../../../shared/services/invitation.service";
+
 import { Component, OnDestroy, OnInit, TemplateRef } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import swal from "sweetalert2";
 
 import { Subscription } from "rxjs";
-import { GuestService } from "../../../shared/Services/guest.service";
+import { GuestService } from "../../../shared/services/guest.service";
 import { Guest } from "../../../shared/Models/guest";
 import {
   ActivatedRoute,
@@ -30,7 +33,7 @@ import { EmailRequest } from "../../../shared/Models/EmailRequest";
 import { Event } from "../../../shared/Models/Event";
 import { SmsRequest } from "@shared/Models/Sms";
 import { SharedModule } from "../../../shared/shared.module";
-import { EventdetailsService } from "@shared/Services/eventdetails.service";
+import { EventdetailsService } from "@shared/services/eventdetails.service";
 import { EventResponse } from "../event-response";
 import { L } from "@fullcalendar/list/internal-common";
 
@@ -116,10 +119,9 @@ export class AllGuestComponent implements OnInit {
         },
       });
     });
-   
   }
 
-   setupCheckboxEvents(): void {
+  setupCheckboxEvents(): void {
     const checkAll = document.getElementById("checkAll") as HTMLInputElement;
     checkAll.addEventListener("click", () => {
       const allCheckboxes = document.querySelectorAll<HTMLInputElement>(
@@ -137,7 +139,7 @@ export class AllGuestComponent implements OnInit {
 
     allCheckboxes.forEach((checkbox) => {
       console.log(checkbox);
-      
+
       checkbox.addEventListener("click", () => {
         this.updateDeleteAllButtonState();
       });
@@ -153,44 +155,63 @@ export class AllGuestComponent implements OnInit {
     const anyChecked = allCheckboxes.some((checkbox) => checkbox.checked);
     this.isCheckedAllDisabled = !anyChecked;
     console.log(anyChecked);
-    
+
     this.selectedGuestIds = allCheckboxes
       .filter((checkbox) => checkbox.checked)
       .map((checkbox) => Number(checkbox.value));
   }
 
   deleteAll(): void {
-  
     swal.fire("Deleted!", "Your guest has been deleted.", "success");
     swal
-    .fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Yes, delete it!",
-      cancelButtonText: "No, cancel!",
-    })
-    .then((result) => {
-      if (result.isConfirmed) {
+      .fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "No, cancel!",
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
           console.log("Selected Guest IDs: ", this.selectedGuestIds);
-          this.subGuest = this.guestSer.deleteAllGuest(this.idEvent,this.selectedGuestIds).subscribe({
-            next: (data) => {
-              location.reload();
-            },
-            error: (err) => {
-              console.log(err);
-            },
-          });
+          this.subGuest = this.guestSer
+            .deleteAllGuest(this.idEvent, this.selectedGuestIds)
+            .subscribe({
+              next: (data) => {
+                location.reload();
+              },
+              error: (err) => {
+                console.log(err);
+              },
+            });
           // Use this.selectedGuestIds for partial deletion logic
           swal.fire("Deleted!", "Your guest has been deleted.", "success");
-        //}
-      } else if (result.dismiss === swal.DismissReason.cancel) {
-        swal.fire("Cancelled", "Your guest is safe :)", "error");
-      }
-    });
+          //}
+        } else if (result.dismiss === swal.DismissReason.cancel) {
+          swal.fire("Cancelled", "Your guest is safe :)", "error");
+        }
+      });
   }
 
+  sendAll() {
+        this.subGuest = this.guestSer
+      .sendAllGuest(this.idEvent)
+      .subscribe({
+        next: (data:any) => {
+          swal.fire({
+            title: "Success",
+            text: `Invitation Sent via email to ${data.result} Successfully!`,
+            icon: "success",
+            confirmButtonText: "OK",
+          });
+          location.reload();
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
+  }
 
   openModal(template: TemplateRef<any>): void {
     this.modalRef?.hide();
@@ -388,7 +409,6 @@ export class AllGuestComponent implements OnInit {
       this.uploadResponse = "Please select a valid Excel file first.";
     }
   }
-
 
   ngOnDestroy(): void {
     this.subscribe?.unsubscribe();
