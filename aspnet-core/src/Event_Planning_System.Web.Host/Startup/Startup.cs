@@ -28,6 +28,8 @@ using Hangfire.SqlServer;
 using Event_Planning_System.GuestsFeed;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.AspNetCore.Http;
+using DinkToPdf.Contracts;
+using DinkToPdf;
 
 namespace Event_Planning_System.Web.Host.Startup
 {
@@ -48,8 +50,9 @@ namespace Event_Planning_System.Web.Host.Startup
 
         public void ConfigureServices(IServiceCollection services)
         {
-			//services.AddHangfire(x => x.UseSqlServerStorage("Server=tcp:examinationdb.database.windows.net,1433;Initial Catalog=Event_Planning_SystemDb;Persist Security Info=False;User ID=examDb;Password=esraa_2000;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
-			services.AddHangfire(configuration =>
+            services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
+            //services.AddHangfire(x => x.UseSqlServerStorage("Server=tcp:examinationdb.database.windows.net,1433;Initial Catalog=Event_Planning_SystemDb;Persist Security Info=False;User ID=examDb;Password=esraa_2000;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
+            services.AddHangfire(configuration =>
 		configuration.SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
 					 .UseSimpleAssemblyNameTypeSerializer()
 					 .UseRecommendedSerializerSettings()
