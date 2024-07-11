@@ -37,6 +37,8 @@ namespace Event_Planning_System.Event
 		private readonly IRepository<Enitities.BudgetExpense, int> _budgetExpenseRepository;
 		private readonly IRepository<Enitities.ToDoCheckList, int> _toDoCheckListRepository;
 		private readonly IRepository<Enitities.notification, int> _notificationRepository;
+		private readonly IRepository<Entities.FavoriteEvent,int> _favoriteEventRepository;
+		private readonly IRepository<Entities.GuestsFeedback, int> _guestFeedbackRepository;
 		private readonly ICloudinaryService _cloudinaryService;
 		private readonly IMapper _mapper;
 		private readonly IEmailService _emailService;
@@ -51,7 +53,7 @@ namespace Event_Planning_System.Event
 		public EventAppService(IRepository<Enitities.Event, int> repository, IRepository<Enitities.Guest, int> guestRepository, IRepository<Interest, int> interestRepository, IBackgroundJobClient backgroundJobClient,
 			IRepository<Enitities.BudgetExpense, int> budgetExpenseRepository, IUnitOfWorkManager unitOfWorkManager,
 			IRepository<Enitities.ToDoCheckList, int> toDoCheckListRepository, IRepository<Enitities.notification, int> notificationRepository, IMapper mapper, IEmailService emailService, ICloudinaryService cloudinaryService, ILogger<EventAppService> logger,
-			IRepository<Entities.Feedback, int> feedbackRepository, IFeedbackAppService feedbackService) : base(repository)
+			IRepository<Entities.Feedback, int> feedbackRepository, IRepository<Entities.FavoriteEvent, int> favoriteEventRepository, IRepository<Entities.GuestsFeedback, int> guestFeedbackRepository, IFeedbackAppService feedbackService) : base(repository)
 		{
 			_unitOfWorkManager = unitOfWorkManager;
 			_backgroundJobClient = backgroundJobClient;
@@ -62,6 +64,8 @@ namespace Event_Planning_System.Event
 			_budgetExpenseRepository = budgetExpenseRepository;
 			_toDoCheckListRepository = toDoCheckListRepository;
 			_notificationRepository = notificationRepository;
+			_favoriteEventRepository=favoriteEventRepository;
+			_guestFeedbackRepository=guestFeedbackRepository;
 			_logger = logger;
 			_mapper = mapper;
 			_emailService = emailService;
@@ -304,7 +308,22 @@ namespace Event_Planning_System.Event
 				{
 					await _notificationRepository.DeleteAsync(notification);
 				}
-				var eventGuests = await _guestRepository.GetAllListAsync(g => g.Events.Any(e => e.Id == eventId));
+                var feedbacks = await _feedbackRepository.GetAllListAsync(nc => nc.EventId == eventId);
+                foreach (var feedback in feedbacks)
+                {
+                    await _feedbackRepository.DeleteAsync(feedback);
+                }
+                var favouriteevents = await _favoriteEventRepository.GetAllListAsync(nc => nc.EventId == eventId);
+                foreach (var favouriteevent in favouriteevents)
+                {
+                    await _favoriteEventRepository.DeleteAsync(favouriteevent);
+                }
+                var gusetevents = await _guestFeedbackRepository.GetAllListAsync(nc => nc.EventId == eventId);
+                foreach (var gusetevent in gusetevents)
+                {
+                    await _guestFeedbackRepository.DeleteAsync(gusetevent);
+                }
+                var eventGuests = await _guestRepository.GetAllListAsync(g => g.Events.Any(e => e.Id == eventId));
 				foreach (var guest in eventGuests)
 				{
 					guest.Events.Remove(eventEntity);

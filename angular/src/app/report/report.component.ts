@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ExpensesService } from './../../shared/Services/expenses.service';
+import { ExpensesService } from './../../shared/services/expenses.service';
 import { result } from "lodash-es";
 import { Component, OnInit, AfterViewInit } from "@angular/core";
 
