@@ -1,8 +1,18 @@
+:root{
+  --newBlue:#050794;
+}
 .card {
     border: none;
     border-radius: 1rem;
+    margin-left: auto;
   }
-  
+  .main-header{
+    width: 87%;
+    margin: 20px auto;
+    border-left: 3px solid #050794;
+    padding-left: 10px;
+    color: #050794;
+  }
   .tableDiv {
     border-top-left-radius: 1rem;
     border-bottom-left-radius: 1rem;
@@ -13,35 +23,133 @@
     width: 200px;
   }
 
-  .btnDiv button ,.GuestCount{
+  .btnDiv button{
     background-color: #050794;
     color: white;
     border: 1px solid #050794;
-    border-bottom-left-radius: 6px;
-    border-bottom-right-radius: 6px;
-    border-top-left-radius: 6px;
-    border-top-right-radius: 6px;
+    border-radius: 6px;
 
   }
   .btnDiv button:hover{
     background-color: white;
     color: #050794;
   }
+  .add-btns button{
+    color: white;
+    border-radius: 6px;
+
+  }
+  /* .add-btns button:hover{
+    background-color: white;
+    color: #050794;
+  } */
+  .GuestCount{
+    color: #050794;
+    font-size: larger;
+    font-weight: 700;
+  }
+  .GuestCount .acutal-GuestCount{
+   color: #FBAF1B;
+  }
 
   
-  .btn:disabled,.btnDiv button:disabled:hover{
+  .btnDiv button:disabled:hover{
     background-color: #050794 !important;
     color: white !important;
     cursor: not-allowed !important;
     pointer-events: visible !important;
   }
 
-  .sendInvitation a{
+  .sendInvitation a,.sendInvitation button{
     background-color: #FBAF1B;
     color: white;
   }
-  .sendInvitation a:hover{
+  .sendInvitation a:hover,.sendInvitation button:hover{
     color: #FBAF1B;
     background-color: white;
   }
 
+  .acutal-GuestCount {
+    animation: glow .5s infinite alternate;
+}
+
+@keyframes glow {
+    to {
+        text-shadow: 0 0 10px #FBAF1B;
+    }
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+.m-2 {
+  margin: 10px 0;
+}
+
+.add-label {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.custom-file-upload {
+  display: inline-block;
+  cursor: pointer;
+  padding: 6px 12px;
+  margin-right: 10px;
+  background-color: #f1f1f1;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.custom-file-upload:hover {
+  background-color: #ddd;
+}
+
+.file-input {
+  display: none;
+}
+
+.choose-file-btn, .upload-btn {
+  display: inline-block;
+  padding: 6px 12px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #28a745;
+  color: white;
+  font-size: 14px;
+}
+
+.choose-file-btn:hover, .upload-btn:hover {
+  background-color: #218838;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+}
+
+.btn-secondary:disabled {
+  background-color: #a8a8a8;
+  cursor: not-allowed;
+}
+
+.form-check-input {
+   position: relative !important;
+  margin-top: .0 !important;
+   margin-left: 0 !important;
+  }
+/* .sendAll{
+
+} */
+.form-check-inputt:checked[type=checkbox] tr{
+  background-color: #eee !important;
+}
+.eventName{
+  color: #050794;
+}

@@ -1,0 +1,22 @@
+/* .chart{
+
+} */
+
+.container{
+   min-height: 80vh;
+}
+ .imgChart img{
+    width: 50%;
+ }
+ .report-links .link{
+    background-color: #050794;
+    /* border-radius: 12.5%; */
+ }
+ .report-links .link:hover{
+    cursor: pointer;
+ }
+ @media only screen and (max-width: 767px) {
+ .main-container {
+   margin: 10px 82px;
+}
+ }

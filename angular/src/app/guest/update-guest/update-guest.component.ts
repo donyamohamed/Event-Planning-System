@@ -2,17 +2,18 @@ import { GuestGetResponse } from './../guest-get-response';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
-import { GuestService } from '@shared/Services/guest.service';
+import { GuestService } from '@shared/services/guest.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Guest } from '@shared/Models/guest';
 import { FormsModule } from '@angular/forms';
+import { SharedModule } from "../../../shared/shared.module";
 
 @Component({
-  selector: 'app-update-guest',
-  standalone: true,
-  imports: [CommonModule,FormsModule],
-  templateUrl: './update-guest.component.html',
-  styleUrl: './update-guest.component.css'
+    selector: 'app-update-guest',
+    standalone: true,
+    templateUrl: './update-guest.component.html',
+    styleUrl: './update-guest.component.css',
+    imports: [CommonModule, FormsModule, SharedModule]
 })
 export class UpdateGuestComponent implements OnInit{
 

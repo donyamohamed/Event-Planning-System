@@ -1,36 +1,125 @@
-<div class="header-container">
-  <h2>Event Details</h2>
-  <div class="buttons">
-    <a [routerLink]="'/app/todolist/' + event.id" class="btn">TodoList</a>
-    <a (click)="navigateToSetExpenses(event.id)" class="btn btn-expense">Set Expenses</a>
-  </div>
-</div>
-<section class="container">
-  <div class="event-details">
-    <div class="card-media">
-      <div class="card-media-object-container">
-        <div class="card-media-object" style="background-image: url(../../../assets/img/Event.jpg);"></div>
-        <!-- <div class="card-media-object" style="background-image: url('../../../assets/img{{ event.eventImg }}');"></div> -->
 
+
+<div class="header-container">
+  <div class="blur"
+    [ngStyle]="{'background-image': 'url(' + (event?.eventImg ? event.eventImg : '../../assets/img/Event.jpg') + ')'}">
+  </div>
+  <img class="card-media-object" [src]="event?.eventImg ? event.eventImg : ('../../assets/img/Event.jpg')"
+    alt="Event Image">
+
+    <div class="star-feedback">
+      <div class="rating">
+        <ng-container *ngFor="let star of stars">
+          <i *ngIf="star.type === 'full'" class="fa-solid fa-star text-warning" title="{{ star.title }}"></i>
+          <i *ngIf="star.type === 'half'" class="fa-regular fa-star-half-stroke text-warning" title="{{ star.title }}"></i>
+          <i *ngIf="star.type === 'empty'" class="fa-regular fa-star" title="{{ star.title }}"></i>
+        </ng-container>
+      </div>          
+    </div>
+</div>
+
+
+<div class="buttons" *ngIf="isEventCreator">
+  <a [routerLink]="'/app/todolist/' + event?.id" class="btn btn-todolist">{{ "TodoList" | localize }}</a>
+  <a (click)="navigateToSetExpenses(event?.id)" class="btn btn-expense">{{ "Set Expenses" | localize }}</a>
+</div>
+
+
+<div class="event-info">
+  <div class="ticket-sales-info">
+    <div><span>Ticket sales end soon</span></div>
+    <div class="icons" >
+      <!-- <i class="fa" [ngClass]="isEventSaved ? 'fa-bookmark' : 'fa-bookmark-o'" (click)="toggleSavedEvent()"></i> -->
+     <!-- event-details.component.html -->
+     <i class="fa-bookmark bookmark-icon" *ngIf="isLogin"
+     [ngClass]="{'fa-regular': !isEventSaved, 'fa-solid text-warning': isEventSaved }"
+     (click)="toggleSavedEvent()">
+  </i>
+  
+      <i class="fa-solid fa-arrow-up-from-bracket" (click)="openShareAlert()" style="margin-left:10px;"></i>
+    </div>
+  </div>
+  
+  
+  <div class="date-category">
+    <div class="date">
+      <div class="start-date"><i class="fa-regular fa-calendar mr-2"></i> {{ event?.startDate | date: 'EEE, MMM dd, hh:mm a' }}</div>
+      <div class="end-date">{{ "-" | localize }} {{ event?.endDate | date: 'EEE, MMM dd, hh:mm a' }}</div>
+    </div>
+    <div class="category">
+      <p class="badge badge-warning">{{ event?.category }}</p>
+    </div>
+  </div>
+ 
+  <div class="location-info">
+    <div class="location-data"><i class="fas fa-map-marker-alt location-icon mr-2"></i>
+      {{ event?.location }}
+    </div>
+  </div>
+
+  <div class="event-name">
+    <h1>{{ event?.name }}</h1>
+  </div>
+
+  <div class="event-desc">
+    <h3>About</h3>
+    <p>{{ event?.description }}</p>
+  </div>
+  
+  <div class="user-data">
+    <div class="user-image">
+      <img [src]="getUserImage()" alt="User Image">
+    </div>
+    <div class="user-details">
+      <div class="user-info">
+        <div class="user-name mb-2">
+          <span>By </span>
+          <h6>{{ user?.name }}</h6>
+        </div>
+        <div class="guest-number">
+          <div>
+            <h6><span class="mr-2"><i class="fa-solid fa-user-group"></i></span>{{ event?.maxCount }} </h6> 
+            <span>attendees hosted</span>
+          </div>
+         
+        
+        </div>
       </div>
-      <div class="card-media-body">
-        <div class="card-media-body-top">
-          <p class="subtle"><strong>Name:</strong> {{ event.name }}</p> 
-          
-        </div>
-        <div class="card-media-body-supporting-bottom">
-          <p class="subtle"><strong>Start Date:</strong> {{ event.startDate | date: 'EEE, MMM dd, hh:mm a' }}</p>
-          <p class="subtle"><strong> End Date:</strong> {{ event.endDate | date: 'EEE, MMM dd, hh:mm a' }}</p>
-          <p class="subtle"><strong>Location:</strong> {{ event.location }}</p>
-          <p class="subtle"><strong>Type:</strong> {{ event.isPublic ? 'Public' : 'Private' }}</p>
-          <p><strong>Description:</strong> {{ event.description }}</p>
-          <p><strong>Category:</strong> {{ event.category }}</p>
-          <p><strong>Max Count:</strong> {{ event.maxCount }}</p>
-        </div>
+  
+      
+      <div class="connect-button" *ngIf="!isEventCreator">
+        <button class="email" (click)="sendEmail(user?.emailAddress)">Connect</button>
       </div>
     </div>
   </div>
-  <div *ngIf="!event" class="loading-message">
-    <p>Loading event details...</p>
+  
+  <h3>Reviews</h3>
+<div class="reviews">
+  <div *ngIf="feedbackList.length === 0" class="no-reviews text-center">
+    No reviews yet.
   </div>
-</section>
+  <div *ngFor="let feedback of feedbackList" class="data-feedback">
+    <img *ngIf="feedback.user?.image; else defaultImage" [src]="feedback.user?.image" alt="User Image">
+    <ng-template #defaultImage>
+      <img src="https://static.vecteezy.com/system/resources/thumbnails/005/129/844/small/profile-user-icon-isolated-on-white-background-eps10-free-vector.jpg" alt="Default Image">
+    </ng-template>
+    
+    <div>
+      <span>{{ feedback.user?.name }}</span>
+      <h3>{{ feedback.body }}</h3>
+      <div class="rating">
+        <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
+          <i *ngIf="feedback.rate >= star" class="fa-solid fa-star"></i>
+          <i *ngIf="feedback.rate >= star - 0.5 && feedback.rate < star" class="fa-regular fa-star-half-stroke"></i>
+          <i *ngIf="feedback.rate < star - 0.5" class="fa-regular fa-star"></i>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
+

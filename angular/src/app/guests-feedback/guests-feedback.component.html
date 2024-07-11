@@ -1,0 +1,29 @@
+<h3 style="text-align: center;color: rgb(151, 149, 158);margin-bottom: 0px;">Give Us Your Feedback!</h3>
+<div style="display: flex; flex-direction: row; justify-content: center; align-items: center; height: 100vh;">
+  <div>
+    <img src="../../assets/img/Feedback.gif" alt="Feedback" style="max-width: 100%; height: auto;">
+  </div>
+  <div class="cont">
+    <div class="title">
+      <h1>How was the Event?</h1>
+    </div>
+    <div class="stars">
+      <form [formGroup]="guestsfeedbackForm" (ngSubmit)="onSubmit()">
+        <input class="star star-5" id="star-5" type="radio" name="star" (click)="selectedStars(5.0)" />
+        <label class="star star-5" for="star-5"></label>
+        <input class="star star-4" id="star-4" type="radio" name="star" (click)="selectedStars(4.0)" />
+        <label class="star star-4" for="star-4"></label>
+        <input class="star star-3" id="star-3" type="radio" name="star" (click)="selectedStars(3.0)" />
+        <label class="star star-3" for="star-3"></label>
+        <input class="star star-2" id="star-2" type="radio" name="star" (click)="selectedStars(2.0)" />
+        <label class="star star-2" for="star-2"></label>
+        <input class="star star-1" id="star-1" type="radio" name="star" (click)="selectedStars(1.0)" />
+        <label class="star star-1" for="star-1"></label>
+        <div class="rev-box">
+          <textarea class="review" formControlName="body" placeholder="Write Your Comment"></textarea>
+          <button class="btn" type="submit">Send Review</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

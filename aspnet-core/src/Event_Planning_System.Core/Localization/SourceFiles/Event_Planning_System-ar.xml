@@ -1,58 +1,68 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="ar">
 	<texts>
-		<text name="HomePage" value="الصفحه الاساسيه" />
+
+		  <!--nada-->
+
+		<text name="HomePage" value="الصفحة الرئيسية" />
 		<text name="About" value="من نحن" />
 		<text name="WelcomeMessage" value="مرحبا بك في تطبيقنا Eventa -_-" />
 		<text name="FormIsNotValidMessage" value="النموذج ليس رسالة صالحة" />
 		<text name="TenantNameCanNotBeEmpty" value="لا يمكن أن يكون اسم المستأجر فارغًا" />
 		<text name="InvalidUserNameOrPassword" value="خطأ في اسم المستخدم أو كلمة مرور" />
-		<text name="ThereIsNoTenantDefinedWithName{0}" value="Tenant ای با نام  {0} یافت نشد." />
-		<text name="TenantIsNotActive" value="Tenant {0} فعال نیست." />
-		<text name="UserIsNotActiveAndCanNotLogin" value="کاربر {0} فعال نیست و امکان ورود ندارد." />
-		<text name="UserEmailIsNotConfirmedAndCanNotLogin">آدرس ایمیل شما تایید نشده است. امکان ورود ندارید.</text>
-		<text name="UserLockedOutMessage">کاربر مورد نظر قفل نشده است. لطفا مجددا بررسی نمایید.</text>
-		<text name="PleaseEnterLoginInformation" value="لطفا اطلاعات ورود را وارد نمایید" />
+
+		<text name="ThereIsNoTenantDefinedWithName{0}" value="لا يوجد مستخدم محدد بهذا الاسم" />
+		<text name="TenantIsNotActive" value="المستخدم غير مفعل على السيستم" />
+		<text name="UserIsNotActiveAndCanNotLogin" value="المستخدم غير نشط ولا يمكنه تسجيل الدخول" />
+		<text name="UserEmailIsNotConfirmedAndCanNotLogin">البريد الإلكتروني للمستخدم غير مؤكد ولا يمكن تسجيل الدخول</text>
+		<text name="UserLockedOutMessage">رساله متركه للمستخدم.</text>
+		<text name="PleaseEnterLoginInformation" value="الرجاء إدخال معلومات تسجيل الدخول" />
+
 		<text name="TenancyName" value="نام Tenant" />
 		<text name="UserNameOrEmail" value="اسم المستخدم أو كلمة مرور" />
 		<text name="Password" value="كلمة المرور" />
 		<text name="NewPassword" value="كلمه المرور الجديده" />
 		<text name="ResetPassword" value="إعادة تعيين كلمة المرور" />
-		<text name="UpdatePassword" value="تطوير كلمة السر" />
+		<text name="UpdatePassword" value="تغيير كلمة السر" />
 		<text name="RememberMe" value="تذكرني" />
-		<text name="Login" value="تسجيل الدخول" />
+
+		<text name="LogIn" value="تسجيل الدخول" />
+
 		<text name="LoginFailed" value="فشل تسجيل الدخول" />
 		<text name="NameSurname" value="اسم اللقب" />
 		<text name="UserName" value="اسم المستخدم" />
-		<text name="Name" value="الاسم" />
+		<text name="Name" value="الإسم" />
 		<text name="Surname" value="اللقب" />
 		<text name="EmailAddress" value="بريد اليكتروني" />
 		<text name="Tenants" value="مستخدمين" />
-		<text name="SavedSuccessfully" value="ذخیره با موفقیت انجام شد" />
+
+		<text name="SavedSuccessfully" value="تم الحفظ بنجاح" />
 		<text name="CreateNewTenant" value="انشاء مستخدم" />
-		<text name="AdminEmailAddress" value="ايميل ادمین" />
-		<text name="AdminPassword" value="كلمه مرورادمین" />
-		<text name="Cancel" value="انصراف" />
-		<text name="TenantName_Regex_Description" value="Tenant name must be at least 2 chars, starts with a letter and continue with letter, number, dash or underscore." />
-		<text name="DefaultPasswordIs" value="رمز عبور پیشفرض {0} است." />
-		<text name="CanBeEmptyToLoginAsHost" value="می‌تواند برای ورود به عنوان هاست خالی باشد." />
+		<text name="AdminEmailAddress" value="ايميل الادمن" />
+		<text name="AdminPassword" value="كلمه مرور الادمن" />
+		<text name="Cancel" value="يلغي" />
+		<text name="TenantName_Regex_Description" value="يجب أن يتكون اسم المستأجر من حرفين على الأقل، ويبدأ بحرف ويستمر بحرف أو رقم أو شرطة أو شرطة سفلية." />
+		<text name="DefaultPasswordIs" value="كلمة المرور الافتراضية" />
+		<text name="CanBeEmptyToLoginAsHost" value="يمكن أن يكون فارغًا لتسجيل الدخول كمضيف." />
 		<text name="Register" value="يسجل" />
-		<text name="OrLoginWith" value="با لاگین کنید با " />
-		<text name="WaitingForActivationMessage" value="حساب کاربری شما در انتظار تایید توسط ادمین سیستم است." />
+		<text name="OrLoginWith" value="تسجيل الدخول بواسطة " />
+		<text name="WaitingForActivationMessage" value="في انتظار رسالة التنشيط" />
 		<text name="TenantSelection" value="انتخاب Tenant" />
-		<text name="TenantSelection_Detail" value="لطفا یکی از Tenantهای زیر را انتخاب نمایید ." />
+		<text name="TenantSelection_Detail" value="تفاصيل اختيار المستخدم" />
 		<text name="Logout" value="تسجيل الخروج" />
-		<text name="RegisterFormUserNameInvalidMessage">سجل للحصول على اسم المستخدم رسالة غير صالحة</text>
-		<text name="DatabaseConnectionString" value="آدرس اتصال پایگاه داده" />
+		<text name="RegisterFormUserNameInvalidMessage">سجل للحصول على اسم المستخدم , رسالة غير صالحة</text>
+		<text name="DatabaseConnectionString" value="سلسلة اتصال قاعدة البيانات" />
 		<text name="Users" value="المستخدمون" />
 		<text name="IsActive" value="فعال" />
-		<text name="FullName" value=" الاسم الكامل" />
+		<text name="FullName" value=" الإسم الكامل" />
 		<text name="CreateNewUser" value="انشاء مستخدم جديد" />
 		<text name="Yes" value="نغم" />
 		<text name="No" value="لا" />
 		<text name="Optional" value="اختیاری" />
 		<text name="LeaveEmptyToSwitchToHost">اتركه فارغًا للتبديل إلى المضيف</text>
-		<text name="CurrentTenant">Current tenant</text>
+
+		<text name="CurrentTenant">المستخدم الحالي</text>
+
 		<text name="NotSelected">لم يتم اختياره</text>
 		<text name="Change">تغییر</text>
 		<text name="ChangeTenant">تغيير المستأجر</text>
@@ -64,58 +74,59 @@
 		<text name="DisplayName">تعديل الاسم</text>
 		<text name="Edit">تعديل</text>
 		<text name="Delete">حذف</text>
-		<text name="CreateNewRole">انشاء دور جديد</text>
+		<text name="CreateNewRole">إنشاء دور جديد</text>
 		<text name="RoleName">اسم الدور </text>
 		<text name="Actions">عملیات</text>
-		<text name="CouldNotCompleteLoginOperation">ورود انجام نشد. لطفا مجددا اقدام نمایید.</text>
-		<text name="CouldNotValidateExternalUser">امکان اعتبارسنجی کاربر بیرونی وجود نداشت.</text>
+
+		<text name="CouldNotCompleteLoginOperation">لا يمكن إكمال عملية تسجيل الدخول.</text>
+		<text name="CouldNotValidateExternalUser">لا يمكن التحقق من صحة المستخدم الخارجي.</text>
 		<text name="EditRole">تعديل الدور </text>
-		<text name="EditTenant">تعديل Tenant</text>
+		<text name="EditTenant">تعديل المستخدم</text>
 		<text name="EditUser">تعديل المستخدم</text>
-		<text name="TenantIdIsNotActive{0}">TenantId {0} is not active</text>
-		<text name="UnknownTenantId{0}">Unknown tenantId {0}</text>
+		<text name="TenantIdIsNotActive{0}">الرقم التعريفي للمستخدم غير نشط</text>
+		<text name="UnknownTenantId{0}">الرقم التعريفي للمستخدم غير معرف</text>
 		<text name="ThisFieldIsRequired">هذه الخانة مطلوبه</text>
 		<text name="PleaseWait">من فضلك انتظر</text>
 		<text name="Administration">ادمین</text>
-		<text name="ClearAll">حذف همه</text>
-		<text name="ClearOthers">حذف بقیه</text>
-		<text name="LabelOptions">Label options</text>
-		<text name="Permissions">دسترسی‌ها</text>
-		<text name="RoleDescription">توضیحات نقش</text>
-		<text name="Refresh">بازنشانی</text>
-		<text name="Create">ایجاد</text>
-		<text name="UserDetails">جزییات کاربر</text>
-		<text name="UserRoles">نقش‌های کاربر</text>
-		<text name="ConfirmPassword">تایید رمز عبور</text>
+		<text name="ClearAll">حذف الكل</text>
+		<text name="ClearOthers">حذف البقيه</text>
+		<text name="LabelOptions">خيارات</text>
+		<text name="Permissions">الأذونات‌</text>
+		<text name="RoleDescription">وصف الدور</text>
+		<text name="Refresh">اعاده تحميل</text>
+		<text name="Create">انشاء</text>
+		<text name="UserDetails">بيانات المستخدم</text>
+		<text name="UserRoles">أدوار المستخدمين</text>
+		<text name="ConfirmPassword">تأكيد كلمة المرور</text>
 		<text name="Version">نسخه</text>
-		<text name="On">روشن</text>
-		<text name="Off">خاموش</text>
-		<text name="AreYouSureWantToDelete">آیا از حذف {0} اطمینان دارید؟</text>
-		<text name="SuccessfullyDeleted">با موفقیت حذف شد</text>
-		<text name="StartTyping">شروع به نوشتن کنید</text>
+		<text name="On">فتح</text>
+		<text name="Off">مغلق</text>
+		<text name="AreYouSureWantToDelete">هل أنت متأكد من أنك تريد الحذف؟</text>
+		<text name="SuccessfullyDeleted">تم الحذف بنجاح</text>
+		<text name="StartTyping">بدا المحاوله</text>
 		<text name="Skins">Skins</text>
-		<text name="Settings">تنظیمات</text>
+		<text name="Settings">الاعدادات</text>
 		<text name="Filter">فیلتر</text>
 		<text name="CurrentPassword">رمز عبور فعلی</text>
-		<text name="PasswordsDoNotMatch">رمزهای وارد شده یکسان نیستند</text>
-		<text name="PasswordsMustBeAtLeast8CharactersContainLowercaseUppercaseNumber">رمز عبور باید حداقل هشت کاراکتر داشته باشد، شامل حروف کوچک، بزرگ و اعداد باشد</text>
-		<text name="UserDeleteWarningMessage">کاربر {0} حذف خواهد شد.</text>
-		<text name="RoleDeleteWarningMessage">نقش {0} و دسترسی‌های آن حذف خواهد شد.</text>
+		<text name="PasswordsDoNotMatch">كلمة المرور غير مطابقة</text>
+		<text name="PasswordsMustBeAtLeast8CharactersContainLowercaseUppercaseNumber">يجب أن تحتوي كلمات المرور على 8 أحرف على الأقل، وأحرف صغيرة، وأحرف كبيرة، ورقم</text>
+		<text name="UserDeleteWarningMessage">رسالة تحذير حذف المستخدم.</text>
+		<text name="RoleDeleteWarningMessage">رسالة تحذير حذف الدور.</text>
 		<text name="TenantDeleteWarningMessage">Tenant {0} will be deleted.</text>
 		<text name="SearchWithThreeDot">جستجو...</text>
-		<text name="PleaseEnterAtLeastNCharacter">حداقل {0} کاراکتر وارد کنید.</text>
-		<text name="PleaseEnterNoMoreThanNCharacter">لطفا بیشتر از {0} کاراکتر وارد نکنید.</text>
-		<text name="InvalidEmailAddress">آدرس ایمیل نامعتبر</text>
-		<text name="InvalidPattern">نامعتبر</text>
+		<text name="PleaseEnterAtLeastNCharacter">الرجاء إدخال حرف على الأقل.</text>
+		<text name="PleaseEnterNoMoreThanNCharacter">الرجاء إدخال لا أكثر من الحرف.</text>
+		<text name="InvalidEmailAddress">عنوان البريد الإلكتروني غير صالح</text>
+		<text name="InvalidPattern">النمط غير صالح</text>
 		<text name="PairsDoNotMatch" value="أزواج لا تتطابق" />
 		<text name="All" vlaue="كل" />
-		<text name="TotalRecordsCount">مجموعا {0}</text>
+		<text name="TotalRecordsCount">إجمالي عدد السجلات</text>
 		<text name="ResetPasswordStepOneInfo" value="إعادة تعيين كلمة المرور" />
 		<text name="ResetPasswordStepTwoInfo" value="إعادة تعيين كلمة المرور" />
 		<text name="UsersActivation">تفعيل المستخدمين</text>
-		<text name="Profile" value="الصفحه الشخصيه"/>
-		<text name="Events" value="الاحداث"/>
-		<text name="Recommended Events" value="الأحداث الموصى بها"/>
+		<text name="Profile" value="الصفحة الشخصية"/>
+		<text name="Events" value="المناسبات"/>
+		<text name="Recommended Events" value="المناسبات الموصى بها"/>
 		<text name="ConfirmNewPassword" vlaue="تأكيد كلمة المرور الجديدة" ></text>
 	    <text name="Search" value="بحث" />
 	    <text name="Save" value=" حفظ" />
@@ -125,7 +136,154 @@
 	    <text name="Or Register?" value="سجل حساب ؟" />
         <text name="Forget Password" value="نسيت كلمه المرور" />
 
+
+         <!--esraa-->
+
+        <text name="Welcome to Eventa Planning System" value="مرحبا بكم في نظام تنظيم المناسبات" />
+        <text name="Streamline your event planning process with our intuitive system. Create, manage, and track events effortlessly." value="قم بتبسيط عملية التخطيط للمناسبات الخاص بك من خلال نظامنا المبسط. قم بإنشاء المناسبات وإدارتها وتتبعها بسهولة." />
+        <text name="Create detailed event plans" value="انشاء خطط تفصيليه للمناسبات" />
+        <text name="Manage tasks and deadlines" value="إدارة المهام والمواعيد النهائية" />
+        <text name="Invite guests and track RSVPs" value="قم بدعوة الضيوف وتتبع الردود على الدعوات" />
+        <text name="Customize event details and settings" value="تخصيص تفاصيل الحدث والإعدادات" />
+        <text name="Manage budgets and expenses" value="إدارة الميزانيات والنفقات" />
+        <text name="Get Started" value="البدء" />
+        <text name="Add Interests 💖" value="أضف اهتمامات" />
+        <text name="Submit" value="تسليم" />
+        <text name="Image" value="صوره" />
+        <text name="Gender is required. " value="نوع الجمس مطلوب" />
+        <text name="Male" value="ذكر" />
+        <text name="Female" value="انثى" />
+        <text name="Gender" value="النوع" />
+        <text name="Age must not exceed 70" value="يجب ألا يتجاوز العمر 70 عامًا" />
+        <text name="Age must be at least 16." value="يجب أن يكون العمر 16 عامًا على الأقل." />
+        <text name="Age is required" value="العمر مطلوب" />
+        <text name="Age" value="العمر" />
+        <text name="Invalid email format" value="تنسيق البريد الإلكتروني غير صالح" />
+		<text name="Email is required" value="البريد الالكتروني مطلوب" />
+		<text name="Invalid username format" value="تنسيق اسم المستخدم غير صالح" />
+		<text name="User Name must not exceed 50 characters" value="يجب ألا يتجاوز اسم المستخدم 50 حرفًا" />
+		<text name="User Name must be at least 3 characters long" value="يجب أن يتكون اسم المستخدم من 3 أحرف على الأقل" />
+		<text name="User Name is required" value="اسم المستخدم مطلوب" />
+		<text name="User Name:" value="اسم المستخدم " />
+		<text name="Edit My Profile" value="تعديل ملفي الشخصي" />
+		<text name="Please choose some interests! 🍒" value="الرجاء اختيار بعض الاهتمامات! 🍒" />
+		<text name="Add Interest" value="اضف الاهتمامات" />
+		<text name="My Interests" value="اهتماماتي" />
+		<text name="Planner" value="منظم المناسبه" />
+		<text name="success" value="نجاح" />
+		<text name="Error fill the Email" value="خطا املئ البريد الاكتروني" />
+		<text name="Confirm Password" value="تاكيد كلمة المرور" />
+		<text name="New Password" value="كلمه المرور" />
+		<text name="Send Email" value="ارسل بريد الكتروني" />
+		<text name="Please Enter Your Email" value="رجاءا أدخل بريدك الإلكتروني" />
+		<text name="Reset Your Password" value="اعد ضبط كلمه السر" />
+		<text name="Choose your interests" value="اختر اهتماماتك" />
+		<text name="Next" value="التالي" />
+	    <text name="No upcoming events." value="لا توجد مناسبات قادمة." />
+		<text name="Date:" value="تاريخ" />
+		<text name="Description:" value="الوصف" />
+        <text name="Location:" value="الموقع" />
+		<text name="Event Name:" value="اسم المناسبه" />
+		<text name="My Event" value="المناسبه الخاصه بي" />
+		<text name="Will Attend" value="من سوف يحضرون" />
+		<text name="Details View" value="عرض التفاصيل" />
+		<text name="Calendar View" value="عرض التقويم" />
+		<text name="Upcoming Events" value="المناسبات القادمه" />
+		<text name="Activate Account" value="تفعيل حساب" />
+		<text name="Welcome to our Eventa platform! Please click the button below to activate your account:" value="مرحبًا بكم في منصة Eventa الخاصة بنا! الرجاء الضغط على الزر أدناه لتفعيل حسابك:" />
+		<text name="Activate Your Account" value="فعل حسابك" />
+		<text name="Loading event details..." value="جارٍ تحميل تفاصيل الحدث..." />
+		<text name="Max Count:" value="العدد الأقصى" />
+		<text name="Category:" value="الفئه" />
+		<text name="Type:" value="النوع" />
+		<text name="End Date:" value="تاريخ الانتهاء:" />
+		<text name="Start Date:" value="تاريخ البدء" />
+		<text name="Name:" value="الاسم" />
+		<text name="Set Expenses" value="تحديد النفقات" />
+		<text name="TodoList" value="عمل قائمة" />
+		<text name="Event Details" value="تفاصيل المناسبه" />
+
+
+
+		<!--esraa-->
+		<text name="Notifications" value="الإشعارات"/>
+		<text name="UNIQUE" value="تفرد" /> 
+		<text name="CREATIVE" value="إبداع" /> 
+		<text name="EXTRAORDINARY" value="تميز" /> 
+		<text name="Based on your Interests" value="بناء علي إهتماماتك" /> 
+		<text name="ABOUT US" value="من نحن" /> 
+		<text name="About us" value="من نحن"/>
+		<text name="Home" value="الصفحة الرئيسية"/>
+		<text name="Contact" value="تواصل معنا"/>
+		<text name="Useful Links" value="لينكات مفيدة"/>
+		<text name="Privacy Policy" value="سياسة الخصوصية"/>
+		<text name="Terms And Conditions" value="البنود و الظروف"/>
+		<text name="FAQ’s" value="الأسئلة الشائعة"/>
+		<text name="Do you really want to delete" value="هل أنت متأكد من أنك تريد حذف ؟"/>
+		<text name="Create Event" value="أنشيء مناسبة جديدة"/>
+		<text name="Yes, delete it!" value="نعم، قم بحذفه!"/>
+		<text name="No, keep it" value="لا، احتفظ بها"/>
+		<text name="There was an error deleting the event." value="لقد حدث خطأ أثناء حذف العنصر"/>
+		<text name="User Name" value="إسم المستخدم"/>
+		<text name="Event Name" value="إسم المناسبة"/>
+		<text name="Event Location" value="المكان"/>
+		<text name="Start Date" value="تاريخ البداية"/>
+		<text name="End Date" value="تاريخ الإنتهاء"/>
+		<text name="Attendees" value="الحضور"/>
+		<text name="Event Category" value="فئة الحدث"/>
+		<text name="Choose Event Type" value="اختر نوع الحدث"/>
+		<text name="Public" value="عام"/>
+		<text name="Private" value="خاص"/>
+		<text name="Event Image" value="صورة المناسبة"/>
+		<text name="Event Description" value=" وصف المناسبة"/>
+		<text name="Max Attendees" value="أقصي عدد للحضور"/>
+		<text name="Ask for invitation" value="طلب لحضور المناسبة"/>
+		<text name="View" value="تفاصيل"/>
+		<text name="Guest" value="الحضور"/>
+		<text name="Add one by one" value="إضافة واحدا تلو الآخر"/>
+		<text name="Add by excel sheet" value="الإضافة بواسطة إكسل"/>
+		<text name="Choose Excel File" value="إختر ملف إكسل"/>
+		<text name="Upload" value="إرفع"/>
+		<text name="Upload Guest List" value="تحميل قائمة الضيوف"/>
+		<text name="No Guests added yet!" value="!لا يوجد ضيوف بعد"/>
+		<text name="Phone" value="التليفون"/>
+		<text name="Email" value="البريد الإلكتروني"/>
+		<text name="Invitation State" value="حالة الدعوات"/>
+		<text name="Pending" value="قيد الانتظار"/>
+		<text name="Confirmed" value="مؤكد"/>
+		<text name="No. Guests:" value="العدد"/>
+		<text name="Send Invitation" value="أرسل الدعوة"/>Add Guest
 		
-	
+		<text name="Add Guest" value="ضيف جديد"/>
+		<text name="Add New Guest" value="إضافة ضيف جديد "/>
+
+		<text name="My Events" value="مناسباتي"/>
+		<text name="Category" value="الفئة"/>
+		<text name="Eventa System" value="نظام إيفنتا"/>
+		<text name="UNIQUE,CREATIVE AND EXTRAORDINARY" value="فريد، مبدع واستثنائي"/>
+		<text name="Support" value="الدعم"/>
+		<text name="What are you inquiring about?" value="ما الذي تستفسر عنه؟"/>
+		<text name="Ask another question" value="إسأل سؤال آخر"/>
+		<text name="Created Events" value="الأحداث التي تم إنشاؤها"/>
+		<text name="Upcomming Events" value="المناسبات القادمة"/>
+		<text name="Event History" value="المناسبات السابقة"/>
+		<text name="Reports" value="التقارير"/>
+		<text name="Saved Events" value="المناسبات المحفوظة"/>
+		<text name="You are not asking to come to any event yet" value="لم تطلب الحضور لأي مناسبة بعد"/>
+		<text name="Invitation Request For:" value="طلب لحضور"/>
+		<text name="Contact us" value="تواصل معنا"/>
+		<text name="Follow us" value="تابعنا"/>
+		<text name="Your best place to manage, create, and track your events. Eventa makes event planning unique, creative, and extraordinary." value="أفضل مكان لإدارة الأحداث الخاصة بك وإنشائها وتتبعها. تجعل Eventa التخطيط للحدث فريدًا ومبدعًا وغير عادي.
+
+
+
+"/>
+		
+		
+		
+        
+
+
+
 	</texts>
 </localizationDictionary>

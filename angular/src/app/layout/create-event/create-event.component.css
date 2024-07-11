@@ -4,6 +4,9 @@
   padding: 30px;
   background: #ffffff;
 }
+body {
+overflow-x:hidden !important;
+}
 
 button.swal2-confirm.swal2-styled {
   background-color: #050794 !important;
@@ -47,6 +50,9 @@ label {
 
 .submit-button {
   background-color: #fbaf1b;
+  padding:10px 20px;
+  border:none;
+  border-radius: 5px;
   color: #fff;
   transition: background-color 0.3s ease;
 }

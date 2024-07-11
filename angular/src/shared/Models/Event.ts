@@ -16,6 +16,7 @@ export enum Enumerator {
 export class Event {
     constructor(
         public id: number = 0,
+        public isRead: boolean|undefined=false,
         public name: string | undefined = undefined,
         public description: string | undefined = undefined,
         public location: string | undefined = undefined,

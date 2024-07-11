@@ -5,6 +5,7 @@ using System.Reflection;
 using Abp.Authorization.Users;
 using Abp.Extensions;
 using Event_Planning_System.Enitities;
+using Event_Planning_System.Entities;
 
 namespace Event_Planning_System.Authorization.Users
 {
@@ -37,8 +38,9 @@ namespace Event_Planning_System.Authorization.Users
         public virtual ICollection<BudgetExpense> Budgets { get; set; } = new List<BudgetExpense>();
         public virtual ICollection<ToDoCheckList> ToDoChecks { get; set; } = new List<ToDoCheckList>();
         public virtual ICollection<Interest> Interests { get; set; } = new List<Interest>();
+        public virtual ICollection<Feedback> Feedbacks { get; set; } = new List<Feedback>();
 
-
+        public ICollection<FavoriteEvent> FavoriteEvents { get; set; } = new List<FavoriteEvent>();
         public static User CreateTenantAdminUser(int tenantId, string emailAddress )
         {
             var user = new User

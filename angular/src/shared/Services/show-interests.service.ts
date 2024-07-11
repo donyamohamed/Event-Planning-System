@@ -2,15 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Interest } from '../Models/interestss';
 import { Observable, map } from 'rxjs';
-
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ShowInterestsService {
-  private baseUrl="https://localhost:44311/api/services/app/Interests/GetAllInterstsForChoosing";
-  private baseUrl2="https://localhost:44311/api/services/app/Interests/addUserInterests";
-  private baseUrl3="https://localhost:44311/api/services/app/Interests/GetHasInterests";
+  private baseUrl=`${environment.API_URL_BASE_PART}/api/services/app/Interests/GetAllInterstsForChoosing`;
+  private baseUrl2=`${environment.API_URL_BASE_PART}/api/services/app/Interests/addUserInterests`;
+  private baseUrl3=`${environment.API_URL_BASE_PART}/api/services/app/Interests/GetHasInterests`;
 
   constructor(private http : HttpClient) { }
 

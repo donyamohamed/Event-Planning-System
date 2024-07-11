@@ -1,6 +1,6 @@
 // src/app/upcoming-events/upcoming-events.component.ts
 import { Component, OnInit } from '@angular/core';
-import { UserEventsService } from '@shared/Services/user-events.service';
+import { UserEventsService } from '@shared/services/user-events.service';
 import { AppSessionService } from '@shared/session/app-session.service';
 import { Event } from '../../../../shared/Models/Event';
 import { CommonModule } from '@angular/common';
@@ -12,17 +12,21 @@ import interactionPlugin from '@fullcalendar/interaction';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
 import bootstrap5Plugin from '@fullcalendar/bootstrap5';
+import { SharedModule } from "../../../../shared/shared.module";
+import { SidebarEventComponent } from '@app/layout/sidebar-event/sidebar-event.component';
 
 @Component({
-  selector: 'app-upcoming-events',
-  templateUrl: './upcoming-events.component.html',
-  styleUrls: ['./upcoming-events.component.css'],
-  standalone: true,
-  imports: [
-    FormsModule,
-    CommonModule,
-    FullCalendarModule
-  ]
+    selector: 'app-upcoming-events',
+    templateUrl: './upcoming-events.component.html',
+    styleUrls: ['./upcoming-events.component.css'],
+    standalone: true,
+    imports: [
+        FormsModule,
+        CommonModule,
+        FullCalendarModule,
+        SharedModule,
+        SidebarEventComponent
+    ]
 })
 export class UpcomingEventsComponent implements OnInit {
   viewDate: Date = new Date();
@@ -58,9 +62,9 @@ export class UpcomingEventsComponent implements OnInit {
       this.userEvent.getUpcomingEventsToAttendForCurrentUser(userId).subscribe(createdEvents => {
         this.createdEvents = createdEvents.map(event => ({ ...event, source: 'upcoming' }));
 
-        // Combine events and set them to calendarOptions.events
+       
         const allEvents = [...this.attendingEvents, ...this.createdEvents];
-        this.upcomingEvents = allEvents; // Update the upcomingEvents array
+        this.upcomingEvents = allEvents; 
 
         this.calendarOptions.events = allEvents.map(event => ({
           title: event.name,

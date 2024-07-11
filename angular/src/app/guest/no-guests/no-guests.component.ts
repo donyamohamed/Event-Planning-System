@@ -1,20 +1,22 @@
 import { Subscription } from 'rxjs';
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { GuestService } from '@shared/Services/guest.service';
+import { GuestService } from '@shared/services/guest.service';
 import { Guest } from '@shared/Models/guest';
 import { ActivatedRoute, Router } from '@angular/router';
 import { template } from 'lodash-es';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { FormsModule, FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from "../../../shared/shared.module";
+import swal from 'sweetalert2';
 
 
 @Component({
-  selector: 'app-no-guests',
-  standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
-  templateUrl: './no-guests.component.html',
-  styleUrl: './no-guests.component.css'
+    selector: 'app-no-guests',
+    standalone: true,
+    templateUrl: './no-guests.component.html',
+    styleUrl: './no-guests.component.css',
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, SharedModule]
 })
 export class NoGuestsComponent {
   sub: Subscription | null = null;
@@ -35,16 +37,15 @@ export class NoGuestsComponent {
       name: ['', [Validators.required, Validators.maxLength(100)]],
       phone: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
       email: ['', [Validators.required, Validators.email]],
-      invitationState: ['', [Validators.required]]
+      // invitationState: ['', [Validators.required]]
     });
   }
 
   ngOnInit(): void {
     this.sub = this.activatedRouter.params.subscribe((params) => {
       this.idEvent = params["id"];
-      // console.log(this.event);
+      // console.log("Event ID: ", this.idEvent ); 
 
-        console.log("Event ID: ", this.idEvent ); 
     })
 
   }
@@ -64,7 +65,7 @@ export class NoGuestsComponent {
     //   })
     // });
     if (this.guestForm.valid) {
-
+      this.guest.invitationState="Pending";
       this.sub = this.activatedRouter.params.subscribe(param => {
         this.guestSer.createGuest(this.guest, this.idEvent).subscribe({
           next: (result) => {
@@ -85,11 +86,23 @@ export class NoGuestsComponent {
 
 
 
-
-
   fileToUpload: File | null = null;
   uploadResponse: string = '';
 
+  promptFileSelection(): void {
+    swal.fire({
+      title: 'Enter the Name, Phone number, and Email. Each one in a column',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, got it!',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const fileInput = document.getElementById('file-upload') as HTMLInputElement;
+        fileInput.click();
+      }
+    });
+  }
 
   handleFileInput(event: any): void {
     const file: File = event.target.files[0];
@@ -107,18 +120,36 @@ export class NoGuestsComponent {
 
   uploadFile(): void {
     if (this.fileToUpload) {
-      this.guestSer.uploadFile(this.fileToUpload, this.idEvent).subscribe(
-        (response) => {
-          this.uploadResponse = 'File uploaded successfully';
-          this.router.navigateByUrl('app/allGuests/'+this.idEvent);
-        },
-        (error) => {
-          this.uploadResponse = `Error: ${error.message}`;
-        }
-      );
-    } else {
-      this.uploadResponse = 'Please select a valid Excel file first.';
-    }
-  }
+        this.guestSer.uploadFile(this.fileToUpload, this.idEvent).subscribe({
+            next: (response: any) => {
+                swal.fire({
+                    title: 'Success',
+                    text: response.result,
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                }).then((result) => {
+                    this.router.navigateByUrl(`app/allGuests/${this.idEvent}`);
+                });
 
+                this.uploadResponse = 'File uploaded successfully';
+            },
+            error: (error: any) => {
+                console.log(error);
+                swal.fire({
+                    title: 'Error',
+                    text: error.error.result,
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+
+                this.uploadResponse = `Error: ${error}`;
+            }
+        });
+    } else {
+        this.uploadResponse = 'Please select a valid Excel file first.';
+    }
+}
+
+  
+  
 }

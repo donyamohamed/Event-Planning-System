@@ -1,21 +1,15 @@
 ﻿<app-header></app-header>
-<header class="home-header">
-  <div class="big-div">
-    <div class="inner-div">
-      <p>Boston Corporate Events</p>
-      <h1>
-        UNIQUE
-        <br>
-        CREATIVE
-        <br>
-        EXTRAORDINARY
-      </h1>
-
-    </div>
+<header>
+  <div>
+    <h1>{{"Eventa System" |localize}}</h1>
+    <p>{{"UNIQUE,CREATIVE AND EXTRAORDINARY" | localize}}</p>
   </div>
 </header>
 <div [@routerTransition]>
-
+  <div>
+     
+    <app-intersts *ngIf="!hasInterests && isLoggedIn"></app-intersts>
+  </div>
   <section>
     <div class="container m-2 p-2">
       <div class="row">
@@ -25,6 +19,31 @@
       </div>
     </div>
   </section>
+    <!-- Chat Button -->
+    <div class="chat-button-container">
+      <button class="chat-button" (click)="openChat()">
+        <img src="../../assets/img/Aboutus.png" alt="Chat Icon">
+       {{"Support" | localize}} 
+      </button>
+    </div>
+     <!-- Chat Popup -->
+  <div class="chat-popup" id="chatPopup">
+    <div class="chat-header">
+      {{"Support" | localize}} 
+      <span class="close" (click)="closeChat()">&times;</span>
+    </div>
+    <div class="chat-body">
+      <p class="p1 chatbot-title" *ngIf="!selectedQuestion">{{"What are you inquiring about?" | localize}}</p>
+      <ng-container *ngIf="!selectedQuestion">
+        <button *ngFor="let question of questions" (click)="askQuestion(question)">{{ question }}</button>
+      </ng-container>
+      <div *ngIf="answer" class="panswer">
+        <p class="p2 chatbot-q" >{{ selectedQuestion }}</p>
+        <p class="p1 chatbot-a" >{{ answer }}</p>
+        <button (click)="resetQuestions()">{{"Ask another question" | localize}}</button>
+      </div>
+    </div>
+  </div>
 
 </div>
 

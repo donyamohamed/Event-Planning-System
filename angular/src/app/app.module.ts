@@ -14,6 +14,9 @@ import { ServiceProxyModule } from '@shared/service-proxies/service-proxy.module
 import { SharedModule } from '@shared/shared.module';
 import { HomeComponent } from '@app/home/home.component';
 import { AboutComponent } from '@app/about/about.component';
+import { InterstsComponent } from '@app/intersts/intersts.component';
+import { ChatComponentComponent } from '@app/chat-component/chat-component.component';
+import { FeedbackComponent} from './feedback/feedback.component'
 // tenants
 import { TenantsComponent } from '@app/tenants/tenants.component';
 import { CreateTenantDialogComponent } from './tenants/create-tenant/create-tenant-dialog.component';
@@ -46,6 +49,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NotificatiosComponent } from "./layout/notifications/notificatios.component";
 
 import { PublicEventsComponent } from "./home/public-events/public-events.component";
+import { ChatIconComponent } from "./chat-icon/chat-icon.component";
+import { GuestsFeedbackComponent} from './guests-feedback/guests-feedback.component'
+
+
 
 
 
@@ -59,6 +66,9 @@ import { PublicEventsComponent } from "./home/public-events/public-events.compon
         AppComponent,
         HomeComponent,
         AboutComponent,
+        InterstsComponent,
+        FeedbackComponent,
+        ChatComponentComponent,
         // CreateGuestModelComponent,
         // tenants
         TenantsComponent,
@@ -84,6 +94,8 @@ import { PublicEventsComponent } from "./home/public-events/public-events.compon
         SidebarLogoComponent,
         SidebarUserPanelComponent,
         SidebarMenuComponent,
+        GuestsFeedbackComponent
+        
     ],
     bootstrap: [AppComponent],
     providers: [provideHttpClient(withInterceptorsFromDi(), withJsonpSupport())], imports: [CommonModule,
@@ -100,13 +112,11 @@ import { PublicEventsComponent } from "./home/public-events/public-events.compon
         NgxPaginationModule,
         NgbModule,
         FullCalendarModule
-     
-     
         // FullCalendarModule.forRoot({
         //     plugins: [dayGridPlugin]
         //   })
         // CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
-
-        , NotificatiosComponent, PublicEventsComponent] })
+        ,
+        NotificatiosComponent, PublicEventsComponent, ChatIconComponent] })
 
 export class AppModule {}

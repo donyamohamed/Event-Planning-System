@@ -46,9 +46,19 @@ namespace Event_Planning_System.Web.Host.Startup
 
                     options.Events = new JwtBearerEvents
                     {
-                        OnMessageReceived = QueryStringTokenResolver
+                        OnMessageReceived = context =>
+                        {
+                            var accessToken = context.Request.Query["access_token"];
+                            var path = context.HttpContext.Request.Path;
+                            if (!string.IsNullOrEmpty(accessToken) &&
+                                     (path.StartsWithSegments("/chathub") || path.StartsWithSegments("/chatbothub")))
+                            {
+                                context.Token = accessToken;
+                            }
+                            return Task.CompletedTask;
+                        }
                     };
-                
+
                 })
 
               .AddCookie()
@@ -65,7 +75,9 @@ namespace Event_Planning_System.Web.Host.Startup
         private static Task QueryStringTokenResolver(MessageReceivedContext context)
         {
             if (!context.HttpContext.Request.Path.HasValue ||
-                !context.HttpContext.Request.Path.Value.StartsWith("/signalr"))
+                   (!context.HttpContext.Request.Path.Value.StartsWith("/signalr") &&
+                    !context.HttpContext.Request.Path.Value.StartsWith("/chathub") &&
+                    !context.HttpContext.Request.Path.Value.StartsWith("/chatbothub")))
             {
                 // We are just looking for signalr clients
                 return Task.CompletedTask;

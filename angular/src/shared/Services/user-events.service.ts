@@ -1,15 +1,16 @@
+import { EventResponse } from '../../app/guest/event-response';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Event } from '../Models/Event'; // Adjust the import path as necessary
-
+import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
 export class UserEventsService {
-  private apiUrl = 'https://localhost:44311/api/services/app/Event';
-private apiGuestUrl='https://localhost:44311/api/UpcomingEventUserAttended'
+  private apiUrl = `${environment.API_URL_BASE_PART}/api/services/app/Event`;
+private apiGuestUrl=`${environment.API_URL_BASE_PART}/api/UpcomingEventUserAttended`;
   constructor(private http: HttpClient) {}
 
   getUserEvents(userId: number): Observable<Event[]> {
@@ -38,6 +39,15 @@ private apiGuestUrl='https://localhost:44311/api/UpcomingEventUserAttended'
   deleteEvent(eventId: number): Observable<void> {
     const url = `${this.apiUrl}/DeleteEventWithDetails?eventId=${eventId}`;
     return this.http.delete<void>(url);
+  }
+  editEvent(event:Event): Observable<void> {
+    const url = `${this.apiUrl}/Update`;
+    return this.http.put<void>(url,event);
+  }
+
+  getEventById(id:Number): Observable<EventResponse> {
+    const url = `${this.apiUrl}/Get?Id=${id}`;
+    return this.http.get<EventResponse>(url);
   }
 }
 

@@ -6,7 +6,7 @@ import {
   ChangeDetectorRef
 } from '@angular/core';
 import { CurrentUser } from '@shared/Models/current-user';
-import { CurrentUserDataService } from '@shared/Services/current-user-data.service';
+import { CurrentUserDataService } from '@shared/services/current-user-data.service';
 import { AppComponentBase } from '@shared/app-component-base';
 
 @Component({

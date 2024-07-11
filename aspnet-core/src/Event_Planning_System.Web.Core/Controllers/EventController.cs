@@ -7,6 +7,8 @@ using System.IO;
 using Event_Planning_System.Event.Dto;
 using Microsoft.AspNetCore.Http;
 using System;
+using Abp.Domain.Repositories;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Event_Planning_System.Controllers
 {
@@ -57,12 +59,13 @@ namespace Event_Planning_System.Controllers
             return Ok(events);
         }
 
-       
+
         [HttpPost]
         public async Task CreateWithImage([FromForm] CreateEventDto formData)
         {
-            await _eventService.CreateAsync(formData)  ; 
+            await _eventService.CreateAsync(formData);
         }
+
         [HttpDelete]
         public async Task<IActionResult> DeleteEvent(int id)
         {
@@ -70,4 +73,4 @@ namespace Event_Planning_System.Controllers
             return Ok();
         }
     }
-    }
+}

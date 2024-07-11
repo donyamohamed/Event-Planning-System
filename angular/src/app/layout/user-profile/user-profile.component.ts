@@ -1,8 +1,8 @@
 
-import { Component, OnInit, TemplateRef } from "@angular/core";
+import { Component, OnInit, TemplateRef, ChangeDetectionStrategy,Renderer2 } from "@angular/core";
 
-import { CurrentUserDataService } from "@shared/Services/current-user-data.service";
-import { InterestsService } from "@shared/Services/interests.service";
+import { CurrentUserDataService } from "@shared/services/current-user-data.service";
+import { InterestsService } from "@shared/services/interests.service";
 import { CurrentUser } from "@shared/Models/current-user";
 import { Interests } from "@shared/Models/interests";
 import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
@@ -10,20 +10,21 @@ import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { BrowserModule } from "@angular/platform-browser";
 import { RouterLink } from "@angular/router";
-
 import Swal from "sweetalert2";
 import { finalize } from "rxjs";
 import {UpcomingEventsComponent} from './upcoming-events/upcoming-events.component';
 import {HistoryeventComponent} from '../historyevent/historyevent.component';
+import { SharedModule } from "../../../shared/shared.module";
 @Component({
-  imports: [FormsModule, CommonModule, RouterLink,UpcomingEventsComponent,HistoryeventComponent],
-  standalone: true,
-  selector: "app-user-profile",
-  templateUrl: "./user-profile.component.html",
-  styleUrls: ["./user-profile.component.css"],
+    standalone: true,
+    selector: "app-user-profile",
+    templateUrl: "./user-profile.component.html",
+    styleUrls: ["./user-profile.component.css"],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [FormsModule, CommonModule, RouterLink, UpcomingEventsComponent, HistoryeventComponent, SharedModule]
 })
 export class UserProfileComponent implements OnInit {
-
+  isMinimized: boolean = false;
   AddInterest(id: any, interest: any) {
     this.interestsService.AddInterest(id, interest).subscribe({
       next: i => {
@@ -109,12 +110,20 @@ export class UserProfileComponent implements OnInit {
   constructor(
     private _userService: CurrentUserDataService,
     private modalService: BsModalService,
-    private interestsService: InterestsService
+    private interestsService: InterestsService,
+    private renderer: Renderer2
 
   ) { }
   AllExistingInterests: any;
 
   ngOnInit(): void {
+    this.setBodyStyles();
+
+   
+    window.addEventListener('resize', () => {
+      this.setBodyStyles();
+    });
+
     this._userService.GetCurrentUserData().subscribe({
       next: (u: CurrentUser) => {
         console.log("User data loaded:", u);
@@ -158,7 +167,18 @@ export class UserProfileComponent implements OnInit {
   Wedding,
   Gathering,
   Other */
+  setBodyStyles(): void {
+    if (window.innerWidth < 768) {
+      this.renderer.setStyle(document.body, 'min-height', '200vh');
+     
 
+    } else {
+      this.renderer.setStyle(document.body, 'min-height', '130vh');
+    
+
+    }
+    this.renderer.setStyle(document.body, 'position', 'relative');
+  }  
   getStatusLabel(status: number): string {
     switch (status) {
       case 0:
@@ -189,8 +209,8 @@ export class UserProfileComponent implements OnInit {
   }
   getUserImage(): string {
     return this.user?.image
-      ? `https://localhost:44311/${this.user.image}`
-      : "assets/img/user.jpg";
+      ? this.user.image
+      : "./../../assets/img/userImg.png";
   }
 
   openModal(template: any): void {
@@ -230,6 +250,8 @@ export class UserProfileComponent implements OnInit {
     //   },
     // });
   }
-
+  toggleProfile() {
+    this.isMinimized = !this.isMinimized;
+  }
 }
 

@@ -102,6 +102,7 @@ namespace Event_Planning_System.Email
     </head>
     <body>
         <div class='poster'>
+ <img class='header-img' src='https://cmg-cmg-rd-20091-prod.cdn.arcpublishing.com/resizer/HgX8nMzUrr9opXHsnd0xWjgKAQ8=/1440x810/filters:format(jpg):quality(70)/cloudfront-us-east-1.images.arcpublishing.com/cmg/2TDRNGYYPK42B346PJK7WH3ENM.jpg' alt='Header Image'>
             <h1>Event Cancellation</h1>
             <h2>{eventName}</h2>
             <div class='date-time'>

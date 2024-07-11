@@ -3,13 +3,20 @@ import { AppComponentBase } from '@shared/app-component-base';
 import { SignalRAspNetCoreHelper } from '@shared/helpers/SignalRAspNetCoreHelper';
 import { LayoutStoreService } from '@shared/layout/layout-store.service';
 
+import {LocalStorageServiceService} from '../shared/services/local-storage-service.service';
+
+
 @Component({
   templateUrl: './app.component.html'
 })
 export class AppComponent extends AppComponentBase implements OnInit {
   sidebarExpanded: boolean;
+  currentLanguage: string;
 
+
+  
   constructor(
+    private localStorageService: LocalStorageServiceService,
     injector: Injector,
     private renderer: Renderer2,
     private _layoutStore: LayoutStoreService
@@ -18,13 +25,16 @@ export class AppComponent extends AppComponentBase implements OnInit {
   }
 
   ngOnInit(): void {
+   
+    this.currentLanguage = this.localStorageService.getCurrentLanguage();
+    console.log("Current Language from AppComponent:", this.currentLanguage);
     this.renderer.addClass(document.body, 'sidebar-mini');
-
+    
     SignalRAspNetCoreHelper.initSignalR();
-
+    
     abp.event.on('abp.notifications.received', (userNotification) => {
       abp.notifications.showUiNotifyForUserNotification(userNotification);
-
+      
       // Desktop notification
       Push.create('AbpZeroTemplate', {
         body: userNotification.notification.data.message,
@@ -36,13 +46,19 @@ export class AppComponent extends AppComponentBase implements OnInit {
         }
       });
     });
-
+    
     this._layoutStore.sidebarExpanded.subscribe((value) => {
       this.sidebarExpanded = value;
     });
+   
   }
+  
 
+  
   toggleSidebar(): void {
     this._layoutStore.setSidebarExpanded(!this.sidebarExpanded);
   }
+  
+  
+  
 }

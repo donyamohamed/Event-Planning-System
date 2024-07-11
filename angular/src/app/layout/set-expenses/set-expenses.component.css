@@ -1,3 +1,7 @@
+.main-wrapper{
+  min-height: 60vh;
+}
+
 .expense-form {
   display: flex;
   gap: 10px;
@@ -9,7 +13,14 @@
   border: 1px solid #fbaf1b;
   outline: none;
 }
-
+.expense-form label{
+  font-size: 14px;
+  color: #050794;
+  position: absolute;
+  font-weight: 500;
+  left: 10px;
+  top: -14px;
+}
 .expense-form input,
 .expense-form button {
   margin: 10px 0;
@@ -40,7 +51,7 @@
   color: #050794;
   border: none;
   cursor: pointer;
-  border-radius: 15px;
+  border-radius: 15px;  
 }
 .expenses-list button.delete {
   color: rgb(192, 0, 0);
@@ -67,6 +78,7 @@
   left: 8px;
   color: rgb(255 69 69);
   font-weight: 400;
+  font-size: 15px;
 }
 .expense-header {
   width: 400px;

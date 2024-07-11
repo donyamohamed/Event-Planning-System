@@ -1,15 +1,16 @@
 import { Component, OnInit,Renderer2 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ActiveAccountService } from '@shared/Services/active-account.service';
+import { ActiveAccountService } from '@shared/services/active-account.service';
 import { NotifyService } from 'abp-ng2-module';
+import { SharedModule } from "../../shared/shared.module";
 
 @Component({
-  selector: 'app-activate-user',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './activate-user.component.html',
-  styleUrl: './activate-user.component.css'
+    selector: 'app-activate-user',
+    standalone: true,
+    templateUrl: './activate-user.component.html',
+    styleUrl: './activate-user.component.css',
+    imports: [CommonModule, SharedModule]
 })
 export class ActivateUserComponent implements OnInit {
   constructor(

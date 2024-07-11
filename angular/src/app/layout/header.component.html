@@ -1,8 +1,12 @@
-<nav class=" navbar navbar-expand navbar-white navbar-light p-2">
+<nav class=" navbar navbar-expand justify-content-between navbar-white navbar-light p-2">
   <header-left-navbar></header-left-navbar>
-  <ul class="navbar-nav ml-auto">
-    <app-notifications></app-notifications>
-    <header-language-menu></header-language-menu>
+  <ul class="navbar-nav ml-5 ">
+    <div class="d-flex justify-content-center align-items-center gap-4 mx-2" *ngIf="isLoggedIn">
+      <app-chat-icon ></app-chat-icon>
+      <app-notifications  *ngIf="isLoggedIn"></app-notifications>
+    </div>
+    
+    <header-language-menu ></header-language-menu>
     <header-user-menu></header-user-menu>
   </ul>
 </nav>

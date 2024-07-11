@@ -1,0 +1,124 @@
+/* CSS styles to achieve the original design */
+html {
+    background-color: #fefefe;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  
+  *, *:before, *:after {
+    box-sizing: inherit;
+  }
+  
+  .header-container {
+    margin-bottom: 20px;
+    padding: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+  
+  .header-container h2 {
+    font-size: 24px;
+    margin: 0;
+  }
+  
+  .header-container .btn {
+    display: inline-block;
+    margin-right: 10px;
+    padding: 8px 16px;
+    background-color: #41C1F2;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .header-container .btn:hover {
+    background-color: #1e90ff;
+  }
+  
+  .header-container .btn-expense {
+    background-color: #F7931E;
+  }
+  
+  .header-container .btn-expense:hover {
+    background-color: #ff8c00;
+  }
+  
+  .container {
+    margin: 0 auto;
+    width: 800px;
+  }
+  
+  .container h3 {
+    font-size: 20px;
+    margin-top: 0;
+  }
+  
+  .card-media {
+    border-radius: 2px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .12);
+    height: auto;
+    margin-bottom: 25px;
+    transition: all 300ms ease-out;
+    width: 100%;
+    display: flex;
+  }
+  
+  .card-media:hover {
+    box-shadow: 0 5px 14px rgba(0, 0, 0, .2);
+  }
+  
+  .card-media-object-container {
+    width: 35%;
+  }
+  
+  .card-media-object {
+    width: 100%;
+    height: 100%;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+  }
+  
+  .card-media-body {
+    background-color: #fff;
+    padding: 15px;
+    width: 65%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .card-media-body-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .card-media-body-top-icons {
+    display: flex;
+    align-items: center;
+  }
+  
+  .card-media-body-heading {
+    font-size: 18px;
+    margin-top: 10px;
+  }
+  
+  .card-media-body-supporting-bottom-text {
+    color: #888;
+  }
+  
+  .card-media-link {
+    color: #41C1F2;
+    text-decoration: none;
+  }
+  

@@ -1,33 +1,38 @@
+:root{
+  --orangeColor: #FBAF1B;
+  --blueColor: #050794;
+}
 body {
     font-family: Arial, sans-serif;
     background-color: #f8f9fa;
     margin: 0;
     padding: 20px;
 }
-
+.events{
+  min-height: 70vh;
+}
 .events .card-container {
-    max-width: 80%;
+    max-width: 98%;
     margin: auto;
     display: flex;
+    justify-content: center;
     align-items: flex-start;
     align-content: center;
     flex-wrap: wrap;
-    justify-content: space-evenly;
+  
 }
 
 h2 {
-    /* padding: 30px 60px; */
     display: block;
-    
-    /* font-size: 1.5em; */
+    color: #050794;
 }
 
 .card {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    width: 230px;
-    height: 300px;
+    width: 290px;
+    height: 280px;
     background-size: cover;
     background-position: center;
     border-radius: 10px;
@@ -35,14 +40,14 @@ h2 {
     margin-bottom: 20px;
     position: relative;
     overflow: hidden;
-    margin: 20px;
+    margin: 20px 10px;
 }
 
 .date {
     position: absolute;
     top: 10px;
     right: 10px;
-    background-color: white;
+    background-color: rgb(255, 255, 255);
     width: 50px;
     height: 50px;
     border-radius: 7px;
@@ -66,14 +71,22 @@ h2 {
     font-size: 0.9em;
 }
 
-.card-content {
+/* .card-content {
     background-color: white;
     border-radius: 7px;
     padding: 10px;
     text-align: center;
     margin: 10px;
+    position: relative;
+} */
+.card-content {
+  background-color: rgba(255, 255, 255, 0.8); /* Adjust the last value (0.8) for transparency */
+  border-radius: 7px;
+  padding: 10px;
+  text-align: center;
+  margin: 10px;
+  position: relative;
 }
-
 .card-content h3 {
     margin: 0 0 10px;
     font-size: 1em;
@@ -95,7 +108,7 @@ h2 {
     margin: 5px 5px;
 }
 #invite {
-    background:#fbaf1b ;
+    background: #FBAF1B;
     color: #fff;
     border: none;
     padding: 10px 15px;
@@ -113,7 +126,7 @@ h2 {
 }
 .header-container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: start; 
     justify-content: space-between; 
   }
@@ -137,12 +150,42 @@ h2 {
   }
 
   #loading {
-    /* background: url('../../../assets/img/Spin@1x-1.0s-200px-200px.gif') no-repeat center center; */
-    /* background-size: cover; */
-    /* position: absolute; 
-    top: 0;
-    left: 0;*/
     height: 100%;
     width: 100%;
     z-index: 9999999; 
   }
+  .navbar-ltr {
+    direction: ltr;
+  }
+  
+  .navbar-rtl {
+    direction: rtl;
+  }
+  
+  .Chat-icon{
+    background-color: #050794;
+    text-align: center;
+    padding:12px 15px;
+    border-radius: 5px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+  }
+  .Chat-icon i{
+    color: #FBAF1B;
+    font-size: 22px;
+  }
+
+  h2::after {
+    content: "";
+    display: block;
+    width: 100px;
+    height: 5px;
+    background-color: #FBAF1B;
+    margin: 20px auto;
+}
+@media only screen and (max-width: 767px) {
+.events .card-container{
+  justify-content: center;
+}
+}

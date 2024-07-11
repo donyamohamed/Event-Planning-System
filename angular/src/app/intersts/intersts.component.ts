@@ -1,17 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ShowInterestsService } from '../../shared/Services/show-interests.service';
+import { ShowInterestsService } from '../../shared/services/show-interests.service';
 import { Interest } from '../../shared/Models/interestss';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { publicDecrypt } from 'crypto';
 import { Router } from '@angular/router';
+import { SharedModule } from "../../shared/shared.module";
 
 @Component({
-  selector: 'app-intersts',
-  standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
-  templateUrl: './intersts.component.html',
-  styleUrl: './intersts.component.css'
+    selector: 'app-intersts',
+    // standalone: true,
+    templateUrl: './intersts.component.html',
+    styleUrl: './intersts.component.css',
+    // imports: [CommonModule, FormsModule, ReactiveFormsModule, SharedModule]
 })
 export class InterstsComponent implements OnInit {
 
@@ -51,7 +52,8 @@ export class InterstsComponent implements OnInit {
     console.log('Selected Interests:', this.selectedInterestsId);
     this.InterstsService.AddInterstsForUser(this.selectedInterestsId).subscribe({
       next: (response) => {
-        this.router.navigateByUrl("app/home");
+        // this.router.navigateByUrl("app/home");
+        window.location.reload();
       },
       error: (err) => {
         console.error('Error adding interests:', err);

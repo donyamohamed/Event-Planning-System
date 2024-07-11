@@ -21,3 +21,20 @@
     max-height: 250px;
     overflow-y: auto;
   }
+  .bold-text {
+    font-weight: bold;
+    margin: 0;
+    border-top: 1px solid #000; /* Adds a line at the top */
+ 
+    padding: 5px 0; /* Optional: Adds padding to the top and bottom */
+  }
+  @media only screen and (max-width: 767px) {
+
+    .custom-dropdown-menu {
+      width: 400px !important;
+      position: absolute;
+      top: 35px; 
+      left: -200px; 
+      z-index: 1000; 
+  }
+  }

@@ -5,8 +5,15 @@
 body {
   background-color: white !important;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+
 }
 
+div#page-content {
+  height: 100vh;
+}
+/* .flex-container{
+  display: flex;;
+} */
 .card {
   border: none;
   border-radius: 1px 0 0 1rem;
@@ -15,11 +22,15 @@ body {
   margin-left: 270px;
   width: 90%;
 }
+.user-card-full.minimized {
+display: none;
+}
 .user-card-full {
-  position: fixed;
+  /* position: fixed; */
+  position: absolute;
   left: 10px;
   width: 250px;
-  height: 90vh;
+  /* height: 70vh; */
   background-color: white;
   z-index: 100;
 }
@@ -113,9 +124,15 @@ body {
   flex-direction: row;
   justify-content: space-between;
   margin: 10px;
+  width: 95%;
 }
 .interests-container {
   width: 90vw;
+
+}
+.container{
+  margin-bottom:4vh;
+
 }
 .grid-container {
   display: grid;
@@ -155,7 +172,7 @@ body {
   display: flex;
   flex-direction: row;
   border-radius: 6px;
-  width: 100%;
+  width: 95%;
   -webkit-box-shadow: 0 1px 2.94px 0.06px rgba(4, 26, 55, 0.16);
   box-shadow: 0 1px 2.94px 0.06px rgba(4, 26, 55, 0.16);
 }
@@ -198,4 +215,35 @@ body {
 
 .f-right {
   float: right;
+}
+
+@media only screen and (max-width: 767px) {
+  .padding {
+    text-align: center;
+    width: 90%;
+    margin: 10px auto;
+}
+  .user-card-full {
+ 
+    position: static;
+   
+    width: 95%;
+    margin:25px auto;
+    /* height: 70vh; */
+    background-color: white;
+    z-index: 100;
+  }
+  .right-content {
+    margin-left: 0px;
+    width: 97%;
+    margin:25px auto;
+  }
+  .no-gutters {
+    display: flex;
+    justify-content:center;
+    width: 95%;
+}
+.card-body {
+  text-align:left;
+}
 }

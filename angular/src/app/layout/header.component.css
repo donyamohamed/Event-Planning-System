@@ -5,7 +5,7 @@ body {
     font-family: 'Barlow';
     font-style: normal;
     font-weight: 400;
-    font-size: 16px;
+    font-size: 20px;
     line-height: 24px;
     color: #6b7289;
   }
@@ -44,7 +44,7 @@ body {
     font-style: normal;
     font-weight: 600;
     color: #32384d;
-    font-size: 16px;
+    font-size: 20px;
     line-height: 24px;
   }
   .widget-slideshow-container .slider-container .navlabels-slider .navlabel.active {
@@ -248,5 +248,19 @@ body {
   .widget-slideshow-container .slider-container .slider-elements .slider-prev {
     z-index: 2;
   }
-  
+  nav.navbar{
+    display: flex;
+    padding-top: 20px;
+    flex-direction: column;
+    margin-top: 20px;
+  }
+  }
+
+
+  @media only screen and (max-width: 767px) {
+  header-user-menu {
+    position: absolute;
+    right: 20px;
+    top: -4px;
+}
   }

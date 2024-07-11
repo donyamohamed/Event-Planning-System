@@ -1,11 +1,12 @@
 import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit } from '@angular/core';
 import { LayoutStoreService } from '@shared/layout/layout-store.service';
-import { CurrentUserDataService } from '@shared/Services/current-user-data.service'; 
+import { CurrentUserDataService } from '@shared/services/current-user-data.service'; 
 import { CurrentUser } from '@shared/Models/current-user'; 
 
 @Component({
   selector: 'header-left-navbar',
   templateUrl: './header-left-navbar.component.html',
+  styleUrl:'./header-left-navbar.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderLeftNavbarComponent implements OnInit {

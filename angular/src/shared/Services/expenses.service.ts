@@ -2,11 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Expenses } from '../Models/expenses';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
+
 @Injectable({
   providedIn: 'root'
 })
 export class ExpensesService {
-    private apiUrl = ' https://localhost:44311/api/services/app/BudgetExpenseAppServices';
+    private apiUrl = `${environment.API_URL_BASE_PART}/api/services/app/BudgetExpenseAppServices`;
  
   constructor(private http:HttpClient) { }
   getAllExpenses(): Observable<any[]> {
@@ -24,6 +26,12 @@ export class ExpensesService {
   }
   deleteExpense(id: number): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/Delete?id=${id}`);
+  }
+  // reportExpense(): Observable<any> {
+  //   return this.http.get<any>(`${this.apiUrl}/GetExpenseForAllEvent`);
+  // }
+  reportExpense(): Observable<{[key: string]: Expenses[]}> {
+    return this.http.get<{[key: string]: Expenses[]}>(`${this.apiUrl}/GetExpenseForAllEvent`);
   }
 
 

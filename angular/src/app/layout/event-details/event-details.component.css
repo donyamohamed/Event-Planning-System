@@ -1,4 +1,4 @@
-/* CSS styles to achieve the original design */
+/* General styling */
 html {
   background-color: #fefefe;
   box-sizing: border-box;
@@ -7,125 +7,412 @@ html {
   font-weight: 500;
 }
 
-*, *:before, *:after {
+*,
+*:before,
+*:after {
   box-sizing: inherit;
 }
 
+/* Header container styles */
 .header-container {
-  margin-bottom: 20px;
-  padding: 10px 0;
-  display: flex;
-  justify-content: space-between; /* Align items to the start and end */
-  align-items: center; /* Center items vertically */
+  width: 80%;
+height: 560px;
+  margin: 20px auto;
+  border-radius: 25px;
+  text-align: center;
+  padding: 3px 20px;
+  position: relative;
 }
+.icons .fa-bookmark.saved {
+  color: gold;
+}
+.icons .fa-bookmark{
+  color:black !important;
+}
+
+
+.header-container .blur {
+  filter: blur(3px);
+  position: absolute;
+  width: 100%;
+  z-index: -100;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  border-radius: 25px;
+}
+
+.header-container .card-media-object {
+  width: 90%;
+  margin: 0 auto;
+  z-index: 1;
+  height:100%;
+  border-radius: 5px;
+}
+.star-feedback {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #fff;
+  filter: blur(.5px);
+
+  padding: 2px 10px;
+}
+/* event-details.component.css */
+.bookmark-icon {
+  cursor: pointer;
+}
+
+
+
+
+
+
+
+/* Event info container styles */
+.event-info {
+  width: 80%;
+  position: relative;
+  margin: 10px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px 15px;
+  border-radius: 25px;
+}
+
+.event-info .date {
+  margin-top: 15px;
+  display: flex;
+  gap: 2px;
+  align-items: center;
+  border-left: 2px solid #050794;
+  /* width: fit-content; */
+  margin: 4px;
+  padding: 2px 7px;
+}
+
+.event-info .category {
+  right: 25px;
+  top: 12px;
+  font-size: 20px;
+}
+
+.event-info .event-name h1 {
+  text-transform: capitalize;
+  font-size: 50px;
+
+  color: #050794;
+}
+
+.event-info .event-desc p {
+  padding-left: 10px;
+  color: #373737;
+  font-size: 18px;
+}
+
+.date-category {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* User data section styles */
+.user-data  {
+  display: flex;
+  flex-direction: row;
+  background-color: #f8f7fa;
+  border-radius: 10px;
+  padding: 10px;
+  gap: 30px;
+}
+
+
+
+
+
+.user-image {
+  display: flex;
+  justify-content: center;
+}
+
+.user-image img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.user-details {
+  display: flex;
+  justify-content: space-between;
+  /* Distribute space between user info and button */
+  align-items: center;
+  width: 100%;
+  flex-wrap: wrap;
+  /* Ensure it takes up the full width */
+}
+.event-desc h3{
+  font-size: 18px;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  text-align: left;
+  margin-bottom: 5px;
+}
+
+.user-name h6 {
+  display: inline;
+}
+
+.user-name span {
+  color: rgb(149, 146, 146);
+}
+
+
+.guest-number {
+  text-align: left;
+  background-color: #e2d2ff;
+  padding: 8px !important;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.guest-number h6 {
+  display: inline;
+}
+
+.connect-button {
+  display: flex;
+  justify-content: center;
+}
+
+.connect-button .email {
+  background-color: #050794;
+  border-radius: 4px;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.connect-button .email:hover {
+  background-color: #0345a7;
+}
+.location-info{
+  border-left: 2px solid #050794;
+  /* width: fit-content; */
+  margin: 4px;
+  padding: 2px 7px;
+}
+.location-info .location-header {
+  font-size: 1.5rem;
+  line-height: 1.75rem;
+  color: #050794;
+  font-weight: 700;
+  
+}
+
+.ticket-sales-info {
+  display: flex;
+  justify-content: space-between;
+
+}
+
+
+.share-icon {
+  color: #050794;
+  cursor: pointer;
+}
+
+
+
 
 .buttons {
   display: flex;
-  justify-content: flex-end; /* Align items to the end of the flex container */
-  gap: 10px; /* Add some space between buttons */
+  justify-content: flex-end;
+  gap: 10px;
+  margin-bottom: 10px;
+
 }
 
-.header-container h2 {
-  font-size: 24px;
-  margin: 0;
+.btn:hover {
+  background-color: #f8b42c;
 }
 
-.header-container .btn {
-  display: inline-block;
-  margin-right: 10px;
-  padding: 8px 16px;
-  background-color: #41C1F2;
-  color: #fff;
-  text-decoration: none;
-  border-radius: 4px;
-  transition: background-color 0.3s ease;
+.btn-expense {
+  background-color: #050794;
+  color: white;
 }
 
-.header-container .btn:hover {
+.btn-expense:hover {
   background-color: #1e90ff;
 }
 
-.header-container .btn-expense {
-  background-color: #F7931E;
+.btn-todolist {
+  color: white;
+  background-color: #fbaf1b;
 }
 
-.header-container .btn-expense:hover {
-  background-color: #ff8c00;
-}
-
-.container {
-  margin: 0 auto;
-  width: 800px;
-}
-
-.container h3 {
+/* SweetAlert custom styles */
+.swal2-custom-popup .btn {
+  margin: 5px;
   font-size: 20px;
-  margin-top: 0;
 }
 
-.card-media {
-  border-radius: 2px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, .12);
-  height: auto; /* Adjusted height to fit content */
-  margin-bottom: 25px;
-  transition: all 300ms ease-out;
+.swal2-custom-popup .btn i {
+  margin-right: 5px;
+}
+
+.swal2-custom-popup {
   width: 100%;
-  display: flex; /* Ensures card-media is displayed as flex container */
 }
 
-.card-media:hover {
-  box-shadow: 0 5px 14px rgba(0, 0, 0, .2);
+.swal2-custom-popup .position-relative {
+  position: relative;
 }
 
-.card-media-object-container {
-  background: none;
-  width: 35%;
+.swal2-custom-popup .pr-5 {
+  padding-right: 3rem;
 }
 
-.card-media-object {
-  background-position: center center;
-  background-size: cover;
-  height: 100%;
-  border-top-left-radius: 2px;
-  border-bottom-left-radius: 2px;
+
+.link-forcopy {
+
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  /* gap: 10px !important; */
 }
 
-.card-media-body {
-  background-color: #fff;
-  padding: 15px;
-  width: 65%;
+.buttons{
+  display:flex;
+  justify-content:space-between;
+  width: 80%;
+  margin: 10px auto;
+  align-items:center;
+  gap:10px;
+}
+
+/* star rating */
+
+.rating {
+  border: none;
+  float: left;
+}
+
+.rating > i {
+  font-size: 1.5em;
+  margin: 5px;
+  color: #ddd;
+  position: relative;
+  display: inline-block;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.rating > i.text-warning {
+  color: #FFD700;
+}
+
+.rating > i.full,
+.rating > i.half,
+.rating > i.empty {
+  animation: fadeIn 0.5s ease-in-out, glow 0.5s infinite alternate;
+}
+
+.rating > i {
+  font-size: 1.5em;
+  margin: 5px;
+  color:#ffc107;
+  position: relative;
+  display: inline-block;
+  transition: color 0.3s ease, transform 0.3s ease;
+  animation: rotate 3s ease-in-out 1s infinite;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes glow {
+  0% {
+    text-shadow: 0 0 5px #FFD700, 0 0 10px #FFD700, 0 0 15px #FFD700, 0 0 20px #FFD700;
+  }
+  100% {
+    text-shadow: 0 0 10px #FFD700, 0 0 20px #FFD700, 0 0 30px #FFD700, 0 0 40px #FFD700;
+  }
+}
+
+.reviews{
+display: flex;
+flex-direction: column;
+background-color: #f8f7fa;
+border-radius: 10px;
+padding: 10px;
+gap: 30px;
+}
+h3 .reviews{
+  margin-left: 20px;
+  margin-right: 20px;
+}
+.reviews {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  gap: 20px; 
+  font-family: Arial, sans-serif; 
 }
 
-.card-media-body-top {
+.data-feedback {
   display: flex;
-  justify-content: space-between;
+  gap: 10px; 
   align-items: center;
+  /* border: 1px solid #ccc; */
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.card-media-body-top-icons {
+.data-feedback img {
   display: flex;
-  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
-
-
-
-
-.card-media-body-heading {
-  font-size: 18px;
-  margin-top: 10px;
+.data-feedback h3 {
+  margin: 10px 0;
 }
 
-
-
-.card-media-body-supporting-bottom-text {
-  color: #888;
+.rating {
+  display: flex;
+  gap: 5px; /* Adjust the gap between stars */
 }
 
-.card-media-link {
-  color: #41C1F2;
-  text-decoration: none;
-}
+.rating i {
+  color: #ffc107; /* Star color */}
+
+
+
+  @keyframes rotate {
+    0% {
+      transform: rotate(0deg);
+    }
+    50% {
+      transform: rotate(180deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
