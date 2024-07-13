@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ToDoList } from '../../../shared/Models/ToDoList';
-import { TodoListService } from '../../../shared/Services/todo-list.service';
+
+import { TodoListService } from '../../../shared/services/todo-list.service';
+
 import { ActivatedRoute } from '@angular/router'; // Import ActivatedRoute
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';

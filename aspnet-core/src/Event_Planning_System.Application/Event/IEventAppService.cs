@@ -24,6 +24,7 @@ namespace Event_Planning_System.Event
         Task<EventNameAndRatingDto> GetNamesAndRatingForeachEventAsync(long userId);
 
         Task<List<EventDto>> GetPublicEventsByCategory(EventCategory _category);
+        Task<List<EventDto>> GetAllPublicEvents();
 
     }
 

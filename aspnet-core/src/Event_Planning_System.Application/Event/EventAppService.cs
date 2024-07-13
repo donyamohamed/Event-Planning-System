@@ -200,66 +200,32 @@ namespace Event_Planning_System.Event
 			await ScheduleEventFeedbackJob(eventEntity.Id);
 			return _mapper.Map<EventDto>(eventEntity);
 		}
-		public async Task<List<EventDto>> GetPublicEventsByInterest()
-		{
-			var publicEvents = new HashSet<EventDto>();
-			var orderedPublicEvents = new List<EventDto>();
-			var userId = AbpSession.UserId;
+        public async Task<List<EventDto>> GetPublicEventsByInterest()
+        {
+            var publicEvents = new HashSet<EventDto>();
+            var orderedPublicEvents = new List<EventDto>();
+            var userId = AbpSession.UserId;
 
-			if (userId.HasValue && userId > 0)
-			{
-				var interests = await _interestRepository.GetAll()
-					.Include(i => i.Users)
-					.Where(i => i.Users.Any(u => u.Id == userId))
-					.ToListAsync();
-				if (interests.Count > 0)
-				{
-					foreach (var interest in interests)
-					{
-						var interestEvents = await _repository.GetAll()
-							.Where(e => e.Category == interest.Type && e.IsPublic && e.UserId != userId && e.StartDate >= DateTime.Now)
-							.ToListAsync();
+            // Check if the user is not logged in or has no interests
+            if (!userId.HasValue || userId <= 0)
+            {
+                return new List<EventDto>(); // Return empty list if the user is not logged in or has no interests
+            }
 
-						var mappedInterestEvents = _mapper.Map<List<EventDto>>(interestEvents);
+            var interests = await _interestRepository.GetAll()
+                .Include(i => i.Users)
+                .Where(i => i.Users.Any(u => u.Id == userId))
+                .ToListAsync();
 
-						foreach (var eventDto in mappedInterestEvents)
-						{
-							if (publicEvents.Add(eventDto))
-							{
-								orderedPublicEvents.Add(eventDto);
-							}
-						}
-					}
-				}
-				else
-				{
-					var publicEventsFromDb = await _repository.GetAll()
-					.Where(e => e.IsPublic && e.UserId != userId && e.StartDate >= DateTime.Now)
-					.ToListAsync();
-
-					var mappedPublicEvents = _mapper.Map<List<EventDto>>(publicEventsFromDb);
-
-					foreach (var eventDto in mappedPublicEvents)
-					{
-						if (publicEvents.Add(eventDto))
-						{
-							orderedPublicEvents.Add(eventDto);
-						}
-					}
-				}
-
-			}
-			else
-			{
-
-
-                var publicEventsFromDb = await _repository.GetAll()
-                    .Where(e => e.IsPublic && e.StartDate >= DateTime.Now)
+            foreach (var interest in interests)
+            {
+                var interestEvents = await _repository.GetAll()
+                    .Where(e => e.Category == interest.Type && e.IsPublic && e.UserId != userId && e.StartDate >= DateTime.Now)
                     .ToListAsync();
 
-                var mappedPublicEvents = _mapper.Map<List<EventDto>>(publicEventsFromDb);
+                var mappedInterestEvents = _mapper.Map<List<EventDto>>(interestEvents);
 
-                foreach (var eventDto in mappedPublicEvents)
+                foreach (var eventDto in mappedInterestEvents)
                 {
                     if (publicEvents.Add(eventDto))
                     {
@@ -268,11 +234,12 @@ namespace Event_Planning_System.Event
                 }
             }
 
-            // Return the ordered list of events with interest-based events first
+           
             return orderedPublicEvents;
         }
 
-		public async Task DeleteEventWithDetailsAsync(int eventId)
+
+        public async Task DeleteEventWithDetailsAsync(int eventId)
 		{
 			try
 			{
@@ -445,7 +412,40 @@ namespace Event_Planning_System.Event
 				}
 			}
 		}
-	}
+        public async Task<List<EventDto>> GetAllPublicEvents()
+        {
+            var publicEvents = new HashSet<EventDto>();
+            var targetPublicEvents = new List<EventDto>();
+            var userId = AbpSession.UserId;
+            List<Enitities.Event> publicEventsFromDb;
+
+            if (userId.HasValue && userId > 0)
+            {
+                publicEventsFromDb = await _repository.GetAll()
+                    .Where(e => e.IsPublic && e.UserId != userId && e.StartDate >= DateTime.Now)
+                    .ToListAsync();
+            }
+            else
+            {
+                publicEventsFromDb = await _repository.GetAll()
+                    .Where(e => e.IsPublic && e.StartDate >= DateTime.Now)
+                    .ToListAsync();
+            }
+
+            var mappedPublicEvents = _mapper.Map<List<EventDto>>(publicEventsFromDb);
+
+            foreach (var eventDto in mappedPublicEvents)
+            {
+                if (publicEvents.Add(eventDto))
+                {
+                    targetPublicEvents.Add(eventDto);
+                }
+            }
+
+            return targetPublicEvents;
+        }
+
+    }
 }
 
 
