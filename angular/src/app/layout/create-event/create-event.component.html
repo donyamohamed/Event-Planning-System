@@ -91,13 +91,13 @@
                             <label>{{ "Choose Event Type" | localize }}</label>
                             <div class="form-check">
                                 <label class="form-check-label">
-                                    <input type="radio" [(ngModel)]="eventData.isPublic" [value]="true" name="isPublic" class="form-check-input" required>
+                                    <input type="radio" [(ngModel)]="eventData.isPublic" [value]="true" name="isPublic" class="form-check-input" [disabled]="eventData.type === 0"  (change)="onEventpublicChange()">
                                     {{ "Public" | localize }}
                                 </label>
                             </div>
                             <div class="form-check">
                                 <label class="form-check-label">
-                                    <input type="radio" [(ngModel)]="eventData.isPublic" [value]="false" name="isPublic" class="form-check-input">
+                                    <input type="radio" [(ngModel)]="eventData.isPublic" [value]="false" name="isPublic" class="form-check-input" [disabled]="eventData.type === 0" (change)="onEventpublicChange()">
                                     {{ "Private" | localize }}
                                 </label>
                             </div>

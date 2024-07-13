@@ -80,6 +80,13 @@ export class CreateEventComponent implements OnInit {
         } else {
             this.eventData.ticketPrice = null; // Reset the ticket price
             this.eventData.type =EventType.Paid;
+             this.eventData.isPublic = true;
+        }
+    }
+    onEventpublicChange() {
+        if (this.eventData.isPublic === false) {
+            this.eventData.type = 1; // Set to Free
+            this.eventData.ticketPrice = 0; // Set ticket price to 0
         }
     }
     createEvent(): void {
