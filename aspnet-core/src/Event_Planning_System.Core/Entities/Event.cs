@@ -26,6 +26,13 @@ public enum EventCategory
     Other
 }
 
+public enum EventType
+{
+    Paid,
+    Free
+}
+
+
 namespace Event_Planning_System.Enitities
 {
     public class Event : IEntity<int>
@@ -65,7 +72,9 @@ namespace Event_Planning_System.Enitities
         [ForeignKey("UserId")]
         public virtual User User { get; set; }
 
+        public EventType Type { get; set; }
 
+        public int? TicketPrice { get; set; }
 
         public virtual ICollection<notification> Notifications { get; set; } = new List<notification>();
         public virtual ICollection<Guest> Guests { get; set; } = new List<Guest>();

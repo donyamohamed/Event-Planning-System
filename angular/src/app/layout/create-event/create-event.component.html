@@ -23,6 +23,22 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label for="eventType">Event Type</label><br>
+                            <input type="radio" id="free" name="eventType" [(ngModel)]="eventData.type" [value]="1" (change)="onEventTypeChange()">
+                            <label for="free">Free</label>
+                            <input type="radio" id="paid" name="eventType" [(ngModel)]="eventData.type" [value]="0" (change)="onEventTypeChange()">
+                            <label for="paid">Paid</label>
+                            
+                            
+                        </div>
+                
+                        <!-- Ticket Price Field (Conditionally Shown) -->
+                        <div class="form-group" *ngIf="eventData.type === 0">
+                            <label for="ticketPrice">Ticket Price</label>
+                            <input type="number" id="ticketPrice" name="ticketPrice" [(ngModel)]="eventData.ticketPrice" class="form-control">
+                        </div>
+                        
+                        <div class="form-group">
                             <label>{{ "Event Location" | localize }}</label>
                             <!-- Input field for event location -->
                             <!-- <input type="text" [(ngModel)]="eventData.location" name="location" class="form-control" placeholder="{{ 'Event Location' | localize }}" required pattern="^[a-zA-Z0-9 ]+$"> -->
