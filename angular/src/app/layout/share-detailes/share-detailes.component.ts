@@ -1,6 +1,6 @@
 import { Component, Renderer2 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EventdetailsService } from '@shared/Services/eventdetails.service';
+import { EventdetailsService } from '@shared/services/eventdetails.service';
 import { Event } from '@shared/Models/Event';
 
 @Component({

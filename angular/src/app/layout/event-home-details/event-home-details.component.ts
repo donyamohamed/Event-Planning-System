@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { EventdetailsService } from '../../../shared/Services/eventdetails.service';
-import { EventBudgetService } from '../../../shared/Services/event-budget.service'; 
+import { EventdetailsService } from '../../../shared/services/eventdetails.service';
+import { EventBudgetService } from '../../../shared/services/event-budget.service'; 
 import { Event } from '../../../shared/Models/Event';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';

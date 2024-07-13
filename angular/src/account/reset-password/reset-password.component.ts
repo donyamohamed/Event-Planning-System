@@ -1,6 +1,6 @@
 import { Component, OnInit ,Renderer2  } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ResetpasswordService } from '../../shared/Services/resetpassword.service';
+import { ResetpasswordService } from '../../shared/services/resetpassword.service';
 import { Router} from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { Subject } from 'rxjs';

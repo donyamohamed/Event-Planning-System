@@ -1,6 +1,6 @@
-import { GuestResponse } from "./../../app/guest/guest-response.model";
-import { GuestPerEventResponse } from "./../../app/guest/guest-per-event-response";
-import { Guest } from "./../Models/guest";
+import { GuestResponse } from "../../app/guest/guest-response.model";
+import { GuestPerEventResponse } from "../../app/guest/guest-per-event-response";
+import { Guest } from "../Models/guest";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { GuestGetResponse } from "@app/guest/guest-get-response";
@@ -26,6 +26,9 @@ export class GuestService {
 
   private baseUrlforExcel = 
     `${environment.API_URL_BASE_PART}/api/services/app/Guest/AddGuestsThroughExcelFile`;
+    private baseUrlDeleteAll=`${environment.API_URL_BASE_PART}/api/services/app/Guest/DeleteAllGuests` //?eventId=15&ids=21&ids=20
+    private baseUrlSendAll=`${environment.API_URL_BASE_PART}/api/services/app/Guest/SendEmailsToEventGuests`//?eventId=21 //?eventId=15&ids=21&ids=20
+
 
   constructor(private httpClient: HttpClient) { }
 
@@ -67,5 +70,18 @@ export class GuestService {
     return this.httpClient.delete(
       url
     );
+  }
+  public deleteAllGuest(eventId: number, ids:number[] | null=null) {
+    var url;
+    if (ids?.length === 0 || ids === null) {
+      url = `${this.baseUrlDeleteAll}?eventId=${eventId}`;
+    } else {
+      url = `${this.baseUrlDeleteAll}?eventId=${eventId}&ids=${ids.join('&ids=')}`;
+    }
+    return this.httpClient.delete(url);
+  }
+  public sendAllGuest(eventId: number) {
+    const url= `${this.baseUrlSendAll}?eventId=${eventId}`;
+    return this.httpClient.post<number>(url,eventId);
   }
 }

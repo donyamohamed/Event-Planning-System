@@ -10,11 +10,11 @@ import {
 import { AppComponentBase } from "@shared/app-component-base";
 import { appModuleAnimation } from "@shared/animations/routerTransition";
 import { Location } from '@angular/common';
-import { ShowInterestsService } from '../../shared/Services/show-interests.service';
+import { ShowInterestsService } from '../../shared/services/show-interests.service';
 import { Router } from '@angular/router';  // Import Router
-import { CurrentUserDataService } from '@shared/Services/current-user-data.service';
+import { CurrentUserDataService } from '@shared/services/current-user-data.service';
 import { CurrentUser } from '@shared/Models/current-user';
-import { SignalRServiceService } from '../../shared/Services/signal-rservice.service';
+import { SignalRServiceService } from '../../shared/services/signal-rservice.service';
 
 @Component({
   templateUrl: "./home.component.html",

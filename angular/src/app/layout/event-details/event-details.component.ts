@@ -1,17 +1,21 @@
-import { FeedbackService } from './../../../shared/Services/feedback.service';
+
+import { FeedbackService } from '../../../shared/services/feedback.service';
+
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { EventdetailsService } from '../../../shared/Services/eventdetails.service';
-import { EventBudgetService } from '../../../shared/Services/event-budget.service';
+import { EventdetailsService } from '../../../shared/services/eventdetails.service';
+import { EventBudgetService } from '../../../shared/services/event-budget.service';
 import { Event } from '../../../shared/Models/Event';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from "../../../shared/shared.module";
-import { UserService } from '../../../shared/Services/user-service.service';
-import { CurrentUserDataService } from '@shared/Services/current-user-data.service';
+import { UserService } from '../../../shared/services/user-service.service';
+import { CurrentUserDataService } from '@shared/services/current-user-data.service';
 import Swal from 'sweetalert2';
 import { Feedback } from '@shared/Models/feedback';
 import { forkJoin, map } from 'rxjs';
+import { SavedEventServiceService } from '../../../shared/services/saved-event-service.service'; 
+import { SavedEventData } from '../../../shared/Models/SavedEventData';
 
 @Component({
   selector: 'app-event-details',
@@ -20,6 +24,8 @@ import { forkJoin, map } from 'rxjs';
   standalone: true,
   imports: [CommonModule, RouterLink, FormsModule, SharedModule]
 })
+
+
 export class EventDetailsComponent implements OnInit {
   event: Event | undefined;
   eventId: number | undefined;
@@ -31,6 +37,9 @@ export class EventDetailsComponent implements OnInit {
   stars: { type: string, title: string }[] = [];
   numberOfRaters: number | undefined;
   feedbackList: Feedback[] = [];
+  isEventSaved: boolean = false; 
+  isLogin:boolean = false;
+ 
 
   constructor(
     private route: ActivatedRoute,
@@ -39,7 +48,8 @@ export class EventDetailsComponent implements OnInit {
     private eventBudgetService: EventBudgetService,
     private userService: UserService,
     private currentUserData: CurrentUserDataService,
-    private feedbackServ: FeedbackService
+    private feedbackServ: FeedbackService,
+    private savedEventService: SavedEventServiceService 
   ) { }
 
   ngOnInit(): void {
@@ -57,6 +67,7 @@ export class EventDetailsComponent implements OnInit {
       response => {
         console.log(response);
         this.loggedInUserId = response.id;
+        this.isLogin=true;
         this.checkIfEventCreator(); // Check if the event creator is the logged-in user
       },
       error => {
@@ -246,5 +257,35 @@ export class EventDetailsComponent implements OnInit {
         }
       );
     }
+  }
+  toggleSavedEvent(): void {
+    this.isEventSaved = !this.isEventSaved;
+    if (this.isEventSaved) {
+      this.saveEvent();
+    } else {
+      this.removeEventFromSaved();
+    }
+  }
+
+  saveEvent(): void {
+    if (this.event && this.loggedInUserId) {
+      const savedEventData: SavedEventData = {
+        eventId: this.event.id,
+        userId: this.loggedInUserId
+      };
+
+      this.savedEventService.createSavedEvent(savedEventData).subscribe(
+        response => {
+          console.log('Event saved successfully:', response);
+        },
+        error => {
+          console.error('Error saving event:', error);
+        }
+      );
+    }
+  }
+  removeEventFromSaved(): void {
+    console.log("Event removed from saved list.");
+    // Implement your logic to remove the event from the saved list
   }
 }

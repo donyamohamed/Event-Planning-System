@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnInit } from '@angular/core';
 import { LayoutStoreService } from '@shared/layout/layout-store.service';
-import { CurrentUserDataService } from '@shared/Services/current-user-data.service'; 
+import { CurrentUserDataService } from '@shared/services/current-user-data.service'; 
 import { CurrentUser } from '@shared/Models/current-user'; 
 
 @Component({

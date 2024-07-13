@@ -1,4 +1,4 @@
-import { EventResponse } from './../../app/guest/event-response';
+import { EventResponse } from '../../app/guest/event-response';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';

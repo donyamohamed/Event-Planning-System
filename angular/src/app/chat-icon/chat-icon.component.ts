@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
 import { SharedModule } from '../../shared/shared.module';
-import { ChatService } from '@shared/Services/chat.service';
+import { ChatService } from '@shared/services/chat.service';
 import { AppSessionService } from '@shared/session/app-session.service';
 import { Router, RouterLink } from '@angular/router';
 

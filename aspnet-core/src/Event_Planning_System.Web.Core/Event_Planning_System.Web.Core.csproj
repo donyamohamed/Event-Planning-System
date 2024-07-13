@@ -28,6 +28,8 @@
 
     <PackageReference Include="CloudinaryDotNet" Version="1.26.2" />
 
+    <PackageReference Include="DinkToPdf" Version="1.0.8" />
+
     <PackageReference Include="Google.Apis.Auth" Version="1.68.0" />
 
     <PackageReference Include="Hangfire" Version="1.8.14" />

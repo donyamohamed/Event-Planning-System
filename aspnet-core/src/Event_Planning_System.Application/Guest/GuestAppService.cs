@@ -30,6 +30,12 @@ using System.Threading.Tasks;
 using Abp.Runtime.Validation;
 using Abp.Collections.Extensions;
 using System.Text.RegularExpressions;
+using Castle.Core.Internal;
+using Event_Planning_System.Email;
+
+using Event_Planning_System.Enitities;
+using Event_Planning_System.Event;
+using Microsoft.Extensions.Logging;
 
 namespace Event_Planning_System.Guest
 {
@@ -41,9 +47,14 @@ namespace Event_Planning_System.Guest
         private readonly IMapper _mapper;
         private readonly IRepository<User, long> _userRepository;
         private readonly IRepository<Enitities.Event, int> repositoryEvent;
+        private readonly EmailService _emailService;
+
+        private readonly ILogger<GuestAppService> _logger;
+        
 
 
-        public GuestAppService(IRepository<Enitities.Guest, int> repository, IRepository<User, long> userRepository, IRepository<Enitities.Event, int> repositoryEvent, IMapper mapper) : base(repository)
+        public GuestAppService(IRepository<Enitities.Guest, int> repository, IRepository<User, long> userRepository, IRepository<Enitities.Event, int> repositoryEvent, IMapper mapper, EmailService emailService, ILogger<GuestAppService> logger) : base(repository)
+
 
         {
             _repository = repository;
@@ -52,6 +63,10 @@ namespace Event_Planning_System.Guest
             _mapper = mapper;
             _userRepository = userRepository;
             _userRepository = userRepository;
+            _emailService = emailService;
+
+            _logger = logger;
+
         }
 
         public async Task<List<GuestDto>> GetEventGuestsAsync(int eventId)
@@ -361,5 +376,84 @@ namespace Event_Planning_System.Guest
                 throw new AbpValidationException("Email address already exists.");
             }
         }
+        public async Task DeleteAllGuests(int eventId, int?[] ids)
+        {
+            var guests = await GetEventGuestsAsync(eventId);
+
+            if (guests != null)
+            {
+                if (ids == null || ids.Length == 0)
+                {
+                    foreach (var guest in guests)
+                    {
+                        await _repository.DeleteAsync(guest.Id);
+                    }
+                }
+                else
+                {
+                    // Delete guests with specific IDs
+                    foreach (var id in ids)
+                    {
+                        var guestToDelete = guests.FirstOrDefault(g => g.Id == id);
+                        if (guestToDelete != null)
+                        {
+                            await _repository.DeleteAsync(guestToDelete.Id);
+                        }
+                    }
+                }
+            }
+        }
+
+        public async Task<int> SendEmailsToEventGuestsAsync(int eventId)
+        {
+            int successfulInvitations = 0;
+
+            // Retrieve the event and guests from the database
+            var eventWithGuests = await _repositoryEvent
+                .GetAllIncluding(e => e.Guests)
+                .FirstOrDefaultAsync(e => e.Id == eventId);
+
+            if (eventWithGuests == null)
+            {
+                throw new EntityNotFoundException(typeof(Enitities.Event), eventId);
+            }
+
+            // Filter out guests whose email state is already "sent"
+            var guestsToEmail = eventWithGuests.Guests.Where(g => g.InvitationState != "sent").ToList();
+
+            if (!guestsToEmail.Any())
+            {
+                _logger.LogInformation("No guests to email.");
+                return successfulInvitations;
+            }
+
+            foreach (var guest in guestsToEmail)
+            {
+                var subject = $"Invitation to {eventWithGuests.Name}";
+                var message = $"Dear {guest.Name},\n\nYou are invited to {eventWithGuests.Name}.\n\nBest regards,\nEvent Organizer";
+
+                try
+                {
+                    await _emailService.SendEmailAsync(guest.Email, subject, message);
+                    // Update guest email state to "sent"
+                    guest.InvitationState = "sent";
+                    successfulInvitations++;
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError($"Failed to send email to {guest.Email}: {ex.Message}");
+                }
+            }
+
+            // Save changes to the database
+            await _repositoryEvent.UpdateAsync(eventWithGuests);
+
+            return successfulInvitations;
+        }
+
+
+
+
+
     }
-}
+    }

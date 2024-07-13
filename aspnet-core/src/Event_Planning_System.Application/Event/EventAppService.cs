@@ -37,6 +37,8 @@ namespace Event_Planning_System.Event
 		private readonly IRepository<Enitities.BudgetExpense, int> _budgetExpenseRepository;
 		private readonly IRepository<Enitities.ToDoCheckList, int> _toDoCheckListRepository;
 		private readonly IRepository<Enitities.notification, int> _notificationRepository;
+		private readonly IRepository<Entities.FavoriteEvent,int> _favoriteEventRepository;
+		private readonly IRepository<Entities.GuestsFeedback, int> _guestFeedbackRepository;
 		private readonly ICloudinaryService _cloudinaryService;
 		private readonly IMapper _mapper;
 		private readonly IEmailService _emailService;
@@ -51,7 +53,7 @@ namespace Event_Planning_System.Event
 		public EventAppService(IRepository<Enitities.Event, int> repository, IRepository<Enitities.Guest, int> guestRepository, IRepository<Interest, int> interestRepository, IBackgroundJobClient backgroundJobClient,
 			IRepository<Enitities.BudgetExpense, int> budgetExpenseRepository, IUnitOfWorkManager unitOfWorkManager,
 			IRepository<Enitities.ToDoCheckList, int> toDoCheckListRepository, IRepository<Enitities.notification, int> notificationRepository, IMapper mapper, IEmailService emailService, ICloudinaryService cloudinaryService, ILogger<EventAppService> logger,
-			IRepository<Entities.Feedback, int> feedbackRepository, IFeedbackAppService feedbackService) : base(repository)
+			IRepository<Entities.Feedback, int> feedbackRepository, IRepository<Entities.FavoriteEvent, int> favoriteEventRepository, IRepository<Entities.GuestsFeedback, int> guestFeedbackRepository, IFeedbackAppService feedbackService) : base(repository)
 		{
 			_unitOfWorkManager = unitOfWorkManager;
 			_backgroundJobClient = backgroundJobClient;
@@ -62,6 +64,8 @@ namespace Event_Planning_System.Event
 			_budgetExpenseRepository = budgetExpenseRepository;
 			_toDoCheckListRepository = toDoCheckListRepository;
 			_notificationRepository = notificationRepository;
+			_favoriteEventRepository=favoriteEventRepository;
+			_guestFeedbackRepository=guestFeedbackRepository;
 			_logger = logger;
 			_mapper = mapper;
 			_emailService = emailService;
@@ -196,66 +200,32 @@ namespace Event_Planning_System.Event
 			await ScheduleEventFeedbackJob(eventEntity.Id);
 			return _mapper.Map<EventDto>(eventEntity);
 		}
-		public async Task<List<EventDto>> GetPublicEventsByInterest()
-		{
-			var publicEvents = new HashSet<EventDto>();
-			var orderedPublicEvents = new List<EventDto>();
-			var userId = AbpSession.UserId;
+        public async Task<List<EventDto>> GetPublicEventsByInterest()
+        {
+            var publicEvents = new HashSet<EventDto>();
+            var orderedPublicEvents = new List<EventDto>();
+            var userId = AbpSession.UserId;
 
-			if (userId.HasValue && userId > 0)
-			{
-				var interests = await _interestRepository.GetAll()
-					.Include(i => i.Users)
-					.Where(i => i.Users.Any(u => u.Id == userId))
-					.ToListAsync();
-				if (interests.Count > 0)
-				{
-					foreach (var interest in interests)
-					{
-						var interestEvents = await _repository.GetAll()
-							.Where(e => e.Category == interest.Type && e.IsPublic && e.UserId != userId && e.StartDate >= DateTime.Now)
-							.ToListAsync();
+            // Check if the user is not logged in or has no interests
+            if (!userId.HasValue || userId <= 0)
+            {
+                return new List<EventDto>(); // Return empty list if the user is not logged in or has no interests
+            }
 
-						var mappedInterestEvents = _mapper.Map<List<EventDto>>(interestEvents);
+            var interests = await _interestRepository.GetAll()
+                .Include(i => i.Users)
+                .Where(i => i.Users.Any(u => u.Id == userId))
+                .ToListAsync();
 
-						foreach (var eventDto in mappedInterestEvents)
-						{
-							if (publicEvents.Add(eventDto))
-							{
-								orderedPublicEvents.Add(eventDto);
-							}
-						}
-					}
-				}
-				else
-				{
-					var publicEventsFromDb = await _repository.GetAll()
-					.Where(e => e.IsPublic && e.UserId != userId && e.StartDate >= DateTime.Now)
-					.ToListAsync();
-
-					var mappedPublicEvents = _mapper.Map<List<EventDto>>(publicEventsFromDb);
-
-					foreach (var eventDto in mappedPublicEvents)
-					{
-						if (publicEvents.Add(eventDto))
-						{
-							orderedPublicEvents.Add(eventDto);
-						}
-					}
-				}
-
-			}
-			else
-			{
-
-
-                var publicEventsFromDb = await _repository.GetAll()
-                    .Where(e => e.IsPublic && e.StartDate >= DateTime.Now)
+            foreach (var interest in interests)
+            {
+                var interestEvents = await _repository.GetAll()
+                    .Where(e => e.Category == interest.Type && e.IsPublic && e.UserId != userId && e.StartDate >= DateTime.Now)
                     .ToListAsync();
 
-                var mappedPublicEvents = _mapper.Map<List<EventDto>>(publicEventsFromDb);
+                var mappedInterestEvents = _mapper.Map<List<EventDto>>(interestEvents);
 
-                foreach (var eventDto in mappedPublicEvents)
+                foreach (var eventDto in mappedInterestEvents)
                 {
                     if (publicEvents.Add(eventDto))
                     {
@@ -264,11 +234,12 @@ namespace Event_Planning_System.Event
                 }
             }
 
-            // Return the ordered list of events with interest-based events first
+           
             return orderedPublicEvents;
         }
 
-		public async Task DeleteEventWithDetailsAsync(int eventId)
+
+        public async Task DeleteEventWithDetailsAsync(int eventId)
 		{
 			try
 			{
@@ -304,7 +275,22 @@ namespace Event_Planning_System.Event
 				{
 					await _notificationRepository.DeleteAsync(notification);
 				}
-				var eventGuests = await _guestRepository.GetAllListAsync(g => g.Events.Any(e => e.Id == eventId));
+                var feedbacks = await _feedbackRepository.GetAllListAsync(nc => nc.EventId == eventId);
+                foreach (var feedback in feedbacks)
+                {
+                    await _feedbackRepository.DeleteAsync(feedback);
+                }
+                var favouriteevents = await _favoriteEventRepository.GetAllListAsync(nc => nc.EventId == eventId);
+                foreach (var favouriteevent in favouriteevents)
+                {
+                    await _favoriteEventRepository.DeleteAsync(favouriteevent);
+                }
+                var gusetevents = await _guestFeedbackRepository.GetAllListAsync(nc => nc.EventId == eventId);
+                foreach (var gusetevent in gusetevents)
+                {
+                    await _guestFeedbackRepository.DeleteAsync(gusetevent);
+                }
+                var eventGuests = await _guestRepository.GetAllListAsync(g => g.Events.Any(e => e.Id == eventId));
 				foreach (var guest in eventGuests)
 				{
 					guest.Events.Remove(eventEntity);
@@ -426,7 +412,40 @@ namespace Event_Planning_System.Event
 				}
 			}
 		}
-	}
+        public async Task<List<EventDto>> GetAllPublicEvents()
+        {
+            var publicEvents = new HashSet<EventDto>();
+            var targetPublicEvents = new List<EventDto>();
+            var userId = AbpSession.UserId;
+            List<Enitities.Event> publicEventsFromDb;
+
+            if (userId.HasValue && userId > 0)
+            {
+                publicEventsFromDb = await _repository.GetAll()
+                    .Where(e => e.IsPublic && e.UserId != userId && e.StartDate >= DateTime.Now)
+                    .ToListAsync();
+            }
+            else
+            {
+                publicEventsFromDb = await _repository.GetAll()
+                    .Where(e => e.IsPublic && e.StartDate >= DateTime.Now)
+                    .ToListAsync();
+            }
+
+            var mappedPublicEvents = _mapper.Map<List<EventDto>>(publicEventsFromDb);
+
+            foreach (var eventDto in mappedPublicEvents)
+            {
+                if (publicEvents.Add(eventDto))
+                {
+                    targetPublicEvents.Add(eventDto);
+                }
+            }
+
+            return targetPublicEvents;
+        }
+
+    }
 }
 
 

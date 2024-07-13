@@ -1,6 +1,8 @@
 
 import { ActivatedRoute, Router } from "@angular/router";
-import { GuestService } from "./../../../shared/Services/guest.service";
+
+import { GuestService } from "../../../shared/services/guest.service";
+
 import { Component, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { Subscription } from "rxjs";

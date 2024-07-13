@@ -1,8 +1,8 @@
 import { Component, OnInit, Inject, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { FeedbackService } from '../../shared/Services/feedback.service';
+import { FeedbackService } from '../../shared/services/feedback.service';
 import { Feedback } from '../../shared/Models/feedback';
-import { CurrentUserDataService } from '../../shared/Services/current-user-data.service';
+import { CurrentUserDataService } from '../../shared/services/current-user-data.service';
 import { AppSessionService } from '@shared/session/app-session.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
