@@ -54,6 +54,8 @@ namespace Event_Planning_System.Web.Host.Startup
 
             services.AddHangfire(x => x.UseSqlServerStorage("Server=.; Database=Event_Planning_SystemDb,1433; Trusted_Connection=True; TrustServerCertificate=True;"));
 
+
+
             //services.AddHangfire(x => x.UseSqlServerStorage("Server=tcp:examinationdb.database.windows.net,1433;Initial Catalog=Event_Planning_SystemDb;Persist Security Info=False;User ID=examDb;Password=esraa_2000;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
 
             services.AddHangfire(configuration =>

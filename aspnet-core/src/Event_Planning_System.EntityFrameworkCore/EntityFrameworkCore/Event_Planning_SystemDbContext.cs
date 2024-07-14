@@ -23,6 +23,8 @@ namespace Event_Planning_System.EntityFrameworkCore
         public DbSet<FavoriteEvent> FavoriteEvents { get; set; }
         public DbSet<GuestsFeedback> GuestsFeedback { get; set; }
 
+        public DbSet<Payment> payments { get; set; }
+
 		public Event_Planning_SystemDbContext(DbContextOptions<Event_Planning_SystemDbContext> options)
 			: base(options)
 		{
@@ -48,7 +50,7 @@ namespace Event_Planning_System.EntityFrameworkCore
                 .HasOne(t => t.Event)
                 .WithMany(e => e.ToDoCheckLists)
                 .HasForeignKey(t => t.EventId)
-                .OnDelete(DeleteBehavior.Restrict); // Change to Restrict
+                .OnDelete(DeleteBehavior.Restrict); 
 
             modelBuilder.Entity<ToDoCheckList>()
                 .HasOne(t => t.User)
@@ -60,7 +62,7 @@ namespace Event_Planning_System.EntityFrameworkCore
                 .HasOne(b => b.Event)
                 .WithMany(e => e.Budgets)
                 .HasForeignKey(b => b.EventId)
-                .OnDelete(DeleteBehavior.Restrict); // Change to Restrict
+                .OnDelete(DeleteBehavior.Restrict); 
 
             modelBuilder.Entity<GuestEvent>()
                 .HasKey(ge => new { ge.GuestId, ge.EventId });
@@ -69,13 +71,13 @@ namespace Event_Planning_System.EntityFrameworkCore
                 .HasOne(ge => ge.Guest)
                 .WithMany(g => g.GuestEvents)
                 .HasForeignKey(ge => ge.GuestId)
-                .OnDelete(DeleteBehavior.Restrict); // Change to Restrict
+                .OnDelete(DeleteBehavior.Restrict); 
 
             modelBuilder.Entity<GuestEvent>()
                 .HasOne(ge => ge.Event)
                 .WithMany(e => e.GuestEvents)
                 .HasForeignKey(ge => ge.EventId)
-                .OnDelete(DeleteBehavior.Restrict); // Change to Restrict
+                .OnDelete(DeleteBehavior.Restrict); 
 
             modelBuilder.Entity<User>(entity =>
             {
@@ -112,14 +114,16 @@ namespace Event_Planning_System.EntityFrameworkCore
                 .HasOne(fe => fe.User)
                 .WithMany(u => u.FavoriteEvents)
                 .HasForeignKey(fe => fe.UserId)
-                .OnDelete(DeleteBehavior.Restrict); // Change to Restrict
+                .OnDelete(DeleteBehavior.Restrict); 
 
             modelBuilder.Entity<FavoriteEvent>()
                 .HasOne(fe => fe.Event)
                 .WithMany(e => e.FavoriteEvents)
                 .HasForeignKey(fe => fe.EventId)
-                .OnDelete(DeleteBehavior.Restrict); // Change to Restrict
+                .OnDelete(DeleteBehavior.Restrict); 
         }
+
+
 
 
     }

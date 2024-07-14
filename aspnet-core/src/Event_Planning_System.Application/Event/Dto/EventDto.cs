@@ -69,7 +69,7 @@ namespace Event_Planning_System.Event.Dto
             }
         }
 
-        public int NumberOfTickets { get; private set; }
+        public int NumberOfTickets { get; set; }
 
         [RegularExpression(@"^.+\.(png|jpg|jpeg)$", ErrorMessage = "Image must be in PNG, JPG, or JPEG format.")]
         public string EventImg { get; set; }
