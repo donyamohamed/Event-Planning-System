@@ -44,6 +44,7 @@ namespace Event_Planning_System.Event.Dto
         [Required(ErrorMessage = "Location is required.")]
         [StringLength(200, ErrorMessage = "Location can't be longer than 200 characters.")]
         public string Location { get; set; }
+        
 
         [Required(ErrorMessage = "Start date is required.")]
         [DataType(DataType.Date)]

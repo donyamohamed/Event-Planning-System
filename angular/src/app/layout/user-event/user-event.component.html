@@ -80,6 +80,10 @@
       <div>
         <label>Map:</label>
         <div id="map" style="width: 100%; height: 400px;"></div>
+        <input formControlName="location" type="text" [(ngModel)]="eventEdit.location" name="location" class="form-control mt-2" placeholder="{{ 'Event Location' | localize }}">
+        <div *ngIf="eventEditForm.get('location').invalid && eventEditForm.get('location').touched" class="text-danger">
+          <div *ngIf="eventEditForm.get('location').errors.required">Location is required.</div>
+        </div>
       </div>
       <div>
         <label for="startDateInput">Start Date:</label>
@@ -145,7 +149,7 @@
           [(ngModel)]="eventEdit.description" pattern="^[a-zA-Z0-9 ]+$" required></textarea>
         <div *ngIf="eventEditForm.get('description').invalid && eventEditForm.get('description').touched" class="text-danger">
           <div *ngIf="eventEditForm.get('description').errors.required">Description is required.</div>
-          <div *ngIf="eventEditForm.get('description').errors.pattern">{{ "Description must be alphanumeric" | localize }}</div>
+          <div *ngIf="eventEditForm.get('description').errors.pattern">{{ "Description must be alphanumeric and less than 500" | localize }}</div>
         </div>
       </div>
       <input class="btnupdate btn-success m-1" value="Update" type="submit" />

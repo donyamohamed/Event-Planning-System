@@ -70,12 +70,13 @@ export class UserEventComponent implements OnInit {
   ) {
     this.eventEditForm = this.fb.group({
       name: ["", [Validators.required, Validators.pattern("^[a-zA-Z0-9 ]+$")]],
+      location: ["", Validators.required],
       startDate: ["", Validators.required],
       endDate: ["", Validators.required],
       maxCount: ["", Validators.required],
       category: ["", Validators.required],
       isPublic: ["", Validators.required],
-      description: ["", [Validators.required, Validators.pattern("^[a-zA-Z0-9 ]+$")]],
+      description: ["", [Validators.required, Validators.pattern("^[a-zA-Z0-500 ]+$")]],
     });
   }
 
@@ -105,10 +106,11 @@ export class UserEventComponent implements OnInit {
         container: 'map',
         style: 'mapbox://styles/mapbox/streets-v12',
         center: [30.8025, 26.8206], // Default center (Egypt)
+       // center: [-74.5, 40], 
         zoom: 5, // Default zoom level
         attributionControl: false 
     });
-
+// https://api.mapbox.com/geocoding/v5/mapbox.places/30.744557462642092,28.09867557063106.json?access_token=pk.eyJ1IjoibWFiZG9naCIsImEiOiJjbGp1em54c24xaTd4M2NsbDBiOWZuMXk4In0.n4ILS2Jtk5tZ9onHBcL8Cw`;
     // Add map click event to update location input
     this.map.on('click', (e) => {
         const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${e.lngLat.lng},${e.lngLat.lat}.json?access_token=${mapboxgl.accessToken}`;
@@ -117,6 +119,7 @@ export class UserEventComponent implements OnInit {
             .then(data => {
                 const placeName = data.features[0]?.place_name || 'Unknown location';
                 this.eventEdit.location = placeName;
+                console.log(placeName);
             })
             .catch(err => {
                 console.error('Error fetching location name:', err);
@@ -163,13 +166,16 @@ export class UserEventComponent implements OnInit {
   }
 
   guestAppearing(event: Event): void {
-    if (this.events.length === 0) {
-      this.route.navigateByUrl("app/NoGuests/" + event.id);
-    } else {
-      this.route.navigateByUrl("app/allGuests/" + event.id, {
-        state: { event },
-      });
-    }
+    // if (this.events.length === 0) {
+    //   this.route.navigateByUrl("app/NoGuests/" + event.id);
+    // } else {
+    //   this.route.navigateByUrl("app/allGuests/" + event.id, {
+    //     state: { event },
+    //   });
+    // }
+    this.route.navigateByUrl("app/allGuests/" + event.id, {
+      state: { event },
+    });
   }
 
   details(event: Event): void {
@@ -215,7 +221,16 @@ export class UserEventComponent implements OnInit {
 
   editEvent(): void {
     if (this.eventEditForm.valid) {
-      this.userEventsService.editEvent(this.eventEdit).subscribe({
+      // this.userEventsService.editEvent(this.eventEdit).subscribe({
+      //   next: (data) => {
+      //     console.log(data);
+      //     location.reload();
+      //   },
+      //   error: (err) => {
+      //     console.log(err);
+      //   },
+      // });
+      this.userEventsService.editEventWithDetails(this.eventEdit).subscribe({
         next: (data) => {
           console.log(data);
           location.reload();
@@ -224,7 +239,9 @@ export class UserEventComponent implements OnInit {
           console.log(err);
         },
       });
-    } else {
+    }
+    
+    else {
       this.markFormGroupTouched(this.eventEditForm);
     }
   }
