@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
+using System.IO;
 
 namespace Event_Planning_System.Email
 {
@@ -55,16 +56,60 @@ namespace Event_Planning_System.Email
                 throw;
             }
         }
-    }
 
-    public class SmtpSettings
-    {
-        public string Host { get; set; }
-        public int Port { get; set; }
-        public bool EnableSsl { get; set; }
-        public string UserName { get; set; }
-        public string Password { get; set; }
-        public string DefaultFromAddress { get; set; }
-        public string DefaultFromDisplayName { get; set; }
+        public async Task SendEmailWithAttachmentAsync(string toEmail, string subject, string message, byte[] attachmentData, string attachmentName)
+        {
+            var smtpSettings = new SmtpSettings
+            {
+                Host = _configuration["Smtp:Host"],
+                Port = int.Parse(_configuration["Smtp:Port"]),
+                EnableSsl = bool.Parse(_configuration["Smtp:EnableSsl"]),
+                UserName = _configuration["Smtp:UserName"],
+                Password = _configuration["Smtp:Password"],
+                DefaultFromAddress = _configuration["Smtp:DefaultFromAddress"],
+                DefaultFromDisplayName = _configuration["Smtp:DefaultFromDisplayName"]
+            };
+
+            var mailMessage = new MailMessage
+            {
+                From = new MailAddress(smtpSettings.DefaultFromAddress, smtpSettings.DefaultFromDisplayName),
+                Subject = subject,
+                Body = message,
+                IsBodyHtml = true
+            };
+            mailMessage.To.Add(toEmail);
+
+            // Add attachment
+            if (attachmentData != null && !string.IsNullOrEmpty(attachmentName))
+            {
+                mailMessage.Attachments.Add(new Attachment(new MemoryStream(attachmentData), attachmentName));
+            }
+
+            try
+            {
+                using (var client = new SmtpClient(smtpSettings.Host, smtpSettings.Port))
+                {
+                    client.Credentials = new NetworkCredential(smtpSettings.UserName, smtpSettings.Password);
+                    client.EnableSsl = smtpSettings.EnableSsl;
+                    await client.SendMailAsync(mailMessage);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed to send email to {toEmail}: {ex.Message}");
+                throw;
+            }
+        }
+
+        public class SmtpSettings
+        {
+            public string Host { get; set; }
+            public int Port { get; set; }
+            public bool EnableSsl { get; set; }
+            public string UserName { get; set; }
+            public string Password { get; set; }
+            public string DefaultFromAddress { get; set; }
+            public string DefaultFromDisplayName { get; set; }
+        }
     }
 }
