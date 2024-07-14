@@ -1,0 +1,8 @@
+/* src/app/payment/payment.component.css */
+#card-element {
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 4px;
+    background-color: white;
+  }
+  

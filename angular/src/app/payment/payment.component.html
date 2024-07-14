@@ -1,0 +1,10 @@
+<!-- src/app/payment/payment.component.html -->
+<div class="container">
+    <h2>Payment for Ticket</h2>
+    <p>Amount: {{ ticketPrice | currency }}</p>
+    <form (ngSubmit)="submitPayment()">
+      <div id="card-element" class="mb-3"><!-- Stripe Card Element will be inserted here --></div>
+      <button type="submit" class="btn btn-primary">Pay</button>
+    </form>
+  </div>
+  

@@ -20,7 +20,7 @@ import { InterstsComponent } from './intersts/intersts.component';
 import { TodoListComponent } from './layout/event-todo-list/event-todo-list.component';
 import { EventDetailsComponent } from './layout/event-details/event-details.component';
 import { EventHOmeDetailsComponent } from './layout/event-home-details/event-home-details.component';
-
+import {PaymentComponent} from './payment/payment.component'
 import { InvitationStateComponent } from './layout/invitation-state/invitation-state.component';
 import {GuestsFeedbackComponent} from './guests-feedback/guests-feedback.component'
 import { NotificatiosComponent } from './layout/notifications/notificatios.component';
@@ -63,6 +63,8 @@ const routes: Routes = [
             { path: 'feedback', component: FeedbackComponent, canActivate: [AppRouteGuard] },
 
             { path: 'eventDetails/:id', component: EventDetailsComponent },
+            { path: 'payment', component: PaymentComponent },
+
 
             { path: 'shareDetails/:id', component: ShareDetailesComponent, canActivate: [AppRouteGuard] },
             { path: 'todolist/:id', component: TodoListComponent, canActivate: [AppRouteGuard] },

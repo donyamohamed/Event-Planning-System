@@ -52,7 +52,7 @@ import { PublicEventsComponent } from "./home/public-events/public-events.compon
 import { ChatIconComponent } from "./chat-icon/chat-icon.component";
 import { GuestsFeedbackComponent} from './guests-feedback/guests-feedback.component'
 
-
+import {PaymentComponent} from './payment/payment.component'
 
 
 
@@ -94,7 +94,8 @@ import { GuestsFeedbackComponent} from './guests-feedback/guests-feedback.compon
         SidebarLogoComponent,
         SidebarUserPanelComponent,
         SidebarMenuComponent,
-        GuestsFeedbackComponent
+        GuestsFeedbackComponent,
+        PaymentComponent
         
     ],
     bootstrap: [AppComponent],
