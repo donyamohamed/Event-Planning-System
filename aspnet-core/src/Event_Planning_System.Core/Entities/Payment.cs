@@ -1,6 +1,7 @@
 ﻿using Abp.Domain.Entities;
 using Event_Planning_System.Authorization.Users;
 using Event_Planning_System.Enitities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -15,14 +16,16 @@ namespace Event_Planning_System.Entities
     {
         public int Id { get ; set; }
 
-        public long PlannerId { get; set; }
+        public long UserId { get; set; }
 
         [ForeignKey("UserId")]
+        [DeleteBehavior(DeleteBehavior.NoAction)]
         public virtual User User { get; set; }
 
         public long GuestId { get; set; }
 
         [ForeignKey("GuestId")]
+        [DeleteBehavior(DeleteBehavior.NoAction)]
         public virtual User Guest { get; set; }
 
         public int EventId { get; set; }
