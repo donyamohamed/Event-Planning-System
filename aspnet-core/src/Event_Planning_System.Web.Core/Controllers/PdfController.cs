@@ -1,66 +1,55 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using DinkToPdf;
-using DinkToPdf.Contracts;
+﻿using DinkToPdf.Contracts;
 using Event_Planning_System.Email;
+using Microsoft.AspNetCore.Mvc;
 using System;
 
-namespace YourNamespace.Controllers
+[Route("api/[controller]")]
+[ApiController]
+public class PdfController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class PdfController : ControllerBase
+    private readonly IConverter _converter;
+
+    public PdfController(IConverter converter)
     {
-        private readonly IConverter _converter;
+        _converter = converter;
+    }
 
-        public PdfController(IConverter converter)
+    [HttpGet("DownloadInvitation")]
+    public IActionResult DownloadInvitation(string eventName, DateTime date, string eventAddress, string eventImg)
+    {
+        // Logic to generate PDF based on eventName, date, eventAddress, eventImg
+        // Example logic using DinkToPdf
+        var pdfBytes = GenerateInvitationPdf(eventName, date, eventAddress, eventImg);
+
+        if (pdfBytes == null)
         {
-            _converter = converter;
+            return NotFound();
         }
 
-        [HttpGet("DownloadInvitation")]
-        public IActionResult DownloadInvitation(string eventName, DateTime date, string eventAddress, string eventImg)
+        // Return the PDF file
+        return File(pdfBytes, "application/pdf", "Invitation.pdf");
+    }
+
+    [HttpPost("DownloadInvitation")]
+    public IActionResult DownloadInvitation([FromBody] EmailRequest emailRequest)
+    {
+        // Ensure your logic for generating PDF from emailRequest data
+        var pdfBytes = GenerateInvitationPdf(emailRequest.EventName, emailRequest.Date, emailRequest.EventAddress, emailRequest.EventImage);
+
+        if (pdfBytes == null)
         {
-            try
-            {
-                // Log received parameters
-                Console.WriteLine($"DownloadInvitation called with eventName={eventName}, date={date}, eventAddress={eventAddress}, eventImg={eventImg}");
-
-                // Validate parameters
-                if (string.IsNullOrEmpty(eventName) || string.IsNullOrEmpty(eventAddress) || string.IsNullOrEmpty(eventImg))
-                {
-                    throw new ArgumentException("Invalid parameters.");
-                }
-
-                // Generate HTML content
-                string htmlContent = EmailTemplate.GetInvitationEmail(eventName, date, eventAddress, eventImg, string.Empty);
-
-                // Create PDF document
-                var pdf = new HtmlToPdfDocument()
-                {
-                    GlobalSettings = {
-                        PaperSize = PaperKind.A4,
-                        Orientation = Orientation.Portrait
-                    },
-                    Objects = {
-                        new ObjectSettings() {
-                            HtmlContent = htmlContent,
-                            WebSettings = { DefaultEncoding = "utf-8" }
-                        }
-                    }
-                };
-
-                // Convert HTML to PDF
-                byte[] pdfBytes = _converter.Convert(pdf);
-
-                // Return PDF file
-                return File(pdfBytes, "application/pdf", "Invitation.pdf");
-            }
-            catch (Exception ex)
-            {
-                // Log exception
-                Console.WriteLine($"Error: {ex.Message}");
-                return StatusCode(500, "Internal server error");
-            }
+            return NotFound();
         }
+
+        // Return the PDF file
+        return File(pdfBytes, "application/pdf", "Invitation.pdf");
+    }
+
+    private byte[] GenerateInvitationPdf(string eventName, DateTime date, string eventAddress, string eventImg)
+    {
+        // Example logic using DinkToPdf or any PDF generation library
+        // Generate PDF bytes here
+        byte[] pdfBytes = null; // Replace with actual PDF generation logic
+        return pdfBytes;
     }
 }
