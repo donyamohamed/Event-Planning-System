@@ -1,10 +1,13 @@
-<!-- src/app/payment/payment.component.html -->
-<div class="container">
+<div class="payment-container">
+  <div class="payment-visual">
+   <img src="../../assets/img/Payment-yellow.gif" alt="image"/>
+  </div>
+  <div class="payment-form">
     <h2>Payment for Ticket</h2>
-    <p>Amount: {{ ticketPrice | currency }}</p>
+    <p class="badge badge-warning p-2">Amount: {{ ticketPrice | currency }}</p>
     <form (ngSubmit)="submitPayment()">
-      <div id="card-element" class="mb-3"><!-- Stripe Card Element will be inserted here --></div>
-      <button type="submit" class="btn btn-primary">Pay</button>
+      <div id="card-element" class="Input"></div>
+      <button type="submit" class="btn ">Pay</button>
     </form>
   </div>
-  
+</div>
