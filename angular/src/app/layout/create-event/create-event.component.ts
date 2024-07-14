@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Event } from '../../../shared/Models/Event';
+import { Event ,EventType} from '../../../shared/Models/Event';
 import { EventService } from '../../../shared/services/eventa.service';
 import { Enumerator } from "../../../shared/Models/Event";
 import { HttpClient } from '@angular/common/http';
@@ -30,6 +30,7 @@ export class CreateEventComponent implements OnInit {
     username: string;
     today: string = new Date().toISOString().slice(0, 16); // Today's date and time in 'YYYY-MM-DDTHH:MM' format
     filter = new Filter();
+    EventType:EventType
 
     constructor(private eventService: EventService, private http: HttpClient) {}
 
@@ -72,7 +73,22 @@ export class CreateEventComponent implements OnInit {
                 });
         });
     }
-
+   onEventTypeChange(): void {
+        if (this.eventData.type === EventType.Free) {
+            this.eventData.ticketPrice = 0;
+            this.eventData.type =EventType.Free;
+        } else {
+            this.eventData.ticketPrice = null; // Reset the ticket price
+            this.eventData.type =EventType.Paid;
+             this.eventData.isPublic = true;
+        }
+    }
+    onEventpublicChange() {
+        if (this.eventData.isPublic === false) {
+            this.eventData.type = 1; // Set to Free
+            this.eventData.ticketPrice = 0; // Set ticket price to 0
+        }
+    }
     createEvent(): void {
         if (typeof this.eventData.startDate === 'string') {
             this.eventData.startDate = new Date(this.eventData.startDate);
@@ -103,6 +119,8 @@ export class CreateEventComponent implements OnInit {
         formData.append('eventImg', this.eventData.eventImg || '');
         formData.append('category', this.eventData.category || '');
         formData.append('userId', this.eventData.userId?.toString() || '');
+        formData.append('ticketPrice', this.eventData.ticketPrice?.toString() || ''); 
+        formData.append('type',this.eventData.type?.toString() || '');
         if (this.eventData.eventImgFile) {
             formData.append('eventImgFile', this.eventData.eventImgFile);
         }
