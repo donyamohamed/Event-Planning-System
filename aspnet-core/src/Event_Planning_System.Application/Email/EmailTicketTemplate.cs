@@ -173,20 +173,19 @@ public class EmailTicketTemplate
                     <p>{eventAddress}</p>
                     <p><small>www.eventlocation.com</small></p>
                 </div>
-                //<div class='details'>
-                //    <p><strong>Guest Name:</strong> {guestName}</p>
-                //</div>
+               <!-- <div class='details'>
+                    <p><strong>Guest Name:</strong> {guestName}</p>
+                </div>-->
                 <div class='footer'>
                     <p>&copy; {DateTime.Now.Year} Event Planning Team. All rights reserved.</p>
                 </div>
-                //<form method='post' action='/api/Pdf/DownloadInvitation'>
-                //    <input type='hidden' name='eventName' value='{eventName}' />
-                //    <input type='hidden' name='date' value='{date:yyyy-MM-ddTHH:mm:ss}' />
-                //    <input type='hidden' name='eventAddress' value='{eventAddress}' />
-                //    <input type='hidden' name='eventImg' value='{eventImg}' />
-                //    <button type='submit' class='download-btn'>Print Ticket</button>
-                //</form>
-
+              <!--  <form method='post' action='/api/Pdf/DownloadInvitation'>
+                    <input type='hidden' name='eventName' value='{eventName}' />
+                    <input type='hidden' name='date' value='{date:yyyy-MM-ddTHH:mm:ss}' />
+                    <input type='hidden' name='eventAddress' value='{eventAddress}' />
+                    <input type='hidden' name='eventImg' value='{eventImg}' />
+                    <button type='submit' class='download-btn'>Print Ticket</button>
+                </form>-->
             </div>
         </body>
         </html>";
