@@ -445,6 +445,7 @@ namespace Event_Planning_System.Event
             return targetPublicEvents;
         }
 
+
     }
 }
 
