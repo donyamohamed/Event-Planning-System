@@ -47,12 +47,18 @@ label {
   color: red;
   font-size: 0.8rem;
 }
-
+#paid{
+  margin-left: 30px;
+}
+.labelispaid{
+  margin-left: 5px;
+}
 .submit-button {
   background-color: #fbaf1b;
-  padding:10px 20px;
+  padding:10px 30px;
   border:none;
   border-radius: 5px;
+  margin-left: 230px;
   color: #fff;
   transition: background-color 0.3s ease;
 }
