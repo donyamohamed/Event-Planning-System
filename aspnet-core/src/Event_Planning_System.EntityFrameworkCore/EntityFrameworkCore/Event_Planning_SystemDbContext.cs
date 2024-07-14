@@ -23,6 +23,8 @@ namespace Event_Planning_System.EntityFrameworkCore
         public DbSet<FavoriteEvent> FavoriteEvents { get; set; }
         public DbSet<GuestsFeedback> GuestsFeedback { get; set; }
 
+        public DbSet<Payment> payments { get; set; }
+
 		public Event_Planning_SystemDbContext(DbContextOptions<Event_Planning_SystemDbContext> options)
 			: base(options)
 		{
@@ -120,6 +122,8 @@ namespace Event_Planning_System.EntityFrameworkCore
                 .HasForeignKey(fe => fe.EventId)
                 .OnDelete(DeleteBehavior.Restrict); // Change to Restrict
         }
+
+
 
 
     }
