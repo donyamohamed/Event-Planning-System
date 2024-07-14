@@ -26,6 +26,13 @@ public enum EventCategory
     Other
 }
 
+public enum EventType
+{
+    Paid,
+    Free
+}
+
+
 namespace Event_Planning_System.Enitities
 {
     public class Event : IEntity<int>
@@ -53,8 +60,21 @@ namespace Event_Planning_System.Enitities
 
         public bool IsPublic { get; set; }
 
+        
+        private int _maxCount;
+
         [Range(1, 10000, ErrorMessage = "Max count must be between 1 and 10000.")]
-        public int MaxCount { get; set; }
+        public int MaxCount
+        {
+            get => _maxCount;
+            set
+            {
+                _maxCount = value;
+                NumberOfTickets = value;
+            }
+        }
+
+        public int NumberOfTickets { get; private set; }
 
         [RegularExpression(@"^.+\.(png|jpg|jpeg)$", ErrorMessage = "Image must be in PNG, JPG, or JPEG format.")]
         public string EventImg { get; set; }
@@ -65,7 +85,9 @@ namespace Event_Planning_System.Enitities
         [ForeignKey("UserId")]
         public virtual User User { get; set; }
 
+        public EventType Type { get; set; }
 
+        public int? TicketPrice { get; set; }
 
         public virtual ICollection<notification> Notifications { get; set; } = new List<notification>();
         public virtual ICollection<Guest> Guests { get; set; } = new List<Guest>();
