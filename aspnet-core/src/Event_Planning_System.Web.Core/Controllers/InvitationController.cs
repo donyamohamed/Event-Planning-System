@@ -7,6 +7,9 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
 using System.Web;
+using Event_Planning_System.Controllers;
+using DinkToPdf.Contracts;
+
 
 namespace Event_Planning_System.Controllers
 {
@@ -18,6 +21,7 @@ namespace Event_Planning_System.Controllers
         private readonly ISmsService _smsService;
         private readonly ILogger<InvitationController> _logger;
         private readonly GuestAppService _guestAppService;
+        private readonly IConverter _converter;
         private const string BaseUrl = "https://eventa.azurewebsites.net";
 
         public InvitationController(IEmailService emailService, ILogger<InvitationController> logger, ISmsService smsService, GuestAppService guestService)
@@ -172,5 +176,64 @@ namespace Event_Planning_System.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
+        [HttpPost("SendEventTicket")]
+        public async Task<IActionResult> SendTicketEmail([FromBody] EmailRequest emailRequest)
+        {
+            string[] emailParts = emailRequest.ToEmail.Split('@');
+            string guestName = emailParts[0];
+
+            try
+            {
+                if (emailRequest == null)
+                {
+                    return BadRequest("Invalid email request.");
+                }
+
+                if (string.IsNullOrEmpty(emailRequest.Subject) || string.IsNullOrEmpty(emailRequest.Body))
+                {
+                    return BadRequest("Email subject and body cannot be empty.");
+                }
+
+                var htmlBody = EmailTicketTemplate.SendEventTicket(emailRequest.EventName, emailRequest.Date, emailRequest.EventAddress, guestName, emailRequest.EventImage);
+
+                await _emailService.SendEmailAsync(emailRequest.ToEmail, emailRequest.Subject, htmlBody);
+                _logger.LogInformation("Invitation email sent successfully.");
+
+                // Inject PdfController through constructor injection
+                var pdfResult = await DownloadInvitationPdfAsync(emailRequest.EventName, emailRequest.Date, emailRequest.EventAddress, emailRequest.EventImage);
+
+                if (pdfResult is FileContentResult fileResult)
+                {
+                    
+                    await _emailService.SendEmailWithAttachmentAsync(emailRequest.ToEmail, emailRequest.Subject, htmlBody, fileResult.FileContents, "Invitation.pdf");
+
+                    return Ok("Invitation email sent successfully with PDF attachment.");
+                }
+
+                return Ok("Invitation email sent successfully.");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error sending invitation email.");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        private async Task<IActionResult> DownloadInvitationPdfAsync(string eventName, DateTime date, string eventAddress, string eventImg)
+        {
+            try
+            {
+                // Assuming IConverter is injected into this controller
+                var pdfController = new PdfController(_converter);
+                return pdfController.DownloadInvitation(eventName, date, eventAddress, eventImg);
+            }
+            catch (Exception ex)
+            {
+                // Log and handle exception
+                _logger.LogError(ex, "Error downloading PDF for invitation.");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
     }
 }
