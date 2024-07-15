@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace Event_Planning_System.Payment
 {
-    public interface IPaymentAppService 
+    public class StripeSettings
     {
-        Task<IActionResult> CreateCheckoutSession(string amount);
+        public string SecretKey { get; set; }
+
+        public string PublishableKey { get; set; }
     }
 }
