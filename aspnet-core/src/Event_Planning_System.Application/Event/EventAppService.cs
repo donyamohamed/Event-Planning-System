@@ -165,9 +165,10 @@ namespace Event_Planning_System.Event
 			}
 			return new EventNameAndRatingDto { EventNames = eventNames, EventRatings = eventRatings };
 
-		}
-
-		public override async Task<EventDto> CreateAsync([FromForm] CreateEventDto input)
+        }
+		
+        //[Authorize(Roles = "Supplier")]
+        public override async Task<EventDto> CreateAsync([FromForm] CreateEventDto input)
 		{
 			if (input.EventImgFile != null && input.EventImgFile.Length > 0)
 			{
