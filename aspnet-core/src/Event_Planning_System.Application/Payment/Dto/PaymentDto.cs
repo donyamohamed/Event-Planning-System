@@ -14,7 +14,7 @@ namespace Event_Planning_System.Payment.Dto
     {
         public int Id { get; set; }
 
-        public long PlannerId { get; set; }
+        public long UserId { get; set; }
 
         public long GuestId { get; set; }
 
@@ -29,5 +29,7 @@ namespace Event_Planning_System.Payment.Dto
         [Required(ErrorMessage = "Date is required.")]
         [DataType(DataType.Date)]
         public DateTime PaymentDate { get; set; }
+
+        //public string StripeSessionId { get; set; }
     }
 }

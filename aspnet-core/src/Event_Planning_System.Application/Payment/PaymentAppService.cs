@@ -1,23 +1,44 @@
-﻿//using Event_Planning_System.Payment;
-//using Microsoft.AspNetCore.Mvc;
-//using Microsoft.Extensions.Logging;
-//using Stripe.Checkout;
-//using System.Collections.Generic;
-//using System.Threading.Tasks;
-//using System;
-//using Microsoft.Extensions.Options;
-//using Abp.Application.Services;
+﻿using Event_Planning_System.Payment;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Stripe.Checkout;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System;
+using Microsoft.Extensions.Options;
+using Abp.Application.Services;
+using Stripe;
+using Abp.Domain.Repositories;
+using Event_Planning_System.Entities;
+using Event_Planning_System.Authorization.Users;
+using Event_Planning_System.Payment.Dto;
 
-//public class PaymentAppService : ApplicationService , IPaymentAppService
+//public class PaymentAppService : ApplicationService, IPaymentAppService
 //{
 //    private readonly StripeSettings _stripeSettings;
 //    private readonly ILogger<PaymentAppService> _logger;
+//    private readonly IRepository<Payment, int> _paymentrepository;
+//    private readonly IRepository<User, long> _userRepository;
+//    private readonly UserManager _userManager;
+//    private readonly IRepository<Event_Planning_System.Enitities.Event, int> _repositoryEvent;
 
-//    public PaymentAppService(IOptions<StripeSettings> stripeSettings, ILogger<PaymentAppService> logger)
+//    public PaymentAppService(
+//        IOptions<StripeSettings> stripeSettings,
+//        ILogger<PaymentAppService> logger,
+//        IRepository<Payment, int> paymentRepository,
+//        IRepository<Event_Planning_System.Enitities.Event, int> repositoryEvent,
+//        IRepository<User, long> userRepository,
+//        UserManager userManager)
 //    {
 //        _stripeSettings = stripeSettings.Value;
 //        _logger = logger;
+//        _paymentrepository = paymentRepository;
+//        _userRepository = userRepository;
+//        _userManager = userManager;
+//        _repositoryEvent = repositoryEvent;
+//        StripeConfiguration.ApiKey = "sk_test_51PcdCYAFPDLjCbDzmNaL6xyPq1hQLNTrNF6RapBsORBczDVcxnGeFyEjCxWjGO5SOKuSzIKUc8pUVKBSRF28LjTg002BalgpTa";
 //    }
+
 //    [HttpPost]
 //    public async Task<IActionResult> CreateCheckoutSession(string amount)
 //    {
@@ -63,35 +84,54 @@
 //        }
 //    }
 //}
-using Event_Planning_System.Payment;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Stripe.Checkout;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System;
-using Microsoft.Extensions.Options;
-using Abp.Application.Services;
-using Stripe;
 
 public class PaymentAppService : ApplicationService, IPaymentAppService
 {
     private readonly StripeSettings _stripeSettings;
     private readonly ILogger<PaymentAppService> _logger;
+    private readonly IRepository<Payment, int> _paymentRepository;
+    private readonly IRepository<User, long> _userRepository;
+    private readonly UserManager _userManager;
+    private readonly IRepository<Event_Planning_System.Enitities.Event, int> _repositoryEvent;
 
-    public PaymentAppService(IOptions<StripeSettings> stripeSettings, ILogger<PaymentAppService> logger)
+    public PaymentAppService(
+        IOptions<StripeSettings> stripeSettings,
+        ILogger<PaymentAppService> logger,
+        IRepository<Payment, int> paymentRepository,
+        IRepository<Event_Planning_System.Enitities.Event, int> repositoryEvent,
+        IRepository<User, long> userRepository,
+        UserManager userManager)
     {
         _stripeSettings = stripeSettings.Value;
         _logger = logger;
-        StripeConfiguration.ApiKey = "sk_test_51PcdCYAFPDLjCbDzmNaL6xyPq1hQLNTrNF6RapBsORBczDVcxnGeFyEjCxWjGO5SOKuSzIKUc8pUVKBSRF28LjTg002BalgpTa"; // Use the Stripe API key from settings
+        _paymentRepository = paymentRepository;
+        _userRepository = userRepository;
+        _userManager = userManager;
+        _repositoryEvent = repositoryEvent;
+        StripeConfiguration.ApiKey = "sk_test_51PcdCYAFPDLjCbDzmNaL6xyPq1hQLNTrNF6RapBsORBczDVcxnGeFyEjCxWjGO5SOKuSzIKUc8pUVKBSRF28LjTg002BalgpTa";
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateCheckoutSession(string amount)
+    public async Task<IActionResult> CreateCheckoutSession([FromBody] PaymentDto paymentDto)
     {
         try
         {
-            _logger.LogInformation("Starting CreateCheckoutSession with amount: {Amount}", amount);
+
+            var userId = AbpSession.UserId.Value;
+            if(userId != null)
+            {
+               paymentDto.GuestId=userId;
+
+            }
+
+            //var eventPanner = _repositoryEvent.FirstOrDefault(a => a.Id == eventId);
+            //if (eventPanner != null)
+            //{
+            //    paymentDto.UserId =eventPanner.UserId ;
+            //}
+
+
+            _logger.LogInformation("Starting CreateCheckoutSession with amount: {Amount}", paymentDto.Money);
 
             var options = new SessionCreateOptions
             {
@@ -107,9 +147,9 @@ public class PaymentAppService : ApplicationService, IPaymentAppService
                             {
                                 Name = "Event Ticket",
                             },
-                            UnitAmount = int.Parse(amount),
+                            UnitAmount = paymentDto.Money,
                         },
-                        Quantity = 1,
+                        Quantity = paymentDto.NumberOfTickets,
                     },
                 },
                 Mode = "payment",
@@ -122,6 +162,15 @@ public class PaymentAppService : ApplicationService, IPaymentAppService
 
             _logger.LogInformation("Checkout session created successfully with ID: {SessionId}", session.Id);
             _logger.LogInformation("Checkout session details: {@Session}", session);
+
+          
+            paymentDto.PaymentDate = DateTime.Now;
+            var payment = ObjectMapper.Map<Payment>(paymentDto);
+            //payment.StripeSessionId = session.Id;  
+
+            await _paymentRepository.InsertAsync(payment);
+            await CurrentUnitOfWork.SaveChangesAsync();
+
             return new OkObjectResult(new { sessionId = session.Id });
         }
         catch (Exception ex)

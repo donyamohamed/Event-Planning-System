@@ -1,13 +1,12 @@
 ﻿using Event_Planning_System.Payment;
+using Event_Planning_System.Payment.Dto;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Event_Planning_System.Controllers
 {
+    [ApiController]
+    [Route("api/[controller]")]
     public class PaymentController : ControllerBase
     {
         private readonly IPaymentAppService _paymentAppService;
@@ -16,10 +15,11 @@ namespace Event_Planning_System.Controllers
         {
             _paymentAppService = paymentAppService;
         }
-        [HttpPost]
-        public async Task<IActionResult> CreateCheckoutSession([FromBody] string amount)
-        {
-            return await _paymentAppService.CreateCheckoutSession(amount);
-        }
+
+        //[HttpPost("CreateCheckoutSession")]
+        //public async Task<IActionResult> CreateCheckoutSession([FromBody] PaymentDto paymentDto, [FromQuery] int eventId)
+        //{
+        //    return await _paymentAppService.CreateCheckoutSession(paymentDto, eventId);
+        //}
     }
 }
