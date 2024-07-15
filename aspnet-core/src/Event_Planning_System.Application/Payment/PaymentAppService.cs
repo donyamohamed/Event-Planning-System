@@ -23,13 +23,11 @@ public class PaymentAppService : AsyncCrudAppService<Payment, PaymentDto, int>, 
     private readonly IRepository<Payment, int> _paymentRepository;
     private readonly IRepository<User, long> _userRepository;
     private readonly UserManager _userManager;
-    private readonly IRepository<Event_Planning_System.Enitities.Event, int> _repositoryEvent;
 
     public PaymentAppService(
         IOptions<StripeSettings> stripeSettings,
         ILogger<PaymentAppService> logger,
         IRepository<Payment, int> paymentRepository,
-        IRepository<Event_Planning_System.Enitities.Event, int> repositoryEvent,
         IRepository<User, long> userRepository,
         UserManager userManager)
          : base(paymentRepository)
@@ -39,7 +37,6 @@ public class PaymentAppService : AsyncCrudAppService<Payment, PaymentDto, int>, 
         _paymentRepository = paymentRepository;
         _userRepository = userRepository;
         _userManager = userManager;
-        _repositoryEvent = repositoryEvent;
         StripeConfiguration.ApiKey = "sk_test_51PcdCYAFPDLjCbDzmNaL6xyPq1hQLNTrNF6RapBsORBczDVcxnGeFyEjCxWjGO5SOKuSzIKUc8pUVKBSRF28LjTg002BalgpTa";
     }
 
