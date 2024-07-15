@@ -7,7 +7,7 @@ export enum Enumerator {
     Exam = "Exam",
     Birthday = "Birthday",
     Graduation = "Graduation",
-    Baby_Shower = "Baby_Shower",
+    Baby_Shower = "Baby Shower",
     Wedding = "Wedding",
     Gathering = "Gathering",
     Other = "Other"

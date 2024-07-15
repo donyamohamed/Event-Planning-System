@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { Event } from '../../../shared/Models/Event';
+import { Event, EventType } from '../../../shared/Models/Event';
 import { HomeService } from '../../../shared/services/home.service';
 import { AskforInvitationService } from '../../../shared/services/askfor-invitation.service';
 import { EventsResponse } from '../../../app/home/eventInterface';
@@ -29,7 +29,8 @@ export class PublicEventsComponent implements OnInit {
   guestEmail: string;
   guestId: number;
   enumeratorKeys = Object.values(Enumerator);
-
+  isPaid: boolean;
+  eventType = EventType; 
   constructor(
     private PublicEventServ: HomeService,
     private askForInvitationServ: AskforInvitationService,
@@ -220,5 +221,20 @@ export class PublicEventsComponent implements OnInit {
 
   getBackgroundImage(event: any): string {
     return event.eventImg ? event.eventImg : 'https://cdn.pixabay.com/photo/2016/03/28/09/50/firework-1285261_1280.jpg';
+  }
+
+
+ 
+  navigateToPayment(eventId: number, creatorId: number, ticketPrice: number): void {
+    this.router.navigate(['/app/payment'], { queryParams: { eventId: eventId, creatorId: creatorId, ticketPrice: ticketPrice } });
+  }
+  
+
+  handleButtonClick(event: Event) {
+    if (event.type === EventType.Paid) {
+      this.navigateToPayment(event.id, event.userId, event.ticketPrice);
+    } else {
+      this.askForInvitation(event);
+    }
   }
 }

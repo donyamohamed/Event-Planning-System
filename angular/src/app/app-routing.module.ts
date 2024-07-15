@@ -63,7 +63,7 @@ const routes: Routes = [
             { path: 'feedback', component: FeedbackComponent, canActivate: [AppRouteGuard] },
 
             { path: 'eventDetails/:id', component: EventDetailsComponent },
-            { path: 'payment', component: PaymentComponent },
+            { path: 'payment', component: PaymentComponent, canActivate: [AppRouteGuard] },
 
 
             { path: 'shareDetails/:id', component: ShareDetailesComponent, canActivate: [AppRouteGuard] },
