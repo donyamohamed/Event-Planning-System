@@ -1,21 +1,19 @@
 ﻿using Abp.Application.Services;
 using Abp.Domain.Repositories;
-using Event_Planning_System.Entities; 
+using Event_Planning_System.Entities;
 using Event_Planning_System.Payment.Dto;
-using Event_Planning_System.Payment;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Stripe;
 using Stripe.Checkout;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System;
 using Microsoft.Extensions.Options;
-using Abp.Application.Services;
-using Stripe;
-using Abp.Domain.Repositories;
-using Event_Planning_System.Entities;
+using Microsoft.Extensions.Configuration;
 using Event_Planning_System.Authorization.Users;
-using Event_Planning_System.Payment.Dto;
+using Event_Planning_System.Payment;
+
 public class PaymentAppService : AsyncCrudAppService<Payment, PaymentDto, int>, IPaymentAppService
 {
     private readonly StripeSettings _stripeSettings;
@@ -23,21 +21,24 @@ public class PaymentAppService : AsyncCrudAppService<Payment, PaymentDto, int>, 
     private readonly IRepository<Payment, int> _paymentRepository;
     private readonly IRepository<User, long> _userRepository;
     private readonly UserManager _userManager;
+    private readonly IConfiguration _configuration;
 
     public PaymentAppService(
         IOptions<StripeSettings> stripeSettings,
         ILogger<PaymentAppService> logger,
         IRepository<Payment, int> paymentRepository,
         IRepository<User, long> userRepository,
+        IConfiguration configuration,
         UserManager userManager)
-         : base(paymentRepository)
+        : base(paymentRepository)
     {
         _stripeSettings = stripeSettings.Value;
         _logger = logger;
         _paymentRepository = paymentRepository;
         _userRepository = userRepository;
         _userManager = userManager;
-        StripeConfiguration.ApiKey = "sk_test_51PcdCYAFPDLjCbDzmNaL6xyPq1hQLNTrNF6RapBsORBczDVcxnGeFyEjCxWjGO5SOKuSzIKUc8pUVKBSRF28LjTg002BalgpTa";
+        _configuration = configuration;
+        StripeConfiguration.ApiKey = _configuration["Stripe:SecretKey"];
     }
 
     [HttpPost]
@@ -45,12 +46,10 @@ public class PaymentAppService : AsyncCrudAppService<Payment, PaymentDto, int>, 
     {
         try
         {
-
-            var userId = AbpSession.UserId.Value;
-            if(userId != null)
+            var userId = AbpSession.UserId;
+            if (userId.HasValue)
             {
-               paymentDto.GuestId=userId;
-
+                paymentDto.UserId = userId.Value;
             }
 
             _logger.LogInformation("Starting CreateCheckoutSession with amount: {Amount}", paymentDto.Money);
@@ -64,12 +63,12 @@ public class PaymentAppService : AsyncCrudAppService<Payment, PaymentDto, int>, 
                     {
                         PriceData = new SessionLineItemPriceDataOptions
                         {
-                            Currency = "gbp",
+                            Currency = "egp",
                             ProductData = new SessionLineItemPriceDataProductDataOptions
                             {
                                 Name = "Event Ticket",
                             },
-                            UnitAmount = paymentDto.Money,
+                            UnitAmount = (long)(paymentDto.Money * 100),
                         },
                         Quantity = paymentDto.NumberOfTickets,
                     },
@@ -83,12 +82,10 @@ public class PaymentAppService : AsyncCrudAppService<Payment, PaymentDto, int>, 
             Session session = await service.CreateAsync(options);
 
             _logger.LogInformation("Checkout session created successfully with ID: {SessionId}", session.Id);
-            _logger.LogInformation("Checkout session details: {@Session}", session);
 
-          
             paymentDto.PaymentDate = DateTime.Now;
             var payment = ObjectMapper.Map<Payment>(paymentDto);
-            //payment.StripeSessionId = session.Id;  
+            //payment.StripeSessionId = session.Id;
 
             await _paymentRepository.InsertAsync(payment);
             await CurrentUnitOfWork.SaveChangesAsync();
@@ -102,9 +99,6 @@ public class PaymentAppService : AsyncCrudAppService<Payment, PaymentDto, int>, 
         }
     }
 
-
-  
-
     public async Task<decimal> GetTotalPaymentsForEvent(int eventId)
     {
         var payments = await _paymentRepository.GetAllListAsync(p => p.EventId == eventId);
@@ -115,9 +109,6 @@ public class PaymentAppService : AsyncCrudAppService<Payment, PaymentDto, int>, 
         }
         return totalAmount;
     }
-
-
-
 
     public async Task<List<PaymentDto>> GetPaymentsByUserIdAsync(long userId)
     {
@@ -130,6 +121,4 @@ public class PaymentAppService : AsyncCrudAppService<Payment, PaymentDto, int>, 
         var payments = await _paymentRepository.GetAllListAsync(p => p.EventId == eventId);
         return ObjectMapper.Map<List<PaymentDto>>(payments);
     }
-
-
 }
