@@ -16,7 +16,7 @@ using Abp.Domain.Repositories;
 using Event_Planning_System.Entities;
 using Event_Planning_System.Authorization.Users;
 using Event_Planning_System.Payment.Dto;
-public class PaymentAppService : ApplicationService, AsyncCrudAppService<Entities.Payment, PaymentDto, int>, IPaymentAppService
+public class PaymentAppService : AsyncCrudAppService<Payment, PaymentDto, int>, IPaymentAppService
 {
     private readonly StripeSettings _stripeSettings;
     private readonly ILogger<PaymentAppService> _logger;
@@ -32,6 +32,7 @@ public class PaymentAppService : ApplicationService, AsyncCrudAppService<Entitie
         IRepository<Event_Planning_System.Enitities.Event, int> repositoryEvent,
         IRepository<User, long> userRepository,
         UserManager userManager)
+         : base(paymentRepository)
     {
         _stripeSettings = stripeSettings.Value;
         _logger = logger;
@@ -109,7 +110,7 @@ public class PaymentAppService : ApplicationService, AsyncCrudAppService<Entitie
 
     public async Task<decimal> GetTotalPaymentsForEvent(int eventId)
     {
-        var payments = await Repository.GetAllListAsync(p => p.EventId == eventId);
+        var payments = await _paymentRepository.GetAllListAsync(p => p.EventId == eventId);
         decimal totalAmount = 0;
         foreach (var payment in payments)
         {
@@ -123,13 +124,13 @@ public class PaymentAppService : ApplicationService, AsyncCrudAppService<Entitie
 
     public async Task<List<PaymentDto>> GetPaymentsByUserIdAsync(long userId)
     {
-        var payments = await Repository.GetAllListAsync(p => p.UserId == userId);
+        var payments = await _paymentRepository.GetAllListAsync(p => p.UserId == userId);
         return ObjectMapper.Map<List<PaymentDto>>(payments);
     }
 
     public async Task<List<PaymentDto>> GetPaymentsByEventIdAsync(int eventId)
     {
-        var payments = await Repository.GetAllListAsync(p => p.EventId == eventId);
+        var payments = await _paymentRepository.GetAllListAsync(p => p.EventId == eventId);
         return ObjectMapper.Map<List<PaymentDto>>(payments);
     }
 
