@@ -37,6 +37,7 @@ export class Event {
         public budgetId: number | undefined = undefined,
         public type: EventType = EventType.Free,
         public ticketPrice: number | undefined = undefined,
+        public numberOfTickets :number |undefined =undefined,
         public source?: 'attending' | 'upcoming'
     ) {}
 }

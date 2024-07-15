@@ -39,6 +39,7 @@ export class EventDetailsComponent implements OnInit {
   feedbackList: Feedback[] = [];
   isEventSaved: boolean = false; 
   isLogin:boolean = false;
+  guestCount: number | undefined;
  
 
   constructor(
@@ -57,6 +58,7 @@ export class EventDetailsComponent implements OnInit {
       this.eventId = Number(params.get('id'));
       this.loadEventDetails();
       this.showFeedbackForEvent();
+      this.loadGuestCount();
     });
 
     this.loadCurrentUser();
@@ -109,6 +111,19 @@ export class EventDetailsComponent implements OnInit {
         },
         (error) => {
           console.error('Error fetching event details:', error);
+        }
+      );
+    }
+  }
+  loadGuestCount(): void {
+    if (this.eventId) {
+      this.eventDetailsService.getGuestCountByEventId(this.eventId).subscribe(
+        (data) => {
+          this.guestCount = data.result;
+          console.log("Guest Count:", this.guestCount);
+        },
+        (error) => {
+          console.error('Error fetching guest count:', error);
         }
       );
     }
