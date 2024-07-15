@@ -31,10 +31,19 @@
     <div class="icons" >
       <!-- <i class="fa" [ngClass]="isEventSaved ? 'fa-bookmark' : 'fa-bookmark-o'" (click)="toggleSavedEvent()"></i> -->
      <!-- event-details.component.html -->
-     <i class="fa-bookmark bookmark-icon" *ngIf="isLogin"
-     [ngClass]="{'fa-regular': !isEventSaved, 'fa-solid text-warning': isEventSaved }"
-     (click)="toggleSavedEvent()">
-  </i>
+     <button
+     *ngIf="isEventSaved"
+     (click)="cancelEventSave(event?.id)"
+     class="btn text-warning ml-auto">
+     <i class="fas fa-bookmark"></i>
+   </button>
+   <button
+     *ngIf="!isEventSaved"
+     (click)="navigateToSaveEvent(event?.id)"
+     class="btn text-dark ml-auto">
+     <i class="far fa-bookmark"></i>
+   </button>
+
   
       <i class="fa-solid fa-arrow-up-from-bracket" (click)="openShareAlert()" style="margin-left:10px;"></i>
     </div>
@@ -76,20 +85,23 @@
           <span>By </span>
           <h6>{{ user?.name }}</h6>
         </div>
+       <div class="divofguset">
         <div class="guest-number">
           <div>
             <h6><span class="mr-2"><i class="fa-solid fa-user-group"></i></span>{{ event?.maxCount }} </h6> 
             <span>attendees hosted</span>
           </div>
         </div>
-         <div *ngIf="isEventCreator">
+         <div class="guest-number ml-3" *ngIf="isEventCreator">
             <span>Number of tickets remaining:</span>
             <span class="mr-2">{{ event.numberOfTickets }}</span> 
           </div>
-          <div *ngIf="isEventCreator">
-            <span>Number of Guests will attend this Event: </span>
+          <div class="guest-number ml-3">
+            <span> Guests will attend this Event: </span>
             <span class="mr-2">{{guestCount}}</span> 
           </div>
+       </div>
+
       </div>
   
       
