@@ -1,4 +1,8 @@
-﻿using Event_Planning_System.Payment;
+﻿using Abp.Application.Services;
+using Abp.Domain.Repositories;
+using Event_Planning_System.Entities; 
+using Event_Planning_System.Payment.Dto;
+using Event_Planning_System.Payment;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Stripe.Checkout;
@@ -12,7 +16,7 @@ using Abp.Domain.Repositories;
 using Event_Planning_System.Entities;
 using Event_Planning_System.Authorization.Users;
 using Event_Planning_System.Payment.Dto;
-public class PaymentAppService : ApplicationService, IPaymentAppService
+public class PaymentAppService : ApplicationService, AsyncCrudAppService<Entities.Payment, PaymentDto, int>, IPaymentAppService
 {
     private readonly StripeSettings _stripeSettings;
     private readonly ILogger<PaymentAppService> _logger;
@@ -99,4 +103,35 @@ public class PaymentAppService : ApplicationService, IPaymentAppService
             return new StatusCodeResult(500);
         }
     }
+
+
+  
+
+    public async Task<decimal> GetTotalPaymentsForEvent(int eventId)
+    {
+        var payments = await Repository.GetAllListAsync(p => p.EventId == eventId);
+        decimal totalAmount = 0;
+        foreach (var payment in payments)
+        {
+            totalAmount += payment.Money;
+        }
+        return totalAmount;
+    }
+
+
+
+
+    public async Task<List<PaymentDto>> GetPaymentsByUserIdAsync(long userId)
+    {
+        var payments = await Repository.GetAllListAsync(p => p.UserId == userId);
+        return ObjectMapper.Map<List<PaymentDto>>(payments);
+    }
+
+    public async Task<List<PaymentDto>> GetPaymentsByEventIdAsync(int eventId)
+    {
+        var payments = await Repository.GetAllListAsync(p => p.EventId == eventId);
+        return ObjectMapper.Map<List<PaymentDto>>(payments);
+    }
+
+
 }

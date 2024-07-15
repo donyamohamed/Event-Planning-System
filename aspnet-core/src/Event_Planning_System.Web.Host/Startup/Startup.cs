@@ -30,6 +30,7 @@ using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.AspNetCore.Http;
 using DinkToPdf.Contracts;
 using DinkToPdf;
+using Event_Planning_System.AllGuest;
 using Stripe;
 using Event_Planning_System.Payment;
 
@@ -89,9 +90,10 @@ namespace Event_Planning_System.Web.Host.Startup
             services.AddTransient<IChatMessageAppService, ChatMessageAppService>();
 			services.AddTransient<IEmailService, EmailService>();
 			services.AddTransient<IGuestsFeedbackAppService, GuestsFeedbackAppService>();
-			//services.AddScoped<IUnitOfWorkManager, UnitOfWorkManager>();
+            services.AddTransient<IAllGuestService, AllGuestService>();
+            //services.AddScoped<IUnitOfWorkManager, UnitOfWorkManager>();
 
-			services.AddSignalR();
+            services.AddSignalR();
 
 		   //services.AddTransient<IChatMessageAppService, ChatMessageAppService>();
 

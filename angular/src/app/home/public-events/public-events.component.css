@@ -117,7 +117,9 @@ h2 {
     font-size: 1em;
     margin: 5px 5px;
 }
-
+.btn.btn-yellow{
+  background-color: #FBAF1B;
+}
 #invite:hover {
     background:#ebb447 ;
 }

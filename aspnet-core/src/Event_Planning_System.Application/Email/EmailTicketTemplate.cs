@@ -15,177 +15,161 @@ public class EmailTicketTemplate
             <style>
                 @import url('https://fonts.googleapis.com/css2?family=Catamaran:wght@900&family=PT+Sans+Narrow&display=swap');
 
-                *,
-                ::before,
-                ::after {{
+                body {{
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    background-color: #f5f5f5;
+                    font-family: 'PT Sans Narrow', sans-serif;
                     margin: 0;
                     padding: 0;
-                    box-sizing: border-box;
-                }}
-
-                body {{
-                    min-height: 100vh;
-                    display: grid;
-                    place-items: center;
-                    background-color: lavender;
-                    background-image: url('{backgroundImage}');
-                    background-size: cover;
-                    background-position: center;
-                    font-family: 'PT Sans Narrow', sans-serif;
+                    height: 100vh;
                 }}
 
                 .ticket {{
-                    max-width: 700px;
-                    width: 100%;
-                    background-color: #ffffff;
-                    padding: 20px;
-                    position: relative;
-                    color: #333333;
-                    overflow: hidden;
+                    max-width: 800px;
+                    background: #fff;
+                    border: 2px solid #ccc;
                     border-radius: 10px;
-                    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+                    overflow: hidden;
+                    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+                    display: flex;
+                }}
+
+                .ticket-left {{
+                    width: 25%;
+                    background: #000;
+                    color: #fff;
+                    padding: 20px;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    position: relative;
+                }}
+
+                .ticket-left:before {{
+                    content: '';
+                    position: absolute;
+                    left: 0;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    width: 10px;
+                    height: 100%;
+                    background: #fff;
+                    border-top-left-radius: 50%;
+                    border-bottom-left-radius: 50%;
+                }}
+
+                .ticket-left:after {{
+                    content: '';
+                    position: absolute;
+                    right: 0;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    width: 10px;
+                    height: 100%;
+                    background: #fff;
+                    border-top-right-radius: 50%;
+                    border-bottom-right-radius: 50%;
+                }}
+
+                .ticket-left .event-name {{
+                    font-size: 24px;
+                    font-weight: bold;
                     text-align: center;
                 }}
 
-                .header-img {{
-                    width: 100%;
-                    height: 150px;
-                    border-radius: 10px 10px 0 0;
+                .ticket-left .welcome-message {{
+                    font-size: 18px; /* Increased font size */
+                    text-align: center;
+                    margin-top: 10px; /* Adjust the margin-top as needed */
+                    font-weight: bold;
                 }}
 
-                .ticket h1 {{
-                    font-family: 'Catamaran', sans-serif;
-                    font-size: 2rem;
-                    margin: 20px 0;
-                }}
-
-                .ticket h2 {{
-                    font-family: 'Catamaran', sans-serif;
-                    font-size: 1.5rem;
-                    margin-bottom: 20px;
-                }}
-
-                .ticket .welcome {{
-                    font-size: 1.25rem;
-                    margin-bottom: 20px;
-                    color: #555555;
-                }}
-
-                .ticket .date-time {{
-                    font-size: 1rem;
-                    margin-bottom: 20px;
-                }}
-
-                .ticket .date-time span {{
-                    display: inline-block;
+                .ticket-left .event-date {{
+                    background: #f1e4d0;
+                    color: #000;
                     padding: 5px 10px;
-                    background-color: #f1f1f1;
+                    margin-top: 10px; /* Adjust the margin-top as needed */
                     border-radius: 5px;
-                    margin: 2px;
+                    font-size: 16px; /* Increased font size */
                 }}
 
-                .ticket .venue {{
-                    margin-top: 20px;
+                .ticket-right {{
+                    width: 75%;
+                    padding: 20px;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
                 }}
 
-                .ticket .venue h3 {{
-                    font-size: 1.5rem;
-                }}
-
-                .ticket .venue p {{
-                    font-size: 1rem;
-                }}
-
-                .ticket .details {{
-                    margin-top: 30px;
-                    font-size: 1rem;
-                }}
-
-                .ticket .details p {{
+                .ticket-right .section {{
                     margin-bottom: 10px;
                 }}
 
-                .ticket .footer {{
-                    margin-top: 30px;
-                    font-size: 0.9rem;
-                    color: #777777;
+                .ticket-right .section span {{
+                    display: block;
+                    font-size: 16px; /* Increased font size */
                 }}
 
-                .download-btn {{
-                    display: inline-block;
-                    margin-top: 20px;
-                    padding: 8px 18px;
-                    font-size: 1rem;
-                    color: white;
-                    background-color: #ff5722;
-                    text-decoration: none;
-                    border-radius: 5px;
-                    cursor: pointer;
+                .ticket-right .section .label {{
+                    font-weight: bold;
+                    margin-bottom: 5px;
+                    font-size: 18px; /* Increased font size */
+                }}
+
+                .barcode {{
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                }}
+
+                .barcode img {{
+                    height: 50px;
+                }}
+
+                .separator {{
+                    height: 100%;
+                    border-left: 2px dashed #ccc;
+                    margin: 0 20px;
                 }}
 
                 @media screen and (max-width: 600px) {{
                     .ticket {{
-                        padding: 10px;
+                        flex-direction: column;
                     }}
 
-                    .ticket h1 {{
-                        font-size: 1.5rem;
-                    }}
-
-                    .ticket h2 {{
-                        font-size: 1.25rem;
-                    }}
-
-                    .ticket .date-time {{
-                        font-size: 0.875rem;
-                    }}
-
-                    .ticket .venue h3 {{
-                        font-size: 1.25rem;
-                    }}
-
-                    .ticket .venue p {{
-                        font-size: 0.875rem;
-                    }}
-
-                    .ticket .details {{
-                        font-size: 0.875rem;
+                    .ticket-left, .ticket-right {{
+                        width: 100%;
                     }}
                 }}
             </style>
         </head>
         <body>
-            <div class='ticket' id='ticket'>
-                <img class='header-img' src='{backgroundImage}' alt='Event Image'>
-                <h1>{eventName}</h1>
-                <h2>Ticket</h2>
-                <div class='welcome'>
-                    Welcome, {guestName}! We're thrilled to have you join us for this event.
+            <div class='ticket'>
+                <div class='ticket-left'>
+                    <div class='event-name'>{eventName}</div>
+                    <div class='welcome-message'>
+                       Welcome, {guestName}!
+                    </div>
+                    <div class='event-date'>{date:MMMM dd, yyyy}</div>
                 </div>
-                <div class='date-time'>
-                    <span>{date:HH:mm}</span>
-                    <span>{date:dd}</span>
-                    <span>{date:MMM}</span>
-                    <span>{date:yyyy}</span>
+                <div class='separator'></div>
+                <div class='ticket-right'>
+                    <div class='section'>
+                        <span class='label'>Date:</span>
+                        <span>{date:MMMM dd, yyyy}</span>
+                    </div>
+                    <div class='section'>
+                        <span class='label'>Time:</span>
+                        <span>{date:hh:mm tt}</span>
+                    </div>
+                    <div class='section'>
+                        <span class='label'>Venue:</span>
+                        <span>{eventAddress}</span>
+                    </div>
                 </div>
-                <div class='venue'>
-                    <h3>Event Location</h3>
-                    <p>{eventAddress}</p>
-                    <p><small>www.eventlocation.com</small></p>
-                </div>
-               <!-- <div class='details'>
-                    <p><strong>Guest Name:</strong> {guestName}</p>
-                </div>-->
-                <div class='footer'>
-                    <p>&copy; {DateTime.Now.Year} Event Planning Team. All rights reserved.</p>
-                </div>
-              <!--  <form method='post' action='/api/Pdf/DownloadInvitation'>
-                    <input type='hidden' name='eventName' value='{eventName}' />
-                    <input type='hidden' name='date' value='{date:yyyy-MM-ddTHH:mm:ss}' />
-                    <input type='hidden' name='eventAddress' value='{eventAddress}' />
-                    <input type='hidden' name='eventImg' value='{eventImg}' />
-                    <button type='submit' class='download-btn'>Print Ticket</button>
-                </form>-->
             </div>
         </body>
         </html>";

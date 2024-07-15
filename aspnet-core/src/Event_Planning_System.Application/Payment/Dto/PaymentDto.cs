@@ -20,11 +20,11 @@ namespace Event_Planning_System.Payment.Dto
 
         public int EventId { get; set; }
 
-        [Required(ErrorMessage = "Money Of Tickets is required.")]
-        public int Money { get; set; }
+            [Required(ErrorMessage = "Money Of Tickets is required.")]
+            public int Money { get; set; }
 
-        [Required(ErrorMessage = "Number Of Tickets are required.")]
-        public int NumberOfTickets { get; set; }
+            [Required(ErrorMessage = "Number Of Tickets are required.")]
+            public int NumberOfTickets { get; set; }
 
         [Required(ErrorMessage = "Date is required.")]
         [DataType(DataType.Date)]

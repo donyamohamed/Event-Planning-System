@@ -20,7 +20,7 @@ import { InterstsComponent } from './intersts/intersts.component';
 import { TodoListComponent } from './layout/event-todo-list/event-todo-list.component';
 import { EventDetailsComponent } from './layout/event-details/event-details.component';
 import { EventHOmeDetailsComponent } from './layout/event-home-details/event-home-details.component';
-
+import {PaymentComponent} from './payment/payment.component'
 import { InvitationStateComponent } from './layout/invitation-state/invitation-state.component';
 import {GuestsFeedbackComponent} from './guests-feedback/guests-feedback.component'
 import { NotificatiosComponent } from './layout/notifications/notificatios.component';
@@ -38,12 +38,15 @@ import { AllGuestComponent } from './guest/all-guest/all-guest.component';
 import { UpcomingEventsComponent } from './layout/user-profile/upcoming-events/upcoming-events.component';
 import { FeedbackComponent} from './feedback/feedback.component';
 import {SavedeventsComponent} from './savedevents/savedevents.component';
+import {SearchComponent} from './search/search.component';
+
 const routes: Routes = [
     {
         path: '',
         component: AppComponent,
         children: [
             {path:'GuestFeedBack',component:GuestsFeedbackComponent},
+            {path:'Search',component:SearchComponent},
             { path: 'Chat/:plannerId', component: ChatComponentComponent },
             { path: 'home', component: HomeComponent },
             { path: 'users', component: UsersComponent, data: { permission: 'Pages.Users' }, canActivate: [AppRouteGuard] },
@@ -63,6 +66,8 @@ const routes: Routes = [
             { path: 'feedback', component: FeedbackComponent, canActivate: [AppRouteGuard] },
 
             { path: 'eventDetails/:id', component: EventDetailsComponent },
+            { path: 'payment', component: PaymentComponent, canActivate: [AppRouteGuard] },
+
 
             { path: 'shareDetails/:id', component: ShareDetailesComponent, canActivate: [AppRouteGuard] },
             { path: 'todolist/:id', component: TodoListComponent, canActivate: [AppRouteGuard] },

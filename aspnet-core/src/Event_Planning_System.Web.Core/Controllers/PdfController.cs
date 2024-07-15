@@ -1,5 +1,5 @@
-﻿using DinkToPdf.Contracts;
-using Event_Planning_System.Email;
+﻿using DinkToPdf;
+using DinkToPdf.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
@@ -17,24 +17,8 @@ public class PdfController : ControllerBase
     [HttpGet("DownloadInvitation")]
     public IActionResult DownloadInvitation(string eventName, DateTime date, string eventAddress, string eventImg)
     {
-        // Logic to generate PDF based on eventName, date, eventAddress, eventImg
-        // Example logic using DinkToPdf
+        // Example logic using DinkToPdf to generate PDF bytes
         var pdfBytes = GenerateInvitationPdf(eventName, date, eventAddress, eventImg);
-
-        if (pdfBytes == null)
-        {
-            return NotFound();
-        }
-
-        // Return the PDF file
-        return File(pdfBytes, "application/pdf", "Invitation.pdf");
-    }
-
-    [HttpPost("DownloadInvitation")]
-    public IActionResult DownloadInvitation([FromBody] EmailRequest emailRequest)
-    {
-        // Ensure your logic for generating PDF from emailRequest data
-        var pdfBytes = GenerateInvitationPdf(emailRequest.EventName, emailRequest.Date, emailRequest.EventAddress, emailRequest.EventImage);
 
         if (pdfBytes == null)
         {
@@ -48,8 +32,25 @@ public class PdfController : ControllerBase
     private byte[] GenerateInvitationPdf(string eventName, DateTime date, string eventAddress, string eventImg)
     {
         // Example logic using DinkToPdf or any PDF generation library
-        // Generate PDF bytes here
-        byte[] pdfBytes = null; // Replace with actual PDF generation logic
+        var htmlContent = $"<html><body><h1>{eventName}</h1><p>Date: {date}</p><p>Address: {eventAddress}</p></body></html>";
+
+        var converter = new BasicConverter(new PdfTools());
+        var doc = new HtmlToPdfDocument()
+        {
+            GlobalSettings = {
+            ColorMode = ColorMode.Color,
+            Orientation = Orientation.Portrait,
+            PaperSize = PaperKind.A4,
+        },
+            Objects = {
+            new ObjectSettings() {
+                HtmlContent = htmlContent,
+            }
+        }
+        };
+
+        byte[] pdfBytes = converter.Convert(doc);
         return pdfBytes;
     }
+
 }

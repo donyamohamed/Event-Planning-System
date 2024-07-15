@@ -22,6 +22,7 @@ namespace Event_Planning_System.EntityFrameworkCore
 		public DbSet<Interest> interests { get; set; }
         public DbSet<FavoriteEvent> FavoriteEvents { get; set; }
         public DbSet<GuestsFeedback> GuestsFeedback { get; set; }
+        public DbSet<GuestEvent> GuestEvents { get; set; }
 
         public DbSet<Payment> payments { get; set; }
 
@@ -62,7 +63,9 @@ namespace Event_Planning_System.EntityFrameworkCore
                 .HasOne(b => b.Event)
                 .WithMany(e => e.Budgets)
                 .HasForeignKey(b => b.EventId)
-                .OnDelete(DeleteBehavior.Restrict); 
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<GuestEvent>().ToTable("GuestEvents");
 
             modelBuilder.Entity<GuestEvent>()
                 .HasKey(ge => new { ge.GuestId, ge.EventId });
