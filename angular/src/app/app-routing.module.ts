@@ -38,12 +38,15 @@ import { AllGuestComponent } from './guest/all-guest/all-guest.component';
 import { UpcomingEventsComponent } from './layout/user-profile/upcoming-events/upcoming-events.component';
 import { FeedbackComponent} from './feedback/feedback.component';
 import {SavedeventsComponent} from './savedevents/savedevents.component';
+import {SearchComponent} from './search/search.component';
+
 const routes: Routes = [
     {
         path: '',
         component: AppComponent,
         children: [
             {path:'GuestFeedBack',component:GuestsFeedbackComponent},
+            {path:'Search',component:SearchComponent},
             { path: 'Chat/:plannerId', component: ChatComponentComponent },
             { path: 'home', component: HomeComponent },
             { path: 'users', component: UsersComponent, data: { permission: 'Pages.Users' }, canActivate: [AppRouteGuard] },

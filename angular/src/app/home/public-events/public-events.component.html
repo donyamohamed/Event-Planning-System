@@ -1,24 +1,35 @@
 <div class="events m-2 p-2 container">
   <div class="header-container">
-    <h2>{{"Recommended Events" | localize}}</h2>
-    <div class="btn-group dropstart">
-      <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-        Category
-      </button>
-      <ul class="dropdown-menu">
-        <li *ngFor="let key of enumeratorKeys">
-          <a class="dropdown-item" (click)="fetchEventsByCategory(key)">{{key}}</a>
-        </li>
-      </ul>
+    <div>
+
+      <h2>{{"Recommended Events" | localize}}</h2>
+    </div>
+    <div style="display: flex;flex-direction: row;gap: 20px;">
+      <!--search component-->
+      <div class="search-container">
+        <app-search [data]="events" (searchResults)="handleSearchResults($event)"></app-search>
+      </div>
+      <div class="btn-group dropstart">
+        <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+          Category
+        </button>
+        <ul class="dropdown-menu">
+          <li *ngFor="let key of enumeratorKeys">
+            <a class="dropdown-item" (click)="fetchEventsByCategory(key)">{{key}}</a>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
+
 
   <div class="card-container">
     <div id="loading" *ngIf="isLoading" class="text-center">
       <img src="../../../assets/img/Spin@1x-1.0s-200px-200px.gif" alt="" class="p-5 m-5">
     </div>
 
-    <div *ngFor="let event of events" class="card" [ngStyle]="{'background-image': 'url(' + (event.eventImg ? event.eventImg : '../../assets/img/Event.jpg') + ')'}">
+    <div *ngFor="let event of filteredEvents" class="card"
+      [ngStyle]="{'background-image': 'url(' + (event.eventImg ? event.eventImg : '../../assets/img/Event.jpg') + ')'}">
       <div class="date">
         <div class="day">{{ event.startDate | date:'dd' }}</div>
         <div class="month">{{ event.startDate | date:'MMM' }}</div>
@@ -31,6 +42,7 @@
             {{ event.type === eventType.Paid ? 'Get Ticket' : 'Ask for Invitation' | localize }}
         
           </button>
+
           <button id="details" (click)="details(event)">{{"View"|localize}}</button>
         </div>
       </div>
@@ -39,9 +51,8 @@
       </div>
     </div>
   </div>
-  
-  <div *ngIf="events.length == 0" class="noPublic-events text-center">
+
+  <div *ngIf="filteredEvents.length == 0" class="noPublic-events text-center">
     <img src="../../../assets/img/Waiting.gif" alt="">
     <h4>{{"There are no events at this time, check back another day" | localize}}... <span>&#x23F3;</span></h4>
   </div>
-</div>
