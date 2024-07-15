@@ -194,8 +194,10 @@ namespace Event_Planning_System.Controllers
                     return BadRequest("Email subject and body cannot be empty.");
                 }
 
+                // Generate email body
                 var htmlBody = EmailTicketTemplate.SendEventTicket(emailRequest.EventName, emailRequest.Date, emailRequest.EventAddress, guestName, emailRequest.EventImage);
 
+                // Send email without attachment
                 await _emailService.SendEmailAsync(emailRequest.ToEmail, emailRequest.Subject, htmlBody);
                 _logger.LogInformation("Invitation email sent successfully.");
 
@@ -204,7 +206,7 @@ namespace Event_Planning_System.Controllers
 
                 if (pdfResult is FileContentResult fileResult)
                 {
-                    
+                    // Send email with attachment
                     await _emailService.SendEmailWithAttachmentAsync(emailRequest.ToEmail, emailRequest.Subject, htmlBody, fileResult.FileContents, "Invitation.pdf");
 
                     return Ok("Invitation email sent successfully with PDF attachment.");

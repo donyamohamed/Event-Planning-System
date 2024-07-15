@@ -25,6 +25,7 @@ import {
 } from "@angular/forms";
 
 import { SidebarEventComponent } from "../sidebar-event/sidebar-event.component";
+import { SearchComponent } from "../../search/search.component";
 
 @Component({
   selector: "app-user-event",
@@ -38,7 +39,8 @@ import { SidebarEventComponent } from "../sidebar-event/sidebar-event.component"
     FormsModule,
     ReactiveFormsModule,
     SidebarEventComponent,
-  ]
+    SearchComponent
+]
 })
 export class UserEventComponent implements OnInit {
   events: Event[] = [];
@@ -52,6 +54,7 @@ export class UserEventComponent implements OnInit {
   today: string = new Date().toISOString().split("T")[0];
   lastStartDate: Date = new Date();
   lastEndDate: Date = new Date();
+  public filteredEvents: Event[] = []; // Initialize filteredEvents
 
   // Error properties
   dateErrors = {
@@ -103,32 +106,31 @@ export class UserEventComponent implements OnInit {
   initializeMap(): void {
     mapboxgl.accessToken = 'pk.eyJ1IjoibWFiZG9naCIsImEiOiJjbGp1em54c24xaTd4M2NsbDBiOWZuMXk4In0.n4ILS2Jtk5tZ9onHBcL8Cw';
     this.map = new mapboxgl.Map({
-        container: 'map',
-        style: 'mapbox://styles/mapbox/streets-v12',
-        center: [30.8025, 26.8206], // Default center (Egypt)
-       // center: [-74.5, 40], 
-        zoom: 5, // Default zoom level
-        attributionControl: false 
+      container: 'map',
+      style: 'mapbox://styles/mapbox/streets-v12',
+      center: [30.8025, 26.8206], // Default center (Egypt)
+      zoom: 5, // Default zoom level
+      attributionControl: false 
     });
 // https://api.mapbox.com/geocoding/v5/mapbox.places/30.744557462642092,28.09867557063106.json?access_token=pk.eyJ1IjoibWFiZG9naCIsImEiOiJjbGp1em54c24xaTd4M2NsbDBiOWZuMXk4In0.n4ILS2Jtk5tZ9onHBcL8Cw`;
     // Add map click event to update location input
     this.map.on('click', (e) => {
-        const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${e.lngLat.lng},${e.lngLat.lat}.json?access_token=${mapboxgl.accessToken}`;
-        fetch(url)
-            .then(response => response.json())
-            .then(data => {
-                const placeName = data.features[0]?.place_name || 'Unknown location';
+      const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${e.lngLat.lng},${e.lngLat.lat}.json?access_token=${mapboxgl.accessToken}`;
+      fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        const placeName = data.features[0]?.place_name || 'Unknown location';
                 this.eventEdit.location = placeName;
                 console.log(placeName);
             })
             .catch(err => {
                 console.error('Error fetching location name:', err);
+              });
             });
-    });
-}
-  openEditModal(template: TemplateRef<any>, id: number): void {
-    this.userEventsService.getEventById(id).subscribe({
-      next: (data: EventResponse) => {
+          }
+          openEditModal(template: TemplateRef<any>, id: number): void {
+            this.userEventsService.getEventById(id).subscribe({
+              next: (data: EventResponse) => {
         this.eventEdit = data.result;
         this.initializeMap();
         this.lastStartDate = this.eventEdit.startDate;
@@ -143,18 +145,19 @@ export class UserEventComponent implements OnInit {
     });
     this.bsModalRef = this.modalService.show(template);
   }
-
+  
   fetchUserEvents(): void {
     if (this.userId === null) {
       console.error("User ID is not available.");
       return;
     }
-
+    
     this.userEventsService.getUserEvents(this.userId).subscribe(
       (data: Event[]) => {
         if (Array.isArray(data)) {
           this.events = data;
           console.log(data);
+          this.filteredEvents = this.events;
         } else {
           console.error("Data is not an array", data);
         }
@@ -282,5 +285,8 @@ export class UserEventComponent implements OnInit {
     if (startDate < twentyFourHoursLater) {
       this.dateErrors.startDateError = 'Start date is within the next 24 hours.';
     }
+  }
+  handleSearchResults(filteredEvents: Event[]): void {
+    this.filteredEvents = filteredEvents;
   }
 }

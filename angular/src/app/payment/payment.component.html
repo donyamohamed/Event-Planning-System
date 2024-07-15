@@ -1,0 +1,13 @@
+<div class="payment-container">
+  <div class="payment-visual">
+   <img src="../../assets/img/Payment-yellow.gif" alt="image"/>
+  </div>
+  <div class="payment-form">
+    <h2>Payment for Ticket</h2>
+    <p class="badge badge-warning p-2">Amount: {{ ticketPrice | currency }}</p>
+    <form (ngSubmit)="submitPayment()">
+      <div id="card-element" class="Input"></div>
+      <button type="submit" class="btn ">Pay</button>
+    </form>
+  </div>
+</div>

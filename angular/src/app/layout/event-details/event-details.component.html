@@ -81,9 +81,15 @@
             <h6><span class="mr-2"><i class="fa-solid fa-user-group"></i></span>{{ event?.maxCount }} </h6> 
             <span>attendees hosted</span>
           </div>
-         
-        
         </div>
+         <div *ngIf="isEventCreator">
+            <span>Number of tickets remaining:</span>
+            <span class="mr-2">{{ event.numberOfTickets }}</span> 
+          </div>
+          <div *ngIf="isEventCreator">
+            <span>Number of Guests will attend this Event: </span>
+            <span class="mr-2">{{guestCount}}</span> 
+          </div>
       </div>
   
       

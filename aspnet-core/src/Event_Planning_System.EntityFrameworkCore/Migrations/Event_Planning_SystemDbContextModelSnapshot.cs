@@ -1948,11 +1948,14 @@ namespace Event_Planning_System.Migrations
                     b.Property<int>("EventId")
                         .HasColumnType("int");
 
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
                     b.HasKey("GuestId", "EventId");
 
                     b.HasIndex("EventId");
 
-                    b.ToTable("GuestEvent");
+                    b.ToTable("GuestEvents", (string)null);
                 });
 
             modelBuilder.Entity("Event_Planning_System.Entities.GuestsFeedback", b =>

@@ -50,9 +50,12 @@ import { NotificatiosComponent } from "./layout/notifications/notificatios.compo
 
 import { PublicEventsComponent } from "./home/public-events/public-events.component";
 import { ChatIconComponent } from "./chat-icon/chat-icon.component";
-import { GuestsFeedbackComponent} from './guests-feedback/guests-feedback.component'
+import { GuestsFeedbackComponent} from './guests-feedback/guests-feedback.component';
+import { SearchComponent} from './search/search.component';
 
 
+
+import {PaymentComponent} from './payment/payment.component'
 
 
 
@@ -94,12 +97,14 @@ import { GuestsFeedbackComponent} from './guests-feedback/guests-feedback.compon
         SidebarLogoComponent,
         SidebarUserPanelComponent,
         SidebarMenuComponent,
-        GuestsFeedbackComponent
-        
+        GuestsFeedbackComponent,
+        PaymentComponent
+
     ],
     bootstrap: [AppComponent],
     providers: [provideHttpClient(withInterceptorsFromDi(), withJsonpSupport())], imports: [CommonModule,
         FormsModule,
+        SearchComponent,
         ReactiveFormsModule,
         HttpClientModule,
         ModalModule.forChild(),
