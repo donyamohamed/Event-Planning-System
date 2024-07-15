@@ -12,23 +12,25 @@ import Swal from 'sweetalert2';
 import { SharedModule } from "../../../shared/shared.module";
 import { CommonModule } from '@angular/common';
 import { CurrentUserDataService } from '../../../shared/services/current-user-data.service';
+import { SearchComponent } from "../../search/search.component";
 
 @Component({
-    selector: 'app-public-events',
-    templateUrl: './public-events.component.html',
-    styleUrls: ['./public-events.component.css'],
-    standalone: true,
-    imports: [CommonModule, SharedModule, RouterLink]
+  selector: 'app-public-events',
+  templateUrl: './public-events.component.html',
+  styleUrls: ['./public-events.component.css'],
+  standalone: true,
+  imports: [CommonModule, SharedModule, RouterLink, SearchComponent]
 })
 export class PublicEventsComponent implements OnInit {
   public events: Event[] = [];
   public isLoading: boolean = true;
   public isLoggedIn: boolean = false;
-  public isButtonDisabledMap: { [key: number]: boolean } = {}; // Map to store disabled states for each event button
+  public isButtonDisabledMap: { [key: number]: boolean } = {};
   username: string;
   guestEmail: string;
   guestId: number;
   enumeratorKeys = Object.values(Enumerator);
+  public filteredEvents: Event[] = []; // Initialize filteredEvents
 
   constructor(
     private PublicEventServ: HomeService,
@@ -47,17 +49,17 @@ export class PublicEventsComponent implements OnInit {
   checkIfLoggedIn(): void {
     this.currentUserDataService.GetCurrentUserData().subscribe(
       response => {
-        if (response ) {
+        if (response) {
           this.isLoggedIn = true;
           this.username = response.name;
           this.guestId = response.id;
           this.guestEmail = response.emailAddress;
-          this.fetchUserEvents(); // Fetch events after login status is known
+          this.fetchUserEvents();
         }
       },
       error => {
         this.isLoggedIn = false;
-        this.fetchUserEvents(); // Fetch events even if not logged in
+        this.fetchUserEvents();
       }
     );
   }
@@ -66,9 +68,10 @@ export class PublicEventsComponent implements OnInit {
     this.PublicEventServ.getPublicEvents().subscribe(
       (data: EventsResponse) => {
         this.events = data.result;
+        this.filteredEvents = this.events; // Initialize filteredEvents with all events
         this.isLoading = false;
         this.cdr.detectChanges();
-        this.initializeButtonStates(); // Initialize button states after fetching events
+        this.initializeButtonStates();
       },
       error => {
         console.error('Error fetching user events', error);
@@ -79,14 +82,14 @@ export class PublicEventsComponent implements OnInit {
 
   initializeButtonStates(): void {
     this.events.forEach(event => {
-      this.askForInvitation(event, true); // Check if already requested during initialization
+      this.askForInvitation(event, true);
     });
   }
 
   askForInvitation(event: Event, isInitialization: boolean = false): void {
     this.currentUserDataService.GetCurrentUserData().subscribe(
       response => {
-        if (response ) {
+        if (response) {
           this.username = response.name;
           this.guestId = response.id;
           this.guestEmail = response.emailAddress;
@@ -203,9 +206,10 @@ export class PublicEventsComponent implements OnInit {
     this.PublicEventServ.getEventsByCategory(category).subscribe(
       (data: EventsResponse) => {
         this.events = data.result;
+        this.filteredEvents = this.events; // Update filteredEvents after fetching by category
         this.isLoading = false;
         this.cdr.detectChanges();
-        this.initializeButtonStates(); // Initialize button states after fetching events
+        this.initializeButtonStates();
       },
       error => {
         console.error('Error fetching events by category', error);
@@ -220,5 +224,9 @@ export class PublicEventsComponent implements OnInit {
 
   getBackgroundImage(event: any): string {
     return event.eventImg ? event.eventImg : 'https://cdn.pixabay.com/photo/2016/03/28/09/50/firework-1285261_1280.jpg';
+  }
+
+  handleSearchResults(filteredEvents: Event[]): void {
+    this.filteredEvents = filteredEvents;
   }
 }
