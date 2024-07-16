@@ -1,0 +1,69 @@
+<div class="container">
+    <app-sidebar-event class="sidebar"></app-sidebar-event>
+    <div class="main-container">
+        <div class="d-flex justify-content-end">
+
+            <div class="dropdown me-2">
+                <button class="btn btn-success dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  <i class="fa-solid fa-download"></i> Download
+                </button>
+                <ul class="dropdown-menu">
+                  <li>
+                    <button class="dropdown-item  text-success" (click)="saveAsExcel()" title="Excel">
+                        <i class="fa-solid fa-file-excel"></i> As Excel
+                    </button>
+                    </li>
+                  <li>
+                    <button class="dropdown-item text-danger" (click)="saveAsPdf()" title="PDF">
+                        <i class="fa-solid fa-file-pdf"></i> As Pdf
+                    </button>
+                </li>
+                </ul>
+              </div>
+
+
+            <!-- <button class="btn btn-success text-light" (click)="saveAsExcel()"><i class="fa-solid fa-download"></i> Download As Excel</button>
+            <button class="btn btn-danger text-light" (click)="saveAsPdf()">Save As Pdf</button> -->
+            <button class="btn btn-secondary text-light" (click)="print()"><i class="fa-solid fa-print"></i> Print</button>
+          </div>
+        
+        <div class="row report-links m-3">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead class="table-primary">
+                        <tr>
+                            <th scope="col">Event Name</th>
+                            <th scope="col">Expense Name</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngFor="let eventName of items | keyvalue">
+                            <ng-container *ngIf="eventName.value.length > 0">
+                                <tr *ngFor="let expense of eventName.value; let first = first">
+                                    <td scope="row" [attr.rowspan]="eventName.value.length" *ngIf="first">
+                                        {{ eventName.key }}
+                                    </td>
+                                    <td>{{ expense.name }}</td>
+                                    <td>{{ expense.amount }}</td>
+                                    <td>{{ expense.date | date }}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4" class="text-center">Total: {{totalamount(eventName.key)}}</td>
+                                </tr>
+                            </ng-container>
+                            <ng-container *ngIf="eventName.value.length === 0">
+                                <tr>
+                                    <td scope="row">{{ eventName.key }}</td>
+                                    <td colspan="3" class="text-center">No expenses found</td>
+                                </tr>
+                            </ng-container>
+                        </ng-container>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

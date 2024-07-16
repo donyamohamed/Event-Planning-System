@@ -47,6 +47,8 @@
     "famfamfam-flags": "^1.0.0",
     "gapi-script": "^1.2.0",
     "gsap": "^3.12.5",
+    "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.8.2",
     "jwt-decode": "^4.0.0",
     "lodash-es": "^4.17.15",
     "mapbox-gl": "^3.4.0",
@@ -59,6 +61,7 @@
     "sweetalert2": "^11.6.13",
     "ts-helpers": "^1.1.2",
     "tslib": "^2.6.2",
+    "xlsx": "^0.18.5",
     "zone.js": "~0.14.2"
   },
   "devDependencies": {

@@ -1,3 +1,4 @@
+import { ExpensesReportComponent } from './report/expenses-report/expenses-report.component';
 import { ReportComponent } from './report/report.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -56,6 +57,7 @@ const routes: Routes = [
             { path: 'update-password', component: ChangePasswordComponent, canActivate: [AppRouteGuard] },
             { path: 'create-event', component: CreateEventComponent, canActivate: [AppRouteGuard] },
             { path: 'report', component: ReportComponent, canActivate: [AppRouteGuard] },
+            { path: 'expenses-report', component: ExpensesReportComponent, canActivate: [AppRouteGuard] },
             { path: 'set-expenses', component: SetExpensesComponent, canActivate: [AppRouteGuard] },
             { path: 'historyevent', component: HistoryeventComponent, canActivate: [AppRouteGuard] },
             { path: 'user-event', component: UserEventComponent, canActivate: [AppRouteGuard] },
