@@ -6,11 +6,14 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class PaymentService {
-  private apiUrl = `${environment.API_URL_BASE_PART}/api/services/app/Payment`;
+  private apiUrl = `${environment.API_URL_BASE_PART}/api/services/app`;
+
   constructor(private http: HttpClient) { }
+
   createPayment(payment: any): Observable<any> {
-    const url = `${this.apiUrl}/Create`;
+    const url = `${this.apiUrl}/Payment/CreateCheckoutSession`;
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<any>(url, payment, { headers });
+    return this.http.post<any>(url, payment, { headers, withCredentials: true  });
   }
 }
+

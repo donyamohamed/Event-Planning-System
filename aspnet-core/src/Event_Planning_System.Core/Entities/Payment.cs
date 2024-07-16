@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Event_Planning_System.Entities
 {
-    public class Payment : IEntity<int>
+    public class Payment : Entity<int>
     {
         public int Id { get ; set; }
 
@@ -41,6 +41,7 @@ namespace Event_Planning_System.Entities
         [Required(ErrorMessage = "Date is required.")]
         [DataType(DataType.Date)]
         public DateTime PaymentDate { get; set; }
+        //public string StripeSessionId { get; set; }
 
         public bool IsTransient()
         {

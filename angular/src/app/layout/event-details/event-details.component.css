@@ -12,6 +12,9 @@ html {
 *:after {
   box-sizing: inherit;
 }
+.divofguset{
+  display: flex;
+}
 
 /* Header container styles */
 .header-container {
