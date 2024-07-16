@@ -64,15 +64,20 @@ export class PaymentComponent implements OnInit {
   }
 
   async submitPayment() {
+ 
+
+
+
     const paymentData = {
+      id: 0, 
+      userId:this.creatorId ,
+      guestId:this.userId,
+      eventId: this.eventId,
       money: this.totalAmount,
       numberOfTickets: this.numberOfTickets,
-      eventId: this.eventId,
-      creatorId: this.creatorId,
-      userId: this.userId
+      paymentDate: new Date().toISOString() 
     };
 
- debugger
     this.paymentService.createPayment(paymentData).subscribe(
       async response => {
         const sessionId = response.result.sessionId;

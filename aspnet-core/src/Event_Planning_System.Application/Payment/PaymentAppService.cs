@@ -74,8 +74,8 @@ public class PaymentAppService : AsyncCrudAppService<Payment, PaymentDto, int>, 
                     },
                 },
                 Mode = "payment",
-                SuccessUrl = "http://localhost:4200/success",
-                CancelUrl = "http://localhost:4200/cancel",
+                SuccessUrl = "http://localhost:4200",
+                CancelUrl = "http://localhost:4200",
             };
 
             var service = new SessionService();
