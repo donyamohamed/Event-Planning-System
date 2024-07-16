@@ -31,12 +31,9 @@
     <div class="icons" >
       <!-- <i class="fa" [ngClass]="isEventSaved ? 'fa-bookmark' : 'fa-bookmark-o'" (click)="toggleSavedEvent()"></i> -->
      <!-- event-details.component.html -->
-     <button
-     *ngIf="isEventSaved"
-     (click)="cancelEventSave(event?.id)"
-     class="btn text-warning ml-auto">
-     <i class="fas fa-bookmark"></i>
-   </button>
+     <button *ngIf="isEventSaved" (click)="cancelEventSave(event?.id)" class="btn text-warning ml-auto">
+      <i class="fas fa-bookmark"></i> 
+    </button>
    <button
      *ngIf="!isEventSaved"
      (click)="navigateToSaveEvent(event?.id)"
