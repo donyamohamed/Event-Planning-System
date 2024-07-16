@@ -137,8 +137,8 @@ namespace Event_Planning_System.Controllers
                 var htmlBody = EmailAcceptedTemple.YourInvitationRequestAccepted(emailRequest.EventName, emailRequest.Date, emailRequest.EventAddress, guestName, emailRequest.EventImage);
 
                 await _emailService.SendEmailAsync(emailRequest.ToEmail, emailRequest.Subject, htmlBody);
-                _logger.LogInformation("Invitation email sent successfully.");
-                return Ok("Invitation email sent successfully.");
+                _logger.LogInformation(" EmailAccepted sent successfully.");
+                return Ok(" EmailAccepted sent successfully.");
             }
             catch (Exception ex)
             {
@@ -167,8 +167,8 @@ namespace Event_Planning_System.Controllers
                 var htmlBody = EmailRejectedTemple.YourInvitationRequestRejected(emailRequest.EventName, emailRequest.Date, emailRequest.EventAddress, guestName, emailRequest.EventImage);
 
                 await _emailService.SendEmailAsync(emailRequest.ToEmail, emailRequest.Subject, htmlBody);
-                _logger.LogInformation("Invitation email sent successfully.");
-                return Ok("Invitation email sent successfully.");
+                _logger.LogInformation(" EmailRejected sent successfully.");
+                return Ok(" EmailRejected sent successfully.");
             }
             catch (Exception ex)
             {
@@ -177,11 +177,10 @@ namespace Event_Planning_System.Controllers
             }
         }
         [HttpPost("SendEventTicket")]
-        public async Task<IActionResult> SendTicketEmail([FromBody] EmailRequest emailRequest)
+        public async Task<IActionResult> SendEventTicket([FromBody] EmailRequest emailRequest)
         {
             string[] emailParts = emailRequest.ToEmail.Split('@');
             string guestName = emailParts[0];
-
             try
             {
                 if (emailRequest == null)
@@ -194,29 +193,15 @@ namespace Event_Planning_System.Controllers
                     return BadRequest("Email subject and body cannot be empty.");
                 }
 
-                // Generate email body
                 var htmlBody = EmailTicketTemplate.SendEventTicket(emailRequest.EventName, emailRequest.Date, emailRequest.EventAddress, guestName, emailRequest.EventImage);
 
-                // Send email without attachment
                 await _emailService.SendEmailAsync(emailRequest.ToEmail, emailRequest.Subject, htmlBody);
-                _logger.LogInformation("Invitation email sent successfully.");
-
-                // Inject PdfController through constructor injection
-                var pdfResult = await DownloadInvitationPdfAsync(emailRequest.EventName, emailRequest.Date, emailRequest.EventAddress, emailRequest.EventImage);
-
-                if (pdfResult is FileContentResult fileResult)
-                {
-                    // Send email with attachment
-                    await _emailService.SendEmailWithAttachmentAsync(emailRequest.ToEmail, emailRequest.Subject, htmlBody, fileResult.FileContents, "Invitation.pdf");
-
-                    return Ok("Invitation email sent successfully with PDF attachment.");
-                }
-
-                return Ok("Invitation email sent successfully.");
+                _logger.LogInformation("Ticket sent successfully.");
+                return Ok("Ticket sent successfully.");
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error sending invitation email.");
+                _logger.LogError(ex, "Error sending Ticket.");
                 return StatusCode(500, "Internal server error");
             }
         }
