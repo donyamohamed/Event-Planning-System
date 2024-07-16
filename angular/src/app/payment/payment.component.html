@@ -5,7 +5,7 @@
   <div class="payment-form">
     <h2>Payment for Ticket</h2>
     <div class="ticket">
-      <p class="badge badge-warning p-2">Amount: {{ totalAmount | currency }}</p>
+      <p class="badge badge-warning p-2">Amount: {{ totalAmount | currency:'EGP' }}</p>
       <div class="ticket-quantity">
         <label for="numberOfTickets">Tickets No</label>
         <button (click)="decrementTickets()">-</button>
