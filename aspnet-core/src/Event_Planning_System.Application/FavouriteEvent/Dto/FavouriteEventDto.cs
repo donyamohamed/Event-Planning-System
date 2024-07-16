@@ -13,6 +13,7 @@ namespace Event_Planning_System.FavouriteEvent.Dto
         public long UserId { get; set; }
         public int EventId { get; set; }
        
+
     }
 
 }
