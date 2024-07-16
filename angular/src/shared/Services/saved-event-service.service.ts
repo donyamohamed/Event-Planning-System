@@ -17,12 +17,15 @@ export class SavedEventServiceService {
   }
 
   createSavedEvent(eventData: any): Observable<any> {
-    const url = `${this.baseUrl}/Create`;
+    const url = `${this.baseUrl}/SaveEvent`;
     return this.http.post(url, eventData);
   }
 
   deleteSavedEvent(id: number): Observable<any> {
     const url = `${this.baseUrl}/Delete?Id=${id}`;
     return this.http.delete(url);
+  }
+  isEventSaved(userId: number, eventId: number): Observable<boolean> {
+    return this.http.get<boolean>(`${this.baseUrl}/IsEventSaved?userId=${userId}&eventId=${eventId}`);
   }
 }

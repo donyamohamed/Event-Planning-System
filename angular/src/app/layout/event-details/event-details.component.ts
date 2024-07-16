@@ -59,7 +59,8 @@ export class EventDetailsComponent implements OnInit {
       this.loadEventDetails();
       this.showFeedbackForEvent();
       this.loadGuestCount();
-      this.saveEvent();
+      this.checkIfEventSaved(this.loggedInUserId!, this.eventId!); 
+      this.navigateToSaveEvent(this.eventId);
     });
 
     this.loadCurrentUser();
@@ -104,6 +105,7 @@ export class EventDetailsComponent implements OnInit {
               this.user = userData.result;
               console.log("User Data:", userData.result);
               this.checkIfEventCreator(); // Check if the event creator is the logged-in user
+              // this.checkIfEventSaved(this.loggedInUserId!, this.eventId!); 
             },
             (error) => {
               console.error('Error fetching user data:', error);
@@ -277,7 +279,7 @@ export class EventDetailsComponent implements OnInit {
   cancelEventSave(eventId: number): void {
     this.savedEventService.deleteSavedEvent(eventId).subscribe(
       (res) => {
-        this.isEventSaved = false;
+        this.isEventSaved = false; 
         console.log('Event save canceled successfully.');
       },
       (error) => {
@@ -301,57 +303,16 @@ export class EventDetailsComponent implements OnInit {
     );
   }
 
-  saveEvent(): void {
-    if (this.event) {
-      // Check if the event is already saved
-      this.checkIfEventSaved().then(isSaved => {
-        if (isSaved) {
-          Swal.fire('Event is already saved');
-        } else {
-          // Save the event if it's not already saved
-          const eventData: SavedEventData = {
-            eventId: this.event!.id,
-            userId: this.loggedInUserId!
-          };
+ 
   
-          this.savedEventService.createSavedEvent(eventData).subscribe(
-            () => {
-              this.isEventSaved = true;
-              Swal.fire('Event saved successfully');
-            },
-            error => {
-              console.error('Error saving event:', error);
-              Swal.fire('Error saving event', 'Please try again later', 'error');
-            }
-          );
-        }
-      }).catch(error => {
-        console.error('Error checking if event is saved:', error);
-        Swal.fire('Error checking if event is saved', 'Please try again later', 'error');
-      });
-    }
-  }
   
-  checkIfEventSaved(): Promise<boolean> {
-    return new Promise((resolve, reject) => {
-      if (this.eventId && this.loggedInUserId) {
-        // Call API to get saved events for the current user
-        this.savedEventService.getSavedEvents(this.loggedInUserId).subscribe(
-          res => {
-            // Check if the current event is in the saved events list
-            const isSaved = res.result.some((event: any) => event.eventId === this.eventId);
-            resolve(isSaved);
-          },
-          error => {
-            console.error('Error checking saved events:', error);
-            reject(error);
-          }
-        );
-      } else {
-        resolve(false);
+  checkIfEventSaved(userId: number, eventId: number) {
+    this.savedEventService.isEventSaved(userId, eventId).subscribe(isSaved => {
+      this.isEventSaved = isSaved;
+      if (this.isEventSaved) {
+        console.log("This event is saved");
       }
     });
   }
 }
-  
 
