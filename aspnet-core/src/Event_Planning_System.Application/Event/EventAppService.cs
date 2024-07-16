@@ -165,9 +165,10 @@ namespace Event_Planning_System.Event
 			}
 			return new EventNameAndRatingDto { EventNames = eventNames, EventRatings = eventRatings };
 
-		}
-
-		public override async Task<EventDto> CreateAsync([FromForm] CreateEventDto input)
+        }
+		
+        //[Authorize(Roles = "Supplier")]
+        public override async Task<EventDto> CreateAsync([FromForm] CreateEventDto input)
 		{
 			if (input.EventImgFile != null && input.EventImgFile.Length > 0)
 			{
@@ -237,7 +238,7 @@ namespace Event_Planning_System.Event
            
             return orderedPublicEvents;
         }
-
+		
 
         public async Task DeleteEventWithDetailsAsync(int eventId)
 		{
@@ -320,9 +321,6 @@ namespace Event_Planning_System.Event
 			var eventDto = _mapper.Map<EventDto>(eventEntity);
 			return eventDto;
 		}
-
-
-
 
         public async Task<List<EventDto>> GetPublicEventsByCategory(EventCategory _category)
         {
@@ -443,6 +441,32 @@ namespace Event_Planning_System.Event
             }
 
             return targetPublicEvents;
+        }
+
+        public async Task UpdateEventWithDetailsAsync(Enitities.Event eventEdit)
+        {
+            try
+            {
+                var today = DateTime.Today;
+                if (eventEdit.StartDate > today && eventEdit.EndDate > today)
+                {
+                    var guests = await _guestRepository.GetAllListAsync(g => g.Events.Any(e => e.Id == eventEdit.Id) && g.InvitationState != "Pending");
+                    foreach (var guest in guests)
+                    {
+                        var htmlBody = EmailUpdates.GenerateEventUpdatingEmail(eventEdit.Name, eventEdit.StartDate, guest.Name);
+                        await _emailService.SendEmailAsync(guest.Email, "Event Updates", htmlBody);
+                    }
+                }
+
+            await _repository.UpdateAsync(eventEdit);
+            await CurrentUnitOfWork.SaveChangesAsync();
+               
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error in Updateing event with ID {EventId}", eventEdit.Id);
+                throw new Abp.UI.UserFriendlyException("An internal error occurred while trying to update the event.");
+            }
         }
 
 

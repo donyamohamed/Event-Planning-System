@@ -25,6 +25,7 @@ namespace Event_Planning_System.Event
 
         Task<List<EventDto>> GetPublicEventsByCategory(EventCategory _category);
         Task<List<EventDto>> GetAllPublicEvents();
+        Task UpdateEventWithDetailsAsync(Enitities.Event eventEdit);
 
     }
 
