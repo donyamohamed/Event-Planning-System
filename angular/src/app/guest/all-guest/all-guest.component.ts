@@ -273,7 +273,9 @@ export class AllGuestComponent implements OnInit {
           icon: "success",
           confirmButtonText: "OK",
         });
-        location.reload();
+        console.log(data);
+        
+       // location.reload();
       },
       error: (err) => console.log(err),
     });
