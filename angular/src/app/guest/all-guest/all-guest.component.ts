@@ -258,13 +258,13 @@ export class AllGuestComponent implements OnInit {
   }
 
   SendEmail(email: string) {
-    this.emailObj.ToEmail = email;
-    this.emailObj.Subject = "Invitation to the event";
-    this.emailObj.Body = "Dear Guest, you are invited to the event";
-    this.emailObj.EventAddress = this.event.location;
-    this.emailObj.EventName = this.event.name;
-    this.emailObj.Date = this.event.startDate;
-    this.emailObj.EventImage = this.event.eventImg;
+    this.emailObj.toEmail = email;
+    this.emailObj.subject = "Invitation to the event";
+    this.emailObj.body = "Dear Guest, you are invited to the event";
+    this.emailObj.eventAddress = this.event.location;
+    this.emailObj.eventName = this.event.name;
+    this.emailObj.date = this.event.startDate;
+    this.emailObj.eventImage = this.event.eventImg;
     this.invitation.sendInvitationByEmail(this.emailObj).subscribe({
       next: (data) => {
         swal.fire({
