@@ -1,0 +1,27 @@
+.form-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+      }
+      
+      form {
+        width: 100%;
+        max-width: 600px;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      .err{
+        color: red;
+      }
+      label{
+        color:#050794;
+      }
+      h4{
+        color:#FBAF1B;
+        border-left: 3px #050794 solid;
+        margin-left:7px;
+        padding-left:2px;
+      }

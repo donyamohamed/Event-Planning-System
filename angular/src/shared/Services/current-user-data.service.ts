@@ -10,6 +10,7 @@ import { environment } from '../../environments/environment';
 export class CurrentUserDataService {
   private baseUrl = `${environment.API_URL_BASE_PART}/api/services/app/UserProfileAppServices/GetUserProfile`;
   private UpdateUrl=`${environment.API_URL_BASE_PART}/api/services/app/UserProfileAppServices/UpdateUserProfileData`;
+  private UserRole=`${environment.API_URL_BASE_PART}/api/services/app/User/GetUserById?id=`;
 
   constructor(private http: HttpClient) {}
 
@@ -20,5 +21,8 @@ export class CurrentUserDataService {
   }
   public UpdateUserData(user:FormData){
   return this.http.put<CurrentUser>(this.UpdateUrl,user);
+  }
+  public GetUserRole(id:number|any){
+    return  this.http.get(this.UserRole+id);
   }
 }
