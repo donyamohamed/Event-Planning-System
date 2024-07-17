@@ -5,173 +5,182 @@ public class EmailTicketTemplate
     public static string SendEventTicket(string eventName, DateTime date, string eventAddress, string guestName, string eventImg)
     {
         string backgroundImage = string.IsNullOrEmpty(eventImg)
-            ? "https://cdn.pixabay.com/photo/2016/12/18/00/47/structure-1914730_960_720.jpg"
-            : eventImg;
+             ? "https://cdn.pixabay.com/photo/2016/12/18/00/47/structure-1914730_960_720.jpg"
+             : eventImg;
 
         return $@"
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <style>
-                @import url('https://fonts.googleapis.com/css2?family=Catamaran:wght@900&family=PT+Sans+Narrow&display=swap');
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <style>
+                    @import url('https://fonts.googleapis.com/css2?family=Catamaran:wght@900&family=PT+Sans+Narrow&display=swap');
 
-                body {{
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    background-color: #f5f5f5;
-                    font-family: 'PT Sans Narrow', sans-serif;
-                    margin: 0;
-                    padding: 0;
-                    height: 100vh;
-                }}
-
-                .ticket {{
-                    max-width: 800px;
-                    background: #fff;
-                    border: 2px solid #ccc;
-                    border-radius: 10px;
-                    overflow: hidden;
-                    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-                    display: flex;
-                }}
-
-                .ticket-left {{
-                    width: 25%;
-                    background: #000;
-                    color: #fff;
-                    padding: 20px;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    justify-content: center;
-                    position: relative;
-                }}
-
-                .ticket-left:before {{
-                    content: '';
-                    position: absolute;
-                    left: 0;
-                    top: 50%;
-                    transform: translateY(-50%);
-                    width: 10px;
-                    height: 100%;
-                    background: #fff;
-                    border-top-left-radius: 50%;
-                    border-bottom-left-radius: 50%;
-                }}
-
-                .ticket-left:after {{
-                    content: '';
-                    position: absolute;
-                    right: 0;
-                    top: 50%;
-                    transform: translateY(-50%);
-                    width: 10px;
-                    height: 100%;
-                    background: #fff;
-                    border-top-right-radius: 50%;
-                    border-bottom-right-radius: 50%;
-                }}
-
-                .ticket-left .event-name {{
-                    font-size: 24px;
-                    font-weight: bold;
-                    text-align: center;
-                }}
-
-                .ticket-left .welcome-message {{
-                    font-size: 18px; /* Increased font size */
-                    text-align: center;
-                    margin-top: 10px; /* Adjust the margin-top as needed */
-                    font-weight: bold;
-                }}
-
-                .ticket-left .event-date {{
-                    background: #f1e4d0;
-                    color: #000;
-                    padding: 5px 10px;
-                    margin-top: 10px; /* Adjust the margin-top as needed */
-                    border-radius: 5px;
-                    font-size: 16px; /* Increased font size */
-                }}
-
-                .ticket-right {{
-                    width: 75%;
-                    padding: 20px;
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: space-between;
-                }}
-
-                .ticket-right .section {{
-                    margin-bottom: 10px;
-                }}
-
-                .ticket-right .section span {{
-                    display: block;
-                    font-size: 16px; /* Increased font size */
-                }}
-
-                .ticket-right .section .label {{
-                    font-weight: bold;
-                    margin-bottom: 5px;
-                    font-size: 18px; /* Increased font size */
-                }}
-
-                .barcode {{
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                }}
-
-                .barcode img {{
-                    height: 50px;
-                }}
-
-                .separator {{
-                    height: 100%;
-                    border-left: 2px dashed #ccc;
-                    margin: 0 20px;
-                }}
-
-                @media screen and (max-width: 600px) {{
-                    .ticket {{
-                        flex-direction: column;
+                    *,
+                    ::before,
+                    ::after {{
+                        margin: 0;
+                        padding: 0;
+                        box-sizing: border-box;
                     }}
 
-                    .ticket-left, .ticket-right {{
+                    body {{
+                        min-height: 100vh;
+                        display: grid;
+                        place-items: center;
+                        background-color: #050794;
+                        
+                        background-size: cover;
+                        background-position: center;
+                        font-family: 'PT Sans Narrow', sans-serif;
+                    }}
+
+                    .poster {{
+                        max-width: 700px;
                         width: 100%;
+                        background-color: #050794 ;
+                        padding: 20px;
+                        position: relative;
+                        overflow: hidden;
+                        text-align: center;
+                        border-radius: 10px;
+                        box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
                     }}
-                }}
-            </style>
-        </head>
-        <body>
-            <div class='ticket'>
-                <div class='ticket-left'>
-                    <div class='event-name'>{eventName}</div>
-                    <div class='welcome-message'>
-                       Welcome, {guestName}!
+
+                    .header-img {{
+                        width: 100%;
+                        height: 200px;
+                        border-radius: 10px 10px 0 0;
+                    }}
+
+                    .poster h1 {{
+                        font-family: 'Catamaran', sans-serif;
+                        font-size: 2.5rem;
+                        margin: 20px 0;
+                        background-color:  #fbaf1b;
+                        padding:10px 10px;
+                        color:#050794;
+                        
+                    }}
+
+                    .poster h2 {{
+                        font-family: 'Catamaran', sans-serif;
+                        font-size: 2rem;
+                        margin-bottom: 20px;
+                        color:#fbaf1b;
+                    }}
+
+                    .poster .date-time {{
+                        font-size: 1.25rem;
+                        margin-bottom: 20px;
+                    }}
+
+                    .poster .date-time span {{
+                        display: inline-block;
+                        padding: 10px;
+                        background-color: rgba(233, 233, 233, 0.3);
+                        border-radius: 5px;
+                        margin: 5px;
+                    }}
+
+                    .poster .venue {{
+                        margin-top: 20px;
+                    }}
+
+                    .poster .venue h3 {{
+                        font-size: 1.75rem;
+                         color:#fbaf1b;
+                    }}
+
+                    .poster .venue p {{
+                        font-size: 1.25rem;
+                        color:white;
+                    }}
+
+                    .poster .message {{
+                        margin-top: 30px;
+                        font-size: 1.2rem;
+                        line-height: 1.5;
+                        color:white;
+                    }}
+
+                    .poster .message p {{
+                        margin-bottom: 15px;
+                    }}
+
+                    .poster .footer {{
+                        margin-top: 30px;
+                        font-size: 1rem;
+                        color: white;
+                    }}
+
+                    .download-btn {{
+                        display: inline-block;
+                        margin-top: 20px;
+                        padding: 8px 18px;
+                        font-size: 1rem;
+                        color: white;
+                        background-color: #fbaf1b;
+                        text-decoration: none;
+                        border-radius: 5px;
+                        cursor: pointer;
+                    }}
+
+                    @media screen and (max-width: 600px) {{
+                        .poster {{
+                            padding: 10px;
+                        }}
+
+                        .poster h1 {{
+                            font-size: 2rem;
+                        }}
+
+                        .poster h2 {{
+                            font-size: 1.5rem;
+                        }}
+
+                        .poster .date-time {{
+                            font-size: 1rem;
+                        }}
+
+                        .poster .venue h3 {{
+                            font-size: 1.5rem;
+                        }}
+
+                        .poster .venue p {{
+                            font-size: 1rem;
+                        }}
+
+                        .poster .message {{
+                            font-size: 1rem;
+                        }}
+                    }}
+                </style>
+            </head>
+            <body>
+                <div class='poster' id='poster'>
+                    <img class='header-img' src='{backgroundImage}' alt='Header Image'>
+                    <h1>Eventa Ticket</h1>
+                    <h2>{eventName}</h2>
+                    <div class='date-time'>
+                        <span>{date:HH:mm}</span>
+                        <span>{date:dd}</span>
+                        <span>{date:MMM}</span>
+                        <span>{date:yyyy}</span>
                     </div>
-                    <div class='event-date'>{date:MMMM dd, yyyy}</div>
+                    <div class='venue'>
+                        <p>Event Location:{eventAddress}</p>
+                        
+                    </div>
+                    <div class='message'>
+                         <p>Welcome to the {eventName} event! We are thrilled to have you with us.😍❤</p>
+                    </div>
+                    <div class='footer'>
+                        <p>&copy; {DateTime.Now.Year} Event Planning Team. All rights reserved.</p>
+                    </div>
+                   
                 </div>
-                <div class='separator'></div>
-                <div class='ticket-right'>
-                    <div class='section'>
-                        <span class='label'>Date:</span>
-                        <span>{date:MMMM dd, yyyy}</span>
-                    </div>
-                    <div class='section'>
-                        <span class='label'>Time:</span>
-                        <span>{date:hh:mm tt}</span>
-                    </div>
-                    <div class='section'>
-                        <span class='label'>Venue:</span>
-                        <span>{eventAddress}</span>
-                    </div>
-                </div>
-            </div>
-        </body>
-        </html>";
+               
+            </body>
+            </html>";
     }
 }

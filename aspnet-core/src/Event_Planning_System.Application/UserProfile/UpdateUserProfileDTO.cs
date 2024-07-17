@@ -12,7 +12,7 @@ namespace Event_Planning_System.UserProfile
 {
 	public class UpdateUserProfileDTO
 	{
-	//	public long Id { get; set; }
+	
 		[Required]
 		public string UserName { get; set; }
 		
@@ -23,6 +23,5 @@ namespace Event_Planning_System.UserProfile
 		public virtual Gender GenderUser { get; set; }
 
 		public IFormFile ImagePath { get; set; }
-		//public virtual string Image { get; set; }
 	}
 }

@@ -276,17 +276,17 @@ export class EventDetailsComponent implements OnInit {
       );
     }
   }
-  cancelEventSave(eventId: number): void {
-    this.savedEventService.deleteSavedEvent(eventId).subscribe(
-      (res) => {
-        this.isEventSaved = false; 
-        console.log('Event save canceled successfully.');
-      },
-      (error) => {
-        console.error('Error canceling saved event:', error);
+  checkIfEventSaved(userId: number, eventId: number) {
+    this.savedEventService.isEventSaved(userId, eventId).subscribe(isSaved => {
+      this.isEventSaved = isSaved;
+      console.log("asdfghjk"+this.isEventSaved);
+      if (this.isEventSaved) {
+        console.log("This event is saved");
       }
-    );
+    });
   }
+  
+  // Function to save an event
   navigateToSaveEvent(eventId: number): void {
     const data: SavedEventData = {
       eventId: eventId,
@@ -294,7 +294,7 @@ export class EventDetailsComponent implements OnInit {
     };
     this.savedEventService.createSavedEvent(data).subscribe(
       (res) => {
-        this.isEventSaved = true;
+        this.isEventSaved = true; // Mark the event as saved
         console.log('Event saved successfully.');
       },
       (error) => {
@@ -302,17 +302,23 @@ export class EventDetailsComponent implements OnInit {
       }
     );
   }
-
- 
   
-  
-  checkIfEventSaved(userId: number, eventId: number) {
-    this.savedEventService.isEventSaved(userId, eventId).subscribe(isSaved => {
-      this.isEventSaved = isSaved;
-      if (this.isEventSaved) {
-        console.log("This event is saved");
+  // Function to cancel saving an event
+  cancelEventSave(eventId: number): void {
+    this.savedEventService.deleteSavedEvent(eventId).subscribe(
+      (res) => {
+        this.isEventSaved = false; // Mark the event as not saved
+        console.log('Event save canceled successfully.');
+      },
+      (error) => {
+        console.error('Error canceling saved event:', error);
       }
-    });
+    );
+  }
+  
+  // Function to determine which bookmark icon class to use
+  getBookmarkIconClass(): string {
+    return this.isEventSaved ? 'fa-solid fa-bookmark' : 'fa-regular fa-bookmark';
   }
 }
 

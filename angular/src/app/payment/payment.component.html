@@ -5,7 +5,7 @@
   <div class="payment-form">
     <h2>Payment for Ticket</h2>
     <div class="ticket">
-      <p class="badge badge-warning p-2">Amount: {{ totalAmount | currency:'EGP' }}</p>
+      <p class="badge badge-warning p-2">Amount: {{ totalAmount | currency:'EGP' }}</p> 
       <div class="ticket-quantity">
         <label for="numberOfTickets">Tickets No</label>
         <button (click)="decrementTickets()">-</button>
@@ -14,7 +14,7 @@
       </div>
     </div>
     <form (ngSubmit)="submitPayment()">
-      <div id="card-element" class="Input"></div>
+     <!-- <div id="card-element" class="Input"></div> -->
       <button type="submit" class="btn ">Pay</button>
     </form>
   </div>

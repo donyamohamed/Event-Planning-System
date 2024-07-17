@@ -10,6 +10,6 @@ namespace Event_Planning_System.Email
     public interface IEmailService : IApplicationService
     {
         Task SendEmailAsync(string toEmail, string subject, string message);
-        Task SendEmailWithAttachmentAsync(string toEmail, string subject, string message, byte[] attachmentData, string attachmentName);
+      
     }
 }
