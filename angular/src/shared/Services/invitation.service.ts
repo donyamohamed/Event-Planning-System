@@ -22,6 +22,7 @@ export class InvitationService {
   sendInvitationBySms(smsRequest: SmsRequest): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post<any>(this.smsUrl, smsRequest, { headers });
+  
   }
 }
 
