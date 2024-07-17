@@ -226,7 +226,6 @@ p {
 
 .home-header {
   /* background-image: url(../../assets/img/header-bg.jpg); */
-
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;

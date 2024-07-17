@@ -108,10 +108,10 @@ export class AllGuestComponent implements OnInit {
           this.guests = res.result;
           console.log(this.guests);
 
-          this.guestCount = res.result.length;
-          if (this.guestCount === 0) {
-            this.router.navigateByUrl("/app/NoGuests/" + this.idEvent);
-          }
+          // this.guestCount = res.result.length;
+          // if (this.guestCount === 0) {
+          //   this.router.navigateByUrl("/app/NoGuests/" + this.idEvent);
+          // }
           this.setupCheckboxEvents();
         },
         error: (err) => {

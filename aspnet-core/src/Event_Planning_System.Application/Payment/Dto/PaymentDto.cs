@@ -10,13 +10,15 @@ using System.Threading.Tasks;
 
 namespace Event_Planning_System.Payment.Dto
 {
-   
-        public class PaymentDto : IEntityDto<int>
-        {
-            public int Id { get; set; }
-            public long PlannerId { get; set; }
-            public long GuestId { get; set; }
-            public int EventId { get; set; }
+    public class PaymentDto : IEntityDto<int>
+    {
+        public int Id { get; set; }
+
+        public long UserId { get; set; }
+
+        public long GuestId { get; set; }
+
+        public int EventId { get; set; }
 
             [Required(ErrorMessage = "Money Of Tickets is required.")]
             public int Money { get; set; }
@@ -24,10 +26,10 @@ namespace Event_Planning_System.Payment.Dto
             [Required(ErrorMessage = "Number Of Tickets are required.")]
             public int NumberOfTickets { get; set; }
 
-            [Required(ErrorMessage = "Date is required.")]
-            [DataType(DataType.Date)]
-            public DateTime PaymentDate { get; set; }
-        }
-    
+        [Required(ErrorMessage = "Date is required.")]
+        [DataType(DataType.Date)]
+        public DateTime PaymentDate { get; set; }
 
+        //public string StripeSessionId { get; set; }
+    }
 }

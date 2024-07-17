@@ -1,5 +1,6 @@
 ﻿using Abp.Application.Services;
 using Event_Planning_System.Payment.Dto;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace Event_Planning_System.Payment
 {
     public interface IPaymentAppService: IAsyncCrudAppService<PaymentDto, int>
     {
+        Task<IActionResult> CreateCheckoutSession([FromBody] PaymentDto paymentDto);
         Task<List<PaymentDto>> GetPaymentsByUserIdAsync(long userId);
         Task<List<PaymentDto>> GetPaymentsByEventIdAsync(int eventId);
         Task<decimal> GetTotalPaymentsForEvent(int eventId);

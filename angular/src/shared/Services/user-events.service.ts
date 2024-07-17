@@ -40,11 +40,16 @@ private apiGuestUrl=`${environment.API_URL_BASE_PART}/api/UpcomingEventUserAtten
     const url = `${this.apiUrl}/DeleteEventWithDetails?eventId=${eventId}`;
     return this.http.delete<void>(url);
   }
+  
   editEvent(event:Event): Observable<void> {
     const url = `${this.apiUrl}/Update`;
     return this.http.put<void>(url,event);
   }
 
+  editEventWithDetails(event:Event): Observable<void> {
+    const url = `${this.apiUrl}/UpdateEventWithDetails`;
+    return this.http.put<void>(url,event);
+  }
   getEventById(id:Number): Observable<EventResponse> {
     const url = `${this.apiUrl}/Get?Id=${id}`;
     return this.http.get<EventResponse>(url);
