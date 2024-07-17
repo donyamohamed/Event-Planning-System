@@ -1,11 +1,11 @@
 
 export class EmailRequest {
-    public ToEmail: string | undefined = undefined;
-    public Subject: string | undefined = undefined;
-    public Body: string | undefined = undefined;
-    public EventName: string | undefined = undefined;
-    public Date: Date | undefined = undefined;
-    public EventAddress: string | undefined = undefined;
-    public EventImage: string | undefined=undefined;
+    public toEmail: string | undefined = undefined;
+    public subject: string | undefined = undefined;
+    public body: string | undefined = undefined;
+    public eventName: string | undefined = undefined;
+    public date: Date | undefined = undefined;
+    public eventAddress: string | undefined = undefined;
+    public eventImage: string | undefined=undefined;
 }
 
