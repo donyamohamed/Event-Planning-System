@@ -99,6 +99,10 @@ namespace Event_Planning_System.Enitities
 		public virtual ICollection<GuestsFeedback> GuestsFeedback { get; set; } = new List<GuestsFeedback>();
 		public ICollection<GuestEvent> GuestEvents { get; set; }
         public ICollection<FavoriteEvent> FavoriteEvents { get; set; } = new List<FavoriteEvent>();
+        public int? PlaceId { get; set; }
+        [ForeignKey("PlaceId")]
+        public virtual SupplierPlaces SupplierPlaces { get; set; }
+        public bool RequestPlace { get; set; }
 
         public bool IsTransient()
         {
