@@ -71,7 +71,7 @@
                         <!-- Ticket Price Field (Conditionally Shown) -->
                         <div class="form-group" *ngIf="eventData.type === 0">
                             <label for="ticketPrice">Ticket Price</label>
-                            <input type="number" id="ticketPrice" name="ticketPrice" [(ngModel)]="eventData.ticketPrice" class="form-control" required min="40">
+                            <input type="number" id="ticketPrice" name="ticketPrice" [(ngModel)]="eventData.ticketPrice" class="form-control" required min="30">
                             <div *ngIf="eventForm.controls['ticketPrice'].invalid && (eventForm.controls['ticketPrice'].dirty || eventForm.controls['ticketPrice'].touched)" class="error-message">
                                 <div *ngIf="eventForm.controls['ticketPrice'].errors.required">{{ "ticketPriceis required" | localize }}</div>
                                 <div *ngIf="eventForm.controls['ticketPrice'].value < 1">{{ "ticketPrice must be at least 30" | localize }}</div>

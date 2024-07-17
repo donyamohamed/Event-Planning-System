@@ -47,13 +47,14 @@ namespace Event_Planning_System.Event
 		private readonly IBackgroundJobClient _backgroundJobClient;
 		private readonly IRepository<Interest, int> _interestRepository;
 		private readonly IRepository<Entities.Feedback, int> _feedbackRepository;
-		private readonly IFeedbackAppService _feedbackService;
+		private readonly IRepository<Entities.Payment, int> _paymentRepository;
+        private readonly IFeedbackAppService _feedbackService;
 		private readonly IUnitOfWorkManager _unitOfWorkManager;
 
 		public EventAppService(IRepository<Enitities.Event, int> repository, IRepository<Enitities.Guest, int> guestRepository, IRepository<Interest, int> interestRepository, IBackgroundJobClient backgroundJobClient,
 			IRepository<Enitities.BudgetExpense, int> budgetExpenseRepository, IUnitOfWorkManager unitOfWorkManager,
 			IRepository<Enitities.ToDoCheckList, int> toDoCheckListRepository, IRepository<Enitities.notification, int> notificationRepository, IMapper mapper, IEmailService emailService, ICloudinaryService cloudinaryService, ILogger<EventAppService> logger,
-			IRepository<Entities.Feedback, int> feedbackRepository, IRepository<Entities.FavoriteEvent, int> favoriteEventRepository, IRepository<Entities.GuestsFeedback, int> guestFeedbackRepository, IFeedbackAppService feedbackService) : base(repository)
+			IRepository<Entities.Feedback, int> feedbackRepository, IRepository<Entities.FavoriteEvent, int> favoriteEventRepository, IRepository<Entities.Payment, int> paymentRepository ,IRepository<Entities.GuestsFeedback, int> guestFeedbackRepository, IFeedbackAppService feedbackService) : base(repository)
 		{
 			_unitOfWorkManager = unitOfWorkManager;
 			_backgroundJobClient = backgroundJobClient;
@@ -66,6 +67,7 @@ namespace Event_Planning_System.Event
 			_notificationRepository = notificationRepository;
 			_favoriteEventRepository=favoriteEventRepository;
 			_guestFeedbackRepository=guestFeedbackRepository;
+			_paymentRepository=paymentRepository;
 			_logger = logger;
 			_mapper = mapper;
 			_emailService = emailService;
@@ -290,6 +292,11 @@ namespace Event_Planning_System.Event
                 foreach (var gusetevent in gusetevents)
                 {
                     await _guestFeedbackRepository.DeleteAsync(gusetevent);
+                }
+                var eventpayments = await _paymentRepository.GetAllListAsync(p => p.EventId == eventId);
+                foreach (var payment in eventpayments)
+                {
+                    await _paymentRepository.DeleteAsync(payment);
                 }
                 var eventGuests = await _guestRepository.GetAllListAsync(g => g.Events.Any(e => e.Id == eventId));
 				foreach (var guest in eventGuests)
