@@ -40,12 +40,15 @@ import { UpcomingEventsComponent } from './layout/user-profile/upcoming-events/u
 import { FeedbackComponent} from './feedback/feedback.component';
 import {SavedeventsComponent} from './savedevents/savedevents.component';
 import {SearchComponent} from './search/search.component';
+import {SupplierPlacesComponent} from './supplier-places/supplier-places.component';
+
 
 const routes: Routes = [
     {
         path: '',
         component: AppComponent,
         children: [
+            {path:'CreateEventPlace',component:SupplierPlacesComponent},
             {path:'GuestFeedBack',component:GuestsFeedbackComponent},
             {path:'Search',component:SearchComponent},
             { path: 'Chat/:plannerId', component: ChatComponentComponent },
