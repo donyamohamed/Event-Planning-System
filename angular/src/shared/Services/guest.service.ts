@@ -6,7 +6,7 @@ import { Injectable } from "@angular/core";
 import { GuestGetResponse } from "@app/guest/guest-get-response";
 import { Observable } from "rxjs";
 import { environment } from '../../environments/environment';
-
+import { map } from 'rxjs/operators';
 @Injectable({
   providedIn: "root",
 })
@@ -83,5 +83,13 @@ export class GuestService {
   public sendAllGuest(eventId: number) {
     const url= `${this.baseUrlSendAll}?eventId=${eventId}`;
     return this.httpClient.post<number>(url,eventId);
+  }
+
+
+  public getGuestById(guestId: number): Observable<Guest> {
+    const url = `${environment.API_URL_BASE_PART}/api/services/app/Guest/Get?id=${guestId}`;
+    return this.httpClient.get<GuestResponse>(url).pipe(
+      map(response => response.result.items.find(guest => guest.id === guestId))
+    );
   }
 }

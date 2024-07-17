@@ -52,6 +52,8 @@ import { PublicEventsComponent } from "./home/public-events/public-events.compon
 import { ChatIconComponent } from "./chat-icon/chat-icon.component";
 import { GuestsFeedbackComponent} from './guests-feedback/guests-feedback.component';
 import { SearchComponent} from './search/search.component';
+import {SuccessPaymentComponent} from './success-payment/success-payment.component'
+import {FaildPaymentComponent} from './faild-payment/faild-payment.component'
 
 
 
@@ -98,7 +100,9 @@ import {PaymentComponent} from './payment/payment.component'
         SidebarUserPanelComponent,
         SidebarMenuComponent,
         GuestsFeedbackComponent,
-        PaymentComponent
+        PaymentComponent,
+        SuccessPaymentComponent,
+        FaildPaymentComponent
 
     ],
     bootstrap: [AppComponent],
