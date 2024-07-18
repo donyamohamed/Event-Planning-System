@@ -71,16 +71,13 @@ namespace Event_Planning_System.Supplier
         }
         public async Task AcceptEventAsync(int eventId)
         {
-            // Fetch the event by Id
+           
             var eventItem = await _eventrepository.FirstOrDefaultAsync(e => e.Id == eventId);
 
             if (eventItem != null)
             {
-                // Update RequestPlace to true
                 eventItem.RequestPlace =PlaceState.Accepted;
                 await _eventrepository.UpdateAsync(eventItem);
-
-                // Save changes to the database
                 await CurrentUnitOfWork.SaveChangesAsync();
             }
             else
@@ -95,11 +92,8 @@ namespace Event_Planning_System.Supplier
 
             if (eventItem != null)
             {
-                // Update RequestPlace to true
                 eventItem.RequestPlace = PlaceState.Rejected;
                 await _eventrepository.UpdateAsync(eventItem);
-
-                // Save changes to the database
                 await CurrentUnitOfWork.SaveChangesAsync();
             }
             else
