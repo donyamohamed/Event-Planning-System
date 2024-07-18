@@ -22,7 +22,7 @@ namespace Event_Planning_System.Controllers
         private readonly ILogger<InvitationController> _logger;
         private readonly GuestAppService _guestAppService;
         private readonly IConverter _converter;
-        private const string BaseUrl = "https://eventa.azurewebsites.net";
+        private const string BaseUrl = "https://localhost:44311";
 
         public InvitationController(IEmailService emailService, ILogger<InvitationController> logger, ISmsService smsService, GuestAppService guestService)
         {
