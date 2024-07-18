@@ -388,6 +388,7 @@ export class AllGuestComponent implements OnInit {
               confirmButtonText: "OK",
             })
             .then((result) => {
+              location.reload();
               this.router.navigateByUrl(`app/allGuests/${this.idEvent}`);
             });
 

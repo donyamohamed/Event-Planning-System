@@ -27,6 +27,7 @@ using Vonage.Voice.EventWebhooks;
 using Event_Planning_System.Feedback;
 using Hangfire;
 using Abp.Domain.Uow;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Event_Planning_System.Event
 {
@@ -495,7 +496,6 @@ namespace Event_Planning_System.Event
                 throw new Exception("Event not found or not enough tickets available");
             }
         }
-
 
 
     }

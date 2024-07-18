@@ -22,12 +22,14 @@ namespace Event_Planning_System.Supplier
 	{
 		private readonly IRepository<SupplierPlaces, int> _repository;
 		private readonly ICloudinaryService _cloudinaryService;
-		private readonly IMapper _mapper;
-		public SupplierLocationAppService(IRepository<SupplierPlaces, int> repository, ICloudinaryService cloudinaryService,IMapper mapper) : base(repository)
+        private readonly IRepository<Enitities.Event, int> _eventRepository;
+        private readonly IMapper _mapper;
+		public SupplierLocationAppService(IRepository<SupplierPlaces, int> repository, ICloudinaryService cloudinaryService,IMapper mapper , IRepository<Enitities.Event, int> eventRepository) : base(repository)
 		{
 			_repository = repository;
 			_cloudinaryService = cloudinaryService;
 			_mapper = mapper;
+			_eventRepository = eventRepository;
 		}
 		[HttpPost]
 		public async Task CreateSupplierPlace([FromForm] SupplierPlacesDTO supplierPlace)
@@ -55,6 +57,29 @@ namespace Event_Planning_System.Supplier
         {
             var places = await _repository.GetAllListAsync(p => p.eventCategory == category);
             return ObjectMapper.Map<List<GetSupplierPlaces>>(places);
+        }
+
+
+
+        public async Task<ActionResult> GetPlaceForEvent(int eventId)
+        {
+            var targetEvent = await _eventRepository.FirstOrDefaultAsync(a => a.Id == eventId);
+            if (targetEvent == null)
+            {
+                return new NotFoundObjectResult("Event not found");
+            }
+
+            if (targetEvent.PlaceId != null && targetEvent.RequestPlace == PlaceState.Accepted)
+            {
+                var place = await _repository.FirstOrDefaultAsync(a => a.Id == targetEvent.PlaceId);
+                if (place != null)
+                {
+                    return new OkObjectResult(place);
+                }
+                return new NotFoundObjectResult("Place not found");
+            }
+
+            return new BadRequestObjectResult("This event does not contain a place or the place request is not accepted");
         }
 
     }
