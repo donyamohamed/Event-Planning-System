@@ -80,7 +80,7 @@
                         <!-- Right side form fields -->
                         <div class="form-group">
                             <label>{{ "Event Category" | localize }}</label>
-                            <select [(ngModel)]="eventData.category" name="category" class="form-control" title="{{ 'Event Category' | localize }}" required>
+                            <select id="category" name="category" class="form-control" [(ngModel)]="eventData.category" (change)="onCategoryChange()">
                                 <option *ngFor="let key of enumeratorKeys" [ngValue]="key">{{ key }}</option>
                             </select>
                         </div>
@@ -126,8 +126,26 @@
                
             </div>
             <div class="col-lg-4 col-md-12 image-container">
-                <img src="../../../assets/img/Work anniversary-pana.svg"  style="margin-left:15vw; margin-top:10vw;" alt="Event Image" class="img-fluid larger-image">
+                <div class="form-group">
+                    <label for="place">If you want a place for Event, Choose one.</label>
+                    <select id="place" name="place" class="form-control" [(ngModel)]="eventData.placeId">
+                        <option *ngFor="let place of places" [value]="place.id">{{ place.name }}</option>
+                    </select>
+                </div>
+            
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="place-container">
+                            <div class="place-card" *ngFor="let place of places">
+                                <img [src]="place.image" alt="Place Image" class="img img-responsive">
+                                <div class="place-name">{{ place.name }}</div>
+                                <div class="place-description">{{ place.description }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+            
         </div>
     </form>
 </div>

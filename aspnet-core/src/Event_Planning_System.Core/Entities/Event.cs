@@ -32,6 +32,15 @@ public enum EventType
     Free
 }
 
+public enum PlaceState
+{
+    Pendding,
+    Rejected,
+    Accepted
+}
+
+
+
 
 namespace Event_Planning_System.Enitities
 {
@@ -102,7 +111,7 @@ namespace Event_Planning_System.Enitities
         public int? PlaceId { get; set; }
         [ForeignKey("PlaceId")]
         public virtual SupplierPlaces SupplierPlaces { get; set; }
-        public bool RequestPlace { get; set; }
+        public PlaceState RequestPlace { get; set; }
 
         public bool IsTransient()
         {
