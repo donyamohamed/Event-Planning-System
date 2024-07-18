@@ -25,7 +25,12 @@ export class SavedEventServiceService {
     const url = `${this.baseUrl}/Delete?Id=${id}`;
     return this.http.delete(url);
   }
-  isEventSaved(userId: number, eventId: number): Observable<boolean> {
-    return this.http.get<boolean>(`${this.baseUrl}/IsEventSaved?userId=${userId}&eventId=${eventId}`);
-  }
+
+getAllSavedEvents(): Observable<any> {
+  const url = `${this.baseUrl}/GetAll`;
+  return this.http.get(url);
+}
+
+
+
 }

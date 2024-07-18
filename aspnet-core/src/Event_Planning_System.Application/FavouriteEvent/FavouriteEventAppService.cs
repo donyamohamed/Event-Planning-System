@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 using System;
+using Microsoft.Extensions.Logging;
 
 namespace Event_Planning_System.FavouriteEvent
 {
@@ -15,14 +16,17 @@ namespace Event_Planning_System.FavouriteEvent
     {
         private readonly IRepository<Entities.FavoriteEvent, int> _repository;
         private readonly IMapper _mapper;
+        private readonly ILogger<FavouriteEventAppService> _logger;
 
         public FavouriteEventAppService(
             IRepository<Entities.FavoriteEvent, int> repository,
+            ILogger<FavouriteEventAppService> logger,
             IMapper mapper)
             : base(repository)
         {
             _repository = repository;
             _mapper = mapper;
+            _logger=logger;
         }
 
         public async  Task<FavouriteEventDto> SaveEvent(FavouriteEventDto input)
@@ -60,11 +64,25 @@ namespace Event_Planning_System.FavouriteEvent
         }
         public async Task<bool> IsEventSaved(long userId, int eventId)
         {
-            var existingFavorite = await _repository.FirstOrDefaultAsync(f =>
-                f.EventId == eventId && f.UserId == userId);
+            try
+            {
+                _logger.LogInformation("Checking if event is saved for user {UserId} and event {EventId}", userId, eventId);
 
-            return existingFavorite != null;
+                var existingFavorite = await _repository.FirstOrDefaultAsync(f =>
+                    f.EventId == eventId && f.UserId == userId);
+
+                var isSaved = existingFavorite != null;
+                _logger.LogInformation("Event saved status for user {UserId} and event {EventId}: {IsSaved}", userId, eventId, isSaved);
+
+                return isSaved;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error in IsEventSaved method for user {UserId} and event {EventId}", userId, eventId);
+                throw;
+            }
         }
+
 
     }
 }
