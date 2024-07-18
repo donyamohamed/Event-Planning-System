@@ -128,6 +128,7 @@ export class NoGuestsComponent {
                     icon: 'success',
                     confirmButtonText: 'OK',
                 }).then((result) => {
+                  location.reload();
                     this.router.navigateByUrl(`app/allGuests/${this.idEvent}`);
                 });
 
