@@ -477,6 +477,27 @@ namespace Event_Planning_System.Event
         }
 
 
+        public async Task DecrementNoOfTickets(int eventId, int ticketNo)
+        {
+            var eventEntity = await _repository.FirstOrDefaultAsync(e => e.Id == eventId);
+
+            if (eventEntity != null && eventEntity.NumberOfTickets >= ticketNo)
+            {
+                eventEntity.NumberOfTickets -= ticketNo;
+                await _repository.UpdateAsync(eventEntity);
+                await CurrentUnitOfWork.SaveChangesAsync();
+
+              
+            }
+            else
+            {
+              
+                throw new Exception("Event not found or not enough tickets available");
+            }
+        }
+
+
+
     }
 }
 

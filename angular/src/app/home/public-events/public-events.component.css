@@ -15,7 +15,7 @@ body {
     max-width: 98%;
     margin: auto;
     display: flex;
-    justify-content: center;
+  
     align-items: flex-start;
     align-content: center;
     flex-wrap: wrap;
@@ -120,11 +120,11 @@ h2 {
 .btn.btn-yellow{
   background-color: #FBAF1B;
 }
-#invite:hover {
+#invite:hover, .btn.btn-yellow:hover {
     background:#ebb447 ;
 }
 #details:hover {
-    background: #5551ff;
+    background: #2024e6;
 }
 .header-container {
     display: flex;

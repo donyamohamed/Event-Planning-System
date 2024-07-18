@@ -89,6 +89,29 @@ namespace Event_Planning_System.Guest
             await _repositoryEvent.UpdateAsync(eventUser);
         }
 
+        public async Task AddAfterPayment(Enitities.Guest guest, int eventId)
+        {
+         
+            var existingGuest = await _repository.FirstOrDefaultAsync(g => g.Email == guest.Email && g.Events.Any(e => e.Id == eventId));
+            if (existingGuest != null)
+            {
+              
+                return;
+            }
+
+            await ValidateGuestEmail(guest.Email, eventId);
+            var eventUser = await _repositoryEvent.FirstOrDefaultAsync(eventId);
+            if (eventUser == null)
+            {
+                throw new EntityNotFoundException(typeof(Enitities.Event), eventId);
+            }
+
+          
+            guest.InvitationState = "Accepted";
+            eventUser.Guests.Add(guest);
+            await _repositoryEvent.UpdateAsync(eventUser);
+        }
+
 
 
 

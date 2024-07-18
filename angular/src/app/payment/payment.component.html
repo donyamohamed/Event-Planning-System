@@ -3,19 +3,24 @@
     <img src="../../assets/img/Payment-yellow.gif" alt="image"/>
   </div>
   <div class="payment-form">
-    <h2>Payment for Ticket</h2>
+    <h2>Confirm Purchase for Ticket</h2>
     <div class="ticket">
       <p class="badge badge-warning p-2">Amount: {{ totalAmount | currency:'EGP' }}</p> 
-      <div class="ticket-quantity">
-        <label for="numberOfTickets">Tickets No</label>
-        <button (click)="decrementTickets()">-</button>
-        <input type="number" id="numberOfTickets" [(ngModel)]="numberOfTickets" [min]="1" (change)="updateAmount()" />
-        <button (click)="incrementTickets()">+</button>
-      </div>
+  
+        <label for="numberOfTickets">Tickets No <span class="badge badge-success p-2">Available: {{ availableTickets }}</span> </label>
+    
+    </div>
+    <div class="ticket-quantity d-flex justify-content-between align-items-center">
+      <label for="numberOfTickets"> No of tickets you want</label>
+      <div>
+      <button (click)="decrementTickets()">-</button>
+      <input type="number" id="numberOfTickets" [(ngModel)]="numberOfTickets" [min]="1" (change)="updateAmount()" />
+      <button (click)="incrementTickets()">+</button>
+    </div>
     </div>
     <form (ngSubmit)="submitPayment()">
      <!-- <div id="card-element" class="Input"></div> -->
-      <button type="submit" class="btn ">Pay</button>
+      <button type="submit" class="btn ">Confirm </button>
     </form>
   </div>
 </div>

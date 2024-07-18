@@ -22,17 +22,17 @@
       </div>
     </a>
   </li>
-  <li class="nav-item  d-sm-inline-block" *ngIf="isLoggedIn">
+  <li class="nav-item  d-sm-inline-block"  *ngIf="isLoggedIn && roleData.result.roleNames[0]=='ADMIN'">
     <a class="nav-link" [routerLink]="['/app/user-event']">
       {{ "My Events" | localize }}
     </a>
   </li>
-  <li class="nav-item  d-sm-inline-block" *ngIf="isLoggedIn">
+  <li class="nav-item  d-sm-inline-block" *ngIf="isLoggedIn && roleData.result.roleNames[0]=='ADMIN'">
     <a class="nav-link" [routerLink]="['/app/invitation-state']">
       {{"Invitation State" | localize}}
     </a>
   </li>
-  <li class="nav-item  d-sm-inline-block" *ngIf="isLoggedIn">
+  <li class="nav-item  d-sm-inline-block" *ngIf="isLoggedIn && roleData.result.roleNames[0]=='ADMIN'">
     <a class="nav-link" [routerLink]="['/app/Profile']">
       {{ "Profile" | localize }}
     </a>

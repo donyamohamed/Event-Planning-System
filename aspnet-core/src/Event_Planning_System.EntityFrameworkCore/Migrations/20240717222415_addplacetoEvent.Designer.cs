@@ -4,6 +4,7 @@ using Event_Planning_System.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Event_Planning_System.Migrations
 {
     [DbContext(typeof(Event_Planning_SystemDbContext))]
-    partial class Event_Planning_SystemDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240717222415_addplacetoEvent")]
+    partial class addplacetoEvent
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1689,8 +1692,8 @@ namespace Event_Planning_System.Migrations
                     b.Property<int?>("PlaceId")
                         .HasColumnType("int");
 
-                    b.Property<int>("RequestPlace")
-                        .HasColumnType("int");
+                    b.Property<bool>("RequestPlace")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");

@@ -8,11 +8,10 @@ namespace Event_Planning_System.Email
         public static string GetInvitationEmail(string eventName, DateTime date, string eventAddress, string eventImg, string downloadUrl)
         {
             string backgroundImage = string.IsNullOrEmpty(eventImg)
-                ? "https://cdn.pixabay.com/photo/2016/12/18/00/47/structure-1914730_960_720.jpg"
+                ? "https://media.licdn.com/dms/image/C561BAQE-51J-8KkMZg/company-background_10000/0/1584559866970/eventscom_cover?e=2147483647&v=beta&t=8NsL_HPkr3nHk4ppAg8MkUoiYPUIf082mpMvySv5C7o"
                 : eventImg;
 
             string htmlContent = $@"
-    <!DOCTYPE html>
     <html>
     <head>
         <style>
@@ -44,13 +43,16 @@ namespace Event_Planning_System.Email
                 position: relative;
                 color: #e9e9e9;
                 overflow: hidden;
-                
                 text-align: center;
             }}
 
             .header-img {{
                 width: 100%;
-                height: 200px;
+                height: 0;
+                padding-bottom: 100%; /* Makes the div a square */
+                background-image: url('{backgroundImage}');
+                background-size: cover;
+                background-position: center;
             }}
 
             .poster h1 {{
@@ -130,7 +132,7 @@ namespace Event_Planning_System.Email
     </head>
     <body>
         <div class='poster'>
-            <img class='header-img' src='{backgroundImage}' alt='Header Image'>
+            <div class='header-img'></div>
             <h1>Event Invitation</h1>
             <h2>{eventName}</h2>
             <div class='date-time'>
@@ -151,4 +153,4 @@ namespace Event_Planning_System.Email
             return htmlContent;
         }
     }
-    }
+}

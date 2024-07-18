@@ -40,6 +40,9 @@ import { UpcomingEventsComponent } from './layout/user-profile/upcoming-events/u
 import { FeedbackComponent} from './feedback/feedback.component';
 import {SavedeventsComponent} from './savedevents/savedevents.component';
 import {SearchComponent} from './search/search.component';
+import {SuccessPaymentComponent} from './success-payment/success-payment.component';
+import {FaildPaymentComponent} from './faild-payment/faild-payment.component';
+
 import {SupplierPlacesComponent} from './supplier-places/supplier-places.component';
 
 
@@ -72,6 +75,8 @@ const routes: Routes = [
 
             { path: 'eventDetails/:id', component: EventDetailsComponent },
             { path: 'payment', component: PaymentComponent, canActivate: [AppRouteGuard] },
+            { path: 'payment-success', component: SuccessPaymentComponent },
+            { path: 'payment-failed', component: FaildPaymentComponent },
 
 
             { path: 'shareDetails/:id', component: ShareDetailesComponent, canActivate: [AppRouteGuard] },
