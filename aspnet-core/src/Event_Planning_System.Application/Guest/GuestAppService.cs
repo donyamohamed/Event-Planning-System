@@ -353,12 +353,15 @@ namespace Event_Planning_System.Guest
             var guest = await _repository.FirstOrDefaultAsync(guestId);
             if (guest == null)
             {
+                _logger.LogWarning("Guest not found: {0}", guestId);
                 throw new EntityNotFoundException(typeof(Enitities.Guest), guestId);
             }
 
             guest.InvitationState = newState;
             await _repository.UpdateAsync(guest);
+            _logger.LogInformation("Invitation state updated to '{0}' for guest: {1}", newState, guestId);
         }
+
 
         public async Task<GuestDto> GetGuestByEmailAsync(string email)
         {

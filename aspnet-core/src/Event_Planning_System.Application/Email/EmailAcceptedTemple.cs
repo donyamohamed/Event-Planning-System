@@ -11,7 +11,6 @@ namespace Event_Planning_System.Email
                 : eventImg;
 
             return $@"
-            <!DOCTYPE html>
             <html>
             <head>
                 <style>

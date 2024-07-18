@@ -11,7 +11,6 @@ namespace Event_Planning_System.Email
         public static string GenerateEventCancellationEmail(string eventName, DateTime startDate, string guestName)
         {
             return $@"
-    <!DOCTYPE html>
     <html>
     <head>
         <style>
