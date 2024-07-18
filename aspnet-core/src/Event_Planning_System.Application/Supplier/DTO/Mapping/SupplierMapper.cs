@@ -14,7 +14,7 @@ namespace Event_Planning_System.Supplier.DTO.Mapping
         public SupplierMapper()
         {
 			CreateMap<SupplierPlacesDTO, SupplierPlaces>();
-			//CreateMap<SupplierPlaces, SupplierPlacesDTO>();
+			CreateMap<SupplierPlaces, GetSupplierPlaces>();
 		}
     }
 }

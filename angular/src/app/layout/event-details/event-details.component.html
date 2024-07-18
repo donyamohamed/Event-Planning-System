@@ -30,8 +30,8 @@
     <div><span>Ticket sales end soon</span></div>
     <div class="icons">
       <button (click)="isEventSaved ? cancelEventSave(event?.id) : navigateToSaveEvent(event?.id)" class="btn text-warning ml-auto">
-        <i [ngClass]="getBookmarkIconClass()"></i> <!-- Dynamically set bookmark icon class -->
-      </button>
+        <i [ngClass]="getBookmarkIconClass()"></i>
+      </button>      
       <i class="fa-solid fa-arrow-up-from-bracket" (click)="openShareAlert()" style="margin-left:10px;"></i>
     </div>
   </div>

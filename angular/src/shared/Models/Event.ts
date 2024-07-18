@@ -16,7 +16,11 @@ export enum EventType {
     Paid = 0,
     Free = 1
 }
-
+export enum PlaceState  {
+    Pendding=0,
+    Rejected=1,
+    Accepted=2
+}
 
 
 export class Event {
@@ -38,6 +42,8 @@ export class Event {
         public type: EventType = EventType.Free,
         public ticketPrice: number | undefined = undefined,
         public numberOfTickets :number |undefined =undefined,
-        public source?: 'attending' | 'upcoming'
+        public source?: 'attending' | 'upcoming',
+        public placeId: number | undefined = undefined,
+        public requestPlace: PlaceState | undefined =0,
     ) {}
 }

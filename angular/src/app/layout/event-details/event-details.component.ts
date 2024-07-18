@@ -54,24 +54,26 @@ export class EventDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.loadCurrentUser();
     this.route.paramMap.subscribe(params => {
       this.eventId = Number(params.get('id'));
       this.loadEventDetails();
       this.showFeedbackForEvent();
       this.loadGuestCount();
-      this.checkIfEventSaved(this.loggedInUserId!, this.eventId!); 
+      if (this.loggedInUserId && this.eventId) {
+        this.checkIfEventSaved(); 
+      }
       this.navigateToSaveEvent(this.eventId);
     });
-
-    this.loadCurrentUser();
   }
-
+  
   loadCurrentUser(): void {
     this.currentUserData.GetCurrentUserData().subscribe(
       response => {
         console.log(response);
         this.loggedInUserId = response.id;
         this.isLogin=true;
+        this.loadEventDetails();
         this.checkIfEventCreator(); // Check if the event creator is the logged-in user
       },
       error => {
@@ -105,7 +107,7 @@ export class EventDetailsComponent implements OnInit {
               this.user = userData.result;
               console.log("User Data:", userData.result);
               this.checkIfEventCreator(); // Check if the event creator is the logged-in user
-              // this.checkIfEventSaved(this.loggedInUserId!, this.eventId!); 
+              this.checkIfEventSaved();
             },
             (error) => {
               console.error('Error fetching user data:', error);
@@ -276,49 +278,61 @@ export class EventDetailsComponent implements OnInit {
       );
     }
   }
-  checkIfEventSaved(userId: number, eventId: number) {
-    this.savedEventService.isEventSaved(userId, eventId).subscribe(isSaved => {
-      this.isEventSaved = isSaved;
-      console.log("asdfghjk"+this.isEventSaved);
-      if (this.isEventSaved) {
-        console.log("This event is saved");
-      }
-    });
-  }
-  
-  // Function to save an event
-  navigateToSaveEvent(eventId: number): void {
-    const data: SavedEventData = {
-      eventId: eventId,
-      userId: this.loggedInUserId
-    };
-    this.savedEventService.createSavedEvent(data).subscribe(
-      (res) => {
-        this.isEventSaved = true; // Mark the event as saved
-        console.log('Event saved successfully.');
+  checkIfEventSaved(): void {
+    this.savedEventService.getAllSavedEvents().subscribe(
+      (response) => {
+        console.log('GetAllSavedEvents response:', response); // Log the response for debugging
+        const savedEvents = response.result.items;
+
+        if (Array.isArray(savedEvents)) {
+          this.isEventSaved = savedEvents.some((event: any) => event.eventId === this.eventId &&this.event.userId === this.loggedInUserId);
+        } else {
+          console.error('GetAllSavedEvents did not return an array:', savedEvents);
+        }
       },
       (error) => {
-        console.error('Error saving event:', error);
+        console.error('Error checking if event is saved:', error);
       }
     );
   }
+
+
+
   
-  // Function to cancel saving an event
-  cancelEventSave(eventId: number): void {
-    this.savedEventService.deleteSavedEvent(eventId).subscribe(
-      (res) => {
-        this.isEventSaved = false; // Mark the event as not saved
-        console.log('Event save canceled successfully.');
-      },
-      (error) => {
-        console.error('Error canceling saved event:', error);
-      }
-    );
-  }
+ // Function to save an event
+navigateToSaveEvent(eventId: number): void {
+  const data: SavedEventData = {
+    eventId: eventId,
+    userId: this.loggedInUserId!
+  };
+  this.savedEventService.createSavedEvent(data).subscribe(
+    (res) => {
+      this.isEventSaved = true; // Mark the event as saved
+      console.log('Event saved successfully.');
+    },
+    (error) => {
+      console.error('Error saving event:', error);
+    }
+  );
+}
+
+// Function to cancel saving an event
+cancelEventSave(eventId: number): void {
+  this.savedEventService.deleteSavedEvent(eventId).subscribe(
+    (res) => {
+      this.isEventSaved = false; 
+      console.log('Event save canceled successfully.');
+    },
+    (error) => {
+      console.error('Error canceling saved event:', error);
+    }
+  );
+}
+
   
   // Function to determine which bookmark icon class to use
   getBookmarkIconClass(): string {
     return this.isEventSaved ? 'fa-solid fa-bookmark' : 'fa-regular fa-bookmark';
-  }
+  }  
 }
 

@@ -101,6 +101,64 @@ h2 img {
   max-width: 500px; 
   height: auto;
 }
+.image-container {
+  padding: 10px;
+}
+
+.place-container {
+  max-height: 600px; /* Adjust as needed */
+  overflow-y: auto;
+  display: flex;
+  flex-wrap: wrap; /* Wrap cards on all screens */
+  justify-content: flex-start;
+  padding: 10px;
+}
+
+.place-card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px; /* Spacing between cards */
+  width: 100%; /* Full width on larger screens */
+  box-sizing: border-box; /* Include padding in width */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow */
+  transition: transform 0.2s, box-shadow 0.2s; /* Smooth transition */
+  cursor: pointer; /* Change cursor on hover */
+}
+
+.place-card:hover {
+  transform: translateY(-5px); /* Slight lift on hover */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Enhance shadow on hover */
+}
+
+.place-card img {
+  max-width: 100%;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  object-fit: cover; /* Ensure image covers the area */
+}
+
+.place-name {
+  font-weight: bold;
+  font-size: 1.2em;
+  margin-bottom: 10px;
+  color: #333;
+  text-align: center;
+}
+
+.place-description {
+  font-size: 0.9em;
+  color: #666;
+  text-align: center;
+}
+
+@media (max-width: 991px) {
+  .place-card {
+      width: calc(33.33% - 20px); /* 3 cards per row with spacing */
+      margin:10px 5px;
+  }
+}
 
 /* Responsive design */
 @media (max-width: 991px) {

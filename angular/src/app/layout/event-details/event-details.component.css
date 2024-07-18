@@ -27,10 +27,10 @@ height: 560px;
   position: relative;
 }
 .icons .fa-bookmark.saved {
-  color: gold;
+  color: gold !important;
 }
 .icons .fa-bookmark{
-  color:black !important;
+  color:gold !important;
 }
 
 
