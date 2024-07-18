@@ -4,22 +4,17 @@ import { Observable, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { catchError } from 'rxjs/operators';
 import { NotifyService } from 'abp-ng2-module';
+import {Guest}  from '../Models/guest'
 @Injectable({
   providedIn: 'root'
 })
 export class PaymentService {
   private apiUrl = `${environment.API_URL_BASE_PART}/api/services/app`;
-
+  private baseUrlForAddGuest =
+    `${environment.API_URL_BASE_PART}/api/services/app/Guest/AddAfterPayment`;
   constructor(private http: HttpClient,private notify:NotifyService) { }
 
-  // createPayment(payment: any): Observable<any> {
-  //   debugger;
-  //   const url = `${this.apiUrl}/Payment/CreateCheckoutSession`;
-  //   const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-
-  //   return this.http.post<any>(url, payment, { headers, withCredentials: true });
-  // }
-
+ 
   createPayment(paymentData: any): Observable<any> {
     const url = `${this.apiUrl}/Payment/CreateCheckoutSession`;
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
@@ -27,21 +22,20 @@ export class PaymentService {
   }
   
 
-  addGuest(data: any): Observable<any> {
-    return this.http.post('/api/guest/add', data);
+  
+
+ 
+
+
+  public createGuest(guest: Guest, eventId: number) {
+    console.log(guest);
+
+    return this.http.post<Guest>(`${this.baseUrlForAddGuest}?eventId=${eventId}`, guest);
   }
 
-  decrementTickets(eventId: number, numberOfTickets: number): Observable<any> {
-   
-    const params = {
-      eventId: eventId,
-      ticketNo: numberOfTickets
-    };
-
-    return this.http.post<any>(`${environment.API_URL_BASE_PART}/api/services/app/Event/DecrementNoOfTickets`, params);
-  }
 
  sendEventTicketEmail(emailRequest: any): Observable<any> {
+  console.log(emailRequest)
     return this.http.post(`${environment.API_URL_BASE_PART}/api/invitation/SendEventTicket`, emailRequest)
       .pipe(
         catchError((error) => {
@@ -51,4 +45,14 @@ export class PaymentService {
         })
       );
   }
+
+   // decrementTickets(eventId: number, numberOfTickets: number): Observable<any> {
+   
+  //   const params = {
+  //     eventId: eventId,
+  //     ticketNo: numberOfTickets
+  //   };
+
+  //   return this.http.post<any>(`${environment.API_URL_BASE_PART}/api/services/app/Event/DecrementNoOfTickets`, params);
+  // }
 }

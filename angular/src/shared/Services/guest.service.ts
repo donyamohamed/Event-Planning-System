@@ -59,7 +59,7 @@ export class GuestService {
   public createGuest(guest: Guest, eventId: number) {
     console.log(guest);
 
-    return this.httpClient.post<Guest>(this.baseUrlForCreate + `?eventId=${eventId}`, guest);
+    return this.httpClient.post<Guest>(`${this.baseUrlForCreate}?eventId=${eventId}`, guest);
   }
   public updateGuest(guest: Guest) {
 

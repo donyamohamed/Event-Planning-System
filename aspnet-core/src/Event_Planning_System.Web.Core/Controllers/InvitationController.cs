@@ -216,7 +216,7 @@ namespace Event_Planning_System.Controllers
             }
             catch (Exception ex)
             {
-                // Log and handle exception
+               
                 _logger.LogError(ex, "Error downloading PDF for invitation.");
                 return StatusCode(500, "Internal server error");
             }
