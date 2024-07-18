@@ -40,7 +40,7 @@ h2{
   height: 70%;
   width: 2px;
   background-color: #c1c1c1;
-  right: 80px;
+  right: 3%;
   top: 50px;
   border-radius: 3px;
 }
@@ -59,7 +59,37 @@ button.btn:hover{
   background-color: #2023c5;
 
 }
-
+.ticket{
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin: 10px 0;
+}
+.ticket-quantity{
+  display: flex;
+  align-items: center;
+}
+.ticket-quantity label{
+  margin-right: 7px;
+  font-weight: 400;
+  color: #050794;
+}
+.ticket-quantity button{
+border: none;
+  background-color: #cdcdcd;
+  color: #050794;
+  height: 30px;
+  width: 30px;
+}
+#numberOfTickets{
+  width: 40px;
+  text-align: center;
+border-color: #9f9f9f;
+outline: none;
+border-width: 1px;
+  height: 30px;
+}
 @media all and (max-width: 676px) {
   .payment-container {
     flex-direction: column;
@@ -68,5 +98,8 @@ button.btn:hover{
     flex: 1;
     padding: 20px;
     width: 100%;
+  }
+  .payment-visual::before{
+    background-color: transparent;
   }
 }

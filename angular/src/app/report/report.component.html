@@ -11,55 +11,22 @@
                 <img src="../../assets/img/social-dashboard-animate.svg" alt="">
             </div>
         </div> <!-- end of row chart -->
+        <!-- <a routerLink="/app/expenses-report" class="btn btn-primary">expenses-report</a> -->
         <hr>
+       
         <div class="row report-links m-3">
-            <div class="table-responsive">
-                <table class="table table-bordered table-hover">
-                    <thead class="table-primary">
-                        <tr>
-                            <th scope="col">Event Name</th>
-                            <th scope="col">Expense Name</th>
-                            <th scope="col">Amount</th>
-                            <th scope="col">Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <ng-container *ngFor="let eventName of items | keyvalue">
-                            <ng-container *ngIf="eventName.value.length > 0">
-                                <tr *ngFor="let expense of eventName.value; let first = first">
-                                    <td scope="row" [attr.rowspan]="eventName.value.length" *ngIf="first">
-                                        {{ eventName.key }}
-                                    </td>
-                                    <td>{{ expense.name }}</td>
-                                    <td>{{ expense.amount }}</td>
-                                    <td>{{ expense.date | date }}</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="4" class="text-center">Total: {{totalamount(eventName.key)}}</td>
-                                </tr>
-                            </ng-container>
-                            <ng-container *ngIf="eventName.value.length === 0">
-                                <tr>
-                                    <td scope="row">{{ eventName.key }}</td>
-                                    <td colspan="3" class="text-center">No expenses found</td>
-                                </tr>
-                            </ng-container>
-                        </ng-container>
-                    </tbody>
-                </table>
+            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 text-center ">
+                <div class="link p-2 text-light rounded-5"  routerLink="/app/expenses-report" >
+                    expenses-report
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 text-center ">
+                <div class="link p-2 text-light rounded-5">Report1</div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 text-center ">
+                <div class="link p-2 text-light rounded-5">Report1</div>
             </div>
         </div>
-        <!-- <div class="row report-links m-3">
-            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 text-center ">
-                <div class="link p-2 text-light rounded-5">Report1</div>
-            </div>
-            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 text-center ">
-                <div class="link p-2 text-light rounded-5">Report1</div>
-            </div>
-            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 text-center ">
-                <div class="link p-2 text-light rounded-5">Report1</div>
-            </div>
-        </div> -->
         <!-- <div class="row report-links m-3">
             <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 text-center ">
                 <div class="link p-2 text-light rounded-5">Report1</div>

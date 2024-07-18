@@ -1,12 +1,20 @@
 <div class="payment-container">
   <div class="payment-visual">
-   <img src="../../assets/img/Payment-yellow.gif" alt="image"/>
+    <img src="../../assets/img/Payment-yellow.gif" alt="image"/>
   </div>
   <div class="payment-form">
     <h2>Payment for Ticket</h2>
-    <p class="badge badge-warning p-2">Amount: {{ ticketPrice | currency }}</p>
+    <div class="ticket">
+      <p class="badge badge-warning p-2">Amount: {{ totalAmount | currency:'EGP' }}</p> 
+      <div class="ticket-quantity">
+        <label for="numberOfTickets">Tickets No</label>
+        <button (click)="decrementTickets()">-</button>
+        <input type="number" id="numberOfTickets" [(ngModel)]="numberOfTickets" [min]="1" (change)="updateAmount()" />
+        <button (click)="incrementTickets()">+</button>
+      </div>
+    </div>
     <form (ngSubmit)="submitPayment()">
-      <div id="card-element" class="Input"></div>
+     <!-- <div id="card-element" class="Input"></div> -->
       <button type="submit" class="btn ">Pay</button>
     </form>
   </div>
