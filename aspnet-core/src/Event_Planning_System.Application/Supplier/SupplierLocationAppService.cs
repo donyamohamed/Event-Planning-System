@@ -51,6 +51,11 @@ namespace Event_Planning_System.Supplier
 			await _repository.InsertAsync(suplierEntitty);
 			await CurrentUnitOfWork.SaveChangesAsync();
 		}
-	
-}
+        public async Task<List<GetSupplierPlaces>> GetPlacesByCategory(EventCategory category)
+        {
+            var places = await _repository.GetAllListAsync(p => p.eventCategory == category);
+            return ObjectMapper.Map<List<GetSupplierPlaces>>(places);
+        }
+
+    }
 }
