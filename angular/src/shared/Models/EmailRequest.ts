@@ -7,5 +7,6 @@ export class EmailRequest {
     public date: Date | undefined = undefined;
     public eventAddress: string | undefined = undefined;
     public eventImage: string | undefined=undefined;
+    public guestId: number| undefined=0;
 }
 
