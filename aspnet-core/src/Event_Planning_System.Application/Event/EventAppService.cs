@@ -475,6 +475,20 @@ namespace Event_Planning_System.Event
                 throw new Abp.UI.UserFriendlyException("An internal error occurred while trying to update the event.");
             }
         }
+        public async Task<List<EventDto>> GetAcceptedEventsPlacesByUserIdAsync(long userId)
+        {
+            var events = await _repository.GetAllListAsync(e => e.UserId == userId && e.RequestPlace == PlaceState.Accepted);
+
+           
+            return ObjectMapper.Map<List<EventDto>>(events);
+        }
+        public async Task<List<EventDto>> GetRejectedEventsPlacesByUserIdAsync(long userId)
+        {
+            var events = await _repository.GetAllListAsync(e => e.UserId == userId && e.RequestPlace == PlaceState.Rejected);
+
+
+            return ObjectMapper.Map<List<EventDto>>(events);
+        }
 
 
     }

@@ -88,6 +88,8 @@ namespace Event_Planning_System.Event.Dto
 
         public int? TicketPrice { get; set; }
 
+        public PlaceState RequestPlace { get; set; }
+
         public bool IsTransient()
         {
             throw new NotImplementedException();
