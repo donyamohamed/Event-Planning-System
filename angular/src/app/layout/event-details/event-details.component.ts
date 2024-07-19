@@ -1,6 +1,5 @@
 
 import { FeedbackService } from '../../../shared/services/feedback.service';
-
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { EventdetailsService } from '../../../shared/services/eventdetails.service';
@@ -13,9 +12,11 @@ import { UserService } from '../../../shared/services/user-service.service';
 import { CurrentUserDataService } from '@shared/services/current-user-data.service';
 import Swal from 'sweetalert2';
 import { Feedback } from '@shared/Models/feedback';
-import { forkJoin, map } from 'rxjs';
-import { SavedEventServiceService } from '../../../shared/services/saved-event-service.service'; 
+import { forkJoin, map, Subject } from 'rxjs';
+import { SavedEventServiceService } from '../../../shared/services/saved-event-service.service';
 import { SavedEventData } from '../../../shared/Models/SavedEventData';
+import {SupplierPlaces} from '../../../shared/Models/SupplierPlaces';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-event-details',
@@ -32,15 +33,17 @@ export class EventDetailsComponent implements OnInit {
   budgetAmount: number | undefined;
   user: any;
   loggedInUserId: number | undefined;
-  isEventCreator: boolean = false; // Add this property
+  isEventCreator: boolean = false; 
   rating: any;
   stars: { type: string, title: string }[] = [];
   numberOfRaters: number | undefined;
   feedbackList: Feedback[] = [];
-  isEventSaved: boolean = false; 
-  isLogin:boolean = false;
+  isEventSaved: boolean = false;
+  isLogin: boolean = false;
   guestCount: number | undefined;
- 
+  place :SupplierPlaces | undefined;
+  private destroy$ = new Subject<void>();
+
 
   constructor(
     private route: ActivatedRoute,
@@ -50,7 +53,7 @@ export class EventDetailsComponent implements OnInit {
     private userService: UserService,
     private currentUserData: CurrentUserDataService,
     private feedbackServ: FeedbackService,
-    private savedEventService: SavedEventServiceService 
+    private savedEventService: SavedEventServiceService
   ) { }
 
   ngOnInit(): void {
@@ -59,20 +62,29 @@ export class EventDetailsComponent implements OnInit {
       this.eventId = Number(params.get('id'));
       this.loadEventDetails();
       this.showFeedbackForEvent();
+      this.showPlaceOfEvent();
       this.loadGuestCount();
+
       if (this.loggedInUserId && this.eventId) {
-        this.checkIfEventSaved(); 
+        this.checkIfEventSaved();
       }
       this.navigateToSaveEvent(this.eventId);
     });
   }
-  
+
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+
   loadCurrentUser(): void {
     this.currentUserData.GetCurrentUserData().subscribe(
       response => {
         console.log(response);
         this.loggedInUserId = response.id;
-        this.isLogin=true;
+        this.isLogin = true;
         this.loadEventDetails();
         this.checkIfEventCreator(); // Check if the event creator is the logged-in user
       },
@@ -264,7 +276,7 @@ export class EventDetailsComponent implements OnInit {
       this.feedbackServ.getAllFeedback(this.eventId).subscribe(
         (data) => {
           console.log('Feedback data:', data);
-           data.map(feedback =>
+          data.map(feedback =>
             this.userService.getUserById2(feedback.userId)
               .pipe(
                 map(user => ({ ...feedback, user: user }))
@@ -278,6 +290,51 @@ export class EventDetailsComponent implements OnInit {
       );
     }
   }
+
+  private showPlaceOfEvent(): void {
+    if (this.eventId) {
+      console.log('Fetching place for event ID:', this.eventId);
+      this.eventDetailsService.getPlaceOfEvent(this.eventId).pipe(takeUntil(this.destroy$)).subscribe(
+        (result) => {
+          console.log('Place data:', result);
+          this.place = result;
+          console.log('Assigned place:', this.place);
+        },
+        (error) => {
+          console.error('Error fetching place:', error);
+        }
+      );
+    }
+  }
+  
+
+  // private showPlaceOfEvent(): void {
+  //   if (this.eventId) {
+  //     this.eventDetailsService.getPlaceOfEvent(this.eventId).pipe(takeUntil(this.destroy$)).subscribe(
+  //       result => {
+  //         this.place = result;
+  //         console.log('Place data:', result);
+  //       },
+  //       error => console.error('Error fetching place:', error)
+  //     );
+  //   }
+  // }
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   checkIfEventSaved(): void {
     this.savedEventService.getAllSavedEvents().subscribe(
       (response) => {
@@ -285,7 +342,7 @@ export class EventDetailsComponent implements OnInit {
         const savedEvents = response.result.items;
 
         if (Array.isArray(savedEvents)) {
-          this.isEventSaved = savedEvents.some((event: any) => event.eventId === this.eventId &&this.event.userId === this.loggedInUserId);
+          this.isEventSaved = savedEvents.some((event: any) => event.eventId === this.eventId && this.event.userId === this.loggedInUserId);
         } else {
           console.error('GetAllSavedEvents did not return an array:', savedEvents);
         }
@@ -298,41 +355,41 @@ export class EventDetailsComponent implements OnInit {
 
 
 
-  
- // Function to save an event
-navigateToSaveEvent(eventId: number): void {
-  const data: SavedEventData = {
-    eventId: eventId,
-    userId: this.loggedInUserId!
-  };
-  this.savedEventService.createSavedEvent(data).subscribe(
-    (res) => {
-      this.isEventSaved = true; // Mark the event as saved
-      console.log('Event saved successfully.');
-    },
-    (error) => {
-      console.error('Error saving event:', error);
-    }
-  );
-}
 
-// Function to cancel saving an event
-cancelEventSave(eventId: number): void {
-  this.savedEventService.deleteSavedEvent(eventId).subscribe(
-    (res) => {
-      this.isEventSaved = false; 
-      console.log('Event save canceled successfully.');
-    },
-    (error) => {
-      console.error('Error canceling saved event:', error);
-    }
-  );
-}
+  // Function to save an event
+  navigateToSaveEvent(eventId: number): void {
+    const data: SavedEventData = {
+      eventId: eventId,
+      userId: this.loggedInUserId!
+    };
+    this.savedEventService.createSavedEvent(data).subscribe(
+      (res) => {
+        this.isEventSaved = true; // Mark the event as saved
+        console.log('Event saved successfully.');
+      },
+      (error) => {
+        console.error('Error saving event:', error);
+      }
+    );
+  }
 
-  
+  // Function to cancel saving an event
+  cancelEventSave(eventId: number): void {
+    this.savedEventService.deleteSavedEvent(eventId).subscribe(
+      (res) => {
+        this.isEventSaved = false;
+        console.log('Event save canceled successfully.');
+      },
+      (error) => {
+        console.error('Error canceling saved event:', error);
+      }
+    );
+  }
+
+
   // Function to determine which bookmark icon class to use
   getBookmarkIconClass(): string {
     return this.isEventSaved ? 'fa-solid fa-bookmark' : 'fa-regular fa-bookmark';
-  }  
+  }
 }
 

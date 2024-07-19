@@ -8,7 +8,8 @@
 }
 h2{
   color: #050794;
-  margin-bottom: 25px;
+  margin-bottom: 35px;
+  font-size: 40px;
 }
 .Input:focus {
   border-image-source: linear-gradient(to right, hsl(249, 99%, 64%), hsl(278, 94%, 30%));
@@ -38,7 +39,7 @@ h2{
   content: '';
   position: absolute;
   height: 70%;
-  width: 2px;
+  width: 1px;
   background-color: #c1c1c1;
   right: 3%;
   top: 50px;
@@ -56,7 +57,7 @@ button.btn{
   transition: .5s;
 }
 button.btn:hover{
-  background-color: #2023c5;
+  background-color: #171bd5;
 
 }
 .ticket{
@@ -70,15 +71,16 @@ button.btn:hover{
   display: flex;
   align-items: center;
 }
-.ticket-quantity label{
+.ticket-quantity label , .ticket label{
   margin-right: 7px;
-  font-weight: 400;
+  font-weight: 600;
   color: #050794;
 }
+
 .ticket-quantity button{
 border: none;
-  background-color: #cdcdcd;
-  color: #050794;
+  background-color: #050794;
+  color: #fff;
   height: 30px;
   width: 30px;
 }

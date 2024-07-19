@@ -19,4 +19,10 @@ export class EventdetailsService {
     const url = `${environment.API_URL_BASE_PART}/api/services/app/AllGuestService/GetGuestCountByEventId?eventId=${eventId}`;
     return this.http.get<any>(url);
   }
+
+  getPlaceOfEvent(eventId : number):Observable<any>{
+    const url = `${environment.API_URL_BASE_PART}/api/services/app/SupplierLocation/GetPlaceForEvent?eventId=${eventId}`;
+    return this.http.get<any>(url);
+  }
+
 }

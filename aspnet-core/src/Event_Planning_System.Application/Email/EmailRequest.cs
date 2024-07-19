@@ -15,7 +15,7 @@ namespace Event_Planning_System.Email
         public DateTime Date { get; set; }
         public string EventAddress { get; set; }
         public string EventImage { get; set; }
-
+        public int? GuestId { get; set; }
 
     }
 }

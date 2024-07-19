@@ -89,6 +89,29 @@ namespace Event_Planning_System.Guest
             await _repositoryEvent.UpdateAsync(eventUser);
         }
 
+        public async Task AddAfterPayment(Enitities.Guest guest, int eventId)
+        {
+         
+            var existingGuest = await _repository.FirstOrDefaultAsync(g => g.Email == guest.Email && g.Events.Any(e => e.Id == eventId));
+            if (existingGuest != null)
+            {
+              
+                return;
+            }
+
+            await ValidateGuestEmail(guest.Email, eventId);
+            var eventUser = await _repositoryEvent.FirstOrDefaultAsync(eventId);
+            if (eventUser == null)
+            {
+                throw new EntityNotFoundException(typeof(Enitities.Event), eventId);
+            }
+
+          
+            guest.InvitationState = "Accepted";
+            eventUser.Guests.Add(guest);
+            await _repositoryEvent.UpdateAsync(eventUser);
+        }
+
 
 
 
@@ -353,12 +376,15 @@ namespace Event_Planning_System.Guest
             var guest = await _repository.FirstOrDefaultAsync(guestId);
             if (guest == null)
             {
+                _logger.LogWarning("Guest not found: {0}", guestId);
                 throw new EntityNotFoundException(typeof(Enitities.Guest), guestId);
             }
 
             guest.InvitationState = newState;
             await _repository.UpdateAsync(guest);
+            _logger.LogInformation("Invitation state updated to '{0}' for guest: {1}", newState, guestId);
         }
+
 
         public async Task<GuestDto> GetGuestByEmailAsync(string email)
         {

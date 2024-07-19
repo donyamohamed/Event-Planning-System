@@ -221,10 +221,75 @@ namespace Event_Planning_System.Authorization.Accounts
         private async Task SendRegistrationConfirmationEmail(User user)
         {
             var activationLink = $"http://localhost:4200/account/activate/{user.Id}";
-            var emailBodyTemplate = $"Thank you for registering! Click <a href='{activationLink}'>here</a> to activate your account.";
+            var emailBodyTemplate = $@"
+    <html>
+    <head>
+        <style>
+            body {{
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f4;
+                margin: 0;
+                padding: 0;
+            }}
+            .container {{
+                width: 100%;
+                max-width: 600px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #ffffff;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }}
+            .header {{
+                background-color: #007bff;
+                color: #ffffff;
+                padding: 10px;
+                text-align: center;
+            }}
+            .content {{
+                padding: 20px;
+                font-size: 16px;
+                line-height: 1.6;
+            }}
+            .button {{
+                display: inline-block;
+                padding: 10px 20px;
+                margin: 20px 0;
+                background-color: #007bff;
+                color: #ffffff;
+                text-decoration: none;
+                border-radius: 5px;
+            }}
+            .footer {{
+                text-align: center;
+                padding: 10px;
+                font-size: 12px;
+                color: #777777;
+            }}
+        </style>
+    </head>
+    <body>
+        <div class='container'>
+            <div class='header'>
+                <h1>Welcome to Our Service!</h1>
+            </div>
+            <div class='content'>
+                <p>Hi {user.Name},</p>
+                <p>Thank you for registering! To complete your registration, please click the button below to activate your account:</p>
+                <a href='{activationLink}' class='button'>Activate Your Account</a>
+                <p>If the button above doesn't work, please copy and paste the following link into your browser:</p>
+                <p><a href='{activationLink}'>{activationLink}</a></p>
+            </div>
+            <div class='footer'>
+                <p>If you did not register for this account, please ignore this email.</p>
+                <p>&copy; 2024 Eventa. All rights reserved.</p>
+            </div>
+        </div>
+    </body>
+    </html>";
 
             await _emailService.SendEmailAsync(user.EmailAddress, "Registration Confirmation", emailBodyTemplate);
         }
+
         public async Task CreateSupplierAccount(string email)
         {
             var emailBodyTemplate = @"

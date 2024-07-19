@@ -10,7 +10,8 @@ import { SidebarEventComponent } from "../layout/sidebar-event/sidebar-event.com
 import { GuestService } from '../../shared/services/guest.service';
 
 import { Router, RouterLink } from '@angular/router';
-import Swal from 'sweetalert2'; // Import SweetAlert2
+import Swal from 'sweetalert2';
+import { SharedModule } from "../../shared/shared.module"; // Import SweetAlert2
 
 interface SavedEvent {
   eventId: number;
@@ -31,7 +32,7 @@ interface EventDetail {
 @Component({
   selector: 'app-savedevents',
   standalone: true,
-  imports: [CommonModule, SidebarEventComponent, RouterLink],
+  imports: [CommonModule, SidebarEventComponent, RouterLink, SharedModule],
   templateUrl: './savedevents.component.html',
   styleUrls: ['./savedevents.component.css']
 })
