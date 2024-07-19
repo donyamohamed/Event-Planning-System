@@ -14,6 +14,8 @@ namespace Event_Planning_System.Supplier
 	public interface ISupplierLocationsAppService : IAsyncCrudAppService<SupplierPlacesDTO, int>
 	{
         Task<List<GetSupplierPlaces>> GetPlacesByCategory(EventCategory category);
+        Task<List<GetSupplierPlaces>> GetAllPlacesWithSupplierInfo();
+        Task<List<GetSupplierPlaces>> GetPlacesBySupplier(long userId);
 
     }
 }

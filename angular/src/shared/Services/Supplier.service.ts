@@ -47,4 +47,17 @@ export class SupplierService {
       map(response => response.result)
     );
   }
+
+  //asma:)
+  getAllPlacesWithSupplierInfo(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/GetAllPlacesWithSupplierInfo`).pipe(
+      map(response => response.result)
+    );
+  }
+
+  getPlacesBySupplier(userId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/GetPlacesBySupplier?userId=${userId}`).pipe(
+      map(response => response.result)
+    );
+  }
 }

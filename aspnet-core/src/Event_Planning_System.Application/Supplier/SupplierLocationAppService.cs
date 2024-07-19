@@ -17,13 +17,14 @@ using Event_Planning_System.Image;
 using AutoMapper;
 using Event_Planning_System.Event.Dto;
 using Abp.Domain.Entities;
+using Event_Planning_System.Authorization.Users;
 
 namespace Event_Planning_System.Supplier
 {
 	public class SupplierLocationAppService : AsyncCrudAppService<SupplierPlaces, SupplierPlacesDTO, int>, ISupplierLocationsAppService
 	{
 		private readonly IRepository<SupplierPlaces, int> _repository;
-
+    
         private readonly IRepository<Enitities.Event, int> _eventrepository;
         private readonly ICloudinaryService _cloudinaryService;
         private readonly IRepository<Authorization.Users.User,long> _userrepository;
@@ -153,6 +154,31 @@ namespace Event_Planning_System.Supplier
             }
 
             return new BadRequestObjectResult("This event does not contain a place or the place request is not accepted");
+        }
+
+        public async Task<List<GetSupplierPlaces>> GetPlacesBySupplier(long userId)
+        {
+            var places = await _repository.GetAllListAsync(p => p.UserId == userId);
+            return ObjectMapper.Map<List<GetSupplierPlaces>>(places);
+        }
+
+
+        public async Task<List<GetSupplierPlaces>> GetAllPlacesWithSupplierInfo()
+        {
+            var places = await _repository.GetAllListAsync();
+            var placeDtos = ObjectMapper.Map<List<GetSupplierPlaces>>(places);
+
+            foreach (var place in placeDtos)
+            {
+                var user = await _userrepository.FirstOrDefaultAsync(u => u.Id == place.UserId);
+                if (user != null)
+                {
+                    place.UserName = user.Name;
+                    place.UserEmail = user.EmailAddress;
+                }
+            }
+
+            return placeDtos;
         }
 
     }

@@ -1,0 +1,33 @@
+<div *ngIf="halls.length > 0; else noHalls" class="hall-container">
+  <h1>{{ title }}</h1>
+  <div class="cards">
+  <article class="card " *ngFor="let hall of halls">
+       <p class="card__price">Price <Span>{{ hall.price }}</Span></p>
+        <p class="card__capacity">Capacity <span>{{ hall.capacity }}</span></p>
+    <img
+      class="card__background"
+      [src]="hall.image || 'https://i.imgur.com/QYWAcXk.jpeg'"
+      alt="Photo of {{ hall.name }}"
+      width="1920"
+      height="2193"
+    />
+    <div class="card__content | flow">
+      <div class="card__content--container | flow">
+        <h2 class="card__title">{{ hall.name }}</h2>
+     
+
+        <p class="card__description">{{ truncateDescription(hall.description) }}</p>
+
+        <p class="badge badge-warning" ><i class="fas fa-map-marker-alt location-icon mr-2"></i> {{hall.location}}</p>
+     <p class="badge badge-primary" *ngIf="userRole === 'ADMIN'" (click)="sendEmail(hall.userEmail)">By: {{hall.userEmail}}</p>
+  
+
+      </div>
+      <button class="card__button" >Know More</button>
+    </div>
+  </article>
+</div>
+</div>
+<ng-template #noHalls class="hall-container">
+  <p class="alert alert-primary w-50 text-center my-4 mx-auto text-dark">No halls available.</p>
+</ng-template>

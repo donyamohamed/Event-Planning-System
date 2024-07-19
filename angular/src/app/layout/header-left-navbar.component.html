@@ -15,6 +15,14 @@
       {{ "New Event Place" | localize }}
     </a>
   </li> 
+  
+  <li class="nav-item  d-sm-inline-block" *ngIf="isLoggedIn">
+    <a class="nav-link " [routerLink]="['/app/event-places']">
+     
+        <span>{{ "Halls" | localize }}</span>
+  
+    </a>
+  </li>
   <li class="nav-item  d-sm-inline-block" *ngIf="!isLoggedIn">
     <a class="nav-link animated-login login-swing" [routerLink]="['/account/login']">
       <div class="loader">
