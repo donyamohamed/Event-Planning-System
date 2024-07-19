@@ -45,5 +45,9 @@ export class Event {
         public source?: 'attending' | 'upcoming',
         public placeId: number | undefined = undefined,
         public requestPlace: PlaceState | undefined =0,
+        public placeName : string | undefined = undefined,
+        public userName : string |undefined=  undefined,
+        public userEmail :string |undefined=  undefined,
+        public ContactEmail :string |undefined=undefined,
     ) {}
 }

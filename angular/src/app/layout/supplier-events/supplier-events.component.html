@@ -1,0 +1,24 @@
+<div *ngIf="events.length > 0">
+    <div *ngFor="let event of events" class="event-item">
+      <div class="event-content">
+        <img class="notification-image" [src]="event.eventImg || '../../assets/img/Event.jpg'" alt="Event Image">
+        <div class="event-details">
+          <h6>{{ event.userName }} wants a reserve this {{ event.placeName }} for this {{ event.name }} </h6>
+          <!-- <p>EventName : {{ event.name }}</p> -->
+          <p>StartDate : {{ event.startDate }}</p>
+          <p>EndDate : {{ event.endDate }}</p>
+          <!-- <p>Planer_Name : {{ event.userName }}</p> -->
+          <p>Planer_Email : {{ event.userEmail }}</p>
+        </div>
+      </div>
+      <div class="event-actions">
+        <button class="btn btn-success" (click)="acceptEvent(event.id)">Accept</button>
+        <button class="btn btn-danger" (click)="rejectEvent(event.id)">Reject</button>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="events.length === 0"  class="no-events1">
+    <img src="../../../assets/img/Shrug.gif" alt="">
+    <h3>There is no request for any place</h3>
+  </div>
+  

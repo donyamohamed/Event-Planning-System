@@ -44,7 +44,7 @@ import {SuccessPaymentComponent} from './success-payment/success-payment.compone
 import {FaildPaymentComponent} from './faild-payment/faild-payment.component';
 
 import {SupplierPlacesComponent} from './supplier-places/supplier-places.component';
-
+import { SupplierEventsComponent } from '../app/layout/supplier-events/supplier-events.component';
 
 const routes: Routes = [
     {
@@ -75,6 +75,9 @@ const routes: Routes = [
 
             { path: 'eventDetails/:id', component: EventDetailsComponent },
             { path: 'payment', component: PaymentComponent, canActivate: [AppRouteGuard] },
+
+            {path: 'supplier-events',component:SupplierEventsComponent, canActivate: [AppRouteGuard] },
+
             { path: 'payment-success', component: SuccessPaymentComponent },
             { path: 'payment-failed', component: FaildPaymentComponent },
 

@@ -15,22 +15,29 @@ using System.IO;
 using Event_Planning_System.UserProfile;
 using Event_Planning_System.Image;
 using AutoMapper;
+using Event_Planning_System.Event.Dto;
+using Abp.Domain.Entities;
 
 namespace Event_Planning_System.Supplier
 {
 	public class SupplierLocationAppService : AsyncCrudAppService<SupplierPlaces, SupplierPlacesDTO, int>, ISupplierLocationsAppService
 	{
 		private readonly IRepository<SupplierPlaces, int> _repository;
-		private readonly ICloudinaryService _cloudinaryService;
-        private readonly IRepository<Enitities.Event, int> _eventRepository;
+
+        private readonly IRepository<Enitities.Event, int> _eventrepository;
+        private readonly ICloudinaryService _cloudinaryService;
+        private readonly IRepository<Authorization.Users.User,long> _userrepository;
         private readonly IMapper _mapper;
-		public SupplierLocationAppService(IRepository<SupplierPlaces, int> repository, ICloudinaryService cloudinaryService,IMapper mapper , IRepository<Enitities.Event, int> eventRepository) : base(repository)
+		public SupplierLocationAppService(IRepository<SupplierPlaces, int> repository, IRepository<Enitities.Event, int> eventrepository, IRepository<Authorization.Users.User, long> userrepository, ICloudinaryService cloudinaryService,IMapper mapper) : base(repository)
+
 		{
 			_repository = repository;
 			_cloudinaryService = cloudinaryService;
 			_mapper = mapper;
-			_eventRepository = eventRepository;
+            _eventrepository= eventrepository;
+            _userrepository = userrepository;
 		}
+
 		[HttpPost]
 		public async Task CreateSupplierPlace([FromForm] SupplierPlacesDTO supplierPlace)
 		{
@@ -58,6 +65,78 @@ namespace Event_Planning_System.Supplier
             var places = await _repository.GetAllListAsync(p => p.eventCategory == category);
             return ObjectMapper.Map<List<GetSupplierPlaces>>(places);
         }
+        public async Task<List<EventDto>> GetPendingEventsBySupplierIdAsync(long userId)
+        {
+            // Get supplier places for the user
+            var supplierPlaces = await _repository.GetAllListAsync(sp => sp.UserId == userId);
+            var supplierPlaceIds = supplierPlaces.Select(sp => sp.Id).ToList();
+
+            // Get events for the supplier places
+            var events = await _eventrepository.GetAllListAsync(e => supplierPlaceIds.Contains(e.PlaceId.Value) && e.RequestPlace == PlaceState.Pendding);
+
+            var eventDtos = new List<EventDto>();
+
+            foreach (var eventEntity in events)
+            {
+                // Fetch the user details
+                var user = await _userrepository.GetAsync(eventEntity.UserId);
+
+                // Map event to EventDto and include the user details
+                var eventDto = ObjectMapper.Map<EventDto>(eventEntity);
+                eventDto.PlaceName = eventEntity.SupplierPlaces?.Name;
+                eventDto.UserName = user.Name;
+                eventDto.UserEmail = user.EmailAddress;
+
+                eventDtos.Add(eventDto);
+            }
+
+            return eventDtos;
+        }
+
+        public async Task<int> GetPendingEventsCountBySupplierIdAsync(long userId)
+        {
+            var supplierPlaces = await _repository.GetAllListAsync(sp => sp.UserId == userId);
+            var supplierPlaceIds = supplierPlaces.Select(sp => sp.Id).ToList();
+            var pendingEventsCount = await _eventrepository.CountAsync(e => supplierPlaceIds.Contains(e.PlaceId.Value) && e.RequestPlace == PlaceState.Pendding);
+            return pendingEventsCount;
+        }
+
+        public async Task AcceptEventAsync(int eventId)
+        {
+           
+            var eventItem = await _eventrepository.FirstOrDefaultAsync(e => e.Id == eventId);
+
+            if (eventItem != null)
+            {
+                eventItem.RequestPlace =PlaceState.Accepted;
+                await _eventrepository.UpdateAsync(eventItem);
+                await CurrentUnitOfWork.SaveChangesAsync();
+            }
+            else
+            {
+                throw new EntityNotFoundException($"Event with id {eventId} not found.");
+            }
+        }
+        public async Task RejectEventAsync(int eventId)
+        {
+            // Fetch the event by Id
+            var eventItem = await _eventrepository.FirstOrDefaultAsync(e => e.Id == eventId);
+
+            if (eventItem != null)
+            {
+                eventItem.RequestPlace = PlaceState.Rejected;
+                await _eventrepository.UpdateAsync(eventItem);
+                await CurrentUnitOfWork.SaveChangesAsync();
+            }
+            else
+            {
+                throw new EntityNotFoundException($"Event with id {eventId} not found.");
+            }
+        }
+
+
+
+
 
 
 
