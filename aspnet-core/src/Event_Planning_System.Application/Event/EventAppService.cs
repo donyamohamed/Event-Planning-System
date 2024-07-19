@@ -493,7 +493,7 @@ namespace Event_Planning_System.Event
                 var eventEntity = events.FirstOrDefault(e => e.Id == eventDto.Id);
                 if (eventEntity != null)
                 {
-                    eventDto.PlaceName = eventEntity.SupplierPlaces?.Name;
+                    eventDto.PlaceName = eventEntity.SupplierPlaces?.Name; ;
                     eventDto.ContactEmail = eventEntity.SupplierPlaces?.ContactEmail;
                     eventDto.UserName = eventEntity.User?.UserName;
                     eventDto.UserEmail = eventEntity.User?.EmailAddress;
