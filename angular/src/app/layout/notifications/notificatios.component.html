@@ -10,8 +10,7 @@
                         </div>
                         <div class="content" #con>
                                 <h6 class="alert alert-info mt-5 my-lg-5 text-center"
-                                        *ngIf="AllCount==0 && Upcomming.result.length===0 ">You
-                                        Don't Have Any Notifications Yet!</h6>
+                                        *ngIf="AllCount==0 && Upcomming.result.length===0 ">  {{"You Don't Have Any Notifications Yet!" | localize}}</h6>
                                 @for (item of AllNotifications; track $index) {
                                 <div style="display: flex; flex-direction: row; margin-bottom: 10px;"
                                         *ngIf="item.status==0">
@@ -22,7 +21,7 @@
                                         <div style="margin-top: 5px;">
                                                 <b>
                                                        
-                                                        {{ item.content }} from {{ getGuestData(item.guestId) }}
+                                                        {{ item.content }}   {{"from" | localize}} {{ getGuestData(item.guestId) }}
                                                       <i class="text-uppercase">
                                                         {{ guestData.result.fullName }}
                                                       </i>  </b><br>
@@ -35,9 +34,9 @@
 
                                                 <div style="display: flex; flex-direction: row; justify-content: end;">
                                                         <button class="btn btn-dark"
-                                                                (click)="Accept(item)">Accept</button>
+                                                                (click)="Accept(item)">  {{"Accept" | localize}}</button>
                                                         <button class="btn btn-danger ml-4"
-                                                                (click)="Reject(item)">Reject</button>
+                                                                (click)="Reject(item)">  {{"Reject" | localize}}</button>
                                                 </div>
                                         </div>
 
@@ -54,7 +53,7 @@
                                         <div style="margin-top: 5px;">
                                                 <p style="font-weight: bold; margin: 0;" #text
                                                         [ngStyle]="{'font-weight':item.isRead==true? 'normal' :'bold'}">
-                                                        🎉 Don't forget about
+                                                        {{"🎉 Don't forget about" | localize}}
                                                         {{item.name}} 🎉</p>
                                                 <p style="font-size: 14px; margin: 0;">📅
                                                         {{item.startDate.split("T")[0]}}</p>
@@ -66,7 +65,7 @@
                                                         <button (click)="changeFontWeight(item)"
                                                                 [ngStyle]="{'color':item.isRead==true? 'gray':'black','text-align':'center'}"
                                                                 [disabled]="item.isRead==true" class="btn btn-warning">
-                                                                seen</button>
+                                                                {{"seen" | localize}}</button>
                                                 </div>
                                         </div>
                                 </div>
@@ -81,17 +80,58 @@
                                                         </div>
                                                         <div style="margin-top: 5px;">
                                                                 <p style="font-weight: bold; margin: 0;" #text>
-                                                                        Would you mind giving us your feedback about <i style="font-family: 'Times New Roman', Times, serif;">{{(item.content).split(":")[1]}} Event!</i></p>
+                                                                        {{" Would you mind giving us your feedback about" | localize}} <i style="font-family: 'Times New Roman', Times, serif;">{{(item.content).split(":")[1]}} Event!</i></p>
                                                         </div>
                                                 </div>
                                                         <span style="margin-left: 50%;" >
                                                                 <button class="btn btn-dark" (click)="GiveReview(item)">Sure!</button>
-                                                                <button class="btn btn-danger m-lg-2">Cancel</button>
+                                                                <button class="btn btn-danger m-lg-2">{{"Cancel" | localize}}</button>
                                                         </span>
                                         </div>
         
                                         }
-                                     
+                                        <div *ngFor="let event of acceptedEvents" class="event">
+                                                <div style="display: flex; flex-direction: row; margin-bottom: 10px;">
+                                                  <div>
+                                                    <img [src]="event.eventImg || '../../assets/img/Event.jpg'" style="width: 60px; height: auto; margin-right: 10px;" alt="Event Image" />
+                                                  </div>
+                                                  <div style="margin-top: 5px;">
+                                                    <p class="bold-text" [ngStyle]="{'font-weight': event.isRead ? 'normal' : 'bold'}">
+                                                        Your request to reserve this {{ event.placeName }} for this{{ event.name }} has been approved 
+                                                    </p>
+                                                    <p style="font-size: 14px; margin: 0;">📅 {{ event.startDate | date: 'shortDate' }}</p>
+                                                    <p style="font-size: 14px; margin: 0;">🕒 {{ event.startDate | date: 'shortTime' }}</p>
+                                                    <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                                                      <p style="font-size: 14px; margin: 0;">📍 {{ event.location }}</p>
+                                                      <button (click)="sendEmail(event.contactEmail)" [ngStyle]="{'color': event.isRead ? 'gray' : 'black', 'text-align': 'center'}" [disabled]="event.isRead" class="btn btn-primary">
+                                                        Connect
+                                                      </button>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                              
+                                              <div *ngFor="let event of rejectedEvents" class="event">
+                                                <div style="display: flex; flex-direction: row; margin-bottom: 10px;">
+                                                  <div>
+                                                    <img [src]="event.eventImg || '../../assets/img/Event.jpg'" style="width: 60px; height: auto; margin-right: 10px;" alt="Event Image" />
+                                                  </div>
+                                                  <div style="margin-top: 5px;">
+                                                    <p class="bold-text" [ngStyle]="{'font-weight': event.isRead ? 'normal' : 'bold'}">
+                                                        Your request to reserve this {{ event.placeName }} for this{{ event.name }} has been denied
+                                                    </p>
+                                                    <p style="font-size: 14px; margin: 0;">📅 {{ event.startDate | date: 'shortDate' }}</p>
+                                                    <p style="font-size: 14px; margin: 0;">🕒 {{ event.startDate | date: 'shortTime' }}</p>
+                                                    <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                                                      <p style="font-size: 14px; margin: 0;">📍 {{ event.location }}</p>
+                                                      <button (click)="changeFontWeight(event)" [ngStyle]="{'color': event.isRead ? 'gray' : 'black', 'text-align': 'center'}" [disabled]="event.isRead" class="btn btn-warning">
+                                                        Seen
+                                                      </button>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                              
                                         
                         </div>
                         <br>

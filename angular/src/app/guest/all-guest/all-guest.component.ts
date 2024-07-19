@@ -94,6 +94,10 @@ export class AllGuestComponent implements OnInit {
         next: (res: EventResponse) => {
           this.eventname = res.result.name;
           this.maxCountOfGuest = res.result.maxCount;
+          this.emailObj.eventAddress = res.result.location;
+        this.emailObj.eventName = res.result.name;
+    this.emailObj.date = res.result.startDate;
+    this.emailObj.eventImage = res.result.eventImg;
         },
         error: (err) => {
           console.log(err);
@@ -257,14 +261,13 @@ export class AllGuestComponent implements OnInit {
     });
   }
 
-  SendEmail(email: string) {
+  SendEmail(email: string,id: number) {
     this.emailObj.toEmail = email;
     this.emailObj.subject = "Invitation to the event";
     this.emailObj.body = "Dear Guest, you are invited to the event";
-    this.emailObj.eventAddress = this.event.location;
-    this.emailObj.eventName = this.event.name;
-    this.emailObj.date = this.event.startDate;
-    this.emailObj.eventImage = this.event.eventImg;
+    
+    
+    this.emailObj.guestId=id;
     this.invitation.sendInvitationByEmail(this.emailObj).subscribe({
       next: (data) => {
         swal.fire({
@@ -280,7 +283,7 @@ export class AllGuestComponent implements OnInit {
       error: (err) => console.log(err),
     });
   }
-
+  
   SendSMS(phone: string) {
     this.smsObj.ToPhoneNumber = phone;
     this.smsObj.Message = "Dear Guest, you are invited to the event";
@@ -390,6 +393,7 @@ export class AllGuestComponent implements OnInit {
               confirmButtonText: "OK",
             })
             .then((result) => {
+              location.reload();
               this.router.navigateByUrl(`app/allGuests/${this.idEvent}`);
             });
 

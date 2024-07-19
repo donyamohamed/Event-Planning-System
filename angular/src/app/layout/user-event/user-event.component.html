@@ -60,10 +60,10 @@
       <div class="header-container">
         <a routerLink="/app/create-event" class="btncreate">{{ "Create Event" | localize }}</a>
       </div>
-      <div class="no-events1 ">
+      <div class="no-events1">
 
         <img src="../../../assets/img/NoEvent.gif" alt="">
-        <h3>You have not created any event, please create the first event</h3>
+        <h3>{{"You have not created any event, please create the first event"| localize}}</h3>
       </div>
     </div>
   </div>
@@ -73,7 +73,7 @@
 <!---------------- edit Modal ---------------------->
 <ng-template #Editetemplate>
   <div class="modal-header">
-    <h4 class="modal-title" style="color: #1D2027;">Update Event</h4>
+    <h4 class="modal-title" style="color: #1D2027;">{{ "Update Event" | localize }}</h4>
     <button type="button" class="close" aria-label="Close" (click)="bsModalRef.hide()">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -81,40 +81,40 @@
   <div class="modal-body">
     <form [formGroup]="eventEditForm" (ngSubmit)="editEvent()">
       <div>
-        <label for="nameInput">Event Name:</label>
+        <label for="nameInput">{{ "Event Name:" | localize }}</label>
         <input formControlName="name" class="form-control" type="text" id="nameInput" name="nameInput"
           [(ngModel)]="eventEdit.name" required />
         <div *ngIf="eventEditForm.get('name').invalid && eventEditForm.get('name').touched" class="text-danger">
-          <div *ngIf="eventEditForm.get('name').errors.required">Name is required.</div>
-          <div *ngIf="eventEditForm.get('name').errors.maxlength">Name cannot be longer than 100 characters.</div>
+          <div *ngIf="eventEditForm.get('name').errors.required">{{ "Name is required." | localize }}</div>
+          <div *ngIf="eventEditForm.get('name').errors.maxlength">{{ "Name cannot be longer than 100 characters." | localize }}</div>
         </div>
       </div>
       <div>
-        <label>Map:</label>
+        <label>{{ "Map:" | localize }}</label>
         <div id="map" style="width: 100%; height: 400px;"></div>
         <input formControlName="location" type="text" [(ngModel)]="eventEdit.location" name="location" class="form-control mt-2" placeholder="{{ 'Event Location' | localize }}">
         <div *ngIf="eventEditForm.get('location').invalid && eventEditForm.get('location').touched" class="text-danger">
-          <div *ngIf="eventEditForm.get('location').errors.required">Location is required.</div>
+          <div *ngIf="eventEditForm.get('location').errors.required">{{ "Location is required." | localize }}</div>
         </div>
       </div>
       <div>
-        <label for="startDateInput">Start Date:</label>
+        <label for="startDateInput">{{ "Start Date:" | localize }}</label>
         <input formControlName="startDate" class="form-control" type="datetime-local" id="startDateInput"
           name="startDateInput" [(ngModel)]="eventEdit.startDate" (change)="validateDates()" required />
         <div *ngIf="eventEditForm.get('startDate').invalid && eventEditForm.get('startDate').touched"
           class="text-danger">
-          <div *ngIf="eventEditForm.get('startDate').errors.required">Date is required.</div>
+          <div *ngIf="eventEditForm.get('startDate').errors.required">{{ "Date is required." | localize }}</div>
         </div>
         <div *ngIf="dateErrors.startDateError" class="text-danger">
           {{ dateErrors.startDateError }}
         </div>
       </div>
       <div>
-        <label for="endDateInput">End Date:</label>
+        <label for="endDateInput">{{ "End Date:" | localize }}</label>
         <input formControlName="endDate" class="form-control" type="datetime-local" id="endDateInput"
           name="endDateInput" [(ngModel)]="eventEdit.endDate" (change)="validateDates()" required />
         <div *ngIf="eventEditForm.get('endDate').invalid && eventEditForm.get('endDate').touched" class="text-danger">
-          <div *ngIf="eventEditForm.get('endDate').errors.required">End Date is required.</div>
+          <div *ngIf="eventEditForm.get('endDate').errors.required">{{ "End Date is required." | localize }}</div>
         </div>
         <div *ngIf="dateErrors.endDateError" class="text-danger">
           {{ dateErrors.endDateError }}
@@ -130,11 +130,11 @@
         </div>
       </div>
       <div>
-        <label for="maxCountInput">Max Count:</label>
+        <label for="maxCountInput">{{ "Max Count:" | localize }}</label>
         <input formControlName="maxCount" class="form-control" type="number" id="maxCountInput" name="maxCountInput"
           [(ngModel)]="eventEdit.maxCount" required />
         <div *ngIf="eventEditForm.get('maxCount').invalid && eventEditForm.get('maxCount').touched" class="text-danger">
-          <div *ngIf="eventEditForm.get('maxCount').errors.required">Max Count is required.</div>
+          <div *ngIf="eventEditForm.get('maxCount').errors.required">{{ "Max Count is required." | localize }}</div>
         </div>
       </div>
       <div>
@@ -154,20 +154,20 @@
           </label>
         </div>
         <div *ngIf="eventEditForm.get('isPublic').invalid && eventEditForm.get('isPublic').touched" class="text-danger">
-          <div *ngIf="eventEditForm.get('isPublic').errors.required">Event type is required.</div>
+          <div *ngIf="eventEditForm.get('isPublic').errors.required">{{ "Event type is required." | localize }}</div>
         </div>
       </div>
       <div>
-        <label for="descriptionInput">Description:</label>
-        <textarea formControlName="description" class="form-control" name="description" id="description" cols="30"
+        <label for="descriptionInput">{{ "Description:" | localize }}</label>
+        <textarea formControlName="description" class="form-control" name="description" id="descriptionInput" cols="30"
           rows="10" [(ngModel)]="eventEdit.description" pattern="^[a-zA-Z0-9 ]+$" required></textarea>
         <div *ngIf="eventEditForm.get('description').invalid && eventEditForm.get('description').touched"
           class="text-danger">
-          <div *ngIf="eventEditForm.get('description').errors.required">Description is required.</div>
-          <div *ngIf="eventEditForm.get('description').errors.pattern">{{ "Description must be alphanumeric and less than 500" | localize }}</div>
+          <div *ngIf="eventEditForm.get('description').errors.required">{{ "Description is required." | localize }}</div>
+          <div *ngIf="eventEditForm.get('description').errors.pattern">{{ "Description must be alphanumeric and less than 500 characters." | localize }}</div>
         </div>
       </div>
-      <input class="btnupdate btn-success m-1" value="Update" type="submit" />
+      <input class="btnupdate btn-success m-1" value="Update"  type="submit" />
     </form>
   </div>
 </ng-template>

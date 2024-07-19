@@ -4,7 +4,7 @@
   <form #createForm="ngForm" (ngSubmit)="onSubmit()">
     <!-- Name -->
     <div class="form-group">
-      <label for="Name">Name</label>
+      <label for="Name">{{"Name" |localize}}</label>
       <input type="text" class="form-control" id="Name" name="Name" [(ngModel)]="supplierPlace.name" required
         minlength="3" maxlength="50" pattern="^[a-zA-Z0-9]+(?:[_-][a-zA-Z0-9]+)*$" />
       <div *ngIf="
@@ -28,7 +28,7 @@
     </div>
     <!-- Email -->
     <div class="form-group">
-      <label for="contactEmail">Contact Email</label>
+      <label for="contactEmail">{{"Contact Email" |localize}}</label>
       <input type="email" class="form-control" id="contactEmail" name="contactEmail"
         [(ngModel)]="supplierPlace.contactEmail" #contactEmail="ngModel" required email />
       <div *ngIf="
@@ -46,7 +46,7 @@
 
     <!-- Capacity -->
     <div class="form-group">
-      <label for="Capacity">Capacity</label>
+      <label for="Capacity">{{"Capacity"|localize}}</label>
       <input type="number" class="form-control" id="Capacity" min="2" name="Capacity"
         [(ngModel)]="supplierPlace.capacity" required />
       <div *ngIf="
@@ -64,7 +64,7 @@
     </div>
     <!-- Price -->
     <div class="form-group">
-      <label for="Price">Price</label>
+      <label for="Price">{{"Price" | localize}}</label>
       <input type="number" class="form-control" id="Price" min="30" name="Price" [(ngModel)]="supplierPlace.price"
         required />
       <div *ngIf="
@@ -82,13 +82,13 @@
     </div>
     <!-- Image -->
     <div class="form-group">
-      <label for="imagePath">Image</label>
+      <label for="imagePath">{{"Image" | localize}}</label>
       <input type="file" class="form-control" id="imagePath" name="imagePath" (change)="onFileSelected($event)"
         required />
     </div>
     <!-- Description -->
     <div class="form-group">
-      <label for="Description">Description</label>
+      <label for="Description">{{"Description" | localize}}</label>
       <textarea minlength="5" class="form-control" id="Description" name="Description"
         [(ngModel)]="supplierPlace.description" required rows="4"></textarea>
       <div *ngIf="
@@ -104,7 +104,7 @@
 
     <!-- Event Category -->
     <div class="form-group">
-      <label>Event Category</label>
+      <label>{{"Event Category" | localize}}</label>
       <select [(ngModel)]="supplierPlace.eventCategory" name="category" id="category" class="form-control"
         title="{{ 'Category' | localize }}" required>
         <option *ngFor="let key of enumeratorKeys" [ngValue]="key">{{ key }}</option>
@@ -112,7 +112,7 @@
     </div>
     <!-- Location -->
     <div class="form-group">
-      <label for="location">Location</label>
+      <label for="location">{{"Location" | localize}}</label>
       <!-- Map container -->
       <div id="map" style="height: 400px; margin-bottom: 20px;"></div>
       <input type="text" [(ngModel)]="supplierPlace.location" name="location" id="location" class="form-control"

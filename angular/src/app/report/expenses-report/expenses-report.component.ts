@@ -6,11 +6,12 @@ import { ExpensesService } from '../../../shared/services/expenses.service';
 import * as XLSX from 'xlsx';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import { SharedModule } from "../../../shared/shared.module";
 
 @Component({
   selector: 'app-expenses-report',
   standalone: true,
-  imports: [SidebarEventComponent, CommonModule],
+  imports: [SidebarEventComponent, CommonModule, SharedModule],
   templateUrl: './expenses-report.component.html',
   styleUrl: './expenses-report.component.css'
 })

@@ -26,11 +26,15 @@ height: 560px;
   padding: 3px 20px;
   position: relative;
 }
-.icons .fa-bookmark.saved {
+.icons > .fa-bookmark.saved {
   color: gold !important;
+
 }
-.icons .fa-bookmark{
-  color:gold !important;
+.icons > .fa-bookmark{
+  color:#050794 !important;
+}
+.icons > .fa-arrow-up-from-bracket {
+  color: #050794 !important;
 }
 
 

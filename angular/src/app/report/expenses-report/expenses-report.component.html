@@ -2,41 +2,39 @@
     <app-sidebar-event class="sidebar"></app-sidebar-event>
     <div class="main-container">
         <div class="d-flex justify-content-end">
-
             <div class="dropdown me-2">
                 <button class="btn btn-success dropdown-toggle" type="button" data-bs-toggle="dropdown"
                   aria-expanded="false">
-                  <i class="fa-solid fa-download"></i> Download
+                  <i class="fa-solid fa-download"></i> {{ 'Download' | localize }}
                 </button>
                 <ul class="dropdown-menu">
                   <li>
-                    <button class="dropdown-item  text-success" (click)="saveAsExcel()" title="Excel">
-                        <i class="fa-solid fa-file-excel"></i> As Excel
+                    <button class="dropdown-item text-success" (click)="saveAsExcel()" title="{{ 'Excel' | localize }}">
+                        <i class="fa-solid fa-file-excel"></i> {{ 'As Excel' | localize }}
                     </button>
-                    </li>
+                  </li>
                   <li>
-                    <button class="dropdown-item text-danger" (click)="saveAsPdf()" title="PDF">
-                        <i class="fa-solid fa-file-pdf"></i> As Pdf
+                    <button class="dropdown-item text-danger" (click)="saveAsPdf()" title="{{ 'PDF' | localize }}">
+                        <i class="fa-solid fa-file-pdf"></i> {{ 'As Pdf' | localize }}
                     </button>
-                </li>
+                  </li>
                 </ul>
-              </div>
+            </div>
 
-
-            <!-- <button class="btn btn-success text-light" (click)="saveAsExcel()"><i class="fa-solid fa-download"></i> Download As Excel</button>
-            <button class="btn btn-danger text-light" (click)="saveAsPdf()">Save As Pdf</button> -->
-            <button class="btn btn-secondary text-light" (click)="print()"><i class="fa-solid fa-print"></i> Print</button>
-          </div>
+            <!-- <button class="btn btn-success text-light" (click)="saveAsExcel()"><i class="fa-solid fa-download"></i> {{ 'Download As Excel' | localize }}</button>
+            <button class="btn btn-danger text-light" (click)="saveAsPdf()">{{ 'Save As Pdf' | localize }}</button> -->
+            <button class="btn btn-secondary text-light" (click)="print()"><i class="fa-solid fa-print"></i> {{ 'Print' | localize }}</button>
+        </div>
         
         <div class="row report-links m-3">
             <div class="table-responsive">
                 <table class="table table-bordered table-hover">
                     <thead class="table-primary">
                         <tr>
-                            <th scope="col">Event Name</th>
-                            <th scope="col">Expense Name</th>
-                            <th scope="col">Amount</th>
-                            <th scope="col">Date</th>
+                            <th scope="col">{{ 'Event Name' | localize }}</th>
+                            <th scope="col">{{ 'Expense Name' | localize }}</th>
+                            <th scope="col">{{ 'Amount' | localize }}</th>
+                            <th scope="col">{{ 'Date' | localize }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -51,13 +49,13 @@
                                     <td>{{ expense.date | date }}</td>
                                 </tr>
                                 <tr>
-                                    <td colspan="4" class="text-center">Total: {{totalamount(eventName.key)}}</td>
+                                    <td colspan="4" class="text-center">{{ 'Total: ' | localize }}{{totalamount(eventName.key)}}</td>
                                 </tr>
                             </ng-container>
                             <ng-container *ngIf="eventName.value.length === 0">
                                 <tr>
                                     <td scope="row">{{ eventName.key }}</td>
-                                    <td colspan="3" class="text-center">No expenses found</td>
+                                    <td colspan="3" class="text-center">{{ 'No expenses found' | localize }}</td>
                                 </tr>
                             </ng-container>
                         </ng-container>

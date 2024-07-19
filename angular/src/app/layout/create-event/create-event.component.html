@@ -127,7 +127,7 @@
             </div>
             <div class="col-lg-4 col-md-12 image-container">
                 <div class="form-group">
-                    <label for="place">If you want a place for Event, Choose one.</label>
+                    <label for="place">{{ "If you want a place for Event, Choose one." | localize }}</label>
                     <select id="place" name="place" class="form-control" [(ngModel)]="eventData.placeId">
                         <option *ngFor="let place of places" [value]="place.id">{{ place.name }}</option>
                     </select>
