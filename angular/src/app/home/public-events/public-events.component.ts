@@ -228,14 +228,14 @@ export class PublicEventsComponent implements OnInit {
   }
 
  
-  navigateToPayment(eventId: number, creatorId: number, ticketPrice: number): void {
-    this.router.navigate(['/app/payment'], { queryParams: { eventId: eventId, creatorId: creatorId, ticketPrice: ticketPrice } });
+  navigateToPayment(eventId: number, creatorId: number, ticketPrice: number,availableTickets:number): void {
+    this.router.navigate(['/app/payment'], { queryParams: { eventId: eventId, creatorId: creatorId, ticketPrice: ticketPrice,availableTickets: availableTickets} });
   }
   
 
   handleButtonClick(event: Event) {
     if (event.type === EventType.Paid) {
-      this.navigateToPayment(event.id, event.userId, event.ticketPrice);
+      this.navigateToPayment(event.id, event.userId, event.ticketPrice,event.numberOfTickets);
     } else {
       this.askForInvitation(event);
     }

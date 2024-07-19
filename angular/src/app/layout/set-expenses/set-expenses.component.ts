@@ -4,11 +4,12 @@ import { AppSessionService } from '@shared/session/app-session.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { SharedModule } from "../../../shared/shared.module";
 
 @Component({
   selector: 'app-set-expenses',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, SharedModule],
   templateUrl: './set-expenses.component.html',
   styleUrls: ['./set-expenses.component.css']
 })

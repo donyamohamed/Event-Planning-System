@@ -8,11 +8,10 @@ namespace Event_Planning_System.Email
         public static string GetInvitationEmail(string eventName, DateTime date, string eventAddress, string eventImg, string downloadUrl)
         {
             string backgroundImage = string.IsNullOrEmpty(eventImg)
-                ? "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZXZlbnR8ZW58MHx8MHx8fDA%3D"
+                ? "https://media.licdn.com/dms/image/C561BAQE-51J-8KkMZg/company-background_10000/0/1584559866970/eventscom_cover?e=2147483647&v=beta&t=8NsL_HPkr3nHk4ppAg8MkUoiYPUIf082mpMvySv5C7o"
                 : eventImg;
 
             string htmlContent = $@"
-    <!DOCTYPE html>
     <html>
     <head>
         <style>
