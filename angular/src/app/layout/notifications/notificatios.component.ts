@@ -21,6 +21,9 @@ export class NotificatiosComponent implements OnInit {
   EventData: Event | any;
   acceptedEvents: any[] = [];
   rejectedEvents: any[] = [];
+  acceptedCount: number = 0;
+  rejectedCount: number = 0;
+
 
   getEventData(arg0: any) {
     return this.Service.GetEventById(arg0).subscribe({
@@ -172,6 +175,7 @@ export class NotificatiosComponent implements OnInit {
   ReminderNotificationsList: Notifications[] | any;
   ngOnInit(): void {
     this.getUserProfileAndEvents();
+    this.handleConnectClick(this.EventData);
     this.Service.GetREviewsNotification().subscribe({
       next: n => {
         if (n) {
@@ -224,7 +228,7 @@ export class NotificatiosComponent implements OnInit {
     });
   }
   calculateAllCount(): void {
-    this.AllCount = Number(this.count.result) + Number(this.count2.result) + Number(this.count3.result);
+    this.AllCount = Number(this.count.result) + Number(this.count2.result) + Number(this.count3.result) + this.acceptedCount + this.rejectedCount;
     console.log("allCount: ", this.AllCount);
   }
   //this.calculateAllCount();
@@ -306,9 +310,12 @@ export class NotificatiosComponent implements OnInit {
     });
   }
 
+
   getAcceptedEvents(userId: number): void {
     this.Service.getAcceptedEvents(userId).subscribe(response => {
       this.acceptedEvents = response.result;
+      this.acceptedCount = this.acceptedEvents.length;
+      this.calculateAllCount();
       console.log('Accepted events:', this.acceptedEvents );
     });
   }
@@ -316,6 +323,8 @@ export class NotificatiosComponent implements OnInit {
   getRejectedEvents(userId: number): void {
     this.Service.getRejectedEvents(userId).subscribe(response => {
       this.rejectedEvents = response.result;
+      this.rejectedCount = this.rejectedEvents.length;
+      this.calculateAllCount();
     });
   }
   sendEmail(email: string): void {
@@ -325,6 +334,14 @@ export class NotificatiosComponent implements OnInit {
     } else {
       console.error('Email address is not defined');
     }
+  }
+  handleConnectClick(event: any): void {
+   
+    this.sendEmail(event.contactEmail); 
+    this.acceptedCount -= 1;
+    this.acceptedEvents = this.acceptedEvents.filter(e => e !== event);
+    this.calculateAllCount();
+    this. changeFontWeight(event);
   }
   
 

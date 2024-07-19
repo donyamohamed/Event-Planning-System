@@ -103,7 +103,7 @@
                                                     <p style="font-size: 14px; margin: 0;">🕒 {{ event.startDate | date: 'shortTime' }}</p>
                                                     <div style="display: flex; flex-direction: row; justify-content: space-between;">
                                                       <p style="font-size: 14px; margin: 0;">📍 {{ event.location }}</p>
-                                                      <button (click)="sendEmail(event.contactEmail)" [ngStyle]="{'color': event.isRead ? 'gray' : 'black', 'text-align': 'center'}" [disabled]="event.isRead" class="btn btn-primary">
+                                                      <button (click)="handleConnectClick(event)" [ngStyle]="{'color': event.isRead ? 'gray' : 'black', 'text-align': 'center'}" [disabled]="event.isRead" class="btn btn-primary">
                                                         Connect
                                                       </button>
                                                     </div>

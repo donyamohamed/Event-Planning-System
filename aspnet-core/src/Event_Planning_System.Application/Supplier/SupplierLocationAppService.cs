@@ -142,7 +142,7 @@ namespace Event_Planning_System.Supplier
 
         public async Task<ActionResult> GetPlaceForEvent(int eventId)
         {
-            var targetEvent = await _eventRepository.FirstOrDefaultAsync(a => a.Id == eventId);
+            var targetEvent = await _eventrepository.FirstOrDefaultAsync(a => a.Id == eventId);
             if (targetEvent == null)
             {
                 return new NotFoundObjectResult("Event not found");
