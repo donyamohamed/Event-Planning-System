@@ -138,7 +138,7 @@ body {
     font-size: 18px;
     transition: 0.6s ease;
     border-radius: 0 3px 3px 0;
-    user-select: none;
+    /* user-select: none; */
   }
   .widget-slideshow-container .slider-container .slider-elements .slider-prev:hover,
   .widget-slideshow-container .slider-container .slider-elements .slider-next:hover {
@@ -264,3 +264,112 @@ body {
     top: -4px;
 }
   }
+/* header.component.css */
+.notification-icon {
+  position: relative;
+  cursor: pointer;
+}
+
+.notification-icon i {
+  font-size: 23px;
+  margin-top: 15px;
+}
+
+.notification-icon .badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 10px;
+  margin-left: 10px;
+}
+
+.notification-dropdown {
+  position: absolute;
+  right: 0;
+  top: 35%;
+  background-color: white;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  width: 400px;
+  max-height: 400px;
+  overflow: hidden;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+}
+
+.notification-dropdown h2 {
+  font-size: 24px;
+  color: blue;
+  text-align: center;
+}
+
+.notifications-container {
+  overflow-y: auto;
+  flex-grow: 1;
+}
+
+.notification-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-bottom: 1px solid #e9ecf0;
+}
+
+.notification-content {
+  display: flex;
+  align-items: center;
+}
+
+.notification-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.notification-details {
+  flex-grow: 1;
+}
+
+.notification-details h3 {
+  font-size: 16px;
+  margin: 0;
+}
+
+.notification-details p {
+  margin: 0;
+  font-size: 14px;
+  color: gray;
+}
+
+.notification-actions {
+  display: flex;
+  gap: 5px;
+}
+
+.notification-actions .btn {
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.view-all {
+  text-align: center;
+  margin-top: 10px;
+  background: white;
+  padding: 10px 0;
+  border-top: 1px solid #e9ecf0;
+  position: sticky;
+  bottom: 0;
+  z-index: 1001;
+}
+
+.view-all .btn {
+  padding: 5px 20px;
+  cursor: pointer;
+}

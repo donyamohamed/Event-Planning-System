@@ -91,7 +91,48 @@
                                         </div>
         
                                         }
-                                     
+                                        <div *ngFor="let event of acceptedEvents" class="event">
+                                                <div style="display: flex; flex-direction: row; margin-bottom: 10px;">
+                                                  <div>
+                                                    <img [src]="event.eventImg || '../../assets/img/Event.jpg'" style="width: 60px; height: auto; margin-right: 10px;" alt="Event Image" />
+                                                  </div>
+                                                  <div style="margin-top: 5px;">
+                                                    <p class="bold-text" [ngStyle]="{'font-weight': event.isRead ? 'normal' : 'bold'}">
+                                                        Your request to reserve this {{ event.placeName }} for this{{ event.name }} has been approved 
+                                                    </p>
+                                                    <p style="font-size: 14px; margin: 0;">📅 {{ event.startDate | date: 'shortDate' }}</p>
+                                                    <p style="font-size: 14px; margin: 0;">🕒 {{ event.startDate | date: 'shortTime' }}</p>
+                                                    <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                                                      <p style="font-size: 14px; margin: 0;">📍 {{ event.location }}</p>
+                                                      <button (click)="sendEmail(event.contactEmail)" [ngStyle]="{'color': event.isRead ? 'gray' : 'black', 'text-align': 'center'}" [disabled]="event.isRead" class="btn btn-primary">
+                                                        Connect
+                                                      </button>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                              
+                                              <div *ngFor="let event of rejectedEvents" class="event">
+                                                <div style="display: flex; flex-direction: row; margin-bottom: 10px;">
+                                                  <div>
+                                                    <img [src]="event.eventImg || '../../assets/img/Event.jpg'" style="width: 60px; height: auto; margin-right: 10px;" alt="Event Image" />
+                                                  </div>
+                                                  <div style="margin-top: 5px;">
+                                                    <p class="bold-text" [ngStyle]="{'font-weight': event.isRead ? 'normal' : 'bold'}">
+                                                        Your request to reserve this {{ event.placeName }} for this{{ event.name }} has been denied
+                                                    </p>
+                                                    <p style="font-size: 14px; margin: 0;">📅 {{ event.startDate | date: 'shortDate' }}</p>
+                                                    <p style="font-size: 14px; margin: 0;">🕒 {{ event.startDate | date: 'shortTime' }}</p>
+                                                    <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                                                      <p style="font-size: 14px; margin: 0;">📍 {{ event.location }}</p>
+                                                      <button (click)="changeFontWeight(event)" [ngStyle]="{'color': event.isRead ? 'gray' : 'black', 'text-align': 'center'}" [disabled]="event.isRead" class="btn btn-warning">
+                                                        Seen
+                                                      </button>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                              
                                         
                         </div>
                         <br>

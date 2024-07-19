@@ -9,6 +9,7 @@ import { CurrentUser } from '@shared/Models/current-user';
 import { SharedModule } from "../../../shared/shared.module";
 import { FeedbackComponent } from '@app/feedback/feedback.component';
 import { MatDialog } from '@angular/material/dialog';
+import { map } from 'rxjs/operators';
 @Component({
   selector: 'app-notifications',
   standalone: true,
@@ -18,6 +19,8 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class NotificatiosComponent implements OnInit {
   EventData: Event | any;
+  acceptedEvents: any[] = [];
+  rejectedEvents: any[] = [];
 
   getEventData(arg0: any) {
     return this.Service.GetEventById(arg0).subscribe({
@@ -168,6 +171,7 @@ export class NotificatiosComponent implements OnInit {
   AllCount: number | any = 0;
   ReminderNotificationsList: Notifications[] | any;
   ngOnInit(): void {
+    this.getUserProfileAndEvents();
     this.Service.GetREviewsNotification().subscribe({
       next: n => {
         if (n) {
@@ -292,6 +296,37 @@ export class NotificatiosComponent implements OnInit {
       console.error('Dialog error:', error);
     });
   }
+  getUserProfileAndEvents(): void {
+    this.Service.getUserProfile().pipe(
+      map(response => response.result)
+    ).subscribe(profile => {
+      const userId = profile.id; 
+      this.getAcceptedEvents(userId);
+      this.getRejectedEvents(userId);
+    });
+  }
+
+  getAcceptedEvents(userId: number): void {
+    this.Service.getAcceptedEvents(userId).subscribe(response => {
+      this.acceptedEvents = response.result;
+      console.log('Accepted events:', this.acceptedEvents );
+    });
+  }
+
+  getRejectedEvents(userId: number): void {
+    this.Service.getRejectedEvents(userId).subscribe(response => {
+      this.rejectedEvents = response.result;
+    });
+  }
+  sendEmail(email: string): void {
+    if (email) {
+      console.log(email);
+      window.location.href = `mailto:${email}`;
+    } else {
+      console.error('Email address is not defined');
+    }
+  }
+  
 
   constructor(public Service: NotificationsService, private elementRef: ElementRef, private cdr: ChangeDetectorRef,public dialog: MatDialog) {
   }

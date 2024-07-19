@@ -48,13 +48,15 @@ namespace Event_Planning_System.Event
 		private readonly IRepository<Interest, int> _interestRepository;
 		private readonly IRepository<Entities.Feedback, int> _feedbackRepository;
 		private readonly IRepository<Entities.Payment, int> _paymentRepository;
+        private readonly IRepository<Entities.SupplierPlaces, int> _supplierRepository;
+        private readonly IRepository<Authorization.Users.User, long> _userrepository;
         private readonly IFeedbackAppService _feedbackService;
 		private readonly IUnitOfWorkManager _unitOfWorkManager;
 
 		public EventAppService(IRepository<Enitities.Event, int> repository, IRepository<Enitities.Guest, int> guestRepository, IRepository<Interest, int> interestRepository, IBackgroundJobClient backgroundJobClient,
 			IRepository<Enitities.BudgetExpense, int> budgetExpenseRepository, IUnitOfWorkManager unitOfWorkManager,
 			IRepository<Enitities.ToDoCheckList, int> toDoCheckListRepository, IRepository<Enitities.notification, int> notificationRepository, IMapper mapper, IEmailService emailService, ICloudinaryService cloudinaryService, ILogger<EventAppService> logger,
-			IRepository<Entities.Feedback, int> feedbackRepository, IRepository<Entities.FavoriteEvent, int> favoriteEventRepository, IRepository<Entities.Payment, int> paymentRepository ,IRepository<Entities.GuestsFeedback, int> guestFeedbackRepository, IFeedbackAppService feedbackService) : base(repository)
+			IRepository<Entities.Feedback, int> feedbackRepository, IRepository<Entities.SupplierPlaces, int> supplierRepository, IRepository<Authorization.Users.User, long> userrepository, IRepository<Entities.FavoriteEvent, int> favoriteEventRepository, IRepository<Entities.Payment, int> paymentRepository ,IRepository<Entities.GuestsFeedback, int> guestFeedbackRepository, IFeedbackAppService feedbackService) : base(repository)
 		{
 			_unitOfWorkManager = unitOfWorkManager;
 			_backgroundJobClient = backgroundJobClient;
@@ -68,7 +70,9 @@ namespace Event_Planning_System.Event
 			_favoriteEventRepository=favoriteEventRepository;
 			_guestFeedbackRepository=guestFeedbackRepository;
 			_paymentRepository=paymentRepository;
-			_logger = logger;
+            _supplierRepository = supplierRepository;
+            _userrepository= userrepository;
+            _logger = logger;
 			_mapper = mapper;
 			_emailService = emailService;
 			_imageFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images");
@@ -477,18 +481,50 @@ namespace Event_Planning_System.Event
         }
         public async Task<List<EventDto>> GetAcceptedEventsPlacesByUserIdAsync(long userId)
         {
-            var events = await _repository.GetAllListAsync(e => e.UserId == userId && e.RequestPlace == PlaceState.Accepted);
+            var events = await _repository.GetAllIncluding(e => e.SupplierPlaces, e => e.User)
+                                          .Where(e => e.UserId == userId && e.RequestPlace == PlaceState.Accepted)
+                                          .ToListAsync();
 
-           
-            return ObjectMapper.Map<List<EventDto>>(events);
+            var eventDtos = ObjectMapper.Map<List<EventDto>>(events);
+
+            foreach (var eventDto in eventDtos)
+            {
+                var eventEntity = events.FirstOrDefault(e => e.Id == eventDto.Id);
+                if (eventEntity != null)
+                {
+                    eventDto.PlaceName = eventEntity.SupplierPlaces?.Name;
+                    eventDto.ContactEmail = eventEntity.SupplierPlaces?.ContactEmail;
+                    eventDto.UserName = eventEntity.User?.UserName;
+                    eventDto.UserEmail = eventEntity.User?.EmailAddress;
+                }
+            }
+
+            return eventDtos;
         }
+
         public async Task<List<EventDto>> GetRejectedEventsPlacesByUserIdAsync(long userId)
         {
-            var events = await _repository.GetAllListAsync(e => e.UserId == userId && e.RequestPlace == PlaceState.Rejected);
+            var events = await _repository.GetAllIncluding(e => e.SupplierPlaces, e => e.User)
+                                          .Where(e => e.UserId == userId && e.RequestPlace == PlaceState.Rejected)
+                                          .ToListAsync();
 
+            var eventDtos = ObjectMapper.Map<List<EventDto>>(events);
 
-            return ObjectMapper.Map<List<EventDto>>(events);
+            foreach (var eventDto in eventDtos)
+            {
+                var eventEntity = events.FirstOrDefault(e => e.Id == eventDto.Id);
+                if (eventEntity != null)
+                {
+                    eventDto.PlaceName = eventEntity.SupplierPlaces?.Name;
+                    eventDto.ContactEmail = eventEntity.SupplierPlaces?.ContactEmail;
+                    eventDto.UserName = eventEntity.User?.UserName;
+                    eventDto.UserEmail = eventEntity.User?.EmailAddress;
+                }
+            }
+
+            return eventDtos;
         }
+
 
 
     }

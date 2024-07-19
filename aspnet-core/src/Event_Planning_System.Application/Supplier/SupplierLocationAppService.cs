@@ -25,13 +25,15 @@ namespace Event_Planning_System.Supplier
 		private readonly IRepository<SupplierPlaces, int> _repository;
         private readonly IRepository<Enitities.Event, int> _eventrepository;
         private readonly ICloudinaryService _cloudinaryService;
-		private readonly IMapper _mapper;
-		public SupplierLocationAppService(IRepository<SupplierPlaces, int> repository, IRepository<Enitities.Event, int> eventrepository, ICloudinaryService cloudinaryService,IMapper mapper) : base(repository)
+        private readonly IRepository<Authorization.Users.User,long> _userrepository;
+        private readonly IMapper _mapper;
+		public SupplierLocationAppService(IRepository<SupplierPlaces, int> repository, IRepository<Enitities.Event, int> eventrepository, IRepository<Authorization.Users.User, long> userrepository, ICloudinaryService cloudinaryService,IMapper mapper) : base(repository)
 		{
 			_repository = repository;
 			_cloudinaryService = cloudinaryService;
 			_mapper = mapper;
             _eventrepository= eventrepository;
+            _userrepository = userrepository;
 
         }
 		[HttpPost]
@@ -63,12 +65,40 @@ namespace Event_Planning_System.Supplier
         }
         public async Task<List<EventDto>> GetPendingEventsBySupplierIdAsync(long userId)
         {
-           
+            // Get supplier places for the user
             var supplierPlaces = await _repository.GetAllListAsync(sp => sp.UserId == userId);
             var supplierPlaceIds = supplierPlaces.Select(sp => sp.Id).ToList();
+
+            // Get events for the supplier places
             var events = await _eventrepository.GetAllListAsync(e => supplierPlaceIds.Contains(e.PlaceId.Value) && e.RequestPlace == PlaceState.Pendding);
-            return ObjectMapper.Map<List<EventDto>>(events);
+
+            var eventDtos = new List<EventDto>();
+
+            foreach (var eventEntity in events)
+            {
+                // Fetch the user details
+                var user = await _userrepository.GetAsync(eventEntity.UserId);
+
+                // Map event to EventDto and include the user details
+                var eventDto = ObjectMapper.Map<EventDto>(eventEntity);
+                eventDto.PlaceName = eventEntity.SupplierPlaces?.Name;
+                eventDto.UserName = user.Name;
+                eventDto.UserEmail = user.EmailAddress;
+
+                eventDtos.Add(eventDto);
+            }
+
+            return eventDtos;
         }
+
+        public async Task<int> GetPendingEventsCountBySupplierIdAsync(long userId)
+        {
+            var supplierPlaces = await _repository.GetAllListAsync(sp => sp.UserId == userId);
+            var supplierPlaceIds = supplierPlaces.Select(sp => sp.Id).ToList();
+            var pendingEventsCount = await _eventrepository.CountAsync(e => supplierPlaceIds.Contains(e.PlaceId.Value) && e.RequestPlace == PlaceState.Pendding);
+            return pendingEventsCount;
+        }
+
         public async Task AcceptEventAsync(int eventId)
         {
            
