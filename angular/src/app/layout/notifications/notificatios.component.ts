@@ -175,7 +175,6 @@ export class NotificatiosComponent implements OnInit {
   ReminderNotificationsList: Notifications[] | any;
   ngOnInit(): void {
     this.getUserProfileAndEvents();
-    this.handleConnectClick(this.EventData);
     this.Service.GetREviewsNotification().subscribe({
       next: n => {
         if (n) {
