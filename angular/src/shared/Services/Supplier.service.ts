@@ -14,8 +14,6 @@ export class SupplierService {
   private apiUrl = `${environment.API_URL_BASE_PART}/api/services/app/SupplierLocation`;
   private userProfileUrl = `${environment.API_URL_BASE_PART}/api/services/app/UserProfileAppServices/GetUserProfile`;
 
-
-
   constructor(private http: HttpClient) { }
 
   createPlace(place: any): Observable<any> {
@@ -26,11 +24,13 @@ export class SupplierService {
     const url = `${this.getPlacesByCategoryUrl}?category=${category}`;
     return this.http.get(url);
   }
+
   getPendingEventsBySupplierId(userId: number): Observable<Event[]> {
     return this.http.get<any>(`${this.apiUrl}/GetPendingEventsBySupplierId?userId=${userId}`).pipe(
       map(response => response.result)
     );
   }
+
   getPendingEventsCount(userId: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/GetPendingEventsCountBySupplierId?userId=${userId}`);
   }
@@ -42,6 +42,7 @@ export class SupplierService {
   rejectEvent(eventId: number): Observable<void> {
     return this.http.post<void>(`${this.apiUrl}/RejectEvent?eventId=${eventId}`, {});
   }
+
   getUserProfile(): Observable<any> {
     return this.http.get<any>(this.userProfileUrl).pipe(
       map(response => response.result)
@@ -57,6 +58,13 @@ export class SupplierService {
 
   getPlacesBySupplier(userId: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/GetPlacesBySupplier?userId=${userId}`).pipe(
+      map(response => response.result)
+    );
+  }
+
+  // get a supplier place by ID
+  getSupplierPlaceById(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/GetSupplierPlaceById?id=${id}`).pipe(
       map(response => response.result)
     );
   }
