@@ -1,7 +1,7 @@
 <div class="container create-event">
     <h2>
         <img src="../../../assets/img/beautiful-meticulously-designed-event-planning-icon-event-planning-icon-120778365-transformed.webp" alt="">
-        Create Event
+        {{"Create Event" | localize}}
     </h2>
     <form (ngSubmit)="createEvent()" #eventForm="ngForm" class="form-container">
         <div class="form-inner-container row">
@@ -59,18 +59,18 @@
                             </div>                            
                         </div>
                         <div class="form-group">
-                            <label for="eventType">Event Type</label><br>
+                            <label for="eventType">{{"Event Type" | localize}}</label><br>
                             <input type="radio" id="free" name="eventType" [(ngModel)]="eventData.type" [value]="1" (change)="onEventTypeChange()">
-                            <label class="labelispaid" for="free">Free</label>
+                            <label class="labelispaid" for="free">{{"Free" | localize}}</label>
                             <input type="radio" id="paid" name="eventType" [(ngModel)]="eventData.type" [value]="0" (change)="onEventTypeChange()">
-                            <label class="labelispaid" for="paid">Paid</label>
+                            <label class="labelispaid" for="paid">{{"Paid" | localize}}</label>
                             
                             
                         </div>
                 
                         <!-- Ticket Price Field (Conditionally Shown) -->
                         <div class="form-group" *ngIf="eventData.type === 0">
-                            <label for="ticketPrice">Ticket Price</label>
+                            <label for="ticketPrice">{{"Ticket Price" | localize}}</label>
                             <input type="number" id="ticketPrice" name="ticketPrice" [(ngModel)]="eventData.ticketPrice" class="form-control" required min="30">
                             <div *ngIf="eventForm.controls['ticketPrice'].invalid && (eventForm.controls['ticketPrice'].dirty || eventForm.controls['ticketPrice'].touched)" class="error-message">
                                 <div *ngIf="eventForm.controls['ticketPrice'].errors.required">{{ "ticketPriceis required" | localize }}</div>
@@ -81,7 +81,7 @@
                         <div class="form-group">
                             <label>{{ "Event Category" | localize }}</label>
                             <select id="category" name="category" class="form-control" [(ngModel)]="eventData.category" (change)="onCategoryChange()">
-                                <option *ngFor="let key of enumeratorKeys" [ngValue]="key">{{ key }}</option>
+                                <option *ngFor="let key of enumeratorKeys" [ngValue]="key">{{ key | localize }}</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -89,13 +89,13 @@
                             <div class="form-check">
                                 <label class="form-check-label">
                                     <input type="radio" [(ngModel)]="eventData.isPublic" [value]="true" name="isPublic" class="form-check-input" [disabled]="eventData.type === 0"  (change)="onEventpublicChange()">
-                                    {{ "Public" | localize }}
+                                    {{  "Public" | localize }}
                                 </label>
                             </div>
                             <div class="form-check">
                                 <label class="form-check-label">
                                     <input type="radio" [(ngModel)]="eventData.isPublic" [value]="false" name="isPublic" class="form-check-input" [disabled]="eventData.type === 0" (change)="onEventpublicChange()">
-                                    {{ "Private" | localize }}
+                                    {{  "Private" | localize }}
                                 </label>
                             </div>
                         </div>

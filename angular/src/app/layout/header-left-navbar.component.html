@@ -1,7 +1,7 @@
 <ul class="navbar-nav">
   <li class="nav-item">
     <h3 class="pe-2" style="color:#050793; font-weight: 700;">
-      Eventa
+      {{"Eventa" | localize}}
     </h3>
   </li>
   <ul class="d-flex align-items-center">
@@ -19,7 +19,7 @@
   <li class="nav-item  d-sm-inline-block" *ngIf="isLoggedIn">
     <a class="nav-link " [routerLink]="['/app/event-places']">
      
-        <span>{{ "Halls" | localize }}</span>
+        <span>{{ "Places" | localize }}</span>
   
     </a>
   </li>
@@ -30,11 +30,49 @@
       </div>
     </a>
   </li>
-  <li class="nav-item  d-sm-inline-block"  *ngIf="isLoggedIn && roleData.result.roleNames[0]=='ADMIN'">
+  <!-- <li class="nav-item  d-sm-inline-block"  *ngIf="isLoggedIn && roleData.result.roleNames[0]=='ADMIN'">
     <a class="nav-link" [routerLink]="['/app/user-event']">
       {{ "My Events" | localize }}
     </a>
+  </li> -->
+  <!-- <li class="nav-item dropdown d-sm-inline-block" *ngIf="isLoggedIn">
+    <a class="nav-link dropdown-toggle" href="#" id="eventsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <span>{{ "Events" | localize }}</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="eventsDropdown">
+      <li><a class="dropdown-item" [routerLink]="['/app/saved-events']">{{ "Saved Events" | localize }}</a></li>
+      <li><a class="dropdown-item" [routerLink]="['/app/upcoming-events']">{{ "Upcoming Events" | localize }}</a></li>
+      <li><a class="dropdown-item" [routerLink]="['/app/history-events']">{{ "History Events" | localize }}</a></li>
+    </ul>
+  </li> -->
+  <li class="nav-item dropdown d-sm-inline-block position-relative" *ngIf="isLoggedIn && roleData.result.roleNames[0]=='ADMIN'">
+    <a class="nav-link dropdown-toggle" href="#" id="eventsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <span>{{ "Events" | localize }}</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="eventsDropdown">
+      <li><a class="dropdown-item" [routerLink]="['/app/user-event']">{{ "My Events" | localize }}</a></li>
+      <li><a class="dropdown-item" [routerLink]="['/app/savedevents']">{{ "Saved Events" | localize }}</a></li>
+      <li><a class="dropdown-item" [routerLink]="['/app/upcomming-events']">{{ "Upcomming Events" | localize }}</a></li>
+      <li><a class="dropdown-item" [routerLink]="['/app/historyevent']">{{ "History Events" | localize }}</a></li>
+    </ul>
   </li>
+  <li class="nav-item  d-sm-inline-block" *ngIf="isLoggedIn && roleData.result.roleNames[0]=='ADMIN'">
+    <a class="nav-link " [routerLink]="['/app/report']">
+     
+        <span>{{ "Reports" | localize }}</span>
+  
+    </a>
+  </li>
+  <!-- <li class="nav-item dropdown d-sm-inline-block" *ngIf="isLoggedIn" style="position: relative;">
+    <a class="nav-link dropdown-toggle" href="#" id="eventsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <span>{{ "Events" | localize }}</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="eventsDropdown" style="position: absolute; left: 100%; top: 0;">
+      <li><a class="dropdown-item" [routerLink]="['/app/saved-events']">{{ "Saved Events" | localize }}</a></li>
+      <li><a class="dropdown-item" [routerLink]="['/app/upcoming-events']">{{ "Upcoming Events" | localize }}</a></li>
+      <li><a class="dropdown-item" [routerLink]="['/app/history-events']">{{ "History Events" | localize }}</a></li>
+    </ul>
+  </li> -->
   <li class="nav-item  d-sm-inline-block" *ngIf="isLoggedIn && roleData.result.roleNames[0]=='ADMIN'">
     <a class="nav-link" [routerLink]="['/app/invitation-state']">
       {{"Invitation State" | localize}}

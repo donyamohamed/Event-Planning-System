@@ -230,6 +230,7 @@
 		<text name="Details View" value="عرض التفاصيل" />
 		<text name="Calendar View" value="عرض التقويم" />
 		<text name="Upcoming Events" value="الاحداث القادمه" />
+		<text name="History Events" value="الاحداث السابقة" />
 		<text name="Activate Account" value="تفعيل حساب" />
 		<text name="Welcome to our Eventa platform! Please click the button below to activate your account:" value="مرحبًا بكم في منصة Eventa الخاصة بنا! الرجاء الضغط على الزر أدناه لتفعيل حسابك:" />
 		<text name="Activate Your Account" value="فعل حسابك" />
@@ -267,10 +268,32 @@
 		<text name="Back to Home" value="العودة إلى الصفحة الرئيسية"/>
 		<text name="You have not created any event, please create the first event" value="لم تقم بإنشاء أي حدث، يرجى إنشاء الحدث الأول"/>
 
-
-
-
-
+		<!--donya-->
+		<text name="Arabic" value="العربية" />
+		<text name="English" value="الانجليزية" />
+		<text name="Invite" value="ارسال دعوة" />
+		<text name="Eventa" value="إيفنتا" />
+		<text name="Event Type" value="نوع الحدث" />
+		<text name="Paid" value="مدفوع" />
+		<text name="Free" value="مجاني" />
+		<text name="Public" value="عام" />
+		<text name="Private" value="خاص" />
+		<text name="Ticket Price" value="سعر التذاكرة" />
+		<text name=" Edit" value="تعديل " />
+		<text name="Concert" value="حفلة موسيقية" />
+		<text name="Conference" value="مؤتمر" />
+		<text name="Workshop" value="ورشة عمل" />
+		<text name="Seminar" value="ندوة" />
+		<text name="Party" value="حفلة" />
+		<text name="Exam" value="امتحان" />
+		<text name="Birthday" value="عيد ميلاد" />
+		<text name="Graduation" value="تخرُّج" />
+		<text name="Baby Shower" value="سبوع الطفل" />
+		<text name="Wedding" value="حفل زفاف" />
+		<text name="Gathering" value="تجمع" />
+		<text name="Other" value="آخر" />
+		<text name="Places" value="الاماكن" />
+		<text name="Create Supplier Account" value="أنشيءحساب مورد" />
 		<!--esraa-->
 		<text name="Notifications" value="الإشعارات"/>
 		<text name="UNIQUE" value="تفرد" /> 
@@ -298,8 +321,8 @@
 		<text name="Attendees" value="الحضور"/>
 		<text name="Event Category" value="فئة الحدث"/>
 		<text name="Choose Event Type" value="اختر نوع الحدث"/>
-		<text name="Public" value="عام"/>
-		<text name="Private" value="خاص"/>
+		<!--<text name="Public" value="عام"/>
+		<text name="Private" value="خاص"/>-->
 		<text name="Event Image" value="صورة الحدث"/>
 		<text name="Event Description" value=" وصف الحدث"/>
 		<text name="Max Attendees" value="أقصي عدد للحضور"/>

@@ -26,9 +26,9 @@ export class CurrentUserDataService {
     return  this.http.get(this.UserRole+id);
   }
 
-  getUserRole(id: number | any): Observable<string> {
-    return this.http.get<{ result: { roleNames: string[] } }>(this.UserRole + id).pipe(
-      map(response => response.result.roleNames[0])
-    );
-  }
+  // getUserRole(id: number | any): Observable<string> {
+  //   return this.http.get<{ result: { roleNames: string[] } }>(this.UserRole + id).pipe(
+  //     map(response => response.result.roleNames[0])
+  //   );
+  // }
 }

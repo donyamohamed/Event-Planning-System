@@ -86,11 +86,21 @@
       <input type="file" class="form-control" id="imagePath" name="imagePath" (change)="onFileSelected($event)"
         required />
     </div>
+
+    <!-- Event Category -->
+    <div class="form-group">
+      <label>{{"Event Category" | localize}}</label>
+      <select [(ngModel)]="supplierPlace.eventCategory" name="category" id="category" class="form-control"
+        title="{{ 'Category' | localize }}" required>
+        <option *ngFor="let key of enumeratorKeys" [ngValue]="key">{{ key }}</option>
+      </select>
+    </div>
+
     <!-- Description -->
     <div class="form-group">
       <label for="Description">{{"Description" | localize}}</label>
       <textarea minlength="5" class="form-control" id="Description" name="Description"
-        [(ngModel)]="supplierPlace.description" required rows="4"></textarea>
+        [(ngModel)]="supplierPlace.description" required rows="7"></textarea>
       <div *ngIf="
           createForm.controls['Description'].invalid &&
           (createForm.controls['Description'].dirty ||
@@ -102,19 +112,12 @@
       </div>
     </div>
 
-    <!-- Event Category -->
-    <div class="form-group">
-      <label>{{"Event Category" | localize}}</label>
-      <select [(ngModel)]="supplierPlace.eventCategory" name="category" id="category" class="form-control"
-        title="{{ 'Category' | localize }}" required>
-        <option *ngFor="let key of enumeratorKeys" [ngValue]="key">{{ key }}</option>
-      </select>
-    </div>
+
     <!-- Location -->
     <div class="form-group">
       <label for="location">{{"Location" | localize}}</label>
       <!-- Map container -->
-      <div id="map" style="height: 400px; margin-bottom: 20px;"></div>
+      <div id="map" style="height: 180px; margin-bottom: 20px;"></div>
       <input type="text" [(ngModel)]="supplierPlace.location" name="location" id="location" class="form-control"
         placeholder="Event Location" />
     </div>
