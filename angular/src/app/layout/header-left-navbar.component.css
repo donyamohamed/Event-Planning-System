@@ -149,3 +149,24 @@
 li{
   list-style: none;
 }
+.navbar-nav .dropdown-menu {
+  min-width: 200px; /* Adjust the width as needed */
+  border-radius: 0; /* Remove border radius if not needed */
+}
+
+.navbar-nav .dropdown-item {
+  padding: 10px 20px; /* Adjust padding as needed */
+}
+.navbar-nav .nav-link,
+.navbar-nav .dropdown-item {
+  transition: color 0.3s;
+}
+
+.navbar-nav .nav-link:hover,
+.navbar-nav .dropdown-item:hover,
+.navbar-nav .nav-link:active,
+.navbar-nav .dropdown-item:active,
+.navbar-nav .nav-link:focus,
+.navbar-nav .dropdown-item:focus {
+  color: #050794 !important;
+}
