@@ -57,9 +57,9 @@ p {
   line-height: 1.5;
   color: var(--white);
 }
-p.badge.badge-warning ,p.badge.badge-primary{
+p.badge.badge-warning ,p.badge.badge-primary,div.d-flex.justify-content-between.align-items-center{
   font-size: 12px;
-  margin-top:7px;
+  margin-top: 9px !important;
 }
 .flow > * + * {
   margin-top: var(--flow-space, 1em);
@@ -75,8 +75,7 @@ p.badge.badge-warning ,p.badge.badge-primary{
 .card {
   display: grid;
   place-items: center;
-  width: 80vw;
-  max-width: 21.875rem;
+ 
   width: calc(33.33% - 20px); /* Adjust for 3 cards per row */
   max-width: 21.875rem;
   height: 28.125rem;
@@ -101,9 +100,9 @@ p.badge.badge-warning ,p.badge.badge-primary{
   --flow-space: 0.9375rem;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-self: flex-end;
-  height: 65%;
+  height: 72%;
   padding: 12% 1.25rem 1.875rem;
   background: linear-gradient(
     180deg,
@@ -176,8 +175,16 @@ padding: 4px 0;
   text-decoration: underline;
 }
 
+.Chat-icon{
+  color: #fff;
 
-
+  font-size: 18px;
+  margin-top: 6px;
+  
+}
+.Chat-icon:hover{
+  color: #FBAF1B;
+}
 @media (any-hover: hover) and (any-pointer: fine) {
   .card__content {
     transform: translateY(62%);

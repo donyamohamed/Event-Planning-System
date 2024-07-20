@@ -15,7 +15,7 @@ export class HallsComponent implements OnInit {
   user: CurrentUser;
   roleData: any;
   title: string;
-
+  public isLoggedIn: boolean = false;
   constructor(
     private supplierService: SupplierService,
     private userService: CurrentUserDataService,
@@ -26,6 +26,9 @@ export class HallsComponent implements OnInit {
   ngOnInit(): void {
     this.userService.GetCurrentUserData().subscribe({
       next: (u: CurrentUser) => {
+        if(CurrentUser){
+          this.isLoggedIn = true;
+        }
         console.log('User data loaded:', u);
         this.user = u;
         this.userId = u.id;
@@ -73,9 +76,14 @@ export class HallsComponent implements OnInit {
     window.location.href = `mailto:${email}`;
   }
 
+
+  navigateToComponent(id: number): void {
+    this.router.navigateByUrl(`/app/Chat/${id}`);
+  }
+
   truncateDescription(description: string): string {
     const words = description.split(' ');
-    return words.length > 20 ? words.slice(0, 20).join(' ') + '...' : description;
+    return words.length > 17 ? words.slice(0, 17).join(' ') + '...' : description;
   }
   navigateToHallDetails(placeId: number) {
     this.router.navigate(['/app/hall-details', placeId]);

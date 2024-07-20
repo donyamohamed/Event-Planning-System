@@ -19,11 +19,14 @@
         <p class="card__description">{{ truncateDescription(hall.description) }}</p>
 
         <p class="badge badge-warning" ><i class="fas fa-map-marker-alt location-icon mr-2"></i> {{hall.location}}</p>
+        <div class="d-flex gap-5 align-items-center">
      <p class="badge badge-primary" *ngIf="userRole === 'ADMIN'" (click)="sendEmail(hall.userEmail)">By: {{hall.userEmail}}</p>
-  
-
+     <div class="Chat-icon" (click)="navigateToComponent(hall.userId)" *ngIf="isLoggedIn && userRole === 'ADMIN'">
+      <i class="fa-regular fa-comment-dots"></i>
+    </div>
+  </div>
       </div>
-      <button class="card__button" (click)="navigateToHallDetails(hall.id)">Know More</button>
+      <button class="card__button" (click)="navigateToHallDetails(hall.id)">See More</button>
     </div>
   </article>
 </div>
