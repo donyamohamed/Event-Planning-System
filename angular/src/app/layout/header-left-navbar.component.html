@@ -16,8 +16,9 @@
     </a>
   </li> 
   
-  <li class="nav-item  d-sm-inline-block" *ngIf="isLoggedIn">
+  <li class="nav-item  d-sm-inline-block" *ngIf="isLoggedIn && roleData.result.roleNames[0]=='SUPPLIER'">
     <a class="nav-link " [routerLink]="['/app/event-places']">
+
      
         <span>{{ "Places" | localize }}</span>
   
@@ -78,7 +79,7 @@
       {{"Invitation State" | localize}}
     </a>
   </li>
-  <li class="nav-item  d-sm-inline-block" *ngIf="isLoggedIn && roleData.result.roleNames[0]=='ADMIN'">
+  <li class="nav-item  d-sm-inline-block" *ngIf="isLoggedIn">
     <a class="nav-link" [routerLink]="['/app/Profile']">
       {{ "Profile" | localize }}
     </a>
