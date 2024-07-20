@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { SupplierService } from '@shared/Services/Supplier.service';
 import { CurrentUserDataService } from '@shared/services/current-user-data.service';
 import { CurrentUser } from '@shared/Models/current-user';
-
+import { ActivatedRoute, Router, RouterLink } from "@angular/router";
 @Component({
   selector: 'app-hall',
   templateUrl: './halls.component.html',
@@ -19,7 +19,8 @@ export class HallsComponent implements OnInit {
   constructor(
     private supplierService: SupplierService,
     private userService: CurrentUserDataService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -75,5 +76,8 @@ export class HallsComponent implements OnInit {
   truncateDescription(description: string): string {
     const words = description.split(' ');
     return words.length > 20 ? words.slice(0, 20).join(' ') + '...' : description;
+  }
+  navigateToHallDetails(placeId: number) {
+    this.router.navigate(['/app/hall-details', placeId]);
   }
 }

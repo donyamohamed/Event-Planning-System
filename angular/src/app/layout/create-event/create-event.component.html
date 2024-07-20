@@ -137,7 +137,9 @@
                     <div class="col-md-12">
                         <div class="place-container">
                             <div class="place-card" *ngFor="let place of places">
-                                <img [src]="place.image" alt="Place Image" class="img img-responsive">
+                                <a (click)="navigateToHallDetails(place.id)">
+                                    <img [src]="place.image" alt="Place Image" class="img img-responsive">
+                                </a>
                                 <div class="place-name">{{ place.name }}</div>
                                 <div class="place-description">{{ place.description }}</div>
                             </div>

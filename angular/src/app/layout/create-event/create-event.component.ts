@@ -10,13 +10,13 @@ import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js';
 import { FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '@shared/shared.module';
-
+import { ActivatedRoute, Router, RouterLink } from "@angular/router";
 @Component({
   selector: 'app-create-event',
   templateUrl: './create-event.component.html',
   styleUrls: ['./create-event.component.css'],
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, CommonModule, SharedModule]
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, SharedModule,RouterLink]
 })
 export class CreateEventComponent implements OnInit {
     @ViewChild('eventForm') eventForm!: NgForm;
@@ -33,7 +33,8 @@ export class CreateEventComponent implements OnInit {
   constructor(
     private eventService: EventService,
     private http: HttpClient,
-    private supplierService: SupplierService
+    private supplierService: SupplierService,
+    private router :Router
   ) { }
 
   ngOnInit(): void {
@@ -214,5 +215,8 @@ export class CreateEventComponent implements OnInit {
 
   private containsBadWords(text: string): boolean {
     return this.filter.isProfane(text);
+  }
+  navigateToHallDetails(placeId: number) {
+    this.router.navigate(['/app/hall-details', placeId]);
   }
 }

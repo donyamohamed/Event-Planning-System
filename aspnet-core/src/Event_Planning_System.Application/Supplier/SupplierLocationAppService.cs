@@ -180,6 +180,27 @@ namespace Event_Planning_System.Supplier
 
             return placeDtos;
         }
+        public async Task<GetSupplierPlaces> GetSupplierPlaceByIdAsync(int id)
+        {
+            var supplierPlace = await _repository.FirstOrDefaultAsync(id);
+            if (supplierPlace == null)
+            {
+                throw new EntityNotFoundException($"Supplier place with id {id} not found.");
+            }
+
+            var supplierPlaceDto = ObjectMapper.Map<GetSupplierPlaces>(supplierPlace);
+
+            // Fetch the user details associated with the supplier place
+            var user = await _userrepository.FirstOrDefaultAsync(u => u.Id == supplierPlace.UserId);
+            if (user != null)
+            {
+                supplierPlaceDto.UserName = user.Name;
+                supplierPlaceDto.UserEmail = user.EmailAddress;
+            }
+
+            return supplierPlaceDto;
+        }
+
 
     }
 }
