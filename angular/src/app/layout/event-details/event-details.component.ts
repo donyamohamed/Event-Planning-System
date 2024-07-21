@@ -297,7 +297,7 @@ export class EventDetailsComponent implements OnInit {
       this.eventDetailsService.getPlaceOfEvent(this.eventId).pipe(takeUntil(this.destroy$)).subscribe(
         (result) => {
           console.log('Place data:', result);
-          this.place = result;
+          this.place = result.result;
           console.log('Assigned place:', this.place);
         },
         (error) => {
