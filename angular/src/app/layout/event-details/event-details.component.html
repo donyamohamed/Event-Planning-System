@@ -124,24 +124,35 @@
 </div>
 
 
-<h3>{{ "Place" | localize }}</h3>
-<div class="place" *ngIf="place">
-  <div class="place-card">
-    <!-- <img [src]="place.image ? place.image : 'path-to-default-image.jpg'" alt="{{ place.name }}"> -->
-    <div class="place-details">
-      <h3>{{ place.name }}</h3>
-      <p>{{ place.description }}</p>
-      <!-- <p><strong>Category:</strong> {{ place.eventCategory }}</p> -->
-      <p><strong>Location:</strong> {{ place.location }}</p>
-      <p><strong>Capacity:</strong> {{ place.capacity }}</p>
-      <p><strong>Price:</strong> ${{ place.price }}</p>
-      <p><strong>Contact:</strong> {{ place.contactEmail }}</p>
+
+
+<div *ngIf="event; else loading">
+ 
+  <h3>{{ "Place" | localize }}</h3>
+  <div class="place" *ngIf="place">
+    <div class="place-card">
+      <img *ngIf="place?.image; else defaultImage2" [src]="place?.image" alt="place.name">
+      <ng-template #defaultImage2>
+        <img src="../../../assets/img/place.jpg" class="placeimg" alt="Default Image">
+      </ng-template>
+  
+      <div class="place-details">
+        <p><strong>Name:</strong>{{ place?.name }}</p>
+        <p><strong>Description:</strong>{{ place?.description }}</p>
+        <p><strong>Location:</strong>{{ place.location }}</p>
+        <p><strong>Capacity:</strong>{{ place.capacity }}</p>
+        <p><strong>Price:</strong>${{ place.price }}</p>
+      </div>
     </div>
   </div>
-</div>
-<div *ngIf="!place" class="no-reviews text-center">
-  {{ "No place information available." | localize }}
-</div>
+  <div *ngIf="!place" class="no-place text-center">
+    {{ "No place information available." | localize }}
+  </div>
+  </div>
+<ng-template #loading>
+  <p>Loading...</p>
+</ng-template>
+
 </div>
 
 
