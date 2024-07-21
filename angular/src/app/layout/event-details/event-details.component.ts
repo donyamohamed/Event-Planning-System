@@ -94,30 +94,67 @@ export class EventDetailsComponent implements OnInit {
     );
   }
 
+  // loadEventDetails(): void {
+  //   if (this.eventId) {
+  //     this.eventDetailsService.getEventById(this.eventId).subscribe(
+  //       (data) => {
+  //         this.event = data.result;
+  //         console.log("Event Details:", data.result);
+
+  //         this.rating = this.feedbackServ.getRating(this.event.id).subscribe(
+  //           (res) => {
+  //             console.log("Rating:", res.result.numberOfRaters);
+  //             this.numberOfRaters = res.result.numberOfRaters;
+  //             console.log(res.result.averageRating);
+  //             this.setStars(res.result.averageRating); // Set stars based on rating
+  //           },
+  //           (error) => {
+  //             console.error('Error fetching user data:', error);
+  //           }
+  //         ); // Set rating from event data
+
+
+  //         this.userService.getUserById(this.event.userId).subscribe(
+  //           (userData) => {
+  //             this.user = userData.result;
+  //             console.log("User Data:", userData.result);
+  //             this.checkIfEventCreator(); // Check if the event creator is the logged-in user
+  //             this.checkIfEventSaved();
+  //           },
+  //           (error) => {
+  //             console.error('Error fetching user data:', error);
+  //           }
+  //         );
+  //       },
+  //       (error) => {
+  //         console.error('Error fetching event details:', error);
+  //       }
+  //     );
+  //   }
+  // }
+
   loadEventDetails(): void {
     if (this.eventId) {
       this.eventDetailsService.getEventById(this.eventId).subscribe(
         (data) => {
           this.event = data.result;
-          console.log("Event Details:", data.result);
-
-          this.rating = this.feedbackServ.getRating(this.event.id).subscribe(
+          console.log("Event Details:", this.event); // Log the event details
+  
+          this.feedbackServ.getRating(this.event.id).subscribe(
             (res) => {
               console.log("Rating:", res.result.numberOfRaters);
               this.numberOfRaters = res.result.numberOfRaters;
-              console.log(res.result.averageRating);
               this.setStars(res.result.averageRating); // Set stars based on rating
             },
             (error) => {
-              console.error('Error fetching user data:', error);
+              console.error('Error fetching rating data:', error);
             }
-          ); // Set rating from event data
-
-
+          );
+  
           this.userService.getUserById(this.event.userId).subscribe(
             (userData) => {
               this.user = userData.result;
-              console.log("User Data:", userData.result);
+              console.log("User Data:", this.user); // Log the user data
               this.checkIfEventCreator(); // Check if the event creator is the logged-in user
               this.checkIfEventSaved();
             },
@@ -132,6 +169,9 @@ export class EventDetailsComponent implements OnInit {
       );
     }
   }
+  
+
+
   loadGuestCount(): void {
     if (this.eventId) {
       this.eventDetailsService.getGuestCountByEventId(this.eventId).subscribe(
@@ -294,10 +334,10 @@ export class EventDetailsComponent implements OnInit {
   private showPlaceOfEvent(): void {
     if (this.eventId) {
       console.log('Fetching place for event ID:', this.eventId);
-      this.eventDetailsService.getPlaceOfEvent(this.eventId).pipe(takeUntil(this.destroy$)).subscribe(
+      this.eventDetailsService.getPlaceOfEvent(this.eventId).subscribe(
         (result) => {
           console.log('Place data:', result);
-          this.place = result;
+          this.place = result.result;
           console.log('Assigned place:', this.place);
         },
         (error) => {

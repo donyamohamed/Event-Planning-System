@@ -337,7 +337,7 @@ height: 560px;
   position: relative;
   display: inline-block;
   transition: color 0.3s ease, transform 0.3s ease;
-  animation: rotate 3s ease-in-out 1s infinite;
+  /* animation: rotate 3s ease-in-out 1s infinite; */
 }
 
 @keyframes fadeIn {
@@ -423,3 +423,32 @@ h3 .reviews{
       transform: rotate(360deg);
     }
   }
+
+.place-card {
+  display: flex;
+  align-items: flex-start; /* Aligns the items to the top */
+  border-radius: 10px;
+  padding: 10px;
+  gap: 30px;
+  background-color: #f8f7fa;
+}
+
+.place-card img {
+  max-width: 310px; /* Adjust the width as needed */
+  margin-right: 10px; 
+  height: 210px;
+ 
+}
+
+.place-details {
+  flex: 1; /* Takes up the remaining space */
+  background-color: #f8f7fa;
+}
+
+.no-place {
+  margin-top: 20px;
+  background-color: #f8f7fa;
+  border-radius: 10px;
+  padding: 10px;
+  gap: 30px;
+}
