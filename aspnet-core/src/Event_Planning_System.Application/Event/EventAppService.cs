@@ -31,7 +31,8 @@ using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Event_Planning_System.Event
 {
-	public class EventAppService : AsyncCrudAppService<Enitities.Event, EventDto, int, PagedAndSortedResultRequestDto, CreateEventDto, EventDto>, IEventAppService
+   
+    public class EventAppService : AsyncCrudAppService<Enitities.Event, EventDto, int, PagedAndSortedResultRequestDto, CreateEventDto, EventDto>, IEventAppService
 	{
 		private readonly IRepository<Enitities.Event, int> _repository;
 		private readonly IRepository<Enitities.Guest, int> _guestRepository;
@@ -482,6 +483,31 @@ namespace Event_Planning_System.Event
         {
             try
             {
+                // Check if the event exists
+                var currentEvent = await _repository.FirstOrDefaultAsync(e => e.Id == eventEdit.Id);
+                if (currentEvent == null)
+                {
+                    throw new Abp.UI.UserFriendlyException("The event does not exist.");
+                }
+
+                // Check if a paid event is being changed to free
+                if (currentEvent.Type == EventType.Paid && eventEdit.Type == EventType.Free)
+                {
+                    throw new Abp.UI.UserFriendlyException("A paid event cannot be changed to free.");
+                }
+
+                // Check if the ticket price of a paid event is being changed
+                if (currentEvent.Type == EventType.Paid && currentEvent.TicketPrice != eventEdit.TicketPrice)
+                {
+                    throw new Abp.UI.UserFriendlyException("The ticket price of a paid event cannot be changed.");
+                }
+
+                // Check if the place is being edited when it shouldn't be
+                if (currentEvent.PlaceId != null && currentEvent.RequestPlace == PlaceState.Accepted && currentEvent.PlaceId != eventEdit.PlaceId)
+                {
+                    throw new Abp.UI.UserFriendlyException("The place of an accepted event cannot be changed.");
+                }
+
                 var today = DateTime.Today;
                 if (eventEdit.StartDate > today && eventEdit.EndDate > today)
                 {
@@ -493,16 +519,17 @@ namespace Event_Planning_System.Event
                     }
                 }
 
-            await _repository.UpdateAsync(eventEdit);
-            await CurrentUnitOfWork.SaveChangesAsync();
-               
+                await _repository.UpdateAsync(eventEdit);
+                await CurrentUnitOfWork.SaveChangesAsync();
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error in Updateing event with ID {EventId}", eventEdit.Id);
+                _logger.LogError(ex, "Error in updating event with ID {EventId}", eventEdit.Id);
                 throw new Abp.UI.UserFriendlyException("An internal error occurred while trying to update the event.");
             }
         }
+
+
         public async Task<List<EventDto>> GetAcceptedEventsPlacesByUserIdAsync(long userId)
         {
             var events = await _repository.GetAllIncluding(e => e.SupplierPlaces, e => e.User)

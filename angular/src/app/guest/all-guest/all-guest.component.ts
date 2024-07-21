@@ -98,6 +98,8 @@ export class AllGuestComponent implements OnInit {
         this.emailObj.eventName = res.result.name;
     this.emailObj.date = res.result.startDate;
     this.emailObj.eventImage = res.result.eventImg;
+    this.emailObj.eventId = res.result.id;
+
         },
         error: (err) => {
           console.log(err);
