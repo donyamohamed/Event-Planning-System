@@ -10,11 +10,11 @@
       {{ "Home" | localize }}
     </a>
   </li>
- <li class="nav-item  d-sm-inline-block" *ngIf="isLoggedIn && roleData.result.roleNames[0]=='SUPPLIER'">
+ <!-- <li class="nav-item  d-sm-inline-block" *ngIf="isLoggedIn && roleData.result.roleNames[0]=='SUPPLIER'">
     <a class="nav-link" [routerLink]="['/app/CreateEventPlace']">
       {{ "New Event Place" | localize }}
     </a>
-  </li> 
+  </li>  -->
   
   <li class="nav-item  d-sm-inline-block" *ngIf="isLoggedIn && roleData.result.roleNames[0]=='SUPPLIER'">
     <a class="nav-link " [routerLink]="['/app/event-places']">

@@ -1,50 +1,55 @@
 ﻿<app-header></app-header>
 <header>
   <div>
-    <h1>{{"Eventa System" |localize}}</h1>
-    <p>{{"UNIQUE,CREATIVE AND EXTRAORDINARY" | localize}}</p>
+    <h1>{{ "Eventa System" | localize }}</h1>
+    <p>{{ "UNIQUE, CREATIVE AND EXTRAORDINARY" | localize }}</p>
   </div>
 </header>
 <div [@routerTransition]>
   <div>
-     
-    <app-intersts *ngIf="!hasInterests && isLoggedIn"></app-intersts>
+    <app-intersts *ngIf="(!hasInterests || roleData === 'SUPPLIER') && isLoggedIn"></app-intersts>
   </div>
   <section>
-    <div class=" m-2 p-2">
+    <div class="m-2 p-2">
       <div class="row">
         <div class="col-12">
-          <app-public-events></app-public-events>
+          <app-public-events *ngIf="roleData.result.roleNames[0] === 'ADMIN' || roleData.result.roleNames[0] === null"></app-public-events>
+          <div class="supplierclass" *ngIf="roleData.result.roleNames[0] === 'SUPPLIER'">
+            
+            <img src="../../assets/img/World.gif">
+            <button class="createplace" [routerLink]="['/app/CreateEventPlace']" >
+              {{ "Create New Place" | localize }}
+            </button>
+          </div>
+          
         </div>
       </div>
     </div>
   </section>
-    <!-- Chat Button -->
-    <div class="chat-button-container">
-      <button class="chat-button" (click)="openChat()">
-        <img src="../../assets/img/Aboutus.png" alt="Chat Icon">
-       {{"Support" | localize}} 
-      </button>
-    </div>
-     <!-- Chat Popup -->
+  <!-- Chat Button -->
+  <div class="chat-button-container">
+    <button class="chat-button" (click)="openChat()">
+      <img src="../../assets/img/Aboutus.png" alt="Chat Icon">
+      {{ "Support" | localize }}
+    </button>
+  </div>
+  <!-- Chat Popup -->
   <div class="chat-popup" id="chatPopup">
     <div class="chat-header">
-      {{"Support" | localize}} 
+      {{ "Support" | localize }}
       <span class="close" (click)="closeChat()">&times;</span>
     </div>
     <div class="chat-body">
-      <p class="p1 chatbot-title" *ngIf="!selectedQuestion">{{"What are you inquiring about?" | localize}}</p>
+      <p class="p1 chatbot-title" *ngIf="!selectedQuestion">{{ "What are you inquiring about?" | localize }}</p>
       <ng-container *ngIf="!selectedQuestion">
         <button *ngFor="let question of questions" (click)="askQuestion(question)">{{ question }}</button>
       </ng-container>
       <div *ngIf="answer" class="panswer">
-        <p class="p2 chatbot-q" >{{ selectedQuestion }}</p>
-        <p class="p1 chatbot-a" >{{ answer }}</p>
-        <button (click)="resetQuestions()">{{"Ask another question" | localize}}</button>
+        <p class="p2 chatbot-q">{{ selectedQuestion }}</p>
+        <p class="p1 chatbot-a">{{ answer }}</p>
+        <button (click)="resetQuestions()">{{ "Ask another question" | localize }}</button>
       </div>
     </div>
   </div>
-
 </div>
-
 <app-footer></app-footer>

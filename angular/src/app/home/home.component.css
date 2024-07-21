@@ -270,6 +270,21 @@ p {
 .chatbot-q,.chatbot-a{
   margin: 5px 0px;
 }
+.supplierclass{
+  display: flex;
+  align-items: center;
+  width: 80%;
+  margin: 50px auto;
+  flex-direction: column;
+  justify-content: center;
+}
+.createplace{
+  background-color: #fbaf1b;
+  border: #fbaf1b;
+  border-radius: 5px;
+  padding: 10px;
+  color: white;
+}
 /* body {
   background: #f5f6f8;
 }

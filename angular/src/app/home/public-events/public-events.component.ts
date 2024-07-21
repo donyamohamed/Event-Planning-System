@@ -34,7 +34,6 @@ export class PublicEventsComponent implements OnInit {
   eventType = EventType; 
   public filteredEvents: Event[] = []; // Initialize filteredEvents
   allPublicEvents: Event[] = [];
-
   constructor(
     private PublicEventServ: HomeService,
     private askForInvitationServ: AskforInvitationService,
