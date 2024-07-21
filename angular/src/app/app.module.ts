@@ -58,7 +58,7 @@ import {FaildPaymentComponent} from './faild-payment/faild-payment.component'
 
 
 import {PaymentComponent} from './payment/payment.component'
-
+import {HallsComponent} from './halls/halls.component'
 
 
 // import { CreateGuestModelComponent } from './guest/create-guest-model/create-guest-model.component';
@@ -102,7 +102,8 @@ import {PaymentComponent} from './payment/payment.component'
         GuestsFeedbackComponent,
         PaymentComponent,
         SuccessPaymentComponent,
-        FaildPaymentComponent
+        FaildPaymentComponent,
+        HallsComponent
 
     ],
     bootstrap: [AppComponent],

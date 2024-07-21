@@ -45,7 +45,8 @@ import {FaildPaymentComponent} from './faild-payment/faild-payment.component';
 
 import {SupplierPlacesComponent} from './supplier-places/supplier-places.component';
 import { SupplierEventsComponent } from '../app/layout/supplier-events/supplier-events.component';
-
+import {HallsComponent} from './halls/halls.component';
+import {HallDetailsComponent} from './hall-details/hall-details.component';
 const routes: Routes = [
     {
         path: '',
@@ -77,6 +78,7 @@ const routes: Routes = [
             { path: 'payment', component: PaymentComponent, canActivate: [AppRouteGuard] },
 
             {path: 'supplier-events',component:SupplierEventsComponent, canActivate: [AppRouteGuard] },
+            { path: 'event-places', component: HallsComponent },
 
             { path: 'payment-success', component: SuccessPaymentComponent },
             { path: 'payment-failed', component: FaildPaymentComponent },
@@ -102,7 +104,8 @@ const routes: Routes = [
                     { path: 'showMore/:id', component: GetByIdGuestComponent, canActivate: [AppRouteGuard] }
                 ]
             },
-            { path: 'sidebar-event', component: SidebarEventComponent, canActivate: [AppRouteGuard] }
+            { path: 'sidebar-event', component: SidebarEventComponent, canActivate: [AppRouteGuard] },
+            {path:'hall-details/:id', component:HallDetailsComponent,canActivate:[AppRouteGuard]}
         ]
     }
 ];

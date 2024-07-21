@@ -10,6 +10,8 @@ export class SupplierPlaces {
                 public image: string | undefined='',
                 public description: string | undefined='',
                 public imagePath: File | undefined=undefined,
+                public userName: string | undefined=undefined,
+                public userEmail: string | undefined=undefined,
         ) {
         }
 }

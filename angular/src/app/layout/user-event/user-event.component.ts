@@ -101,6 +101,8 @@ export class UserEventComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCurrentUserId();
+    this.fetchUserEvents();
+   
   }
 
   getCurrentUserId(): void {
@@ -250,16 +252,20 @@ export class UserEventComponent implements OnInit {
             },
             (error) => {
               console.error("Error deleting event", error);
-              const localizedMessage = abp.localization.localize(
-                "There was an error deleting the event.",
-                "YourSourceName"
-              );
-              swal.fire("Error!", localizedMessage, "error");
+              let errorMessage = "There was an error deleting the event.";
+              // Check for specific error message
+              if (error.error && error.error.message) {
+                errorMessage = error.error.message;
+              } else if (error.status === 400) {
+                errorMessage = "Cannot delete the event because you have reserved a place for it or people have paid for it.";
+              }
+              swal.fire("Error!", errorMessage, "error");
             }
           );
         }
       });
-  }
+      }
+     
 
   editEvent(): void {
     if (this.eventEditForm.valid) {

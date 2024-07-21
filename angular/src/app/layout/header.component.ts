@@ -19,6 +19,7 @@ export class HeaderComponent  implements OnInit{
   events: Event[] = [];
   userId: number; 
   showDropdown: boolean = false;
+  roleData: any;
   constructor(
     private _userService: CurrentUserDataService,
     private cdr: ChangeDetectorRef,
@@ -26,19 +27,26 @@ export class HeaderComponent  implements OnInit{
     private router: Router 
   ) {}
   ngOnInit(): void {
-    // this.getPendingEventsCount(8);
-    // this.getPendingEvents(8);
     this.loadUserProfile();
     this._userService.GetCurrentUserData().subscribe({
       next: (u: CurrentUser) => {
-        console.log('User data loaded:', u); // Debugging: Log the user data
+        console.log('User data loaded:', u); 
         this.user = u;
         this.cdr.markForCheck(); // Manually trigger change detection
+        this._userService.GetUserRole(this.user.id).subscribe({
+          next :n=>{
+            if(n){
+              this.roleData=n;
+              console.log("role ",n);
+            }
+          }
+        });
       },
       error: (err) => {
         console.error('Failed to load user data', err);
       }
     });
+    console.log(this.isLoggedIn);
   }
 
   get isLoggedIn(): boolean {
@@ -104,5 +112,3 @@ export class HeaderComponent  implements OnInit{
     );
   }
 }
-
-
