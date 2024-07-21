@@ -33,6 +33,7 @@ export class PublicEventsComponent implements OnInit {
   isPaid: boolean;
   eventType = EventType; 
   public filteredEvents: Event[] = []; // Initialize filteredEvents
+  allPublicEvents: Event[] = [];
   constructor(
     private PublicEventServ: HomeService,
     private askForInvitationServ: AskforInvitationService,
@@ -56,6 +57,7 @@ export class PublicEventsComponent implements OnInit {
           this.guestId = response.id;
           this.guestEmail = response.emailAddress;
           this.fetchUserEvents();
+          this.fetchAllPublicrEvents();
         }
       },
       error => {
@@ -243,4 +245,20 @@ export class PublicEventsComponent implements OnInit {
   handleSearchResults(filteredEvents: Event[]): void {
     this.filteredEvents = filteredEvents;
   }
+
+  fetchAllPublicrEvents(): void {
+    this.PublicEventServ.getAllPublicEvents().subscribe(
+      (data: EventsResponse) => {
+        this.allPublicEvents = data.result;
+        this.isLoading = false;
+        this.cdr.detectChanges();
+        this.initializeButtonStates();
+      },
+      error => {
+        console.error('Error fetching user events', error);
+        this.isLoading = false;
+      }
+    );
+  }
+
 }

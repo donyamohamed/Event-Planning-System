@@ -122,9 +122,11 @@
       </div>
       <div>
         <div class="form-group">
-          <label>{{ "Event Category" | localize }}</label>
+          <label>{{ "Event Category" | localize }}
+            <h6 class="text-warning">If you Changed event Category, you will have to change the place</h6>
+          </label>
           <select [(ngModel)]="eventEdit.category" formControlName="category" name="category" class="form-control"
-            title="{{ 'Event Category' | localize }}" required>
+            title="{{ 'Event Category' | localize }}" required (change)="onCategoryChange()">
             <option *ngFor="let key of enumeratorKeys" [ngValue]="key">{{ key }}</option>
           </select>
         </div>
@@ -139,13 +141,19 @@
       </div>
       <div>
         <label>{{ "Choose Event Type" | localize }}</label>
-        <div class="form-check">
+
+        <div class="d-flex">
+
+          <!-- public -->
+          <div class="form-check me-4">
           <label class="form-check-label">
             <input formControlName="isPublic" type="radio" [(ngModel)]="eventEdit.isPublic" [value]="true"
               name="isPublic" class="form-check-input" required>
             {{ "Public" | localize }}
           </label>
         </div>
+        
+        <!-- private -->
         <div class="form-check">
           <label class="form-check-label">
             <input formControlName="isPublic" type="radio" [(ngModel)]="eventEdit.isPublic" [value]="false"
@@ -153,10 +161,58 @@
             {{ "Private" | localize }}
           </label>
         </div>
+
+        <!-- Validation -->
         <div *ngIf="eventEditForm.get('isPublic').invalid && eventEditForm.get('isPublic').touched" class="text-danger">
           <div *ngIf="eventEditForm.get('isPublic').errors.required">{{ "Event type is required." | localize }}</div>
         </div>
+      </div> <!-- public or private -->
+
+      <div class="d-flex">
+
+        <!-- public -->
+        <div class="form-check me-5">
+        <label class="form-check-label">
+          <input formControlName="type" type="radio" [(ngModel)]="eventEdit.type" [value]="1"
+            name="Type" class="form-check-input" required>
+          {{ "Free" | localize }}
+        </label>
       </div>
+      
+      <!-- private -->
+      <div class="form-check">
+        <label class="form-check-label">
+          <input formControlName="type" type="radio" [(ngModel)]="eventEdit.type" [value]="0"
+            name="Type" class="form-check-input">
+          {{ "Paid" | localize }}
+        </label>
+      </div>
+        <!-- Validation -->
+        <div *ngIf="eventEditForm.get('type').invalid && eventEditForm.get('type').touched" class="text-danger">
+          <div *ngIf="eventEditForm.get('type').errors.required">{{ "Event type is required." | localize }}</div>
+        </div>
+    </div> <!-- public or private -->
+
+
+      </div> <!-- event type -->
+
+
+      <div>
+
+        <div class="form-group">
+          <label for="place">{{ "Event Place" | localize }}
+            <h6 class="text-warning">If you Changed event Category, you will have to change the place</h6>
+          </label>
+          <select [(ngModel)]="eventEdit.placeId" id="place" name="place" class="form-control"
+            title="{{ 'Event Place' | localize }}" required>
+            <option *ngFor="let place in places" [ngValue]="place.id">{{ place.name }}</option>
+          </select>
+        </div>
+
+
+        
+      </div>
+
       <div>
         <label for="descriptionInput">{{ "Description:" | localize }}</label>
         <textarea formControlName="description" class="form-control" name="description" id="descriptionInput" cols="30"

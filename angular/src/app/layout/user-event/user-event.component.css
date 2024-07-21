@@ -249,6 +249,11 @@ label {
   font-size: 16px;
   font-weight: bold;
 }
+label h6{
+  color: rgb(239 116 6);
+  font-size: 0.9rem;
+  font-weight: bold;
+}
 
 .image-container img {
   margin-top: 40px;

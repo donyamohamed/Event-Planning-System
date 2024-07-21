@@ -109,8 +109,7 @@ namespace Event_Planning_System.Email
             </div>
             <div class='message'>
                 <p>Dear {guestName},</p>
-                <p>We regret to inform you that the event '{eventName}' scheduled for {startDate:dd MMM yyyy} has been canceled.</p>
-                <p>We apologize for any inconvenience this may cause and appreciate your understanding.</p>
+                <p>We want to inform you that there is some changes in the event '{eventName}' scheduled for {startDate:dd MMM yyyy} .</p>
                 <p>Best regards,</p>
                 <p>The Event Planning Team</p>
             </div>

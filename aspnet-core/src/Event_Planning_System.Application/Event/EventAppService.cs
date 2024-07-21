@@ -205,7 +205,7 @@ namespace Event_Planning_System.Event
 			var eventEntity = _mapper.Map<Enitities.Event>(input);
 			await _repository.InsertAsync(eventEntity);
 			await CurrentUnitOfWork.SaveChangesAsync();
-			await ScheduleEventFeedbackJob(eventEntity.Id);
+			//await ScheduleEventFeedbackJob(eventEntity.Id);
 			return _mapper.Map<EventDto>(eventEntity);
 		}
         public async Task<List<EventDto>> GetPublicEventsByInterest()

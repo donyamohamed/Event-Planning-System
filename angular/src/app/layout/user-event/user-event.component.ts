@@ -1,8 +1,13 @@
 import { EventResponse } from "./../../guest/event-response";
 import { Enumerator } from "./../../../shared/Models/Event";
-import { Event } from "./../../../shared/Models/Event";
+import { Event, EventType } from "./../../../shared/Models/Event";
 
-import { Component, OnInit, TemplateRef, ChangeDetectionStrategy } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  TemplateRef,
+  ChangeDetectionStrategy,
+} from "@angular/core";
 
 import { CommonModule } from "@angular/common";
 import { UserEventsService } from "../../../shared/services/user-events.service";
@@ -12,9 +17,9 @@ import swal from "sweetalert2";
 import { SharedModule } from "../../../shared/shared.module";
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
 
-import { CurrentUserDataService } from '../../../shared/services/current-user-data.service';
+import { CurrentUserDataService } from "../../../shared/services/current-user-data.service";
 
-import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js';
+import mapboxgl from "mapbox-gl/dist/mapbox-gl.js";
 
 import {
   FormsModule,
@@ -26,6 +31,7 @@ import {
 
 import { SidebarEventComponent } from "../sidebar-event/sidebar-event.component";
 import { SearchComponent } from "../../search/search.component";
+import { SupplierService } from "@shared/Services/Supplier.service";
 
 @Component({
   selector: "app-user-event",
@@ -39,8 +45,8 @@ import { SearchComponent } from "../../search/search.component";
     FormsModule,
     ReactiveFormsModule,
     SidebarEventComponent,
-    SearchComponent
-]
+    SearchComponent,
+  ],
 })
 export class UserEventComponent implements OnInit {
   events: Event[] = [];
@@ -55,11 +61,14 @@ export class UserEventComponent implements OnInit {
   lastStartDate: Date = new Date();
   lastEndDate: Date = new Date();
   public filteredEvents: Event[] = []; // Initialize filteredEvents
-
+  free: EventType.Free;
+  paid: EventType.Paid;
+  places: any[] = [];
+  enumeratorKey = Object.keys(Enumerator); // Assuming Enumerator is an Enum
   // Error properties
   dateErrors = {
-    endDateError: '',
-    startDateError: ''
+    endDateError: "",
+    startDateError: "",
   };
 
   constructor(
@@ -69,7 +78,9 @@ export class UserEventComponent implements OnInit {
     private http: HttpClient,
     private modalService: BsModalService,
     private fb: FormBuilder,
-    private currentUserDataService: CurrentUserDataService // Inject the service
+    private currentUserDataService: CurrentUserDataService, // Inject the service
+    private supplierService: SupplierService
+
   ) {
     this.eventEditForm = this.fb.group({
       name: ["", [Validators.required, Validators.pattern("^[a-zA-Z0-9 ]+$")]],
@@ -79,7 +90,12 @@ export class UserEventComponent implements OnInit {
       maxCount: ["", Validators.required],
       category: ["", Validators.required],
       isPublic: ["", Validators.required],
-      description: ["", [Validators.required, Validators.pattern("^[a-zA-Z0-500 ]+$")]],
+      description: [
+        "",
+        [Validators.required, Validators.pattern("^[a-zA-Z0-500 ]+$")],
+      ],
+      // ticketPrice: [null, [Validators.min(0)]],
+      type: ["", [Validators.required]],
     });
   }
 
@@ -89,48 +105,50 @@ export class UserEventComponent implements OnInit {
 
   getCurrentUserId(): void {
     this.currentUserDataService.GetCurrentUserData().subscribe(
-      response => {
+      (response) => {
         if (response) {
           this.userId = response.id;
-          console.log('User ID:', this.userId);
+          console.log("User ID:", this.userId);
           this.fetchUserEvents();
         } else {
-          console.error('No user data found');
+          console.error("No user data found");
         }
       },
-      error => {
-        console.error('Error fetching user data', error);
+      (error) => {
+        console.error("Error fetching user data", error);
       }
     );
   }
   initializeMap(): void {
-    mapboxgl.accessToken = 'pk.eyJ1IjoibWFiZG9naCIsImEiOiJjbGp1em54c24xaTd4M2NsbDBiOWZuMXk4In0.n4ILS2Jtk5tZ9onHBcL8Cw';
+    mapboxgl.accessToken =
+      "pk.eyJ1IjoibWFiZG9naCIsImEiOiJjbGp1em54c24xaTd4M2NsbDBiOWZuMXk4In0.n4ILS2Jtk5tZ9onHBcL8Cw";
     this.map = new mapboxgl.Map({
-      container: 'map',
-      style: 'mapbox://styles/mapbox/streets-v12',
+      container: "map",
+      style: "mapbox://styles/mapbox/streets-v12",
       center: [30.8025, 26.8206], // Default center (Egypt)
       zoom: 5, // Default zoom level
-      attributionControl: false 
+      attributionControl: false,
     });
-// https://api.mapbox.com/geocoding/v5/mapbox.places/30.744557462642092,28.09867557063106.json?access_token=pk.eyJ1IjoibWFiZG9naCIsImEiOiJjbGp1em54c24xaTd4M2NsbDBiOWZuMXk4In0.n4ILS2Jtk5tZ9onHBcL8Cw`;
+    // https://api.mapbox.com/geocoding/v5/mapbox.places/30.744557462642092,28.09867557063106.json?access_token=pk.eyJ1IjoibWFiZG9naCIsImEiOiJjbGp1em54c24xaTd4M2NsbDBiOWZuMXk4In0.n4ILS2Jtk5tZ9onHBcL8Cw`;
     // Add map click event to update location input
-    this.map.on('click', (e) => {
+    this.map.on("click", (e) => {
       const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${e.lngLat.lng},${e.lngLat.lat}.json?access_token=${mapboxgl.accessToken}`;
       fetch(url)
-      .then(response => response.json())
-      .then(data => {
-        const placeName = data.features[0]?.place_name || 'Unknown location';
-                this.eventEdit.location = placeName;
-                console.log(placeName);
-            })
-            .catch(err => {
-                console.error('Error fetching location name:', err);
-              });
-            });
-          }
-          openEditModal(template: TemplateRef<any>, id: number): void {
-            this.userEventsService.getEventById(id).subscribe({
-              next: (data: EventResponse) => {
+        .then((response) => response.json())
+        .then((data) => {
+          const placeName = data.features[0]?.place_name || "Unknown location";
+          this.eventEdit.location = placeName;
+          console.log(placeName);
+        })
+        .catch((err) => {
+          console.error("Error fetching location name:", err);
+        });
+    });
+  }
+
+  openEditModal(template: TemplateRef<any>, id: number): void {
+    this.userEventsService.getEventById(id).subscribe({
+      next: (data: EventResponse) => {
         this.eventEdit = data.result;
         this.initializeMap();
         this.lastStartDate = this.eventEdit.startDate;
@@ -145,13 +163,34 @@ export class UserEventComponent implements OnInit {
     });
     this.bsModalRef = this.modalService.show(template);
   }
-  
+
+
+  onCategoryChange(): void {
+    if (this.eventEdit.category) {
+      const categoryIndex = this.enumeratorKey.indexOf(
+        this.eventEdit.category
+      );
+      if (categoryIndex !== -1) {
+        this.supplierService.getPlacesByCategory(categoryIndex).subscribe(
+          (response: any) => {
+            this.places = response.result; // Assuming response has an array of places
+            console.log(this.places);
+            
+          },
+          (error) => {
+            console.error("Error fetching places:", error);
+          }
+        );
+      }
+    }
+  }
+
   fetchUserEvents(): void {
     if (this.userId === null) {
       console.error("User ID is not available.");
       return;
     }
-    
+
     this.userEventsService.getUserEvents(this.userId).subscribe(
       (data: Event[]) => {
         if (Array.isArray(data)) {
@@ -242,9 +281,7 @@ export class UserEventComponent implements OnInit {
           console.log(err);
         },
       });
-    }
-    
-    else {
+    } else {
       this.markFormGroupTouched(this.eventEditForm);
     }
   }
@@ -263,19 +300,20 @@ export class UserEventComponent implements OnInit {
     const endDate = new Date(this.eventEdit.endDate);
     const lastStartDate = new Date(this.lastStartDate);
 
-    this.dateErrors.endDateError = '';
-    this.dateErrors.startDateError = '';
+    this.dateErrors.endDateError = "";
+    this.dateErrors.startDateError = "";
 
     if (startDate > endDate) {
       this.eventEdit.endDate = this.eventEdit.startDate;
-      this.dateErrors.endDateError = 'End date cannot be before start date.';
+      this.dateErrors.endDateError = "End date cannot be before start date.";
     }
 
     const oneDayBeforeLastStartDate = new Date(lastStartDate);
     oneDayBeforeLastStartDate.setDate(lastStartDate.getDate() - 1);
 
     if (startDate < oneDayBeforeLastStartDate) {
-      this.dateErrors.startDateError = 'Start date is too far in the past compared to the last start date.';
+      this.dateErrors.startDateError =
+        "Start date is too far in the past compared to the last start date.";
     }
 
     const now = new Date();
@@ -283,7 +321,8 @@ export class UserEventComponent implements OnInit {
     twentyFourHoursLater.setHours(now.getHours() + 24);
 
     if (startDate < twentyFourHoursLater) {
-      this.dateErrors.startDateError = 'Start date is within the next 24 hours.';
+      this.dateErrors.startDateError =
+        "Start date is within the next 24 hours.";
     }
   }
   handleSearchResults(filteredEvents: Event[]): void {
