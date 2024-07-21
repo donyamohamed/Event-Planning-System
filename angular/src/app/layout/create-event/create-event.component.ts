@@ -29,7 +29,7 @@ export class CreateEventComponent implements OnInit {
   EventType: EventType;
   places: any[] = [];
   enumeratorKey = Object.keys(Enumerator); // Assuming Enumerator is an Enum
-
+  mapClickEnabled: boolean = true;
   constructor(
     private eventService: EventService,
     private http: HttpClient,
@@ -70,6 +70,7 @@ export class CreateEventComponent implements OnInit {
         .then(data => {
           const placeName = data.features[0]?.place_name || 'Unknown location';
           this.eventData.location = placeName;
+          this.resetMapClick();
         })
         .catch(err => {
           console.error('Error fetching location name:', err);
@@ -218,5 +219,17 @@ export class CreateEventComponent implements OnInit {
   }
   navigateToHallDetails(placeId: number) {
     this.router.navigate(['/app/hall-details', placeId]);
+  }
+
+  onPlaceChange(placeId: string): void {
+    const selectedPlace = this.places.find(place => place.id.toString() === placeId); // Ensure comparison is correct
+    if (selectedPlace) {
+      this.eventData.location = selectedPlace.location; // Assuming 'name' is the location name
+      this.mapClickEnabled = false; // Disable map clicks
+    }
+  }
+  
+  resetMapClick(): void {
+    this.mapClickEnabled = true;
   }
 }
