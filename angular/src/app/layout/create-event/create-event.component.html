@@ -128,14 +128,24 @@
             <div class="col-lg-4 col-md-12 image-container">
                 <div class="form-group">
                     <label for="place">{{ "If you want a place for Event, Choose one." | localize }}</label>
-                    <select id="place" name="place" class="form-control" [(ngModel)]="eventData.placeId">
+                    
+                    <!-- Check if places array is empty -->
+                    <select *ngIf="places.length > 0; else noPlacesMessage" id="place" name="place" class="form-control" [(ngModel)]="eventData.placeId">
                         <option *ngFor="let place of places" [value]="place.id">{{ place.name }}</option>
                     </select>
+                    
+                    <!-- Template to display when there are no places -->
+                    <ng-template #noPlacesMessage>
+                        <div class="alert alert-info" role="alert">
+                            Not available places yet.
+                        </div>
+                    </ng-template>
                 </div>
             
+                <!-- Conditionally render the place-container based on places array -->
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="place-container">
+                        <div class="place-container" *ngIf="places.length > 0; else noPlacesCards">
                             <div class="place-card" *ngFor="let place of places">
                                 <a (click)="navigateToHallDetails(place.id)">
                                     <img [src]="place.image" alt="Place Image" class="img img-responsive">
@@ -144,6 +154,13 @@
                                 <div class="place-description">{{ place.description }}</div>
                             </div>
                         </div>
+                        
+                        <!-- Template to display when there are no place cards -->
+                        <ng-template #noPlacesCards>
+                            <div class="alert alert-info" role="alert">
+                                Not available places yet.
+                            </div>
+                        </ng-template>
                     </div>
                 </div>
             </div>
