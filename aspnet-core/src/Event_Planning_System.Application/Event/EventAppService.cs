@@ -229,7 +229,12 @@ namespace Event_Planning_System.Event
             foreach (var interest in interests)
             {
                 var interestEvents = await _repository.GetAll()
-                    .Where(e => e.Category == interest.Type && e.IsPublic && e.UserId != userId && e.StartDate >= DateTime.Now)
+                    .Where(e => e.Category == interest.Type
+                                && e.IsPublic
+                                && e.UserId != userId
+                                && e.StartDate >= DateTime.Now
+                                && (e.PlaceId == null ||
+                                    (e.PlaceId != null && e.RequestPlace != PlaceState.Pendding && e.RequestPlace != PlaceState.Rejected)))
                     .ToListAsync();
 
                 var mappedInterestEvents = _mapper.Map<List<EventDto>>(interestEvents);
@@ -243,9 +248,10 @@ namespace Event_Planning_System.Event
                 }
             }
 
-           
             return orderedPublicEvents;
         }
+
+
 
 
         public async Task DeleteEventWithDetailsAsync(int eventId)
@@ -456,13 +462,24 @@ namespace Event_Planning_System.Event
             if (userId.HasValue && userId > 0)
             {
                 publicEventsFromDb = await _repository.GetAll()
-                    .Where(e => e.IsPublic && e.UserId != userId && e.StartDate >= DateTime.Now)
+                    .Where(e => e.IsPublic
+                                && e.UserId != userId
+                                && e.StartDate >= DateTime.Now
+                                && (e.PlaceId == null
+                                    || (e.PlaceId != null
+                                        && e.RequestPlace != PlaceState.Pendding
+                                        && e.RequestPlace != PlaceState.Rejected)))
                     .ToListAsync();
             }
             else
             {
                 publicEventsFromDb = await _repository.GetAll()
-                    .Where(e => e.IsPublic && e.StartDate >= DateTime.Now)
+                    .Where(e => e.IsPublic
+                                && e.StartDate >= DateTime.Now
+                                && (e.PlaceId == null
+                                    || (e.PlaceId != null
+                                        && e.RequestPlace != PlaceState.Pendding
+                                        && e.RequestPlace != PlaceState.Rejected)))
                     .ToListAsync();
             }
 
@@ -478,6 +495,7 @@ namespace Event_Planning_System.Event
 
             return targetPublicEvents;
         }
+
 
         public async Task UpdateEventWithDetailsAsync(Enitities.Event eventEdit)
         {
