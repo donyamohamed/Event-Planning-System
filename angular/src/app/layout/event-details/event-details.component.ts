@@ -64,7 +64,7 @@ export class EventDetailsComponent implements OnInit {
       this.showFeedbackForEvent();
       this.showPlaceOfEvent();
       this.loadGuestCount();
-
+      this.checkIfEventSaved();
       if (this.loggedInUserId && this.eventId) {
         this.checkIfEventSaved();
       }
@@ -339,12 +339,13 @@ export class EventDetailsComponent implements OnInit {
     this.savedEventService.getAllSavedEvents().subscribe(
       (response) => {
         console.log('GetAllSavedEvents response:', response); // Log the response for debugging
-        const savedEvents = response.result.items;
-
-        if (Array.isArray(savedEvents)) {
-          this.isEventSaved = savedEvents.some((event: any) => event.eventId === this.eventId && this.event.userId === this.loggedInUserId);
+  
+        if (response && response.result && Array.isArray(response.result.items)) {
+          const savedEvents = response.result.items;
+          this.isEventSaved = savedEvents.some((event: any) => event.eventId === this.eventId && event.userId === this.loggedInUserId);
+          console.log("Saved");
         } else {
-          console.error('GetAllSavedEvents did not return an array:', savedEvents);
+          console.error('GetAllSavedEvents did not return the expected format:', response);
         }
       },
       (error) => {
@@ -352,6 +353,7 @@ export class EventDetailsComponent implements OnInit {
       }
     );
   }
+  
 
 
 
@@ -390,6 +392,9 @@ export class EventDetailsComponent implements OnInit {
   // Function to determine which bookmark icon class to use
   getBookmarkIconClass(): string {
     return this.isEventSaved ? 'fa-solid fa-bookmark' : 'fa-regular fa-bookmark';
+  }
+  get isLoggedIn(): boolean {
+    return this.user !== null;
   }
 }
 

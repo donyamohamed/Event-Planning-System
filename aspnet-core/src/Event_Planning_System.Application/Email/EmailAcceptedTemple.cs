@@ -176,7 +176,6 @@ namespace Event_Planning_System.Email
                     <div class='footer'>
                         <p>&copy; {DateTime.Now.Year} Event Planning Team. All rights reserved.</p>
                     </div>
-                    <a id='printpdf' class='download-btn'>Print</a>
                 </div>
                 <script src='https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js'></script>
                 <script>

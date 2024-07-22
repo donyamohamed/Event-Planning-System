@@ -145,7 +145,6 @@ namespace Event_Planning_System.Email
                 <h3>Event Location</h3>
                 <p>{eventAddress}</p>
             </div>
-            <a href='{downloadUrl}' class='download-btn'>Download Invitation</a>
         </div>
     </body>
     </html>";
