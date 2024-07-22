@@ -1,0 +1,21 @@
+<div class="invitation-card">
+    <div class="poster">
+      <div class="header-img" [ngStyle]="{'background-image': 'url(' + eventImage + ')'}"></div>
+      <h1>Event Invitation</h1>
+      <h2>{{ eventName }}</h2>
+      <div class="date-time">
+        <span>{{ eventDate | date: 'HH:mm' }}</span>
+        <span>{{ eventDate | date: 'dd' }}</span>
+        <span>{{ eventDate | date: 'MMM' }}</span>
+        <span>{{ eventDate | date: 'yyyy' }}</span>
+      </div>
+      <div class="venue">
+        <h3>Event Location</h3>
+        <p>{{ eventAddress }}</p>
+      </div>
+    </div>
+    <button (click)="downloadInvitation()" class="download-btn">Download Invitation</button>
+    <div *ngIf="loading" class="loading">Generating invitation, please wait...</div>
+    <div *ngIf="error" class="error">{{ error }}</div>
+  </div>
+  

@@ -47,7 +47,8 @@ import {SupplierPlacesComponent} from './supplier-places/supplier-places.compone
 import { SupplierEventsComponent } from '../app/layout/supplier-events/supplier-events.component';
 import {HallsComponent} from './halls/halls.component';
 import {HallDetailsComponent} from './hall-details/hall-details.component';
-const routes: Routes = [
+import {SentEmailComponent} from './sent-email/sent-email.component';
+const routes: Routes = [ 
     {
         path: '',
         component: AppComponent,
@@ -105,7 +106,8 @@ const routes: Routes = [
                 ]
             },
             { path: 'sidebar-event', component: SidebarEventComponent, canActivate: [AppRouteGuard] },
-            {path:'hall-details/:id', component:HallDetailsComponent,canActivate:[AppRouteGuard]}
+            {path:'hall-details/:id', component:HallDetailsComponent,canActivate:[AppRouteGuard]},
+            {path:'sentemail',component:SentEmailComponent}
         ]
     }
 ];

@@ -9,5 +9,6 @@ export class EmailRequest {
     public eventImage: string | undefined=undefined;
     public guestId: number| undefined=0;
     public eventId: number| undefined=0;
+    public guestName: string | undefined=undefined;
 }
 

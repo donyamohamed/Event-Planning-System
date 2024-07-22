@@ -52,10 +52,11 @@ namespace Event_Planning_System.Controllers
                 // Ensure URL encoding for parameters
                 var encodedEventName = HttpUtility.UrlEncode(emailRequest.EventName);
                 var encodedEventAddress = HttpUtility.UrlEncode(emailRequest.EventAddress);
-                var encodedEventImg = emailRequest.EventImage != null ? HttpUtility.UrlEncode(emailRequest.EventImage) : "https://media.licdn.com/dms/image/C561BAQE-51J-8KkMZg/company-background_10000/0/1584559866970/eventscom_cover?e=2147483647&v=beta&t=8NsL_HPkr3nHk4ppAg8MkUoiYPUIf082mpMvySv5C7o";
+                var encodedGuestName = HttpUtility.UrlEncode(emailRequest.GuestName);
+                var encodedEventImg = emailRequest.EventImage != null ? HttpUtility.UrlEncode(emailRequest.EventImage) : HttpUtility.UrlEncode("https://media.licdn.com/dms/image/C561BAQE-51J-8KkMZg/company-background_10000/0/1584559866970/eventscom_cover?e=2147483647&v=beta&t=8NsL_HPkr3nHk4ppAg8MkUoiYPUIf082mpMvySv5C7o");
                 var backgroundImage = emailRequest.EventImage != null ? emailRequest.EventImage : "https://media.licdn.com/dms/image/C561BAQE-51J-8KkMZg/company-background_10000/0/1584559866970/eventscom_cover?e=2147483647&v=beta&t=8NsL_HPkr3nHk4ppAg8MkUoiYPUIf082mpMvySv5C7o";
-                var downloadUrl = $"{BaseUrl}/api/pdf/DownloadInvitation?eventName={encodedEventName}&date={emailRequest.Date:yyyy-MM-ddTHH:mm:ss}&eventAddress={encodedEventAddress}&eventImg={encodedEventImg}";
-                
+                var downloadUrl = $"http://localhost:4200/app/sentemail?eventName={encodedEventName}&date={emailRequest.Date:yyyy-MM-ddTHH:mm:ss}&eventAddress={encodedEventAddress}&eventImg={encodedEventImg}&guestName={encodedGuestName}";
+
                 // Construct HTML email content
                 string htmlBody = $@"
 <html>
@@ -75,101 +76,81 @@ body {{
     min-height: 100vh;
     display: grid;
     place-items: center;
-    background-color: lavender;
-    background-image: url('https://cdn.pixabay.com/photo/2016/12/18/00/47/structure-1914730_960_720.jpg');
-    background-size: cover;
-    background-position: center;
+    background-color: #f5f5f5;
     font-family: 'PT Sans Narrow', sans-serif;
 }}
 
 .poster {{
     max-width: 700px;
     width: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: #ffffff;
+    border: 2px solid #000000;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     position: relative;
-    color: #e9e9e9;
+    color: #333333;
     overflow: hidden;
     text-align: center;
+    padding: 20px;
 }}
 
 .header-img {{
     width: 100%;
     height: 0;
-    padding-bottom: 100%; /* Makes the div a square */
+    padding-bottom: 50%;
     background-image: url('{backgroundImage}');
     background-size: cover;
     background-position: center;
+    border-radius: 10px 10px 0 0;
 }}
 
 .poster h1 {{
     font-family: 'Catamaran', sans-serif;
-    font-size: 3rem;
-    margin-bottom: 10px;
+    font-size: 2.5rem;
+    margin: 20px 0;
+    color: #fbaf1b;
 }}
 
 .poster h2 {{
     font-family: 'Catamaran', sans-serif;
     font-size: 2rem;
-    margin-bottom: 20px;
+    margin: 10px 0;
 }}
 
 .poster .date-time {{
     font-size: 1.5rem;
-    margin-bottom: 20px;
+    margin: 20px 0;
 }}
 
 .poster .date-time span {{
     display: inline-block;
     padding: 10px;
-    background-color: rgba(233, 233, 233, 0.3);
+    background-color: rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     margin: 5px;
+    color: #333333;
 }}
 
 .poster .venue {{
-    margin-top: 20px;
+    margin: 20px 0;
 }}
 
 .poster .venue h3 {{
     font-size: 1.75rem;
+    margin-bottom: 10px;
 }}
 
 .poster .venue p {{
     font-size: 1.25rem;
-}}
-
-@media screen and (max-width: 600px) {{
-    .poster {{
-        height: auto;
-    }}
-
-    .poster h1 {{
-        font-size: 2.5rem;
-    }}
-
-    .poster h2 {{
-        font-size: 1.75rem;
-    }}
-
-    .poster .date-time {{
-        font-size: 1.25rem;
-    }}
-
-    .poster .venue h3 {{
-        font-size: 1.5rem;
-    }}
-
-    .poster .venue p {{
-        font-size: 1rem;
-    }}
+    margin: 0;
 }}
 
 .download-btn {{
     display: inline-block;
     margin-top: 20px;
-    padding: 8px 18px;
+    padding: 10px 20px;
     font-size: 1rem;
-    color: white;
+    color: #ffffff;
     background-color: #fbaf1b;
     text-decoration: none;
     border-radius: 5px;
@@ -179,8 +160,9 @@ body {{
 <body>
     <div class='poster'>
         <div class='header-img'></div>
-        <h1>Event Invitation</h1>
-        <h2>{emailRequest.EventName}</h2>
+        <h1>Dear {emailRequest.GuestName},</h1>
+        <h2>You're Invited!</h2>
+        <h3>{emailRequest.EventName}</h3>
         <div class='date-time'>
             <span>{emailRequest.Date:HH:mm}</span>
             <span>{emailRequest.Date:dd}</span>

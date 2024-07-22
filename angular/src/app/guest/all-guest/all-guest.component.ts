@@ -267,7 +267,9 @@ export class AllGuestComponent implements OnInit {
     this.emailObj.toEmail = email;
     this.emailObj.subject = "Invitation to the event";
     this.emailObj.body = "Dear Guest, you are invited to the event";
-    
+    const name = this.guestForm.get('name')?.value;
+  if (typeof name === 'string') { 
+    this.emailObj.guestName =name;}
     
     this.emailObj.guestId=id;
     this.invitation.sendInvitationByEmail(this.emailObj).subscribe({

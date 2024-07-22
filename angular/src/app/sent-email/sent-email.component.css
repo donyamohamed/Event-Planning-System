@@ -1,0 +1,80 @@
+.invitation-card {
+    max-width: 600px;
+    margin: 20px auto;
+    border: 2px solid #ccc;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    font-family: 'Arial, sans-serif';
+  }
+  
+  .poster {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .header-img {
+    width: 100%;
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    border-bottom: 2px solid #ccc;
+  }
+  
+  h1 {
+    font-size: 2em;
+    margin: 20px 0;
+    color: #333;
+  }
+  
+  h2 {
+    font-size: 1.5em;
+    margin: 10px 0;
+    color: #666;
+  }
+  
+  .date-time span {
+    display: block;
+    font-size: 1.2em;
+    margin: 5px 0;
+    color: #444;
+  }
+  
+  .venue h3 {
+    font-size: 1.2em;
+    margin: 15px 0 10px;
+    color: #555;
+  }
+  
+  .venue p {
+    font-size: 1em;
+    margin: 0;
+    color: #777;
+  }
+  
+  .download-btn {
+    display: block;
+    width: calc(100% - 40px);
+    margin: 20px auto;
+    padding: 10px;
+    font-size: 1em;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+  }
+  
+  .download-btn:hover {
+    background-color: #0056b3;
+  }
+  
+  .loading, .error {
+    text-align: center;
+    margin: 10px 0;
+    font-size: 1em;
+    color: #d9534f;
+  }
+  
