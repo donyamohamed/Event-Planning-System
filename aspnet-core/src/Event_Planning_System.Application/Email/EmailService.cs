@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
+using System.IO;
 
 namespace Event_Planning_System.Email
 {
@@ -55,16 +56,18 @@ namespace Event_Planning_System.Email
                 throw;
             }
         }
-    }
 
-    public class SmtpSettings
-    {
-        public string Host { get; set; }
-        public int Port { get; set; }
-        public bool EnableSsl { get; set; }
-        public string UserName { get; set; }
-        public string Password { get; set; }
-        public string DefaultFromAddress { get; set; }
-        public string DefaultFromDisplayName { get; set; }
+      
+
+        public class SmtpSettings
+        {
+            public string Host { get; set; }
+            public int Port { get; set; }
+            public bool EnableSsl { get; set; }
+            public string UserName { get; set; }
+            public string Password { get; set; }
+            public string DefaultFromAddress { get; set; }
+            public string DefaultFromDisplayName { get; set; }
+        }
     }
 }

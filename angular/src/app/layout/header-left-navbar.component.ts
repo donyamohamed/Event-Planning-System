@@ -11,8 +11,9 @@ import { CurrentUser } from '@shared/Models/current-user';
 })
 export class HeaderLeftNavbarComponent implements OnInit {
   sidebarExpanded: boolean;
-  user: CurrentUser | null = null;
-
+  user: CurrentUser | null = null; 
+  isLoggedIn: boolean=false;
+  roleData:any;
   constructor(
     private _layoutStore: LayoutStoreService,
     private _userService: CurrentUserDataService,
@@ -23,24 +24,33 @@ export class HeaderLeftNavbarComponent implements OnInit {
     this._layoutStore.sidebarExpanded.subscribe((value) => {
       this.sidebarExpanded = value;
     });
-
+    
     this._userService.GetCurrentUserData().subscribe({
       next: (u: CurrentUser) => {
         console.log('User data loaded:', u); // Debugging: Log the user data
         this.user = u;
+        this.isLoggedIn=true;
         this.cdr.markForCheck(); // Manually trigger change detection
+        this._userService.GetUserRole(this.user.id).subscribe({
+          next :n=>{
+            if(n){
+              this.roleData=n;
+              console.log("role ",n);
+            }
+          }
+        });
       },
       error: (err) => {
         console.error('Failed to load user data', err);
       }
     });
+    console.log(this.isLoggedIn);
   }
 
   toggleSidebar(): void {
     this._layoutStore.setSidebarExpanded(!this.sidebarExpanded);
   }
 
-  get isLoggedIn(): boolean {
-    return this.user !== null;
-  }
+  
+ 
 }

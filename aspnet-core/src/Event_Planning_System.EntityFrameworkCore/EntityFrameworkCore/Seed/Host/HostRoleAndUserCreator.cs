@@ -29,7 +29,6 @@ namespace Event_Planning_System.EntityFrameworkCore.Seed.Host
         private void CreateHostRoleAndUsers()
         {
             // Admin role for host
-
             var adminRoleForHost = _context.Roles.IgnoreQueryFilters().FirstOrDefault(r => r.TenantId == null && r.Name == StaticRoleNames.Host.Admin);
             if (adminRoleForHost == null)
             {
@@ -38,17 +37,34 @@ namespace Event_Planning_System.EntityFrameworkCore.Seed.Host
             }
 
             // Grant all permissions to admin role for host
+            GrantPermissions(adminRoleForHost, MultiTenancySides.Host);
 
+            // Subelier role for host
+            var supplierRoleForHost = _context.Roles.IgnoreQueryFilters().FirstOrDefault(r => r.TenantId == null && r.Name == StaticRoleNames.Host.Supplier);
+            if (supplierRoleForHost == null)
+            {
+                supplierRoleForHost = _context.Roles.Add(new Role(null, StaticRoleNames.Host.Supplier, StaticRoleNames.Host.Supplier) { IsStatic = true }).Entity;
+                _context.SaveChanges();
+            }
+
+            // Grant necessary permissions to Subelier role for host
+            GrantPermissions(supplierRoleForHost, MultiTenancySides.Host);
+
+            // Admin user for host
+            CreateAdminUserForHost(adminRoleForHost);
+        }
+
+        private void GrantPermissions(Role role, MultiTenancySides sides)
+        {
             var grantedPermissions = _context.Permissions.IgnoreQueryFilters()
                 .OfType<RolePermissionSetting>()
-                .Where(p => p.TenantId == null && p.RoleId == adminRoleForHost.Id)
+                .Where(p => p.TenantId == role.TenantId && p.RoleId == role.Id)
                 .Select(p => p.Name)
                 .ToList();
 
             var permissions = PermissionFinder
                 .GetAllPermissions(new Event_Planning_SystemAuthorizationProvider())
-                .Where(p => p.MultiTenancySides.HasFlag(MultiTenancySides.Host) &&
-                            !grantedPermissions.Contains(p.Name))
+                .Where(p => p.MultiTenancySides.HasFlag(sides) && !grantedPermissions.Contains(p.Name))
                 .ToList();
 
             if (permissions.Any())
@@ -56,17 +72,18 @@ namespace Event_Planning_System.EntityFrameworkCore.Seed.Host
                 _context.Permissions.AddRange(
                     permissions.Select(permission => new RolePermissionSetting
                     {
-                        TenantId = null,
+                        TenantId = role.TenantId,
                         Name = permission.Name,
                         IsGranted = true,
-                        RoleId = adminRoleForHost.Id
+                        RoleId = role.Id
                     })
                 );
                 _context.SaveChanges();
             }
+        }
 
-            // Admin user for host
-
+        private void CreateAdminUserForHost(Role adminRoleForHost)
+        {
             var adminUserForHost = _context.Users.IgnoreQueryFilters().FirstOrDefault(u => u.TenantId == null && u.UserName == AbpUserBase.AdminUserName);
             if (adminUserForHost == null)
             {
@@ -89,8 +106,6 @@ namespace Event_Planning_System.EntityFrameworkCore.Seed.Host
 
                 // Assign Admin role to admin user
                 _context.UserRoles.Add(new UserRole(null, adminUserForHost.Id, adminRoleForHost.Id));
-                _context.SaveChanges();
-
                 _context.SaveChanges();
             }
         }

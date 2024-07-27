@@ -11,7 +11,8 @@ namespace Event_Planning_System.Authorization.Accounts
         Task<IsTenantAvailableOutput> IsTenantAvailable(IsTenantAvailableInput input);
 
         //Task<RegisterOutput> Register(RegisterInput input);
-        Task<RegisterOutput> Register([FromForm] RegisterInput input);
-     //Task<RegisterOutput> RegisterByGoogle(GoogleRegisterInputs input);
+        Task<RegisterOutput> Register([FromForm] RegisterInput input, [FromQuery] bool Supplier = false);
+        //Task<RegisterOutput> RegisterByGoogle(GoogleRegisterInputs input);
+        Task CreateSupplierAccount(string email);
     }
 }

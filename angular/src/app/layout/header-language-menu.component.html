@@ -2,7 +2,7 @@
   <a href="javascript:;" class="nav-link" dropdownToggle>
     <i class="d-inline-block "></i>
     <span class="d-none d-md-inline-block ml-1">
-      {{ currentLanguage.displayName }}
+      {{ currentLanguage.displayName | localize }}
     </span>
   </a>
   <div class="dropdown-menu dropdown-menu-right p-0" *dropdownMenu>
@@ -14,7 +14,7 @@
         (click)="changeLanguage(language.name)"
       >
         <i class="d-inline-block mr-1"></i>
-        {{ language.displayName }}
+        {{ language.displayName | localize}}
       </a>
     </ng-container>
   </div>

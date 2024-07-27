@@ -5,7 +5,7 @@
   <div class="right-content">
     <div class="expense-form">
       <div>
-        <label for="expense-name">Expense Name</label>
+        <label for="expense-name">  {{"Expense Name" | localize}}</label>
         <input
           id="expense-name"
           type="text"
@@ -13,11 +13,11 @@
           [(ngModel)]="newExpense.name"
         />
         <span *ngIf="showError && !newExpense.name" class="error-message">
-          Expense name is required
+          {{"Expense name is required" | localize}}
         </span>
       </div>
       <div>
-        <label for="expense-amount">Amount</label>
+        <label for="expense-amount"> {{"Amount" | localize}}</label>
         <input
           id="expense-amount"
           type="number"
@@ -25,10 +25,10 @@
           [(ngModel)]="newExpense.amount"
         />
         <span *ngIf="showError && !newExpense.amount" class="error-message">
-          Amount is required
+          {{"Amount is required" | localize}}
         </span>
         <span *ngIf="showError && newExpense.amount < 0" class="error-message">
-          Amount cannot be negative
+          {{"Amount cannot be negative" | localize}}
         </span>
       </div>
       <button
@@ -42,7 +42,7 @@
     <div *ngIf="expenses && expenses.length > 0" class="expenses-list">
       <h3>
         <img src="assets/img/accounts.png" width="40px" alt="expenses" />
-        Expenses
+        {{" Expenses" | localize}}
       </h3>
       <div *ngFor="let expense of expenses" class="row-ex">
         <div>

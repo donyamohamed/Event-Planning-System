@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using System;
 using Abp.Domain.Repositories;
 using Microsoft.AspNetCore.Authorization;
+using Event_Planning_System.AllGuest;
 
 namespace Event_Planning_System.Controllers
 {
@@ -18,12 +19,15 @@ namespace Event_Planning_System.Controllers
         private readonly IEventAppService _eventService;
         private readonly IMapper _mapper;
         private readonly string _imageFolderPath;
+        
+
 
         public EventController(IEventAppService eventService, IMapper mapper)
         {
             _eventService = eventService;
             _mapper = mapper;
             _imageFolderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images");
+            
         }
 
         [HttpGet]
@@ -72,5 +76,6 @@ namespace Event_Planning_System.Controllers
             await _eventService.DeleteEventWithDetailsAsync(id);
             return Ok();
         }
+      
     }
 }

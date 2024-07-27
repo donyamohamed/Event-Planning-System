@@ -13,5 +13,7 @@ namespace Event_Planning_System.FavouriteEvent
     public interface IFavouriteEventAppService : IAsyncCrudAppService<FavouriteEventDto, int>
     {
         Task<List<FavouriteEventDto>> GetSavedEvent(long userId);
+        Task<FavouriteEventDto> SaveEvent(FavouriteEventDto input);
+        Task<bool> IsEventSaved(long userId, int eventId);
     }
 }

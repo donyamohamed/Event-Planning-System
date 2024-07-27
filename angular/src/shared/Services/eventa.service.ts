@@ -7,6 +7,8 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class EventService {
+  
+  
   private baseUrl = `${environment.API_URL_BASE_PART}/api/services/app/Event/Create`;
 
  

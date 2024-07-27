@@ -17,7 +17,7 @@ export class SavedEventServiceService {
   }
 
   createSavedEvent(eventData: any): Observable<any> {
-    const url = `${this.baseUrl}/Create`;
+    const url = `${this.baseUrl}/SaveEvent`;
     return this.http.post(url, eventData);
   }
 
@@ -25,4 +25,12 @@ export class SavedEventServiceService {
     const url = `${this.baseUrl}/Delete?Id=${id}`;
     return this.http.delete(url);
   }
+
+getAllSavedEvents(): Observable<any> {
+  const url = `${this.baseUrl}/GetAll`;
+  return this.http.get(url);
+}
+
+
+
 }

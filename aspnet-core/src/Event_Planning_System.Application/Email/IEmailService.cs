@@ -10,5 +10,6 @@ namespace Event_Planning_System.Email
     public interface IEmailService : IApplicationService
     {
         Task SendEmailAsync(string toEmail, string subject, string message);
+      
     }
 }

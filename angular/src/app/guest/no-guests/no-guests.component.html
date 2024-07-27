@@ -1,7 +1,6 @@
 <div>
     <div>
         <div class="container text-center p-2">
-          
             <h3>{{ "No Guests added yet! Invate Guests" | localize }}</h3>
             <div class="d-flex justify-content-between m-5 p-5 flex-wrap">
                 <div class="oneByOne" (click)="openModal(template)">
@@ -36,7 +35,7 @@
 <!-- add guest -->
 <ng-template #template>
     <div class="modal-header">
-        <h4 class="modal-title" style="color: #1d2027">Add New Guest</h4>
+        <h4 class="modal-title" style="color: #1d2027">{{"Add New Guest" | localize}}</h4>
         <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -44,60 +43,62 @@
     <div class="modal-body">
         <form [formGroup]="guestForm" (ngSubmit)="AddGeust()">
             <div>
-                <label for="nameInput">Name:</label>
+                <label for="nameInput">{{"Name:" | localize}}</label>
                 <input class="form-control" type="text" id="nameInput" formControlName="name"
                     [(ngModel)]="guest.name" />
                 <div *ngIf="guestForm.get('name').invalid && guestForm.get('name').touched" class="text-danger">
                     <div *ngIf="guestForm.get('name').errors.required">
-                        Name is required.
+                        {{ "Name is required." | localize }}
                     </div>
                     <div *ngIf="guestForm.get('name').errors.maxlength">
-                        Name cannot be longer than 100 characters.
+                        {{ "Name cannot be longer than 100 characters." | localize }}
                     </div>
                 </div>
             </div>
             <div>
-                <label for="phoneInput">Phone:</label>
+                <label for="phoneInput">{{"Phone:" | localize}}</label>
                 <input class="form-control" type="text" id="phoneInput" formControlName="phone"
                     [(ngModel)]="guest.phone" required />
                 <div *ngIf="
-            guestForm.get('phone').invalid && guestForm.get('phone').touched
-          " class="text-danger">
+                    guestForm.get('phone').invalid && guestForm.get('phone').touched
+                " class="text-danger">
                     <div *ngIf="guestForm.get('phone').errors.required">
-                        Phone is required.
+                        {{ "Phone is required." | localize }}
                     </div>
                     <div *ngIf="guestForm.get('phone').errors.pattern">
-                        Phone must be a 10-digit number.
+                        {{ "Phone must be a 10-digit number." | localize }}
                     </div>
                 </div>
             </div>
             <div>
-                <label for="emailInput">Email:</label>
+                <label for="emailInput">{{"Email:" | localize}}</label>
                 <input class="form-control" type="email" id="emailInput" formControlName="email"
                     [(ngModel)]="guest.email" required />
                 <div *ngIf="
-            guestForm.get('email').invalid && guestForm.get('email').touched
-          " class="text-danger">
+                    guestForm.get('email').invalid && guestForm.get('email').touched
+                " class="text-danger">
                     <div *ngIf="guestForm.get('email').errors.required">
-                        Email is required.
+                        {{ "Email is required." | localize }}
                     </div>
                     <div *ngIf="guestForm.get('email').errors.email">
-                        Invalid email address.
+                        {{ "Invalid email address." | localize }}
                     </div>
                 </div>
             </div>
             <!-- <div>
-                <label for="invStatInput">Invitation State:</label>
+                <label for="invStatInput">{{"Invitation State:" | localize}}</label>
                 <select formControlName="invitationState" id="invStatInput" class="form-control" [(ngModel)]="guest.invitationState" required >
-                    <option value="">Select State</option>
-                    <option value="Pending">Pending</option>
-                    <option value="Confirmed">Confirmed</option>
+                    <option value="">{{"Select State" | localize}}</option>
+                    <option value="Pending">{{"Pending" | localize}}</option>
+                    <option value="Confirmed">{{"Confirmed" | localize}}</option>
                 </select>
                 <div *ngIf="guestForm.get('invitationState').invalid && guestForm.get('invitationState').touched" class="text-danger">
-                    <div *ngIf="guestForm.get('invitationState').errors.required">Invitation state is required.</div>
+                    <div *ngIf="guestForm.get('invitationState').errors.required">
+                        {{ "Invitation state is required." | localize }}
+                    </div>
                 </div>
             </div> -->
-            <input class="btn btn-success" value="Add" type="submit" />
+            <input class="btn btn-success" value="Add"  type="submit" />
         </form>
     </div>
 </ng-template>

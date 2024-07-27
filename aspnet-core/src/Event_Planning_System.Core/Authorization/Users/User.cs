@@ -39,8 +39,10 @@ namespace Event_Planning_System.Authorization.Users
         public virtual ICollection<ToDoCheckList> ToDoChecks { get; set; } = new List<ToDoCheckList>();
         public virtual ICollection<Interest> Interests { get; set; } = new List<Interest>();
         public virtual ICollection<Feedback> Feedbacks { get; set; } = new List<Feedback>();
+		public virtual ICollection<SupplierPlaces> SupplierPlaces { get; set; } = new List<SupplierPlaces>();
 
-        public ICollection<FavoriteEvent> FavoriteEvents { get; set; } = new List<FavoriteEvent>();
+
+		public ICollection<FavoriteEvent> FavoriteEvents { get; set; } = new List<FavoriteEvent>();
         public static User CreateTenantAdminUser(int tenantId, string emailAddress )
         {
             var user = new User

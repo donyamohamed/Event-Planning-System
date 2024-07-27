@@ -15,6 +15,7 @@ import { finalize } from "rxjs";
 import {UpcomingEventsComponent} from './upcoming-events/upcoming-events.component';
 import {HistoryeventComponent} from '../historyevent/historyevent.component';
 import { SharedModule } from "../../../shared/shared.module";
+import { cw } from "@fullcalendar/core/internal-common";
 @Component({
     standalone: true,
     selector: "app-user-profile",
@@ -24,6 +25,7 @@ import { SharedModule } from "../../../shared/shared.module";
     imports: [FormsModule, CommonModule, RouterLink, UpcomingEventsComponent, HistoryeventComponent, SharedModule]
 })
 export class UserProfileComponent implements OnInit {
+  roleData:any;
   isMinimized: boolean = false;
   AddInterest(id: any, interest: any) {
     this.interestsService.AddInterest(id, interest).subscribe({
@@ -118,8 +120,6 @@ export class UserProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.setBodyStyles();
-
-   
     window.addEventListener('resize', () => {
       this.setBodyStyles();
     });
@@ -128,11 +128,21 @@ export class UserProfileComponent implements OnInit {
       next: (u: CurrentUser) => {
         console.log("User data loaded:", u);
         this.user = u;
+        this._userService.GetUserRole(this.user.id).subscribe({
+          next :n=>{
+            if(n){
+              this.roleData=n;
+              console.log("role ",n);
+            }
+          }
+        });
       },
       error: (err) => {
         console.error("Failed to load user data", err);
       },
     });
+    //role
+   
     //interests
     this.interestsService.GetUserInterests().subscribe({
       next: (interest) => {
@@ -155,18 +165,6 @@ export class UserProfileComponent implements OnInit {
       return !this.AllInterests.result.some(added => added.id === interest.id);
     });
   }
-  /*Concert,
-  Conference,
-  Workshop,
-  Seminar,
-  Party,
-  Exam,
-  Birthday,
-  Graduation,
-  Baby_Shower,
-  Wedding,
-  Gathering,
-  Other */
   setBodyStyles(): void {
     if (window.innerWidth < 768) {
       this.renderer.setStyle(document.body, 'min-height', '200vh');

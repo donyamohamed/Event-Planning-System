@@ -94,6 +94,12 @@ export class AllGuestComponent implements OnInit {
         next: (res: EventResponse) => {
           this.eventname = res.result.name;
           this.maxCountOfGuest = res.result.maxCount;
+          this.emailObj.eventAddress = res.result.location;
+        this.emailObj.eventName = res.result.name;
+    this.emailObj.date = res.result.startDate;
+    this.emailObj.eventImage = res.result.eventImg;
+    this.emailObj.eventId = res.result.id;
+
         },
         error: (err) => {
           console.log(err);
@@ -108,10 +114,10 @@ export class AllGuestComponent implements OnInit {
           this.guests = res.result;
           console.log(this.guests);
 
-          this.guestCount = res.result.length;
-          if (this.guestCount === 0) {
-            this.router.navigateByUrl("/app/NoGuests/" + this.idEvent);
-          }
+          // this.guestCount = res.result.length;
+          // if (this.guestCount === 0) {
+          //   this.router.navigateByUrl("/app/NoGuests/" + this.idEvent);
+          // }
           this.setupCheckboxEvents();
         },
         error: (err) => {
@@ -257,14 +263,13 @@ export class AllGuestComponent implements OnInit {
     });
   }
 
-  SendEmail(email: string) {
-    this.emailObj.ToEmail = email;
-    this.emailObj.Subject = "Invitation to the event";
-    this.emailObj.Body = "Dear Guest, you are invited to the event";
-    this.emailObj.EventAddress = this.event.location;
-    this.emailObj.EventName = this.event.name;
-    this.emailObj.Date = this.event.startDate;
-    this.emailObj.EventImage = this.event.eventImg;
+  SendEmail(email: string,id: number) {
+    this.emailObj.toEmail = email;
+    this.emailObj.subject = "Invitation to the event";
+    this.emailObj.body = "Dear Guest, you are invited to the event";
+    
+    
+    this.emailObj.guestId=id;
     this.invitation.sendInvitationByEmail(this.emailObj).subscribe({
       next: (data) => {
         swal.fire({
@@ -278,7 +283,7 @@ export class AllGuestComponent implements OnInit {
       error: (err) => console.log(err),
     });
   }
-
+  
   SendSMS(phone: string) {
     this.smsObj.ToPhoneNumber = phone;
     this.smsObj.Message = "Dear Guest, you are invited to the event";
@@ -388,6 +393,7 @@ export class AllGuestComponent implements OnInit {
               confirmButtonText: "OK",
             })
             .then((result) => {
+              location.reload();
               this.router.navigateByUrl(`app/allGuests/${this.idEvent}`);
             });
 

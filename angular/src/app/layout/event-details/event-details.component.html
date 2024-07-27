@@ -27,15 +27,11 @@
 
 <div class="event-info">
   <div class="ticket-sales-info">
-    <div><span>Ticket sales end soon</span></div>
-    <div class="icons" >
-      <!-- <i class="fa" [ngClass]="isEventSaved ? 'fa-bookmark' : 'fa-bookmark-o'" (click)="toggleSavedEvent()"></i> -->
-     <!-- event-details.component.html -->
-     <i class="fa-bookmark bookmark-icon" *ngIf="isLogin"
-     [ngClass]="{'fa-regular': !isEventSaved, 'fa-solid text-warning': isEventSaved }"
-     (click)="toggleSavedEvent()">
-  </i>
-  
+    <div><span>{{ "Ticket sales end soon" | localize }}</span></div>
+    <div class="icons">
+      <button (click)="isEventSaved ? cancelEventSave(event?.id) : navigateToSaveEvent(event?.id)" class="btn text-warning ml-auto">
+        <i [ngClass]="getBookmarkIconClass()"></i>
+      </button>      
       <i class="fa-solid fa-arrow-up-from-bracket" (click)="openShareAlert()" style="margin-left:10px;"></i>
     </div>
   </div>
@@ -62,7 +58,7 @@
   </div>
 
   <div class="event-desc">
-    <h3>About</h3>
+    <h3>{{ "About" | localize }} </h3>
     <p>{{ event?.description }}</p>
   </div>
   
@@ -73,30 +69,39 @@
     <div class="user-details">
       <div class="user-info">
         <div class="user-name mb-2">
-          <span>By </span>
+          <span>{{ "By" | localize }} </span>
           <h6>{{ user?.name }}</h6>
         </div>
+       <div class="divofguset">
         <div class="guest-number">
           <div>
             <h6><span class="mr-2"><i class="fa-solid fa-user-group"></i></span>{{ event?.maxCount }} </h6> 
-            <span>attendees hosted</span>
+            <span>{{ "attendees hosted" | localize }}</span>
           </div>
-         
-        
         </div>
+         <div class="guest-number ml-3" *ngIf="isEventCreator">
+            <span>{{ "Number of tickets remaining:" | localize }}</span>
+            <span class="mr-2">{{ event.numberOfTickets }}</span> 
+          </div>
+          <div class="guest-number ml-3">
+            <span> {{ "Guests will attend this Event:" | localize }} </span>
+            <span class="mr-2">{{guestCount}}</span> 
+          </div>
+       </div>
+
       </div>
   
       
       <div class="connect-button" *ngIf="!isEventCreator">
-        <button class="email" (click)="sendEmail(user?.emailAddress)">Connect</button>
+        <button class="email" (click)="sendEmail(user?.emailAddress)">{{ "Connect" | localize }}</button>
       </div>
     </div>
   </div>
   
-  <h3>Reviews</h3>
+  <h3>{{ "Reviews" | localize }}</h3>
 <div class="reviews">
   <div *ngIf="feedbackList.length === 0" class="no-reviews text-center">
-    No reviews yet.
+    {{ "No reviews yet." | localize }}
   </div>
   <div *ngFor="let feedback of feedbackList" class="data-feedback">
     <img *ngIf="feedback.user?.image; else defaultImage" [src]="feedback.user?.image" alt="User Image">
@@ -119,6 +124,34 @@
 </div>
 
 
+
+
+<div *ngIf="event; else loading">
+ 
+  <h3>{{ "Place" | localize }}</h3>
+  <div class="place" *ngIf="place">
+    <div class="place-card">
+      <img *ngIf="place?.image; else defaultImage2" [src]="place?.image" alt="place.name">
+      <ng-template #defaultImage2>
+        <img src="../../../assets/img/place.jpg" class="placeimg" alt="Default Image">
+      </ng-template>
+  
+      <div class="place-details">
+        <p><strong>Name:</strong>{{ place?.name }}</p>
+        <p><strong>Description:</strong>{{ place?.description }}</p>
+        <p><strong>Location:</strong>{{ place.location }}</p>
+        <p><strong>Capacity:</strong>{{ place.capacity }}</p>
+        <p><strong>Price:</strong>${{ place.price }}</p>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="!place" class="no-place text-center">
+    {{ "No place information available." | localize }}
+  </div>
+  </div>
+<ng-template #loading>
+  <p>Loading...</p>
+</ng-template>
 
 </div>
 

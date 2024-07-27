@@ -44,6 +44,7 @@ namespace Event_Planning_System.Event.Dto
         [Required(ErrorMessage = "Location is required.")]
         [StringLength(200, ErrorMessage = "Location can't be longer than 200 characters.")]
         public string Location { get; set; }
+        
 
         [Required(ErrorMessage = "Start date is required.")]
         [DataType(DataType.Date)]
@@ -55,8 +56,20 @@ namespace Event_Planning_System.Event.Dto
 		public bool isRead { get; set; } = false;
 		public bool IsPublic { get; set; }
 
+        private int _maxCount;
+
         [Range(1, 10000, ErrorMessage = "Max count must be between 1 and 10000.")]
-        public int MaxCount { get; set; }
+        public int MaxCount
+        {
+            get => _maxCount;
+            set
+            {
+                _maxCount = value;
+                NumberOfTickets = value;
+            }
+        }
+
+        public int NumberOfTickets { get; set; }
 
         [RegularExpression(@"^.+\.(png|jpg|jpeg)$", ErrorMessage = "Image must be in PNG, JPG, or JPEG format.")]
         public string EventImg { get; set; }
@@ -71,7 +84,16 @@ namespace Event_Planning_System.Event.Dto
 
       
         public IFormFile EventImgFile { get; set; }
+        public EventType Type { get; set; }
 
+        public int? TicketPrice { get; set; }
+        public int? PlaceId { get; set; }
+        public PlaceState RequestPlace { get; set; }
+
+        public string PlaceName { get; set; }
+        public string UserName { get; set; }
+        public string UserEmail { get; set; }
+        public string ContactEmail { get; set; }
         public bool IsTransient()
         {
             throw new NotImplementedException();

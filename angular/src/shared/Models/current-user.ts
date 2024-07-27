@@ -9,5 +9,6 @@ export class CurrentUser {
    public genderUser: string | undefined,
    public  image: string | undefined,
    public  ImagePath :File|undefined,
+   public roleNames: string[]
   ) {}
 }

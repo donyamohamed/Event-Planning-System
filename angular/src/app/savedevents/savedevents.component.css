@@ -161,7 +161,7 @@
     .Chat-icon{
       background-color: #050794;
       text-align: center;
-      padding:12px 15px;
+      padding:15px 15px;
       border-radius: 5px;
       position: absolute;
       top: 10px;
@@ -170,6 +170,7 @@
     .Chat-icon i{
       color: #FBAF1B;
       font-size: 22px;
+
     }
   
     h2::after {
@@ -179,6 +180,40 @@
       height: 5px;
       background-color: #FBAF1B;
       margin: 20px auto;
+  }
+  .dropdown{
+    bottom:42px;
+    left: 10px;
+  }
+  #delete {
+    /* background: #ff4d4d; */
+    color: red;
+    border: none;
+    padding: 15px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    /* font-size: 0.8em; */
+    font-size: 20px;
+  }
+  
+  #delete:hover {
+    background: #ff1a1a;
+    color: #fff;
+  }
+  #chat {
+    /* background: #ff4d4d; */
+    color: #050794;
+    border: none;
+    padding: 10px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    /* font-size: 0.8em; */
+    font-size: 20px;
+  }
+  
+  #chat:hover {
+    background: #050794;
+    color: #fff;
   }
   @media only screen and (max-width: 767px) {
   .events .card-container{

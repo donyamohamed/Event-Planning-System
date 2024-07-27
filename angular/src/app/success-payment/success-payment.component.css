@@ -1,0 +1,29 @@
+.success-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: 150px auto;
+  }
+  
+  .success-container img {
+    width: 320px; /* Adjust width as per your image dimensions */
+    height: auto; /* Maintain aspect ratio */
+    margin-bottom: 20px; /* Optional margin below image */
+  }
+  
+  .success-container h2 {
+    font-size: 2rem;
+    color: #4caf50; /* Green color for success */
+  }
+  
+  .success-container p {
+    font-size: 1.2rem;
+    margin-top: 10px; /* Adjust margin as needed */
+  }
+  
+  .success-container button {
+    margin-top: 30px;
+  }
+  

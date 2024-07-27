@@ -31,6 +31,7 @@ export class NotificationsService {
   private ReviewNotificationUrl=`${environment.API_URL_BASE_PART}/api/services/app/Notification/GetNotificationOfEventReview`;
   private GetNotReviewedCountUrl=`${environment.API_URL_BASE_PART}/api/services/app/Notification/GetCountOfNotReviewedUserEvents` ;
   private UpdateIsReviewTakenUrl=`${environment.API_URL_BASE_PART}/api/services/app/Notification/UpdateIsReviewdStatus`;
+ 
 
   constructor(private http: HttpClient) { }
 
@@ -88,5 +89,16 @@ export class NotificationsService {
   }
   GetEventNameandStartdateById(id: number): Observable<ApiResponse<Event>> {
     return this.http.get<ApiResponse<Event>>(this.EventUrl + id);
+  }
+ 
+
+  getAcceptedEvents(userId: number): Observable<any> {
+    const url = `${environment.API_URL_BASE_PART}/api/services/app/Event/GetAcceptedEventsPlacesByUserId?userId=${userId}`;
+    return this.http.get<any>(url);
+  }
+
+  getRejectedEvents(userId: number): Observable<any> {
+    const url = `${environment.API_URL_BASE_PART}/api/services/app/Event/GetRejectedEventsPlacesByUserId?userId=${userId}`;
+    return this.http.get<any>(url);
   }
 }

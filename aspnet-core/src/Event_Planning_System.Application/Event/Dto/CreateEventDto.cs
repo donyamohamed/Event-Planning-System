@@ -44,5 +44,11 @@ namespace Event_Planning_System.Event.Dto
     
 
         public IFormFile EventImgFile { get; set; }
+        public EventType Type { get; set; }
+
+        public int? TicketPrice { get; set; }
+        public int? PlaceId { get; set; }
+
+        public PlaceState RequestPlace { get; set; }
     }
 }

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
-import { CurrentUser } from '@shared/Models/current-user';
+import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -15,10 +15,13 @@ export class UserService {
     return this.http.get<any>(`${this.baseUrl}?Id=${userId}`);
   }
 
-  getUserById2(userId: number): Observable<CurrentUser> {
-    return this.http.get<any>(`${this.baseUrl}?Id=${userId}`).pipe(
-      map((data) => data["result"]
-      ),
-    );;
+  getUserById2(userId: number): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}?Id=${userId}`);
+  }
+
+  createSupplierAccount(email: string): Observable<any> {
+    const url = `${environment.API_URL_BASE_PART}/api/services/app/Account/CreateSupplierAccount`;
+    const params = { email };
+    return this.http.post<any>(url, null, { params });
   }
 }

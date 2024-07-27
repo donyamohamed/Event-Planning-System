@@ -7,11 +7,12 @@
     margin-left: auto;
   }
   .main-header{
-    width: 87%;
+    /* width: 87%; */
     margin: 20px auto;
     border-left: 3px solid #050794;
     padding-left: 10px;
     color: #050794;
+    text-transform: capitalize;
   }
   .tableDiv {
     border-top-left-radius: 1rem;

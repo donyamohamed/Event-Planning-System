@@ -127,9 +127,9 @@ export class AccountServiceProxy {
 
 
 
-    registerFromForm(formData: FormData): Observable<RegisterOutput> {
-       
-        const url = this.baseUrl + "/api/services/app/Account/Register";
+    registerFromForm(formData: FormData,registerUrl: string): Observable<RegisterOutput> {
+        const url = `${this.baseUrl}${registerUrl}`;
+        //const url = this.baseUrl + "/api/services/app/Account/Register";
         const headers = new HttpHeaders({
           // 'Content-Type': 'multipart/form-data', // Do not set this header explicitly
           'Accept': 'application/json'

@@ -1,0 +1,107 @@
+/* Example CSS styles for Stripe Elements */
+.Input {
+  border: 1px solid hsl(279, 6%, 55%);
+  border-radius: 4px;
+  padding: 10px;
+  background-color: hsl(0, 0%, 100%);
+  color: hsl(0, 0%, 100%);
+}
+h2{
+  color: #050794;
+  margin-bottom: 35px;
+  font-size: 40px;
+}
+.Input:focus {
+  border-image-source: linear-gradient(to right, hsl(249, 99%, 64%), hsl(278, 94%, 30%));
+  border-image-slice: 1;
+  outline: none;
+}
+
+.payment-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  align-items:center;
+  background-color: #ffffff;
+  min-height:80vh;
+  width: 90%;
+  margin: 30px auto;
+}
+
+.payment-visual{
+  flex: 1;
+  position: relative;
+}
+.payment-visual img{
+  width: 100%;
+}
+.payment-visual::before{
+  content: '';
+  position: absolute;
+  height: 70%;
+  width: 1px;
+  background-color: #c1c1c1;
+  right: 3%;
+  top: 50px;
+  border-radius: 3px;
+}
+.payment-form {
+  flex: 1;
+  padding: 20px;
+}
+button.btn{
+  background-color: #050794;
+  margin-top: 20px;
+  color: #fff;
+  padding: 7px 50px;
+  transition: .5s;
+}
+button.btn:hover{
+  background-color: #171bd5;
+
+}
+.ticket{
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin: 10px 0;
+}
+.ticket-quantity{
+  display: flex;
+  align-items: center;
+}
+.ticket-quantity label , .ticket label{
+  margin-right: 7px;
+  font-weight: 600;
+  color: #050794;
+}
+
+.ticket-quantity button{
+border: none;
+  background-color: #050794;
+  color: #fff;
+  height: 30px;
+  width: 30px;
+}
+#numberOfTickets{
+  width: 40px;
+  text-align: center;
+border-color: #9f9f9f;
+outline: none;
+border-width: 1px;
+  height: 30px;
+}
+@media all and (max-width: 676px) {
+  .payment-container {
+    flex-direction: column;
+  }
+  .payment-form {
+    flex: 1;
+    padding: 20px;
+    width: 100%;
+  }
+  .payment-visual::before{
+    background-color: transparent;
+  }
+}

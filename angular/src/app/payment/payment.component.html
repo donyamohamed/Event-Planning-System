@@ -1,0 +1,24 @@
+<div class="payment-container">
+  <div class="payment-visual">
+    <img src="../../assets/img/Payment-yellow.gif" alt="{{ 'Payment Image' | localize }}"/>
+  </div>
+  <div class="payment-form">
+    <h2>{{ 'Confirm Purchase for Ticket' | localize }}</h2>
+    <div class="ticket">
+      <p class="badge badge-warning p-2">{{ 'Amount: ' | localize }}{{ totalAmount | currency:'EGP' }}</p> 
+      <label for="numberOfTickets">{{ 'Tickets No' | localize }} <span class="badge badge-success p-2">{{ 'Available: ' | localize }}{{ availableTickets }}</span></label>
+    </div>
+    <div class="ticket-quantity d-flex justify-content-between align-items-center">
+      <label for="numberOfTickets">{{ 'Number of tickets you want' | localize }}</label>
+      <div>
+        <button (click)="decrementTickets()">-</button>
+        <input type="number" id="numberOfTickets" [(ngModel)]="numberOfTickets" [min]="1" (change)="updateAmount()" />
+        <button (click)="incrementTickets()">+</button>
+      </div>
+    </div>
+    <form (ngSubmit)="submitPayment()">
+      <!-- <div id="card-element" class="Input"></div> -->
+      <button type="submit" class="btn">{{ 'Confirm' | localize }}</button>
+    </form>
+  </div>
+</div>

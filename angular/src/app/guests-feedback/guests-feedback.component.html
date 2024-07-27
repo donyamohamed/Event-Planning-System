@@ -1,11 +1,11 @@
-<h3 style="text-align: center;color: rgb(151, 149, 158);margin-bottom: 0px;">Give Us Your Feedback!</h3>
+<h3 style="text-align: center;color: rgb(151, 149, 158);margin-bottom: 0px;">{{ "Give Us Your Feedback!" | localize }}</h3>
 <div style="display: flex; flex-direction: row; justify-content: center; align-items: center; height: 100vh;">
   <div>
     <img src="../../assets/img/Feedback.gif" alt="Feedback" style="max-width: 100%; height: auto;">
   </div>
   <div class="cont">
     <div class="title">
-      <h1>How was the Event?</h1>
+      <h1>{{ "How was the Event?" | localize }}</h1>
     </div>
     <div class="stars">
       <form [formGroup]="guestsfeedbackForm" (ngSubmit)="onSubmit()">
@@ -21,7 +21,7 @@
         <label class="star star-1" for="star-1"></label>
         <div class="rev-box">
           <textarea class="review" formControlName="body" placeholder="Write Your Comment"></textarea>
-          <button class="btn" type="submit">Send Review</button>
+          <button class="btn" type="submit">{{ "Send Review" | localize }}</button>
         </div>
       </form>
     </div>
