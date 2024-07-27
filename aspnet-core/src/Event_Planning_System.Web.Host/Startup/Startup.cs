@@ -55,7 +55,7 @@ namespace Event_Planning_System.Web.Host.Startup
         {
             services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
 
-            services.AddHangfire(x => x.UseSqlServerStorage("Server=.; Database=Event_Planning_SystemDb,1433; Trusted_Connection=True; TrustServerCertificate=True;"));
+            services.AddHangfire(x => x.UseSqlServerStorage("Server=MYPC\\MSSQLSERVER2022; Database=Event_Planning_SystemDb,1433; Trusted_Connection=True; TrustServerCertificate=True;"));
 
 
             services.Configure<StripeSettings>(_appConfiguration.GetSection("Stripe"));
@@ -67,7 +67,7 @@ namespace Event_Planning_System.Web.Host.Startup
 		configuration.SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
 					 .UseSimpleAssemblyNameTypeSerializer()
 					 .UseRecommendedSerializerSettings()
-					 .UseSqlServerStorage("Server=.; Database=Event_Planning_SystemDb; Trusted_Connection=True; TrustServerCertificate=True;", new SqlServerStorageOptions
+					 .UseSqlServerStorage("Server=MYPC\\MSSQLSERVER2022; Database=Event_Planning_SystemDb; Trusted_Connection=True; TrustServerCertificate=True;", new SqlServerStorageOptions
 					 {
 						 CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
 						 SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),

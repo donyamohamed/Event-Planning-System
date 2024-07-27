@@ -19,7 +19,7 @@
         <div class=" sendInvitation text-dark">
           <button class="btn" [disabled]="isCheckedAllDisabled" (click)="sendAll()"><i class="fa-solid fa-envelope"></i> {{ "Email" | localize }}</button>
         </div>
-        <button class="btn btn-danger" id="deleteAll"  [disabled]="isCheckedAllDisabled" (click)="deleteAll()"><i class="fa-regular fa-trash-can text-light" aria-hidden="true"></i></button>
+        <button class="btn btn-danger" id="deleteAll"  [disabled]="isCheckedAllDisabled"  (click)="deleteAll()"><i class="fa-regular fa-trash-can text-light" aria-hidden="true"></i></button>
       </div>
     </div>
   </div>
@@ -55,10 +55,10 @@
             </td>
             <td class="d-flex justify-content-evenly">
               <!-- <a class="btn" routerLink="edit/{{item.id}}" (click)="openEditModal(Editetemplate)"><i class="fa-solid fa-pen-to-square text-success"></i></a> -->
-              <a class="btn" (click)="openEditModal(Editetemplate,item.id)"><i
-                  class="fa-solid fa-pen-to-square text-success"></i></a>
-              <a class="btn" (click)="Delete(item.id)"><i class="fa-solid fa-trash-can text-danger"
-                  aria-hidden="true"></i></a>
+              <button class="btn" (click)="openEditModal(Editetemplate,item.id)"><i
+                  class="fa-solid fa-pen-to-square text-success"></i></button>
+              <button class="btn border-0" (click)="Delete(item.id)" [disabled]="item.invitationState=='sent'"><i class="fa-solid fa-trash-can text-danger"
+                  aria-hidden="true"></i></button>
 
             </td>
           </tr>

@@ -19,8 +19,14 @@ export class HomeService {
     return this.http.get<EventsResponse>(this.publicEventsUrl);
   }
 
-  getEventsByCategory(_category: Enumerator): Observable<EventsResponse> {
-    const url = `${this.publicEventsUrl2}?_category=${_category}`;
+  getEventsByCategory(_category: Enumerator | null): Observable<EventsResponse> {
+    var url;
+    if(_category){
+      url = `${this.publicEventsUrl2}?_category=${_category}`;
+    }else{
+      
+      url = `${this.publicEventsUrl2}`;
+    }
     console.log(`Fetching events from URL: ${url}`);
     return this.http.get<EventsResponse>(url);
   }

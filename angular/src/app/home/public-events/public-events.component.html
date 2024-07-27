@@ -56,9 +56,8 @@
    
     <div>
 
-      <!-- <h4>{{"you can join" | localize}}</h4> -->
     </div>
-    <div *ngFor="let event of allPublicEvents" class="card"
+    <!-- <div *ngFor="let event of allPublicEvents" class="card"
       [ngStyle]="{'background-image':'url(' + (event.eventImg ? event.eventImg : '../../assets/img/Event.jpg') + ')'}">
       <div class="date">
         <div class="day">{{ event.startDate | date:'dd' }}</div>
@@ -79,7 +78,7 @@
       <div class="Chat-icon" (click)="navigateToComponent(event.userId)" *ngIf="isLoggedIn">
         <i class="fa-regular fa-comment-dots"></i>
       </div>
-    </div>
+    </div> -->
   </div>
   <div *ngIf="filteredEvents.length == 0 && allPublicEvents.length==0" class="noPublic-events text-center">
     <img src="../../../assets/img/Waiting.gif" alt="">

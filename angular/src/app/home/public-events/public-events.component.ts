@@ -57,14 +57,18 @@ export class PublicEventsComponent implements OnInit {
           this.username = response.name;
           this.guestId = response.id;
           this.guestEmail = response.emailAddress;
-          this.fetchUserEvents();
-          this.fetchAllPublicrEvents();
+          // this.fetchUserEvents();
+          // this.fetchAllPublicrEvents();
+          this.fetchEventsByCategory(null);
+
         }
       },
       error => {
         this.isLoggedIn = false;
-        this.fetchUserEvents();
-        this.fetchAllPublicrEvents();
+        // this.fetchUserEvents();
+        // this.fetchAllPublicrEvents();
+        this.fetchEventsByCategory(null);
+
 
       }
     );
@@ -78,6 +82,7 @@ export class PublicEventsComponent implements OnInit {
         this.isLoading = false;
         this.cdr.detectChanges();
         this.initializeButtonStates();
+        this.fetchEventsByCategory(null);
       },
       error => {
         console.error('Error fetching user events', error);
@@ -207,10 +212,11 @@ export class PublicEventsComponent implements OnInit {
     this.router.navigateByUrl("app/eventDetails/" + event.id, { state: { event } });
   }
 
-  fetchEventsByCategory(category: Enumerator): void {
+  fetchEventsByCategory(category: Enumerator |null): void {
     this.isLoading = true;
     this.PublicEventServ.getEventsByCategory(category).subscribe(
       (data: EventsResponse) => {
+        console.log(data);
         this.events = data.result;
         this.filteredEvents = this.events; // Update filteredEvents after fetching by category
         this.isLoading = false;

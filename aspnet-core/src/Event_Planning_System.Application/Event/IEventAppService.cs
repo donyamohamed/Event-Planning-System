@@ -23,7 +23,7 @@ namespace Event_Planning_System.Event
         Task<EventDto> GetEventByIdAsync(int id);
         Task<EventNameAndRatingDto> GetNamesAndRatingForeachEventAsync(long userId);
 
-        Task<List<EventDto>> GetPublicEventsByCategory(EventCategory _category);
+        Task<List<EventDto>> GetPublicEventsByCategory(EventCategory? _category);
         Task<List<EventDto>> GetAllPublicEvents();
         Task UpdateEventWithDetailsAsync(Enitities.Event eventEdit);
         Task DecrementNoOfTickets(int eventId, int ticketNo);
