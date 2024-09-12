@@ -1,5 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { ExpensesService } from './../../shared/services/expenses.service';
+
+import { ExpensesService } from '../../shared/services/expenses.service';
+
 import { result } from "lodash-es";
 import { Component, OnInit, AfterViewInit } from "@angular/core";
 
@@ -9,27 +11,20 @@ import { SidebarEventComponent } from "../layout/sidebar-event/sidebar-event.com
 import { Chart, registerables, ChartType } from "chart.js";
 import { Event } from "../../shared/Models/Event";
 import { Expenses } from '@shared/Models/expenses';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: "app-report",
   standalone: true,
   templateUrl: "./report.component.html",
   styleUrls: ["./report.component.css"],
-  imports: [SidebarEventComponent,CommonModule],
+  imports: [SidebarEventComponent,CommonModule,RouterLink],
 })
 export class ReportComponent implements OnInit {
   historyevent: Event[] = [];
   eventsNames: string[] = [];
   eventsData: number[] = [];
-  // items: {[key: string]: Expenses[]} = {};
  items: { [key: string]: Expenses[] } = {}; 
-//  = {
-//     "my birthday5": [
-//       {eventId: 7,id:10, amount: 23, name: 'Workspace', date: new Date(), userId: 1},
-//       {eventId: 7,id: 8, amount: 255, name: 'pens', date: new Date(), userId: 1},
-//       {eventId: 7,id: 9, amount: 200, name: 'paper', date: new Date(), userId: 1}
-//     ]
-//   };
 
   constructor(private historyeventService: HistoryeventService, private expenseServ:ExpensesService) {
     Chart.register(...registerables);

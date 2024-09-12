@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace Event_Planning_System.Authorization.Accounts
 {
@@ -24,19 +25,22 @@ namespace Event_Planning_System.Authorization.Accounts
         private readonly UserManager _userManager;
         private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly ICloudinaryService _cloudinaryService;
+        private readonly ILogger<AccountAppService> _logger;
 
         public AccountAppService(
             UserRegistrationManager userRegistrationManager,
             UserManager userManager,
             IEmailService emailService,
             IWebHostEnvironment hostingEnvironment,
-            ICloudinaryService cloudinaryService)
+            ICloudinaryService cloudinaryService,
+         ILogger<AccountAppService> logger)
         {
             _userRegistrationManager = userRegistrationManager;
             _emailService = emailService;
             _userManager = userManager;
             _hostingEnvironment = hostingEnvironment;
             _cloudinaryService = cloudinaryService;
+            _logger=logger;
         }
 
         [AbpAllowAnonymous]
@@ -125,14 +129,15 @@ namespace Event_Planning_System.Authorization.Accounts
             return new IsTenantAvailableOutput(TenantAvailabilityState.Available, tenant.Id);
         }
 
+       
         [AbpAllowAnonymous]
-        public async Task<RegisterOutput> Register([FromForm] RegisterInput input)
+        public async Task<RegisterOutput> Register([FromForm] RegisterInput input, [FromQuery] bool Supplier )
         {
+            _logger.LogInformation($"Register method called with Supplier: {Supplier}");
             string imagePath = null;
 
             try
             {
-               
                 var existingUser = await _userManager.FindByEmailAsync(input.EmailAddress);
                 if (existingUser != null)
                 {
@@ -186,6 +191,12 @@ namespace Event_Planning_System.Authorization.Accounts
                     false
                 );
 
+                // Assign the "Supplier" role if the Supplier flag is true
+                if (Supplier)
+                {
+                    await _userManager.SetRolesAsync(user, new[] { "Supplier" });
+                }
+
                 await SendRegistrationConfirmationEmail(user);
 
                 var isEmailConfirmationRequiredForLogin = await SettingManager.GetSettingValueAsync<bool>(AbpZeroSettingNames.UserManagement.IsEmailConfirmationRequiredForLogin);
@@ -207,13 +218,154 @@ namespace Event_Planning_System.Authorization.Accounts
             }
         }
 
-
         private async Task SendRegistrationConfirmationEmail(User user)
         {
             var activationLink = $"http://localhost:4200/account/activate/{user.Id}";
-            var emailBodyTemplate = $"Thank you for registering! Click <a href='{activationLink}'>here</a> to activate your account.";
+            var emailBodyTemplate = $@"
+    <html>
+    <head>
+        <style>
+            body {{
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f4;
+                margin: 0;
+                padding: 0;
+            }}
+            .container {{
+                width: 100%;
+                max-width: 600px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #ffffff;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }}
+            .header {{
+                background-color: #007bff;
+                color: #ffffff;
+                padding: 10px;
+                text-align: center;
+            }}
+            .content {{
+                padding: 20px;
+                font-size: 16px;
+                line-height: 1.6;
+            }}
+            .button {{
+                display: inline-block;
+                padding: 10px 20px;
+                margin: 20px 0;
+                background-color: #007bff;
+                color: #ffffff;
+                text-decoration: none;
+                border-radius: 5px;
+            }}
+            .footer {{
+                text-align: center;
+                padding: 10px;
+                font-size: 12px;
+                color: #777777;
+            }}
+        </style>
+    </head>
+    <body>
+        <div class='container'>
+            <div class='header'>
+                <h1>Welcome to Our Service!</h1>
+            </div>
+            <div class='content'>
+                <p>Hi {user.Name},</p>
+                <p>Thank you for registering! To complete your registration, please click the button below to activate your account:</p>
+                <a href='{activationLink}' class='button'>Activate Your Account</a>
+                <p>If the button above doesn't work, please copy and paste the following link into your browser:</p>
+                <p><a href='{activationLink}'>{activationLink}</a></p>
+            </div>
+            <div class='footer'>
+                <p>If you did not register for this account, please ignore this email.</p>
+                <p>&copy; 2024 Eventa. All rights reserved.</p>
+            </div>
+        </div>
+    </body>
+    </html>";
 
             await _emailService.SendEmailAsync(user.EmailAddress, "Registration Confirmation", emailBodyTemplate);
         }
+
+        public async Task CreateSupplierAccount(string email)
+        {
+            var emailBodyTemplate = @"
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f6f6f6;
+                margin: 0;
+                padding: 0;
+            }
+            .container {
+                width: 100%;
+                max-width: 600px;
+                margin: 0 auto;
+                background-color: #ffffff;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+            .header {
+                background-color: #4CAF50;
+                color: #ffffff;
+                text-align: center;
+                padding: 10px 0;
+                border-radius: 8px 8px 0 0;
+            }
+            .content {
+                padding: 20px;
+                line-height: 1.6;
+            }
+            .footer {
+                text-align: center;
+                padding: 10px 0;
+                color: #777777;
+                font-size: 12px;
+            }
+            .button {
+                display: inline-block;
+                padding: 10px 20px;
+                margin-top: 20px;
+                color: #ffffff;
+                background-color: #4CAF50;
+                text-decoration: none;
+                border-radius: 4px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class='container'>
+            <div class='header'>
+                <h1>Supplier Account Registration</h1>
+            </div>
+            <div class='content'>
+                <p>Dear Valued Partner,</p>
+                <p>Thank you for your interest in becoming a supplier! We are excited to have you join our platform.</p>
+                <p>To get started, please click the button below to create your supplier account:</p>
+                <p style='text-align: center;'>
+                    <a href='http://localhost:4200/account/register?Supplier=true' class='button'>Create Supplier Account</a>
+                </p>
+                <p>If the button above does not work, you can copy and paste the following link into your web browser:</p>
+                <p><a href='http://localhost:4200/account/register?Supplier=true'>http://localhost:4200/account/register?Supplier=true</a></p>
+                <p>Best regards,<br>Eventa</p>
+            </div>
+            <div class='footer'>
+                <p>&copy; 2024 Eventa. All rights reserved.</p>
+            </div>
+        </div>
+    </body>
+    </html>";
+
+            await _emailService.SendEmailAsync(email, "Supplier Account Registration", emailBodyTemplate);
+        }
+
+
     }
 }

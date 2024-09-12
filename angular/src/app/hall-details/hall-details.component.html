@@ -1,0 +1,38 @@
+<div class="card" *ngIf="supplierPlace">
+  <div class="card__title">
+    <div class="icon">
+      <a href="#"><i class="fa fa-arrow-left"></i></a>
+    </div>
+    <h3>Hall Details</h3>
+  </div>
+  <div class="card__body">
+    <div class="half">
+      <div class="featured_text">
+        <h1>{{ supplierPlace.name }}</h1>
+        <p class="sub">{{ supplierPlace.eventCategory }}</p>
+        <p class="price">{{ supplierPlace.price | currency }}</p>
+      </div>
+      <div class="image">
+        <img [src]="supplierPlace.image" alt="{{ supplierPlace.name }}" *ngIf="supplierPlace.image">
+      </div>
+    </div>
+    <div class="half">
+      <div class="description">
+        <p>{{ supplierPlace.description }}</p>
+      </div>
+      <span class="category"><i class="fa fa-pen"></i> {{ supplierPlace.capacity }}- Capacity</span>
+    </div>
+  </div>
+  <div class="card__footer" *ngIf="userRole === 'ADMIN'">
+    <div class="recommend">
+      <p>Recommended by</p>
+      <h3>{{ supplierPlace.userName }}</h3>
+    </div>
+    <div class="action">
+      <button type="button" (click)="sendEmail(supplierPlace.userEmail)"> Connect Us</button>
+    </div>
+  </div>
+</div>
+<div *ngIf="!supplierPlace">
+  <p>Loading...</p>
+</div>

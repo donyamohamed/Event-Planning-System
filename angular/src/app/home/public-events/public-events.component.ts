@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { Event } from '../../../shared/Models/Event';
+import { Event, EventType } from '../../../shared/Models/Event';
 import { HomeService } from '../../../shared/services/home.service';
 import { AskforInvitationService } from '../../../shared/services/askfor-invitation.service';
 import { EventsResponse } from '../../../app/home/eventInterface';
@@ -12,23 +12,28 @@ import Swal from 'sweetalert2';
 import { SharedModule } from "../../../shared/shared.module";
 import { CommonModule } from '@angular/common';
 import { CurrentUserDataService } from '../../../shared/services/current-user-data.service';
+import { SearchComponent } from "../../search/search.component";
 
 @Component({
-    selector: 'app-public-events',
-    templateUrl: './public-events.component.html',
-    styleUrls: ['./public-events.component.css'],
-    standalone: true,
-    imports: [CommonModule, SharedModule, RouterLink]
+  selector: 'app-public-events',
+  templateUrl: './public-events.component.html',
+  styleUrls: ['./public-events.component.css'],
+  standalone: true,
+  imports: [CommonModule, SharedModule, RouterLink, SearchComponent]
 })
 export class PublicEventsComponent implements OnInit {
   public events: Event[] = [];
   public isLoading: boolean = true;
   public isLoggedIn: boolean = false;
-  public isButtonDisabledMap: { [key: number]: boolean } = {}; // Map to store disabled states for each event button
+  public isButtonDisabledMap: { [key: number]: boolean } = {};
   username: string;
   guestEmail: string;
   guestId: number;
   enumeratorKeys = Object.values(Enumerator);
+  isPaid: boolean;
+  eventType = EventType; 
+  public filteredEvents: Event[] = []; // Initialize filteredEvents
+  allPublicEvents: Event[] = [];
 
   constructor(
     private PublicEventServ: HomeService,
@@ -47,17 +52,24 @@ export class PublicEventsComponent implements OnInit {
   checkIfLoggedIn(): void {
     this.currentUserDataService.GetCurrentUserData().subscribe(
       response => {
-        if (response ) {
+        if (response) {
           this.isLoggedIn = true;
           this.username = response.name;
           this.guestId = response.id;
           this.guestEmail = response.emailAddress;
-          this.fetchUserEvents(); // Fetch events after login status is known
+          // this.fetchUserEvents();
+          // this.fetchAllPublicrEvents();
+          this.fetchEventsByCategory(null);
+
         }
       },
       error => {
         this.isLoggedIn = false;
-        this.fetchUserEvents(); // Fetch events even if not logged in
+        // this.fetchUserEvents();
+        // this.fetchAllPublicrEvents();
+        this.fetchEventsByCategory(null);
+
+
       }
     );
   }
@@ -66,9 +78,11 @@ export class PublicEventsComponent implements OnInit {
     this.PublicEventServ.getPublicEvents().subscribe(
       (data: EventsResponse) => {
         this.events = data.result;
+        this.filteredEvents = this.events; // Initialize filteredEvents with all events
         this.isLoading = false;
         this.cdr.detectChanges();
-        this.initializeButtonStates(); // Initialize button states after fetching events
+        this.initializeButtonStates();
+        this.fetchEventsByCategory(null);
       },
       error => {
         console.error('Error fetching user events', error);
@@ -79,14 +93,14 @@ export class PublicEventsComponent implements OnInit {
 
   initializeButtonStates(): void {
     this.events.forEach(event => {
-      this.askForInvitation(event, true); // Check if already requested during initialization
+      this.askForInvitation(event, true);
     });
   }
 
   askForInvitation(event: Event, isInitialization: boolean = false): void {
     this.currentUserDataService.GetCurrentUserData().subscribe(
       response => {
-        if (response ) {
+        if (response) {
           this.username = response.name;
           this.guestId = response.id;
           this.guestEmail = response.emailAddress;
@@ -198,14 +212,16 @@ export class PublicEventsComponent implements OnInit {
     this.router.navigateByUrl("app/eventDetails/" + event.id, { state: { event } });
   }
 
-  fetchEventsByCategory(category: Enumerator): void {
+  fetchEventsByCategory(category: Enumerator |null): void {
     this.isLoading = true;
     this.PublicEventServ.getEventsByCategory(category).subscribe(
       (data: EventsResponse) => {
+        console.log(data);
         this.events = data.result;
+        this.filteredEvents = this.events; // Update filteredEvents after fetching by category
         this.isLoading = false;
         this.cdr.detectChanges();
-        this.initializeButtonStates(); // Initialize button states after fetching events
+        this.initializeButtonStates();
       },
       error => {
         console.error('Error fetching events by category', error);
@@ -220,5 +236,36 @@ export class PublicEventsComponent implements OnInit {
 
   getBackgroundImage(event: any): string {
     return event.eventImg ? event.eventImg : 'https://cdn.pixabay.com/photo/2016/03/28/09/50/firework-1285261_1280.jpg';
+  }
+
+ 
+  navigateToPayment(eventId: number, creatorId: number, ticketPrice: number,availableTickets:number): void {
+    this.router.navigate(['/app/payment'], { queryParams: { eventId: eventId, creatorId: creatorId, ticketPrice: ticketPrice,availableTickets: availableTickets} });
+  }
+  
+
+  handleButtonClick(event: Event) {
+    if (event.type === EventType.Paid) {
+      this.navigateToPayment(event.id, event.userId, event.ticketPrice,event.numberOfTickets);
+    } else {
+      this.askForInvitation(event);
+    }
+  }
+  handleSearchResults(filteredEvents: Event[]): void {
+    this.filteredEvents = filteredEvents;
+  }
+  fetchAllPublicrEvents(): void {
+    this.PublicEventServ.getAllPublicEvents().subscribe(
+      (data: EventsResponse) => {
+        this.allPublicEvents = data.result;
+        this.isLoading = false;
+        this.cdr.detectChanges();
+        this.initializeButtonStates();
+      },
+      error => {
+        console.error('Error fetching user events', error);
+        this.isLoading = false;
+      }
+    );
   }
 }

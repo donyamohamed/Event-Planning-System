@@ -1683,8 +1683,23 @@ namespace Event_Planning_System.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<int>("NumberOfTickets")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PlaceId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RequestPlace")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<int?>("TicketPrice")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
                     b.Property<long>("UserId")
                         .HasColumnType("bigint");
@@ -1693,6 +1708,8 @@ namespace Event_Planning_System.Migrations
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PlaceId");
 
                     b.HasIndex("UserId");
 
@@ -1939,11 +1956,14 @@ namespace Event_Planning_System.Migrations
                     b.Property<int>("EventId")
                         .HasColumnType("int");
 
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
                     b.HasKey("GuestId", "EventId");
 
                     b.HasIndex("EventId");
 
-                    b.ToTable("GuestEvent");
+                    b.ToTable("GuestEvents", (string)null);
                 });
 
             modelBuilder.Entity("Event_Planning_System.Entities.GuestsFeedback", b =>
@@ -1978,6 +1998,85 @@ namespace Event_Planning_System.Migrations
                     b.HasIndex("GuestId");
 
                     b.ToTable("GuestsFeedback");
+                });
+
+            modelBuilder.Entity("Event_Planning_System.Entities.Payment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("EventId")
+                        .HasColumnType("int");
+
+                    b.Property<long>("GuestId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Money")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NumberOfTickets")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("PaymentDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EventId");
+
+                    b.HasIndex("GuestId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("payments");
+                });
+
+            modelBuilder.Entity("Event_Planning_System.Entities.SupplierPlaces", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Capacity")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ContactEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Location")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("eventCategory")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("SupplierPlaces");
                 });
 
             modelBuilder.Entity("Event_Planning_System.MultiTenancy.Tenant", b =>
@@ -2328,11 +2427,17 @@ namespace Event_Planning_System.Migrations
 
             modelBuilder.Entity("Event_Planning_System.Enitities.Event", b =>
                 {
+                    b.HasOne("Event_Planning_System.Entities.SupplierPlaces", "SupplierPlaces")
+                        .WithMany()
+                        .HasForeignKey("PlaceId");
+
                     b.HasOne("Event_Planning_System.Authorization.Users.User", "User")
                         .WithMany("Events")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("SupplierPlaces");
 
                     b.Navigation("User");
                 });
@@ -2457,6 +2562,44 @@ namespace Event_Planning_System.Migrations
                     b.Navigation("Event");
 
                     b.Navigation("Guest");
+                });
+
+            modelBuilder.Entity("Event_Planning_System.Entities.Payment", b =>
+                {
+                    b.HasOne("Event_Planning_System.Enitities.Event", "Event")
+                        .WithMany()
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Event_Planning_System.Authorization.Users.User", "Guest")
+                        .WithMany()
+                        .HasForeignKey("GuestId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Event_Planning_System.Authorization.Users.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Event");
+
+                    b.Navigation("Guest");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Event_Planning_System.Entities.SupplierPlaces", b =>
+                {
+                    b.HasOne("Event_Planning_System.Authorization.Users.User", "User")
+                        .WithMany("SupplierPlaces")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Event_Planning_System.MultiTenancy.Tenant", b =>
@@ -2593,6 +2736,8 @@ namespace Event_Planning_System.Migrations
                     b.Navigation("Roles");
 
                     b.Navigation("Settings");
+
+                    b.Navigation("SupplierPlaces");
 
                     b.Navigation("ToDoChecks");
 

@@ -1,0 +1,128 @@
+<h4>Add New Event Place</h4>
+<div class="form-container">
+
+  <form #createForm="ngForm" (ngSubmit)="onSubmit()">
+    <!-- Name -->
+    <div class="form-group">
+      <label for="Name">{{"Name" |localize}}</label>
+      <input type="text" class="form-control" id="Name" name="Name" [(ngModel)]="supplierPlace.name" required
+        minlength="3" maxlength="50" pattern="^[a-zA-Z0-9]+(?:[_-][a-zA-Z0-9]+)*$" />
+      <div *ngIf="
+          createForm.controls['Name'].invalid &&
+          (createForm.controls['Name'].dirty ||
+            createForm.controls['Name'].touched)
+        ">
+        <div *ngIf="createForm.controls['Name'].errors?.required" class="err">
+          {{ "Name is required." | localize }}
+        </div>
+        <div *ngIf="createForm.controls['Name'].errors?.minlength" class="err">
+          {{ "Name must be at least 3 characters long." | localize }}
+        </div>
+        <div *ngIf="createForm.controls['Name'].errors?.maxlength" class="err">
+          {{ "Name must not exceed 50 characters." | localize }}
+        </div>
+        <div *ngIf="createForm.controls['Name'].errors?.pattern" class="err">
+          {{ "Invalid name format." | localize }}
+        </div>
+      </div>
+    </div>
+    <!-- Email -->
+    <div class="form-group">
+      <label for="contactEmail">{{"Contact Email" |localize}}</label>
+      <input type="email" class="form-control" id="contactEmail" name="contactEmail"
+        [(ngModel)]="supplierPlace.contactEmail" #contactEmail="ngModel" required email />
+      <div *ngIf="
+          contactEmail.invalid &&
+          (contactEmail.dirty || contactEmail.touched)
+        ">
+        <div *ngIf="contactEmail.errors?.required" class="err">
+          {{ "Email is required." | localize }}
+        </div>
+        <div *ngIf="contactEmail.errors?.email" class="err">
+          {{ "Invalid email format." | localize }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Capacity -->
+    <div class="form-group">
+      <label for="Capacity">{{"Capacity"|localize}}</label>
+      <input type="number" class="form-control" id="Capacity" min="2" name="Capacity"
+        [(ngModel)]="supplierPlace.capacity" required />
+      <div *ngIf="
+          createForm.controls['Capacity'].invalid &&
+          (createForm.controls['Capacity'].dirty ||
+            createForm.controls['Capacity'].touched)
+        ">
+        <div *ngIf="createForm.controls['Capacity'].errors?.required" class="err">
+          {{ "Capacity is required." | localize }}
+        </div>
+        <div *ngIf="createForm.controls['Capacity'].errors?.min" class="err">
+          {{ "Capacity must be at least 2." | localize }}
+        </div>
+      </div>
+    </div>
+    <!-- Price -->
+    <div class="form-group">
+      <label for="Price">{{"Price" | localize}}</label>
+      <input type="number" class="form-control" id="Price" min="30" name="Price" [(ngModel)]="supplierPlace.price"
+        required />
+      <div *ngIf="
+          createForm.controls['Price'].invalid &&
+          (createForm.controls['Price'].dirty ||
+            createForm.controls['Price'].touched)
+        ">
+        <div *ngIf="createForm.controls['Price'].errors?.required" class="err">
+          {{ "Price is required." | localize }}
+        </div>
+        <div *ngIf="createForm.controls['Price'].errors?.min" class="err">
+          {{ "Price must be at least 30." | localize }}
+        </div>
+      </div>
+    </div>
+    <!-- Image -->
+    <div class="form-group">
+      <label for="imagePath">{{"Image" | localize}}</label>
+      <input type="file" class="form-control" id="imagePath" name="imagePath" (change)="onFileSelected($event)"
+        required />
+    </div>
+
+    <!-- Event Category -->
+    <div class="form-group">
+      <label>{{"Event Category" | localize}}</label>
+      <select [(ngModel)]="supplierPlace.eventCategory" name="category" id="category" class="form-control"
+        title="{{ 'Category' | localize }}" required>
+        <option *ngFor="let key of enumeratorKeys" [ngValue]="key">{{ key }}</option>
+      </select>
+    </div>
+
+    <!-- Description -->
+    <div class="form-group">
+      <label for="Description">{{"Description" | localize}}</label>
+      <textarea minlength="5" class="form-control" id="Description" name="Description"
+        [(ngModel)]="supplierPlace.description" required rows="7"></textarea>
+      <div *ngIf="
+          createForm.controls['Description'].invalid &&
+          (createForm.controls['Description'].dirty ||
+            createForm.controls['Description'].touched)
+        ">
+        <div *ngIf="createForm.controls['Description'].errors?.required" class="err">
+          {{ "Description is required." | localize }}
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Location -->
+    <div class="form-group">
+      <label for="location">{{"Location" | localize}}</label>
+      <!-- Map container -->
+      <div id="map" style="height: 180px; margin-bottom: 20px;"></div>
+      <input type="text" [(ngModel)]="supplierPlace.location" name="location" id="location" class="form-control"
+        placeholder="Event Location" />
+    </div>
+    <button type="submit" [disabled]="createForm.invalid" class="btn btn-primary">
+      Submit
+    </button>
+  </form>
+</div>

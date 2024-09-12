@@ -50,10 +50,15 @@ import { NotificatiosComponent } from "./layout/notifications/notificatios.compo
 
 import { PublicEventsComponent } from "./home/public-events/public-events.component";
 import { ChatIconComponent } from "./chat-icon/chat-icon.component";
-import { GuestsFeedbackComponent} from './guests-feedback/guests-feedback.component'
+import { GuestsFeedbackComponent} from './guests-feedback/guests-feedback.component';
+import { SearchComponent} from './search/search.component';
+import {SuccessPaymentComponent} from './success-payment/success-payment.component'
+import {FaildPaymentComponent} from './faild-payment/faild-payment.component'
 
 
 
+import {PaymentComponent} from './payment/payment.component'
+import {HallsComponent} from './halls/halls.component'
 
 
 // import { CreateGuestModelComponent } from './guest/create-guest-model/create-guest-model.component';
@@ -94,12 +99,17 @@ import { GuestsFeedbackComponent} from './guests-feedback/guests-feedback.compon
         SidebarLogoComponent,
         SidebarUserPanelComponent,
         SidebarMenuComponent,
-        GuestsFeedbackComponent
-        
+        GuestsFeedbackComponent,
+        PaymentComponent,
+        SuccessPaymentComponent,
+        FaildPaymentComponent,
+        HallsComponent
+
     ],
     bootstrap: [AppComponent],
     providers: [provideHttpClient(withInterceptorsFromDi(), withJsonpSupport())], imports: [CommonModule,
         FormsModule,
+        SearchComponent,
         ReactiveFormsModule,
         HttpClientModule,
         ModalModule.forChild(),

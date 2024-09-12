@@ -1,0 +1,29 @@
+.failure-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: 150px auto;
+  }
+  
+  .failure-container img {
+    width: 320px; /* Adjust width as per your image dimensions */
+    height: auto; /* Maintain aspect ratio */
+    margin-bottom: 20px; /* Optional margin below image */
+  }
+  
+  .failure-container h2 {
+    font-size: 2rem;
+    color: #f44336; /* Red color for failure */
+  }
+  
+  .failure-container p {
+    font-size: 1.2rem;
+    margin-top: 10px; /* Adjust margin as needed */
+  }
+  
+  .failure-container button {
+    margin-top: 30px;
+  }
+  

@@ -5,19 +5,16 @@
 		  <!--nada-->
 
 		<text name="HomePage" value="الصفحة الرئيسية" />
-		<text name="About" value="من نحن" />
 		<text name="WelcomeMessage" value="مرحبا بك في تطبيقنا Eventa -_-" />
 		<text name="FormIsNotValidMessage" value="النموذج ليس رسالة صالحة" />
 		<text name="TenantNameCanNotBeEmpty" value="لا يمكن أن يكون اسم المستأجر فارغًا" />
 		<text name="InvalidUserNameOrPassword" value="خطأ في اسم المستخدم أو كلمة مرور" />
-
 		<text name="ThereIsNoTenantDefinedWithName{0}" value="لا يوجد مستخدم محدد بهذا الاسم" />
 		<text name="TenantIsNotActive" value="المستخدم غير مفعل على السيستم" />
 		<text name="UserIsNotActiveAndCanNotLogin" value="المستخدم غير نشط ولا يمكنه تسجيل الدخول" />
 		<text name="UserEmailIsNotConfirmedAndCanNotLogin">البريد الإلكتروني للمستخدم غير مؤكد ولا يمكن تسجيل الدخول</text>
 		<text name="UserLockedOutMessage">رساله متركه للمستخدم.</text>
 		<text name="PleaseEnterLoginInformation" value="الرجاء إدخال معلومات تسجيل الدخول" />
-
 		<text name="TenancyName" value="نام Tenant" />
 		<text name="UserNameOrEmail" value="اسم المستخدم أو كلمة مرور" />
 		<text name="Password" value="كلمة المرور" />
@@ -25,9 +22,7 @@
 		<text name="ResetPassword" value="إعادة تعيين كلمة المرور" />
 		<text name="UpdatePassword" value="تغيير كلمة السر" />
 		<text name="RememberMe" value="تذكرني" />
-
 		<text name="LogIn" value="تسجيل الدخول" />
-
 		<text name="LoginFailed" value="فشل تسجيل الدخول" />
 		<text name="NameSurname" value="اسم اللقب" />
 		<text name="UserName" value="اسم المستخدم" />
@@ -35,7 +30,6 @@
 		<text name="Surname" value="اللقب" />
 		<text name="EmailAddress" value="بريد اليكتروني" />
 		<text name="Tenants" value="مستخدمين" />
-
 		<text name="SavedSuccessfully" value="تم الحفظ بنجاح" />
 		<text name="CreateNewTenant" value="انشاء مستخدم" />
 		<text name="AdminEmailAddress" value="ايميل الادمن" />
@@ -60,9 +54,7 @@
 		<text name="No" value="لا" />
 		<text name="Optional" value="اختیاری" />
 		<text name="LeaveEmptyToSwitchToHost">اتركه فارغًا للتبديل إلى المضيف</text>
-
 		<text name="CurrentTenant">المستخدم الحالي</text>
-
 		<text name="NotSelected">لم يتم اختياره</text>
 		<text name="Change">تغییر</text>
 		<text name="ChangeTenant">تغيير المستأجر</text>
@@ -77,7 +69,6 @@
 		<text name="CreateNewRole">إنشاء دور جديد</text>
 		<text name="RoleName">اسم الدور </text>
 		<text name="Actions">عملیات</text>
-
 		<text name="CouldNotCompleteLoginOperation">لا يمكن إكمال عملية تسجيل الدخول.</text>
 		<text name="CouldNotValidateExternalUser">لا يمكن التحقق من صحة المستخدم الخارجي.</text>
 		<text name="EditRole">تعديل الدور </text>
@@ -125,8 +116,8 @@
 		<text name="ResetPasswordStepTwoInfo" value="إعادة تعيين كلمة المرور" />
 		<text name="UsersActivation">تفعيل المستخدمين</text>
 		<text name="Profile" value="الصفحة الشخصية"/>
-		<text name="Events" value="المناسبات"/>
-		<text name="Recommended Events" value="المناسبات الموصى بها"/>
+		<text name="Events" value="الاحداث"/>
+		<text name="Recommended Events" value="الاحداث الموصى بها"/>
 		<text name="ConfirmNewPassword" vlaue="تأكيد كلمة المرور الجديدة" ></text>
 	    <text name="Search" value="بحث" />
 	    <text name="Save" value=" حفظ" />
@@ -135,11 +126,61 @@
 	    <text name="Log in" value="تسجيل الدخول" />
 	    <text name="Or Register?" value="سجل حساب ؟" />
         <text name="Forget Password" value="نسيت كلمه المرور" />
-
-
-         <!--esraa-->
-
-        <text name="Welcome to Eventa Planning System" value="مرحبا بكم في نظام تنظيم المناسبات" />
+		<text name="About" value="عن"/>
+		<text name="Reviews" value="التعليقات"/>
+		<text name="By" value="بواسطه"/>
+		<text name="attendees hosted" value="استضافة الحاضرين"/>
+		<text name="Ticket sales end soon" value="تنتهي مبيعات التذاكر قريبًا"/>
+		<text name="Number of tickets remaining:" value="عدد التذاكر المتبقية:"/>
+		<text name="Guests will attend this Event: " value="سيحضر ضيوف هذا الحدث:"/>
+		<text name="No reviews yet." value="لا توجد تعليقات حتى الآن."/>
+		<text name="Connect " value="تواصل"/>
+		<text name="Place " value="المكان"/>
+		<text name="No place information available." value="لا تتوفر معلومات عن المكان."/>
+		<text name="If you want a place for Event, Choose one." value="إذا كنت تريد مكانًا للحدث، فاختر واحدًا."/>
+		<text name="Today main focus " value="الشئ الاساسي الذي نركز عليه اليوم"/>
+		<text name="TODO" value="لكى يفعل"/>
+		<text name="Inprogress " value="في تَقَدم"/>
+		<text name="Done" value="تم"/>
+		<text name="Send Review " value="ارسال تعليق"/>
+		<text name="How was the Event?" value="كيف كان الحدث"/>
+		<text name="Give Us Your Feedback!" value="أعطنا تقييمك!"/>
+		<text name="Name cannot be longer than 100 characters. " value="لا يمكن أن يزيد الاسم عن 100 حرف."/>
+		<text name="SMS " value="رساله نصيه"/>
+		<text name="Email is required." value="الايميل الالكتروني مطلوب"/>
+		<text name="Invalid email address." value="عنوان البريد الإلكتروني غير صالح."/>
+		<text name="Update Guest" value="تحديث الضيف"/>
+		<text name="Name is required." value="الاسم مطلوب"/>
+		<text name="Phone is required." value="الهاتف مطلوب"/>
+		<text name="Phone must be a 10-digit number." value="يجب أن يكون رقم الهاتف مكونًا من 10 أرقام."/>
+		<text name=" Add One by one: " value="أضف واحدًا تلو الآخر:"/>
+		<text name="Add from excel:" value="اضافة من الاكسل:"/>
+		<text name="Phone:" value="الهاتف"/>
+		<text name="Email:" value="البريد الالكتروني"/>
+		<text name="Would you mind giving us your feedback about" value="هل تمانع في تزويدنا بتعليقاتك حول"/>
+		<text name="seen" value="مرئي"/>
+		<text name="🎉 Don't forget about" value="🎉 لا تنسى"/>
+		<text name="Accept" value="قبول"/>
+		<text name="Reject" value="رفض"/>
+		<text name="You Don't Have Any Notifications Yet!" value="ليس لديك أي إشعارات حتى الآن!"/>
+		<text name="from" value="من"/>
+		<text name="Expense Name" value="اسم المصاريف"/>
+		<text name=" Expense name is required" value="اسم المصاريف مطلوب"/>
+		<text name="Amount" value="المبلغ"/>
+		<text name="Amount is required" value="المبلغ مطلوبه"/>
+		<text name="Amount cannot be negative" value="لا يمكن أن يكون المبلغ سالبًا"/>
+		<text name=" Expenses" value="نفقات"/>
+		<text name="Update Event" value="تحديث الحدث"/>	
+		<text name="Map:" value="الخريطة:"/>
+		<text name="Location is required." value="الموقع مطلوب."/>		
+		<text name="Date is required." value="التاريخ مطلوب."/>
+		<text name="End Date is required." value="تاريخ الانتهاء مطلوب."/>	
+		<text name="Max Count is required." value="الحد الأقصى للعدد مطلوب."/>	
+		<text name="Event type is required." value="نوع الحدث مطلوب."/>
+		<text name="Description is required." value="الوصف مطلوب."/>
+		<text name="Description must be alphanumeric and less than 500 characters." value="يجب أن يكون الوصف أبجدي رقمي وأقل من 500 حرف."/>
+		<text name="Update" value="تحديث"/>
+		<text name="Welcome to Eventa Planning System" value="مرحبا بكم في نظام تنظيم الحدث" />
         <text name="Streamline your event planning process with our intuitive system. Create, manage, and track events effortlessly." value="قم بتبسيط عملية التخطيط للمناسبات الخاص بك من خلال نظامنا المبسط. قم بإنشاء المناسبات وإدارتها وتتبعها بسهولة." />
         <text name="Create detailed event plans" value="انشاء خطط تفصيليه للمناسبات" />
         <text name="Manage tasks and deadlines" value="إدارة المهام والمواعيد النهائية" />
@@ -169,7 +210,7 @@
 		<text name="Please choose some interests! 🍒" value="الرجاء اختيار بعض الاهتمامات! 🍒" />
 		<text name="Add Interest" value="اضف الاهتمامات" />
 		<text name="My Interests" value="اهتماماتي" />
-		<text name="Planner" value="منظم المناسبه" />
+		<text name="Planner" value="منظم الحدث" />
 		<text name="success" value="نجاح" />
 		<text name="Error fill the Email" value="خطا املئ البريد الاكتروني" />
 		<text name="Confirm Password" value="تاكيد كلمة المرور" />
@@ -183,12 +224,13 @@
 		<text name="Date:" value="تاريخ" />
 		<text name="Description:" value="الوصف" />
         <text name="Location:" value="الموقع" />
-		<text name="Event Name:" value="اسم المناسبه" />
-		<text name="My Event" value="المناسبه الخاصه بي" />
+		<text name="Event Name:" value="اسم الحدث" />
+		<text name="My Event" value="الاحداث الخاصه بي" />
 		<text name="Will Attend" value="من سوف يحضرون" />
 		<text name="Details View" value="عرض التفاصيل" />
 		<text name="Calendar View" value="عرض التقويم" />
-		<text name="Upcoming Events" value="المناسبات القادمه" />
+		<text name="Upcoming Events" value="الاحداث القادمه" />
+		<text name="History Events" value="الاحداث السابقة" />
 		<text name="Activate Account" value="تفعيل حساب" />
 		<text name="Welcome to our Eventa platform! Please click the button below to activate your account:" value="مرحبًا بكم في منصة Eventa الخاصة بنا! الرجاء الضغط على الزر أدناه لتفعيل حسابك:" />
 		<text name="Activate Your Account" value="فعل حسابك" />
@@ -201,10 +243,57 @@
 		<text name="Name:" value="الاسم" />
 		<text name="Set Expenses" value="تحديد النفقات" />
 		<text name="TodoList" value="عمل قائمة" />
-		<text name="Event Details" value="تفاصيل المناسبه" />
+		<text name="Event Details" value="تفاصيل الحدث" />
+		<text name="Payment Image" value="صورة الدفع"/>
+		<text name="Confirm Purchase for Ticket" value="تأكيد شراء التذكرة"/>
+		<text name="Amount: " value="المبلغ: "/>
+		<text name="Tickets No" value="عدد التذاكر"/>
+		<text name="Available: " value="متاح: "/>
+		<text name="Number of tickets you want" value="عدد التذاكر التي تريدها"/>
+		<text name="Confirm" value="تأكيد"/>
+		<text name="Download" value="تحميل"/>
+		<text name="Excel" value="Excel"/>
+		<text name="As Excel" value="كملف Excel"/>
+		<text name="PDF" value="PDF"/>
+		<text name="As Pdf" value="كملف PDF"/>
+		<text name="Print" value="طباعة"/>
+		<text name="Date" value="التاريخ"/>
+		<text name="Total: " value="الإجمالي: "/>
+		<text name="No expenses found" value="لم يتم العثور على مصاريف"/>
+		<text name="Chat" value="الدردشة"/>
+		<text name="No events found" value="لم يتم العثور على أحداث"/>
+		<text name="No events saved yet. Explore and choose your favorites to save!" value="لم يتم حفظ أي أحداث بعد. استكشف واختر مفضلاتك لحفظها!"/>
+		<text name="Payment Successful!" value="الدفع ناجح!"/>
+		<text name="Congratulations! Your payment was successful." value="تهانينا! تم الدفع بنجاح."/>
+		<text name="Back to Home" value="العودة إلى الصفحة الرئيسية"/>
+		<text name="You have not created any event, please create the first event" value="لم تقم بإنشاء أي حدث، يرجى إنشاء الحدث الأول"/>
 
-
-
+		<!--donya-->
+		<text name="Arabic" value="العربية" />
+		<text name="English" value="الانجليزية" />
+		<text name="Invite" value="ارسال دعوة" />
+		<text name="Eventa" value="إيفنتا" />
+		<text name="Event Type" value="نوع الحدث" />
+		<text name="Paid" value="مدفوع" />
+		<text name="Free" value="مجاني" />
+		<text name="Public" value="عام" />
+		<text name="Private" value="خاص" />
+		<text name="Ticket Price" value="سعر التذاكرة" />
+		<text name=" Edit" value="تعديل " />
+		<text name="Concert" value="حفلة موسيقية" />
+		<text name="Conference" value="مؤتمر" />
+		<text name="Workshop" value="ورشة عمل" />
+		<text name="Seminar" value="ندوة" />
+		<text name="Party" value="حفلة" />
+		<text name="Exam" value="امتحان" />
+		<text name="Birthday" value="عيد ميلاد" />
+		<text name="Graduation" value="تخرُّج" />
+		<text name="Baby Shower" value="سبوع الطفل" />
+		<text name="Wedding" value="حفل زفاف" />
+		<text name="Gathering" value="تجمع" />
+		<text name="Other" value="آخر" />
+		<text name="Places" value="الاماكن" />
+		<text name="Create Supplier Account" value="أنشيءحساب مورد" />
 		<!--esraa-->
 		<text name="Notifications" value="الإشعارات"/>
 		<text name="UNIQUE" value="تفرد" /> 
@@ -225,19 +314,19 @@
 		<text name="No, keep it" value="لا، احتفظ بها"/>
 		<text name="There was an error deleting the event." value="لقد حدث خطأ أثناء حذف العنصر"/>
 		<text name="User Name" value="إسم المستخدم"/>
-		<text name="Event Name" value="إسم المناسبة"/>
-		<text name="Event Location" value="المكان"/>
+		<text name="Event Name" value="إسم الحدث"/>
+		<text name="Event Location" value="موقع الحدث"/>
 		<text name="Start Date" value="تاريخ البداية"/>
 		<text name="End Date" value="تاريخ الإنتهاء"/>
 		<text name="Attendees" value="الحضور"/>
 		<text name="Event Category" value="فئة الحدث"/>
 		<text name="Choose Event Type" value="اختر نوع الحدث"/>
-		<text name="Public" value="عام"/>
-		<text name="Private" value="خاص"/>
-		<text name="Event Image" value="صورة المناسبة"/>
-		<text name="Event Description" value=" وصف المناسبة"/>
+		<!--<text name="Public" value="عام"/>
+		<text name="Private" value="خاص"/>-->
+		<text name="Event Image" value="صورة الحدث"/>
+		<text name="Event Description" value=" وصف الحدث"/>
 		<text name="Max Attendees" value="أقصي عدد للحضور"/>
-		<text name="Ask for invitation" value="طلب لحضور المناسبة"/>
+		<text name="Ask for invitation" value="طلب لحضور الحدث"/>
 		<text name="View" value="تفاصيل"/>
 		<text name="Guest" value="الحضور"/>
 		<text name="Add one by one" value="إضافة واحدا تلو الآخر"/>
@@ -250,13 +339,10 @@
 		<text name="Email" value="البريد الإلكتروني"/>
 		<text name="Invitation State" value="حالة الدعوات"/>
 		<text name="Pending" value="قيد الانتظار"/>
-		<text name="Confirmed" value="مؤكد"/>
 		<text name="No. Guests:" value="العدد"/>
 		<text name="Send Invitation" value="أرسل الدعوة"/>Add Guest
-		
 		<text name="Add Guest" value="ضيف جديد"/>
 		<text name="Add New Guest" value="إضافة ضيف جديد "/>
-
 		<text name="My Events" value="مناسباتي"/>
 		<text name="Category" value="الفئة"/>
 		<text name="Eventa System" value="نظام إيفنتا"/>
@@ -265,10 +351,10 @@
 		<text name="What are you inquiring about?" value="ما الذي تستفسر عنه؟"/>
 		<text name="Ask another question" value="إسأل سؤال آخر"/>
 		<text name="Created Events" value="الأحداث التي تم إنشاؤها"/>
-		<text name="Upcomming Events" value="المناسبات القادمة"/>
-		<text name="Event History" value="المناسبات السابقة"/>
+		<text name="Upcomming Events" value="الاحداث القادمة"/>
+		<text name="Event History" value="الاحداث السابقة"/>
 		<text name="Reports" value="التقارير"/>
-		<text name="Saved Events" value="المناسبات المحفوظة"/>
+		<text name="Saved Events" value="الاحداث المحفوظة"/>
 		<text name="You are not asking to come to any event yet" value="لم تطلب الحضور لأي مناسبة بعد"/>
 		<text name="Invitation Request For:" value="طلب لحضور"/>
 		<text name="Contact us" value="تواصل معنا"/>

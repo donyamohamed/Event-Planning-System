@@ -4,7 +4,7 @@
 <div class="card container p-3 tableDiv shadow-lg">
   <div class="btnDiv d-flex justify-content-between">
     <button class="btn" [disabled]="guestCount >= maxCountOfGuest" (click)="openModal(AddModal)"><i class="fa-solid fa-user-plus"></i> {{"Add Guest"|localize}}</button>
-    <h5 class="eventName">Event name: {{eventname}}</h5>
+    <h5 class="eventName">{{ "Event name:" | localize }} {{eventname}}</h5>
   </div>
   <div class="text-center imageDiv">
     <img src="../../../assets/img/guests.svg" alt="">
@@ -17,9 +17,9 @@
     <div class="buttons">
       <div class="d-flex">
         <div class=" sendInvitation text-dark">
-          <button class="btn" [disabled]="isCheckedAllDisabled" (click)="sendAll()"><i class="fa-solid fa-envelope"></i> Email</button>
+          <button class="btn" [disabled]="isCheckedAllDisabled" (click)="sendAll()"><i class="fa-solid fa-envelope"></i> {{ "Email" | localize }}</button>
         </div>
-        <button class="btn btn-danger" id="deleteAll"  [disabled]="isCheckedAllDisabled" (click)="deleteAll()"><i class="fa-regular fa-trash-can text-light" aria-hidden="true"></i></button>
+        <button class="btn btn-danger" id="deleteAll"  [disabled]="isCheckedAllDisabled"  (click)="deleteAll()"><i class="fa-regular fa-trash-can text-light" aria-hidden="true"></i></button>
       </div>
     </div>
   </div>
@@ -48,17 +48,17 @@
             <td>{{item.invitationState}}</td>
             <td>{{item.phone}}</td>
             <td class="sendInvitation">
-              By:
-              <a class="btn" (click)="SendSMS(item.phone)"><i class="fa-solid fa-comment-sms"></i> SMS</a> |
-              <a class="btn" (click)="SendEmail(item.email)"><i class="fa-solid fa-envelope"></i> Email</a>
+              {{ " By:" | localize }}
+              <a class="btn" (click)="SendSMS(item.phone)"><i class="fa-solid fa-comment-sms"></i>{{ "SMS" | localize }}</a> |
+              <a class="btn" (click)="SendEmail(item.email,item.id)"><i class="fa-solid fa-envelope"></i> {{ "Email" | localize }}</a>
 
             </td>
             <td class="d-flex justify-content-evenly">
               <!-- <a class="btn" routerLink="edit/{{item.id}}" (click)="openEditModal(Editetemplate)"><i class="fa-solid fa-pen-to-square text-success"></i></a> -->
-              <a class="btn" (click)="openEditModal(Editetemplate,item.id)"><i
-                  class="fa-solid fa-pen-to-square text-success"></i></a>
-              <a class="btn" (click)="Delete(item.id)"><i class="fa-solid fa-trash-can text-danger"
-                  aria-hidden="true"></i></a>
+              <button class="btn" (click)="openEditModal(Editetemplate,item.id)"><i
+                  class="fa-solid fa-pen-to-square text-success"></i></button>
+              <button class="btn border-0" (click)="Delete(item.id)" [disabled]="item.invitationState=='sent'"><i class="fa-solid fa-trash-can text-danger"
+                  aria-hidden="true"></i></button>
 
             </td>
           </tr>
@@ -83,7 +83,7 @@
         <input class="form-control" type="text" id="nameInput" formControlName="name" [(ngModel)]="guest.name" />
         <div *ngIf="guestForm.get('name').invalid && guestForm.get('name').touched" class="text-danger">
           <div *ngIf="guestForm.get('name').errors.required">{{"Name is required."|localize}}</div>
-          <div *ngIf="guestForm.get('name').errors.maxlength">Name cannot be longer than 100 characters.</div>
+          <div *ngIf="guestForm.get('name').errors.maxlength">{{ "Name cannot be longer than 100 characters." | localize }}</div>
         </div>
       </div>
       <div>
@@ -100,8 +100,8 @@
         <input class="form-control" type="email" id="emailInput" formControlName="email" [(ngModel)]="guest.email"
           required />
         <div *ngIf="guestForm.get('email').invalid && guestForm.get('email').touched" class="text-danger">
-          <div *ngIf="guestForm.get('email').errors.required">Email is required.</div>
-          <div *ngIf="guestForm.get('email').errors.email">Invalid email address.</div>
+          <div *ngIf="guestForm.get('email').errors.required">{{"Email is required." | localize}}</div>
+          <div *ngIf="guestForm.get('email').errors.email">{{"Invalid email address." | localize}}</div>
         </div>
       </div>
       <input class="btn btn-success m-2" value="Add" type="submit" />
@@ -111,7 +111,7 @@
 
 <ng-template #Editetemplate>
   <div class="modal-header">
-    <h4 class="modal-title" style="color: #1D2027;">Update Guest</h4>
+    <h4 class="modal-title" style="color: #1D2027;">{{"Update Guest" | localize}}</h4>
     <button type="button" class="close" aria-label="Close" (click)="bsModalRef.hide()">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -123,26 +123,26 @@
         <input formControlName="name" class="form-control" type="text" id="nameInput" name="nameInput"
           [(ngModel)]="guestEdit.name" required />
         <div *ngIf="guestForm.get('name').invalid && guestForm.get('name').touched" class="text-danger">
-          <div *ngIf="guestForm.get('name').errors.required">Name is required.</div>
-          <div *ngIf="guestForm.get('name').errors.maxlength">Name cannot be longer than 100 characters.</div>
+          <div *ngIf="guestForm.get('name').errors.required">{{"Name is required." | localize}}</div>
+          <div *ngIf="guestForm.get('name').errors.maxlength">{{"Name cannot be longer than 100 characters." | localize}}</div>
         </div>
       </div>
       <div>
-        <label for="phoneInput">Phone:</label>
+        <label for="phoneInput">{{"Phone:" | localize}}</label>
         <input formControlName="phone" class="form-control" type="text" id="phoneInput" name="phoneInput"
           [(ngModel)]="guestEdit.phone" required />
         <div *ngIf="guestForm.get('phone').invalid && guestForm.get('phone').touched" class="text-danger">
-          <div *ngIf="guestForm.get('phone').errors.required">Phone is required.</div>
-          <div *ngIf="guestForm.get('phone').errors.pattern">Phone must be a 10-digit number.</div>
+          <div *ngIf="guestForm.get('phone').errors.required">{{"Phone is required." | localize}}</div>
+          <div *ngIf="guestForm.get('phone').errors.pattern">{{"Phone must be a 10-digit number." | localize}}</div>
         </div>
       </div>
       <div>
-        <label for="emailInput">Email:</label>
+        <label for="emailInput">{{"ُEmail:" | localize}}</label>
         <input formControlName="email" class="form-control" type="email" id="emailInput" name="emailInput"
           [(ngModel)]="guestEdit.email" required />
         <div *ngIf="guestForm.get('email').invalid && guestForm.get('email').touched" class="text-danger">
-          <div *ngIf="guestForm.get('email').errors.required">Email is required.</div>
-          <div *ngIf="guestForm.get('email').errors.email">Invalid email address.</div>
+          <div *ngIf="guestForm.get('email').errors.required">{{"Email is required." | localize}}</div>
+          <div *ngIf="guestForm.get('email').errors.email">{{"Invalid email address." | localize}}</div>
         </div>
       </div>
       <input class="btn btn-success m-2" value="Update" type="submit" />
@@ -159,11 +159,11 @@
   </div>
   <div class="modal-body add-btns">
     <div class=" m-2">
-      Add One by one: 
+      {{" Add One by one: " |localize}}
       <button class="btn btn-secondary" [disabled]="guestCount >= maxCountOfGuest" (click)="openModal(template)" ><i class="fa-solid fa-user-plus"></i> </button>
     </div>
     <div class=" m-2">
-      Add from excel:
+      {{" Add from excel:" |localize}}
       <!-- <button class="btn btn-success" (click)="openModal(template)" [disabled]="guestCount >= maxCountOfGuest"><i class="fa-solid fa-file-excel"></i></button> -->
       <label for="file-upload" class="custom-file-upload">
         <i class="fas fa-file-excel"></i>

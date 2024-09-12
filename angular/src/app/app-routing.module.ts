@@ -1,3 +1,4 @@
+import { ExpensesReportComponent } from './report/expenses-report/expenses-report.component';
 import { ReportComponent } from './report/report.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -20,7 +21,7 @@ import { InterstsComponent } from './intersts/intersts.component';
 import { TodoListComponent } from './layout/event-todo-list/event-todo-list.component';
 import { EventDetailsComponent } from './layout/event-details/event-details.component';
 import { EventHOmeDetailsComponent } from './layout/event-home-details/event-home-details.component';
-
+import {PaymentComponent} from './payment/payment.component'
 import { InvitationStateComponent } from './layout/invitation-state/invitation-state.component';
 import {GuestsFeedbackComponent} from './guests-feedback/guests-feedback.component'
 import { NotificatiosComponent } from './layout/notifications/notificatios.component';
@@ -38,12 +39,22 @@ import { AllGuestComponent } from './guest/all-guest/all-guest.component';
 import { UpcomingEventsComponent } from './layout/user-profile/upcoming-events/upcoming-events.component';
 import { FeedbackComponent} from './feedback/feedback.component';
 import {SavedeventsComponent} from './savedevents/savedevents.component';
+import {SearchComponent} from './search/search.component';
+import {SuccessPaymentComponent} from './success-payment/success-payment.component';
+import {FaildPaymentComponent} from './faild-payment/faild-payment.component';
+
+import {SupplierPlacesComponent} from './supplier-places/supplier-places.component';
+import { SupplierEventsComponent } from '../app/layout/supplier-events/supplier-events.component';
+import {HallsComponent} from './halls/halls.component';
+import {HallDetailsComponent} from './hall-details/hall-details.component';
 const routes: Routes = [
     {
         path: '',
         component: AppComponent,
         children: [
+            {path:'CreateEventPlace',component:SupplierPlacesComponent},
             {path:'GuestFeedBack',component:GuestsFeedbackComponent},
+            {path:'Search',component:SearchComponent},
             { path: 'Chat/:plannerId', component: ChatComponentComponent },
             { path: 'home', component: HomeComponent },
             { path: 'users', component: UsersComponent, data: { permission: 'Pages.Users' }, canActivate: [AppRouteGuard] },
@@ -53,6 +64,7 @@ const routes: Routes = [
             { path: 'update-password', component: ChangePasswordComponent, canActivate: [AppRouteGuard] },
             { path: 'create-event', component: CreateEventComponent, canActivate: [AppRouteGuard] },
             { path: 'report', component: ReportComponent, canActivate: [AppRouteGuard] },
+            { path: 'expenses-report', component: ExpensesReportComponent, canActivate: [AppRouteGuard] },
             { path: 'set-expenses', component: SetExpensesComponent, canActivate: [AppRouteGuard] },
             { path: 'historyevent', component: HistoryeventComponent, canActivate: [AppRouteGuard] },
             { path: 'user-event', component: UserEventComponent, canActivate: [AppRouteGuard] },
@@ -63,6 +75,14 @@ const routes: Routes = [
             { path: 'feedback', component: FeedbackComponent, canActivate: [AppRouteGuard] },
 
             { path: 'eventDetails/:id', component: EventDetailsComponent },
+            { path: 'payment', component: PaymentComponent, canActivate: [AppRouteGuard] },
+
+            {path: 'supplier-events',component:SupplierEventsComponent, canActivate: [AppRouteGuard] },
+            { path: 'event-places', component: HallsComponent },
+
+            { path: 'payment-success', component: SuccessPaymentComponent },
+            { path: 'payment-failed', component: FaildPaymentComponent },
+
 
             { path: 'shareDetails/:id', component: ShareDetailesComponent, canActivate: [AppRouteGuard] },
             { path: 'todolist/:id', component: TodoListComponent, canActivate: [AppRouteGuard] },
@@ -84,7 +104,8 @@ const routes: Routes = [
                     { path: 'showMore/:id', component: GetByIdGuestComponent, canActivate: [AppRouteGuard] }
                 ]
             },
-            { path: 'sidebar-event', component: SidebarEventComponent, canActivate: [AppRouteGuard] }
+            { path: 'sidebar-event', component: SidebarEventComponent, canActivate: [AppRouteGuard] },
+            {path:'hall-details/:id', component:HallDetailsComponent,canActivate:[AppRouteGuard]}
         ]
     }
 ];

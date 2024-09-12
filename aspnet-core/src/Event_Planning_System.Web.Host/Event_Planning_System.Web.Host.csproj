@@ -40,6 +40,7 @@
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
     <PackageReference Include="CloudinaryDotNet" Version="1.26.2" />
+    <PackageReference Include="DinkToPdf" Version="1.0.8" />
 
     <PackageReference Include="Google.Apis.Auth" Version="1.68.0" />
 
@@ -50,6 +51,8 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+
+    <PackageReference Include="Stripe.net" Version="45.3.0" />
 
     <PackageReference Include="Twilio" Version="7.1.0" />
   </ItemGroup>

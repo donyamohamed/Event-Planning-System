@@ -1,19 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ToDoList } from '../../../shared/Models/ToDoList';
-import { TodoListService } from '../../../shared/Services/todo-list.service';
+
+import { TodoListService } from '../../../shared/services/todo-list.service';
+
 import { ActivatedRoute } from '@angular/router'; // Import ActivatedRoute
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import Swal from 'sweetalert2'; // Import SweetAlert
 import { EventdetailsService } from '../../../shared/services/eventdetails.service';
 import { CurrentUserDataService } from '../../../shared/services/current-user-data.service';
+import { SharedModule } from "../../../shared/shared.module";
 @Component({
   selector: 'app-event-todo-list',
   templateUrl: './event-todo-list.component.html',
   styleUrls: ['./event-todo-list.component.css'],
   standalone: true,
-  imports: [CommonModule, FormsModule]
+  imports: [CommonModule, FormsModule, SharedModule]
 })
 export class TodoListComponent implements OnInit {
   todoItems: ToDoList[] = [];
